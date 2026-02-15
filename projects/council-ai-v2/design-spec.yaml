@@ -1,0 +1,149 @@
+project:
+  name: "Council AI v2"
+  type: "ai-discussion-platform"
+  market: "japan"
+  description: "複数AI自動議論プラットフォーム - 1つの質問に対して3つのAIが議論し、意思決定を支援"
+
+design:
+  style: "Glassmorphism + LINE Style Chat"
+  axes:
+    density: 3
+    tone: 3
+    era: 4
+    saturation: 3
+
+  style_validation:
+    chosen: "Glassmorphism + LINE Style"
+    expected_axes: [3, 3, 4, 3]
+    actual_axes: [3, 3, 4, 3]
+    manhattan_distance: 0
+    status: "PASS"
+
+  colors:
+    primary: "#1e293b"      # slate-800 - メインテキスト
+    secondary: "#64748b"    # slate-500 - サブテキスト
+    accent: "#6366f1"       # indigo-500 - アクセント・CTA
+    background: "#f1f5f9"   # slate-100 - 背景
+    surface: "#ffffff"      # 白 - カード背景
+
+    ai_colors:
+      gpt4: "#10b981"       # emerald-500 - 楽観的視点
+      claude: "#f97316"     # orange-500 - 慎重な視点
+      gemini: "#3b82f6"     # blue-500 - バランス視点
+
+    palette_rationale: |
+      3つのAIに固有カラーを割り当て、議論の流れを視覚的に追いやすくした。
+      - GPT-4（緑）: 成長・前向きを連想
+      - Claude（オレンジ）: 注意・慎重さを連想
+      - Gemini（青）: 冷静・バランスを連想
+      背景はニュートラルなスレートグレー系で、AIカラーが映えるようにした。
+
+  typography:
+    heading: "Space Grotesk"
+    body: "DM Sans"
+    japanese: "Noto Sans JP"
+
+    import_url: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=DM+Sans:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+
+    font_rationale: |
+      - Space Grotesk: テック感とモダンさを両立する見出しフォント
+      - DM Sans: 読みやすく親しみやすい本文フォント
+      - Noto Sans JP: 日本語の可読性を確保
+      AI感を避けるため、Inter単独使用は回避。
+
+  layout:
+    structure: "2カラム（チャット + サマリーパネル）"
+    responsive: true
+    glass_effect: true
+
+mvp_features:
+  implemented:
+    - name: "質問入力"
+      status: "complete"
+      description: "ユーザーが意思決定の質問を入力するフォーム"
+
+    - name: "3 AI自動議論表示"
+      status: "demo_data"
+      description: "GPT-4（楽観的）、Claude（慎重）、Gemini（バランス）の議論をチャット形式で表示"
+
+    - name: "チャット形式表示"
+      status: "complete"
+      description: "LINE/Slackライクなメッセージバブルで議論を可視化"
+
+    - name: "要約レポート"
+      status: "complete"
+      description: "結論サマリー + 主要論点 + 推奨アクションの3パネル"
+
+quality_check:
+  ai_detection:
+    violations: []
+    checks:
+      - pattern: "Inter単独使用"
+        status: "PASS"
+        note: "Space Grotesk + DM Sans + Noto Sans JPを使用"
+
+      - pattern: "紫青グラデーション"
+        status: "PASS"
+        note: "使用せず。各AIに固有色を割り当て"
+
+      - pattern: "3カラム対称レイアウト"
+        status: "N/A"
+        note: "チャットUIのため該当せず"
+
+      - pattern: "空虚なコピー"
+        status: "PASS"
+        note: "具体的な日本語コピーを使用"
+
+    unjustified_count: 0
+    overall: "PASS"
+
+  ux_principles:
+    usability: "PASS - 質問入力からサマリー確認まで明確な導線"
+    visual_quality: "PASS - AIごとの色分けで視覚的階層が明確"
+    uniqueness: "PASS - 3AI議論という独自のUI体験"
+    interaction: "PASS - CTAが明確、ホバー状態実装済み"
+    overall: "PASS"
+
+  japan_market:
+    japanese_fonts: "PASS - Noto Sans JP使用"
+    line_height: "PASS - 1.8以上"
+    natural_japanese: "PASS - です・ます調で統一"
+    footer_links: "PASS - 利用規約・プライバシーポリシー・会社概要あり"
+    overall: "PASS"
+
+  overall: "PASS"
+
+design_rationale:
+  why_this_works: |
+    Council AI v2は「複数AIによる議論」という新しいUXを提供するため、
+    以下の設計判断を行った：
+
+    1. チャットUIの採用: LINE/Slackに慣れた日本ユーザーにとって
+       直感的に理解できるインターフェース
+
+    2. AI固有カラー: 議論の流れを追いやすく、各AIの立場（楽観/慎重/バランス）
+       が視覚的に判別できる
+
+    3. サマリーパネルの併置: 長い議論を読まなくても、結論・論点・
+       アクションが一目で分かる構成
+
+    4. Glassmorphism効果: モダンでクリーンな印象を与えつつ、
+       情報の階層を明確にする
+
+  differentiator: |
+    記憶に残る要素:
+    - 3色のAIアバターによるビジュアルアイデンティティ
+    - 議論が展開する「ライブ感」のあるチャットUI
+    - 意思決定支援に特化した要約レポート構成
+
+referenced_files:
+  - references/styles.md
+  - references/colors.md
+  - references/typography.md
+  - references/ai-detection.md
+  - references/japan-market.md
+
+output:
+  html: "index.html"
+  spec: "design-spec.yaml"
+  created_at: "2026-02-15"
