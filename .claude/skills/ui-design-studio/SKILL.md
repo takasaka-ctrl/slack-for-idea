@@ -226,12 +226,19 @@ validation:
 ### 出力ファイル
 
 ```
-output/
+projects/
+├── index.html              # ポータル（全モック一覧）← 新規カード追加
 └── {project_name}/
     ├── index.html          # メインUI
-    ├── design-spec.yaml    # 設計仕様
-    └── screenshot.png      # プレビュー（可能な場合）
+    ├── README.md           # アプリ説明（必須）
+    └── design-spec.yaml    # 設計仕様
 ```
+
+### GitHub Pages URL
+
+成果物は `main` ブランチにマージ後、以下のURLで閲覧可能：
+- ポータル: `https://takasaka-ctrl.github.io/slack-for-idea/projects/`
+- モック: `https://takasaka-ctrl.github.io/slack-for-idea/projects/{project_name}/`
 
 ### 成果物の要件
 
@@ -240,6 +247,8 @@ output/
 3. **Google Fonts埋め込み**: 選択したフォントペアリング
 4. **レスポンシブ対応**: モバイル〜デスクトップ
 5. **ダークモード対応**: 可能な限り
+6. **README.md**: アプリ概要・MVP機能・技術スタック・デザイン仕様を記載
+7. **ポータル更新**: `projects/index.html` に新規モックのカードを追加
 
 ### 設計仕様（design-spec.yaml）
 
@@ -379,21 +388,38 @@ Slackからのメッセージ:
    - UX原則確認
 
 5. UI実装（成果物）:
-   - output/kpi-dashboard/option-a/index.html
-   - output/kpi-dashboard/option-b/index.html
+   - projects/kpi-dashboard/index.html
+   - projects/kpi-dashboard/README.md
+   - projects/kpi-dashboard/design-spec.yaml
+   - projects/index.html にカードを追加
+```
+
+### 成果物例（単一案）
+
+```
+projects/
+├── index.html            # ポータル（新規カード追加済み）
+└── kpi-dashboard/
+    ├── index.html        # モックUI
+    ├── README.md         # アプリ説明
+    └── design-spec.yaml  # 設計仕様
 ```
 
 ### 成果物例（複数案）
 
 ```
-output/kpi-dashboard/
-├── option-a/
-│   ├── index.html        # 案A: Swiss Minimalism
-│   └── design-spec.yaml
-├── option-b/
-│   ├── index.html        # 案B: Modern Corporate
-│   └── design-spec.yaml
-└── comparison.md         # 比較サマリー
+projects/
+├── index.html            # ポータル（新規カード追加済み）
+└── kpi-dashboard/
+    ├── option-a/
+    │   ├── index.html        # 案A: Swiss Minimalism
+    │   ├── README.md
+    │   └── design-spec.yaml
+    ├── option-b/
+    │   ├── index.html        # 案B: Modern Corporate
+    │   ├── README.md
+    │   └── design-spec.yaml
+    └── comparison.md         # 比較サマリー
 ```
 
 ---
@@ -405,6 +431,8 @@ output/kpi-dashboard/
 3. **設計根拠は具体的に**: 「モダン」「クリーン」等の曖昧語を避ける
 4. **日本市場は別扱い**: `japan-market.md` のルールを優先
 5. **複数案提示は必須**: 必ず3案を比較表形式で提示し、ユーザーに選択してもらう
+6. **README.md必須**: 各モックにアプリ説明ドキュメントを含める
+7. **ポータル更新必須**: `projects/index.html` に新規モックのカードを追加する
 
 ---
 
