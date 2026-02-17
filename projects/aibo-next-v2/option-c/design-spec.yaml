@@ -1,0 +1,51 @@
+project:
+  name: "AIBO Next v2"
+  type: "mobile_app"
+  market: "japan"
+  option: "C - Neon Arcade"
+
+design:
+  style: "Cyberpunk + Neon Arcade"
+  axes:
+    density: 4
+    tone: 4
+    era: 5
+    saturation: 5
+    total: 18
+
+  colors:
+    primary: "#00ffff"    # Neon Cyan
+    secondary: "#1a1a2e"  # Dark BG Light
+    accent1: "#ff00ff"    # Neon Magenta
+    accent2: "#ffff00"    # Neon Yellow
+    accent3: "#00ff88"    # Neon Green
+    background: "#0f0f1a" # Dark BG
+
+  typography:
+    heading: "Orbitron"
+    body: "Space Grotesk + Noto Sans JP"
+    import: "https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Space+Grotesk:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+
+quality_check:
+  ai_detection: "PASS"
+  ux_principles: "PASS"
+  overall: "PASS"
+  notes:
+    - "Orbitronで近未来的なテック感を表現"
+    - "ネオングロー効果で視覚的インパクト"
+    - "ダーク背景でキャラクターが際立つ"
+
+design_rationale:
+  why_this_works: |
+    AIコンパニオンの「テクノロジー」側面を強調。
+    アーケードゲームやサイバーパンクの世界観で
+    他のAIアプリとの差別化が明確。
+    ダーク背景でドット絵キャラが映える。
+  differentiator: |
+    ネオングロー効果とスキャンライン。
+    グリッド背景でレトロフューチャー感を演出。
+    記憶に残る強烈なビジュアルインパクト。
+  risk: |
+    好みが分かれるデザイン。
+    一部ユーザーには派手すぎる可能性。
+    目が疲れやすいという懸念も。

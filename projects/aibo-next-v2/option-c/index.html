@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>AIBO Next v2 - Neon Arcade</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Space+Grotesk:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            arcade: {
+              bg: '#0f0f1a',
+              bgLight: '#1a1a2e',
+              cyan: '#00ffff',
+              magenta: '#ff00ff',
+              yellow: '#ffff00',
+              pink: '#ff6090',
+              green: '#00ff88',
+              purple: '#8a2be2',
+              text: '#e0e0ff',
+              textDim: '#6a6a8a',
+            }
+          },
+          fontFamily: {
+            heading: ['Orbitron', 'sans-serif'],
+            body: ['"Space Grotesk"', '"Noto Sans JP"', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-feature-settings: "palt" 1;
+      letter-spacing: -0.02em;
+    }
+
+    .neon-glow-cyan {
+      box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff40;
+    }
+
+    .neon-glow-magenta {
+      box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 30px #ff00ff40;
+    }
+
+    .neon-glow-yellow {
+      box-shadow: 0 0 10px #ffff00, 0 0 20px #ffff00, 0 0 30px #ffff0040;
+    }
+
+    .neon-text-cyan {
+      text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 40px #00ffff;
+    }
+
+    .neon-text-magenta {
+      text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 40px #ff00ff;
+    }
+
+    .neon-text-yellow {
+      text-shadow: 0 0 10px #ffff00, 0 0 20px #ffff00;
+    }
+
+    .grid-bg {
+      background-image:
+        linear-gradient(rgba(0,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,255,0.03) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    .scanline {
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.1) 2px,
+        rgba(0,0,0,0.1) 4px
+      );
+    }
+
+    @keyframes pulse-neon {
+      0%, 100% { opacity: 1; filter: brightness(1); }
+      50% { opacity: 0.8; filter: brightness(1.2); }
+    }
+
+    @keyframes glitch {
+      0%, 100% { transform: translate(0); }
+      20% { transform: translate(-2px, 2px); }
+      40% { transform: translate(-2px, -2px); }
+      60% { transform: translate(2px, 2px); }
+      80% { transform: translate(2px, -2px); }
+    }
+
+    @keyframes float-glow {
+      0%, 100% {
+        transform: translateY(0);
+        filter: drop-shadow(0 0 20px #00ffff);
+      }
+      50% {
+        transform: translateY(-10px);
+        filter: drop-shadow(0 0 40px #00ffff) drop-shadow(0 0 60px #ff00ff);
+      }
+    }
+
+    .character-glow {
+      animation: float-glow 3s ease-in-out infinite;
+    }
+
+    .pulse-animation {
+      animation: pulse-neon 2s ease-in-out infinite;
+    }
+
+    .xp-bar-neon {
+      background: linear-gradient(90deg, #00ffff 0%, #00ff88 50%, #ffff00 100%);
+    }
+
+    .card-border {
+      border: 1px solid rgba(0,255,255,0.3);
+      background: rgba(26,26,46,0.8);
+      backdrop-filter: blur(10px);
+    }
+
+    .speech-bubble {
+      position: relative;
+      background: rgba(26,26,46,0.95);
+      border: 2px solid #00ffff;
+      box-shadow: 0 0 20px rgba(0,255,255,0.3), inset 0 0 20px rgba(0,255,255,0.1);
+    }
+
+    .speech-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 12px solid transparent;
+      border-right: 12px solid transparent;
+      border-top: 14px solid #00ffff;
+    }
+
+    .speech-bubble::before {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-top: 10px solid rgba(26,26,46,0.95);
+      z-index: 1;
+    }
+  </style>
+</head>
+
+<body class="font-body bg-arcade-bg min-h-screen flex items-center justify-center p-4 grid-bg">
+
+  <!-- Scanline Overlay -->
+  <div class="fixed inset-0 pointer-events-none scanline opacity-30"></div>
+
+  <!-- Mobile Frame -->
+  <div class="w-full max-w-[375px] bg-arcade-bg rounded-[40px] overflow-hidden border-2 border-arcade-cyan/30 relative" style="box-shadow: 0 0 40px rgba(0,255,255,0.2), 0 0 80px rgba(255,0,255,0.1);">
+
+    <!-- Status Bar -->
+    <div class="bg-arcade-bgLight/80 text-arcade-cyan px-6 py-2 flex justify-between items-center text-xs border-b border-arcade-cyan/20">
+      <span class="font-heading">9:41</span>
+      <div class="flex items-center gap-2">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3C8.5 3 5.5 4.5 3.5 7L12 21l8.5-14C18.5 4.5 15.5 3 12 3z"/></svg>
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M2 22h20V2z"/></svg>
+      </div>
+    </div>
+
+    <!-- App Content -->
+    <div class="px-4 pb-4">
+
+      <!-- Level & XP Bar -->
+      <div class="card-border rounded-xl p-4 mt-3">
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-3">
+            <div class="w-14 h-14 rounded-lg bg-arcade-bgLight border-2 border-arcade-magenta neon-glow-magenta flex items-center justify-center">
+              <span class="font-heading font-black text-arcade-magenta text-2xl neon-text-magenta">23</span>
+            </div>
+            <div>
+              <p class="font-heading font-bold text-arcade-cyan text-lg neon-text-cyan">CYBER-01</p>
+              <p class="text-xs text-arcade-textDim">// CONVERSATION_TYPE</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-1 bg-arcade-yellow/10 border border-arcade-yellow/30 px-3 py-1.5 rounded">
+            <span class="text-lg">⚡</span>
+            <span class="font-heading font-bold text-arcade-yellow neon-text-yellow">2,450</span>
+          </div>
+        </div>
+
+        <div class="relative">
+          <div class="h-3 bg-arcade-bgLight rounded border border-arcade-cyan/30 overflow-hidden">
+            <div class="h-full xp-bar-neon rounded transition-all duration-500 pulse-animation" style="width: 72%;"></div>
+          </div>
+          <div class="flex justify-between mt-1.5">
+            <span class="text-xs text-arcade-green font-heading">EXP</span>
+            <span class="text-xs text-arcade-textDim font-mono">720 / 1000</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Character Area -->
+      <div class="flex flex-col items-center mt-6 mb-4 relative">
+
+        <!-- Decorative Elements -->
+        <div class="absolute -top-2 left-8 font-heading text-arcade-magenta/40 text-[10px]">&lt;ONLINE/&gt;</div>
+        <div class="absolute -top-2 right-8 font-heading text-arcade-cyan/40 text-[10px]">v2.3.1</div>
+
+        <!-- Speech Bubble -->
+        <div class="speech-bubble rounded-lg px-5 py-3 mb-8 max-w-[260px]">
+          <p class="text-center text-arcade-text text-sm leading-relaxed">
+            <span class="text-arcade-cyan">&gt;</span> システム起動完了<br>
+            <span class="text-arcade-magenta">&gt;</span> 今日もよろしくね！
+          </p>
+        </div>
+
+        <!-- Character -->
+        <div class="character-glow">
+          <svg width="140" height="140" viewBox="0 0 100 100" style="image-rendering: pixelated;">
+            <!-- Body outline glow -->
+            <ellipse cx="50" cy="60" rx="30" ry="26" fill="none" stroke="#00ffff" stroke-width="1" opacity="0.5"/>
+
+            <!-- Body -->
+            <rect x="28" y="40" width="44" height="36" rx="8" fill="#1a1a2e"/>
+            <rect x="30" y="42" width="40" height="32" rx="6" fill="#0f0f1a" stroke="#00ffff" stroke-width="2"/>
+
+            <!-- Screen/Face -->
+            <rect x="34" y="46" width="32" height="24" rx="4" fill="#0a0a14"/>
+            <rect x="36" y="48" width="28" height="20" rx="2" fill="#0f0f1a"/>
+
+            <!-- Eyes (LED style) -->
+            <rect x="40" y="52" width="6" height="8" rx="1" fill="#00ffff"/>
+            <rect x="54" y="52" width="6" height="8" rx="1" fill="#00ffff"/>
+            <rect x="41" y="53" width="2" height="3" fill="#ffffff"/>
+            <rect x="55" y="53" width="2" height="3" fill="#ffffff"/>
+
+            <!-- Mouth (LED bar) -->
+            <rect x="44" y="64" width="12" height="2" rx="1" fill="#ff00ff"/>
+
+            <!-- Antenna -->
+            <rect x="48" y="32" width="4" height="10" fill="#1a1a2e"/>
+            <circle cx="50" cy="30" r="4" fill="#ffff00"/>
+            <circle cx="50" cy="30" r="2" fill="#ffffff"/>
+
+            <!-- Arms -->
+            <rect x="20" y="50" width="8" height="16" rx="4" fill="#1a1a2e" stroke="#00ffff" stroke-width="1"/>
+            <rect x="72" y="50" width="8" height="16" rx="4" fill="#1a1a2e" stroke="#00ffff" stroke-width="1"/>
+
+            <!-- Legs -->
+            <rect x="36" y="76" width="10" height="12" rx="3" fill="#1a1a2e" stroke="#ff00ff" stroke-width="1"/>
+            <rect x="54" y="76" width="10" height="12" rx="3" fill="#1a1a2e" stroke="#ff00ff" stroke-width="1"/>
+
+            <!-- Decorative circuits -->
+            <line x1="32" y1="70" x2="32" y2="74" stroke="#00ffff" stroke-width="1" opacity="0.5"/>
+            <line x1="68" y1="70" x2="68" y2="74" stroke="#00ffff" stroke-width="1" opacity="0.5"/>
+          </svg>
+        </div>
+
+        <!-- Status Badges -->
+        <div class="flex gap-2 mt-4">
+          <span class="px-3 py-1 bg-arcade-cyan/10 border border-arcade-cyan/30 text-arcade-cyan rounded text-xs font-heading">
+            ⚡ ACTIVE
+          </span>
+          <span class="px-3 py-1 bg-arcade-magenta/10 border border-arcade-magenta/30 text-arcade-magenta rounded text-xs font-heading">
+            🎯 CHAT_MODE
+          </span>
+        </div>
+      </div>
+
+      <!-- Streak Section -->
+      <div class="card-border rounded-xl p-4 mb-4 border-arcade-yellow/30">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 bg-arcade-yellow/10 border border-arcade-yellow/30 rounded-lg flex items-center justify-center neon-glow-yellow">
+              <span class="text-2xl">🔥</span>
+            </div>
+            <div>
+              <p class="font-heading font-bold text-arcade-yellow neon-text-yellow">7 DAYS STREAK</p>
+              <p class="text-xs text-arcade-textDim">// CONSECUTIVE_LOGIN</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex gap-1 mt-3">
+          <div class="flex-1 h-2 bg-arcade-yellow rounded neon-glow-yellow"></div>
+          <div class="flex-1 h-2 bg-arcade-yellow rounded neon-glow-yellow"></div>
+          <div class="flex-1 h-2 bg-arcade-yellow rounded neon-glow-yellow"></div>
+          <div class="flex-1 h-2 bg-arcade-yellow rounded neon-glow-yellow"></div>
+          <div class="flex-1 h-2 bg-arcade-yellow rounded neon-glow-yellow"></div>
+          <div class="flex-1 h-2 bg-arcade-yellow rounded neon-glow-yellow"></div>
+          <div class="flex-1 h-2 bg-arcade-yellow rounded neon-glow-yellow"></div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="grid grid-cols-2 gap-3 mb-4">
+        <button class="bg-arcade-cyan/10 border-2 border-arcade-cyan text-arcade-cyan py-3.5 rounded-lg font-heading font-bold text-sm hover:bg-arcade-cyan hover:text-arcade-bg transition-all flex items-center justify-center gap-2 neon-glow-cyan">
+          <span class="text-lg">💬</span> CHAT
+        </button>
+        <button class="bg-arcade-magenta/10 border-2 border-arcade-magenta text-arcade-magenta py-3.5 rounded-lg font-heading font-bold text-sm hover:bg-arcade-magenta hover:text-arcade-bg transition-all flex items-center justify-center gap-2 neon-glow-magenta">
+          <span class="text-lg">⚡</span> FEED
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Bottom Tab Navigation -->
+    <div class="bg-arcade-bgLight/90 backdrop-blur-sm px-2 py-2 flex justify-around items-center border-t border-arcade-cyan/20">
+      <button class="flex flex-col items-center px-4 py-2">
+        <div class="w-10 h-10 bg-arcade-cyan/20 border border-arcade-cyan rounded-lg flex items-center justify-center mb-1 neon-glow-cyan">
+          <svg class="w-5 h-5 text-arcade-cyan" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+          </svg>
+        </div>
+        <span class="text-[9px] text-arcade-cyan font-heading">CHAT</span>
+      </button>
+      <button class="flex flex-col items-center px-4 py-2 opacity-50">
+        <div class="w-10 h-10 bg-arcade-textDim/10 border border-arcade-textDim/30 rounded-lg flex items-center justify-center mb-1">
+          <svg class="w-5 h-5 text-arcade-textDim" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+          </svg>
+        </div>
+        <span class="text-[9px] text-arcade-textDim font-heading">TASK</span>
+      </button>
+      <button class="flex flex-col items-center px-4 py-2 opacity-50">
+        <div class="w-10 h-10 bg-arcade-textDim/10 border border-arcade-textDim/30 rounded-lg flex items-center justify-center mb-1">
+          <svg class="w-5 h-5 text-arcade-textDim" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+          </svg>
+        </div>
+        <span class="text-[9px] text-arcade-textDim font-heading">GROW</span>
+      </button>
+      <button class="flex flex-col items-center px-4 py-2 opacity-50">
+        <div class="w-10 h-10 bg-arcade-textDim/10 border border-arcade-textDim/30 rounded-lg flex items-center justify-center mb-1">
+          <svg class="w-5 h-5 text-arcade-textDim" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+          </svg>
+        </div>
+        <span class="text-[9px] text-arcade-textDim font-heading">CONF</span>
+      </button>
+    </div>
+
+    <!-- Home Indicator -->
+    <div class="bg-arcade-bgLight/90 py-2 flex justify-center">
+      <div class="w-32 h-1 bg-arcade-cyan/30 rounded-full"></div>
+    </div>
+
+  </div>
+
+  <!-- Design Label -->
+  <div class="fixed bottom-4 right-4 bg-arcade-bg border-2 border-arcade-magenta text-arcade-magenta px-4 py-2 rounded font-heading text-xs neon-glow-magenta">
+    案C: Neon Arcade
+  </div>
+
+</body>
+</html>

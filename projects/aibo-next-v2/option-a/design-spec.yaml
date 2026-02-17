@@ -1,0 +1,48 @@
+project:
+  name: "AIBO Next v2"
+  type: "mobile_app"
+  market: "japan"
+  option: "A - Retro Pixel Pop"
+
+design:
+  style: "Retro Gaming + Pixel Art"
+  axes:
+    density: 3
+    tone: 4
+    era: 2
+    saturation: 3
+    total: 12
+
+  colors:
+    primary: "#8b5a2b"    # Warm Brown
+    secondary: "#5a3a20"  # Retro Border
+    accent1: "#e07020"    # Retro Orange
+    accent2: "#40c0c0"    # Retro Cyan
+    accent3: "#e880a0"    # Retro Pink
+    background: "#fef7e6" # Cream
+
+  typography:
+    heading: "Press Start 2P"
+    body: "M PLUS Rounded 1c"
+    import: "https://fonts.googleapis.com/css2?family=Press+Start+2P&family=M+PLUS+Rounded+1c:wght@400;500;700&display=swap"
+
+quality_check:
+  ai_detection: "PASS"
+  ux_principles: "PASS"
+  overall: "PASS"
+  notes:
+    - "Press Start 2Pでレトロ感を明確に表現"
+    - "ピクセルボーダーでドット絵との統一感"
+    - "温かみのあるクリーム背景で親しみやすさ確保"
+
+design_rationale:
+  why_this_works: |
+    ゲームボーイ/ファミコン世代へのノスタルジーを喚起。
+    ドット絵キャラクターとの親和性が高く、
+    たまごっちを想起させるレトロ感がコンセプトにマッチ。
+  differentiator: |
+    8bit風のピクセルボーダーとアニメーション。
+    他のモダンなAIアプリとは一線を画す独自の世界観。
+  risk: |
+    若年層（特に10代後半〜20代前半）には
+    古臭く見える可能性がある。

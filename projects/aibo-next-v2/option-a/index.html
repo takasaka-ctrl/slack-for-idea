@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>AIBO Next v2 - Retro Pixel Pop</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=M+PLUS+Rounded+1c:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream: '#fef7e6',
+            warmBrown: '#8b5a2b',
+            retro: {
+              orange: '#e07020',
+              cyan: '#40c0c0',
+              pink: '#e880a0',
+              green: '#40a840',
+              dark: '#2a1810',
+              border: '#5a3a20',
+            }
+          },
+          fontFamily: {
+            pixel: ['"Press Start 2P"', 'cursive'],
+            body: ['"M PLUS Rounded 1c"', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-feature-settings: "palt" 1;
+      image-rendering: pixelated;
+    }
+
+    .pixel-border {
+      box-shadow:
+        4px 0 0 0 #5a3a20,
+        -4px 0 0 0 #5a3a20,
+        0 4px 0 0 #5a3a20,
+        0 -4px 0 0 #5a3a20,
+        4px 4px 0 0 #5a3a20,
+        -4px 4px 0 0 #5a3a20,
+        4px -4px 0 0 #5a3a20,
+        -4px -4px 0 0 #5a3a20;
+    }
+
+    .pixel-shadow {
+      box-shadow: 4px 4px 0 0 rgba(0,0,0,0.3);
+    }
+
+    @keyframes bounce-pixel {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes blink {
+      0%, 90%, 100% { opacity: 1; }
+      95% { opacity: 0; }
+    }
+
+    .character-bounce {
+      animation: bounce-pixel 1s ease-in-out infinite;
+    }
+
+    .blink-animation {
+      animation: blink 4s infinite;
+    }
+
+    .xp-bar {
+      background: repeating-linear-gradient(
+        90deg,
+        #40a840 0px,
+        #40a840 8px,
+        #308030 8px,
+        #308030 10px
+      );
+    }
+
+    /* Pixel art character using CSS */
+    .pixel-character {
+      width: 128px;
+      height: 128px;
+      position: relative;
+    }
+
+    .pixel-row {
+      display: flex;
+      height: 8px;
+    }
+
+    .pixel {
+      width: 8px;
+      height: 8px;
+    }
+
+    .speech-bubble {
+      position: relative;
+      background: #fff;
+      border: 4px solid #5a3a20;
+    }
+
+    .speech-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 12px solid transparent;
+      border-right: 12px solid transparent;
+      border-top: 16px solid #5a3a20;
+    }
+
+    .speech-bubble::before {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-top: 12px solid #fff;
+      z-index: 1;
+    }
+  </style>
+</head>
+
+<body class="font-body bg-cream min-h-screen flex items-center justify-center p-4">
+
+  <!-- Mobile Frame -->
+  <div class="w-full max-w-[375px] bg-cream rounded-[40px] overflow-hidden pixel-shadow" style="box-shadow: 8px 8px 0 0 rgba(90,58,32,0.4);">
+
+    <!-- Status Bar (iOS style) -->
+    <div class="bg-retro-dark text-cream px-6 py-2 flex justify-between items-center text-xs">
+      <span>9:41</span>
+      <div class="flex items-center gap-2">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3C8.5 3 5.5 4.5 3.5 7L12 21l8.5-14C18.5 4.5 15.5 3 12 3z"/></svg>
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M2 22h20V2z"/></svg>
+      </div>
+    </div>
+
+    <!-- App Content -->
+    <div class="bg-cream px-4 pb-4">
+
+      <!-- Level & XP Bar -->
+      <div class="bg-warmBrown/10 rounded-lg p-3 mt-3 pixel-border" style="box-shadow: 4px 4px 0 0 rgba(90,58,32,0.3);">
+        <div class="flex items-center justify-between mb-2">
+          <div class="flex items-center gap-2">
+            <span class="font-pixel text-retro-orange text-xs">Lv.23</span>
+            <span class="text-warmBrown text-sm font-bold">AIBOくん</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <span class="text-yellow-500 text-lg">★</span>
+            <span class="font-pixel text-xs text-warmBrown">2,450</span>
+          </div>
+        </div>
+        <div class="h-4 bg-retro-dark/20 rounded overflow-hidden border-2 border-retro-border">
+          <div class="h-full xp-bar rounded" style="width: 72%;"></div>
+        </div>
+        <div class="flex justify-between mt-1">
+          <span class="text-xs text-warmBrown/70">EXP</span>
+          <span class="font-pixel text-[10px] text-warmBrown">720 / 1000</span>
+        </div>
+      </div>
+
+      <!-- Character Area -->
+      <div class="flex flex-col items-center mt-6 mb-4">
+
+        <!-- Speech Bubble -->
+        <div class="speech-bubble px-4 py-2 mb-6 max-w-[240px]">
+          <p class="text-center text-warmBrown text-sm font-medium">
+            おはよう！今日もがんばろうね！
+          </p>
+        </div>
+
+        <!-- Pixel Art Character -->
+        <div class="character-bounce">
+          <svg width="128" height="128" viewBox="0 0 16 16" style="image-rendering: pixelated;">
+            <!-- Simple pixel art creature -->
+            <!-- Body -->
+            <rect x="4" y="6" width="8" height="7" fill="#40c0c0"/>
+            <rect x="3" y="7" width="1" height="5" fill="#40c0c0"/>
+            <rect x="12" y="7" width="1" height="5" fill="#40c0c0"/>
+            <!-- Head -->
+            <rect x="5" y="3" width="6" height="4" fill="#40c0c0"/>
+            <rect x="4" y="4" width="1" height="2" fill="#40c0c0"/>
+            <rect x="11" y="4" width="1" height="2" fill="#40c0c0"/>
+            <!-- Eyes -->
+            <rect x="6" y="4" width="2" height="2" fill="#fff" class="blink-animation"/>
+            <rect x="9" y="4" width="2" height="2" fill="#fff" class="blink-animation"/>
+            <rect x="6" y="5" width="1" height="1" fill="#2a1810"/>
+            <rect x="10" y="5" width="1" height="1" fill="#2a1810"/>
+            <!-- Mouth -->
+            <rect x="7" y="6" width="2" height="1" fill="#e880a0"/>
+            <!-- Blush -->
+            <rect x="4" y="5" width="1" height="1" fill="#e880a0" opacity="0.6"/>
+            <rect x="11" y="5" width="1" height="1" fill="#e880a0" opacity="0.6"/>
+            <!-- Feet -->
+            <rect x="5" y="13" width="2" height="1" fill="#e07020"/>
+            <rect x="9" y="13" width="2" height="1" fill="#e07020"/>
+            <!-- Antenna -->
+            <rect x="7" y="1" width="2" height="2" fill="#e07020"/>
+            <rect x="7" y="0" width="2" height="1" fill="#ffd700"/>
+          </svg>
+        </div>
+
+        <!-- Character Type Badge -->
+        <div class="mt-3 px-3 py-1 bg-retro-cyan/20 rounded-full border-2 border-retro-cyan">
+          <span class="font-pixel text-[8px] text-retro-dark">会話型 コンパニオン</span>
+        </div>
+      </div>
+
+      <!-- Streak Section -->
+      <div class="bg-retro-orange/10 rounded-lg p-3 pixel-border mb-4" style="box-shadow: 4px 4px 0 0 rgba(224,112,32,0.3);">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="text-2xl">🔥</span>
+            <div>
+              <p class="font-pixel text-xs text-retro-orange">7日連続！</p>
+              <p class="text-xs text-warmBrown/70">連続ログインボーナス中</p>
+            </div>
+          </div>
+          <div class="flex gap-1">
+            <div class="w-6 h-6 bg-retro-orange rounded flex items-center justify-center">
+              <span class="text-white text-xs">月</span>
+            </div>
+            <div class="w-6 h-6 bg-retro-orange rounded flex items-center justify-center">
+              <span class="text-white text-xs">火</span>
+            </div>
+            <div class="w-6 h-6 bg-retro-orange rounded flex items-center justify-center">
+              <span class="text-white text-xs">水</span>
+            </div>
+            <div class="w-6 h-6 bg-retro-orange rounded flex items-center justify-center">
+              <span class="text-white text-xs">木</span>
+            </div>
+            <div class="w-6 h-6 bg-retro-orange rounded flex items-center justify-center">
+              <span class="text-white text-xs">金</span>
+            </div>
+            <div class="w-6 h-6 bg-retro-orange rounded flex items-center justify-center">
+              <span class="text-white text-xs">土</span>
+            </div>
+            <div class="w-6 h-6 bg-retro-orange rounded flex items-center justify-center">
+              <span class="text-white text-xs">日</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="grid grid-cols-2 gap-3 mb-4">
+        <button class="bg-retro-green text-white py-3 rounded-lg font-bold text-sm pixel-shadow hover:brightness-110 transition flex items-center justify-center gap-2" style="box-shadow: 4px 4px 0 0 #2a7a2a;">
+          <span>💬</span> 話しかける
+        </button>
+        <button class="bg-retro-pink text-white py-3 rounded-lg font-bold text-sm pixel-shadow hover:brightness-110 transition flex items-center justify-center gap-2" style="box-shadow: 4px 4px 0 0 #b86080;">
+          <span>🍎</span> ごはん
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Bottom Tab Navigation -->
+    <div class="bg-warmBrown px-2 py-2 flex justify-around items-center">
+      <button class="flex flex-col items-center px-4 py-2 rounded-lg bg-cream/20">
+        <svg class="w-6 h-6 text-cream" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+        </svg>
+        <span class="font-pixel text-[8px] text-cream mt-1">チャット</span>
+      </button>
+      <button class="flex flex-col items-center px-4 py-2 opacity-70">
+        <svg class="w-6 h-6 text-cream" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+        </svg>
+        <span class="font-pixel text-[8px] text-cream mt-1">タスク</span>
+      </button>
+      <button class="flex flex-col items-center px-4 py-2 opacity-70">
+        <svg class="w-6 h-6 text-cream" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+        </svg>
+        <span class="font-pixel text-[8px] text-cream mt-1">育成</span>
+      </button>
+      <button class="flex flex-col items-center px-4 py-2 opacity-70">
+        <svg class="w-6 h-6 text-cream" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+        </svg>
+        <span class="font-pixel text-[8px] text-cream mt-1">設定</span>
+      </button>
+    </div>
+
+    <!-- Home Indicator -->
+    <div class="bg-retro-dark py-2 flex justify-center">
+      <div class="w-32 h-1 bg-cream/30 rounded-full"></div>
+    </div>
+
+  </div>
+
+  <!-- Design Label -->
+  <div class="fixed bottom-4 right-4 bg-warmBrown text-cream px-4 py-2 rounded-lg font-pixel text-xs">
+    案A: Retro Pixel Pop
+  </div>
+
+</body>
+</html>
