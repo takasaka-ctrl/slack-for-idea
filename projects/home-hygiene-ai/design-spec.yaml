@@ -1,0 +1,80 @@
+project:
+  name: "HomeHygiene AI v2"
+  type: "mobile_app"
+  market: "japan"
+  pdca_score: 7.8
+
+design:
+  style: "Clean Wellness"
+  axes:
+    density: 2
+    tone: 3
+    era: 3
+    saturation: 3
+
+  colors:
+    primary: "#2d6a4f"
+    secondary: "#40916c"
+    accent: "#95d5b2"
+    background: "#f8fdf9"
+    text: "#0f2b1e"
+    surface: "#ffffff"
+    muted: "#a8998a"
+
+  typography:
+    heading: "DM Sans"
+    body: "DM Sans"
+    japanese: "Noto Sans JP"
+    import_url: "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap"
+
+  layout:
+    type: "mobile_app_tabs"
+    tabs:
+      - "ホーム (今日のおすすめTOP3 + ストリーク)"
+      - "場所 (掃除場所一覧 + カスタム追加)"
+      - "リスク (健康リスク可視化)"
+      - "設定 (通知 + 提案調整)"
+
+quality_check:
+  ai_detection:
+    inter_only: false
+    purple_blue_gradient: false
+    symmetric_3col: false
+    empty_buzzwords: false
+    status: "PASS"
+
+  must_have:
+    clear_aesthetic: true
+    memorable_element: true
+    color_intent: true
+    font_pairing: true
+    status: "PASS"
+
+  ux_principles:
+    usability: "1タップで掃除完了記録、タブで直感的な画面遷移"
+    visual_hierarchy: "優先度カラー（赤/琥珀/青）で明確な視覚階層"
+    uniqueness: "Wellness Green基調 + ストリークリング + 健康リスクメーター"
+    interaction: "完了ボタン、アコーディオン展開、トグルスイッチ"
+    status: "PASS"
+
+  overall: "PASS"
+
+design_rationale:
+  why_this_works: |
+    ターゲットユーザー（共働き・一人暮らし）にとって掃除は「面倒で後回しにしがち」。
+    Wellness Greenの落ち着いたトーンは「清潔感」「健康」を直感的に伝え、
+    毎日使うアプリとして視覚的な疲労を抑える。
+    無印良品的なミニマルさで情報を整理し、
+    「今日何をすればいいか」が3秒で把握できるUI設計。
+
+  differentiator: |
+    ストリークリング（conic-gradient）による達成感の可視化、
+    健康リスクの具体的数値表示（「雑菌50倍」等）で緊急性を喚起、
+    優先度カラーコーディング（赤→琥珀→青）で直感的な判断を支援。
+
+  style_validation:
+    chosen: "Clean Wellness"
+    expected_axes: [2, 3, 3, 3]
+    actual_axes: [2, 3, 3, 3]
+    manhattan_distance: 0
+    status: "PASS"
