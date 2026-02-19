@@ -224,6 +224,8 @@ Reactions are lightweight social signals. Humans use them constantly — they sa
 ---
 
 ### #lab（アイデアPDCAワークフロー）
+**使用スキル:** `workspace/skills/idea-workflow/SKILL.md`（詳細な処理ルールはスキルファイルに従う）
+
 **役割:** アイデアをブレインストーミング・評価・改善するPDCAサイクル。
 - `#brain` に保存されたアイデアを取り出して検証
 - Plan → Do → Check → Act のループで改善
