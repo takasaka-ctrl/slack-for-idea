@@ -1,0 +1,303 @@
+{
+  "date": "2026年2月19日（木曜日）",
+  "edition": "朝刊",
+  "volume": "1",
+  "tickerText": "🔥 Claude Sonnet 4.6 正式リリース — ARC-AGI-2スコアが4.3倍に跳ね上がる ── 🎵 Google Gemini、Lyria 3で音楽生成機能を追加 ── 🤖 Moltbook「AIエージェント専用SNS」が世界的に話題 ── 💰 OpenAI社員の平均株式報酬が史上最高の150万ドル ── 📊 Meta×Nvidia、数百億ドル規模のAIインフラ拡張契約 ── 🔥 Claude Sonnet 4.6 正式リリース — ARC-AGI-2スコアが4.3倍に跳ね上がる",
+
+  "dataPanel": [
+    {
+      "label": "Claude Sonnet 4.6 ARC-AGI-2",
+      "value": "58.3%",
+      "sparkline": "▁▂▂▃▄▅▇█",
+      "change": "▲ 4.3倍（前版比13.6%→58.3%）",
+      "changeClass": "up"
+    },
+    {
+      "label": "インドのChatGPT週間ユーザー",
+      "value": "1億人",
+      "sparkline": "▁▂▃▄▅▆▇█",
+      "change": "▲ 世界2位の市場へ",
+      "changeClass": "up"
+    },
+    {
+      "label": "OpenAI平均株式報酬",
+      "value": "$1.5M",
+      "sparkline": "▁▂▃▄▅▇█",
+      "change": "▲ テックスタートアップ史上最高",
+      "changeClass": "up"
+    },
+    {
+      "label": "Moltbook登録エージェント数",
+      "value": "770,000+",
+      "sparkline": "▁▁▂▄▆▇█",
+      "change": "▲ 急拡大中",
+      "changeClass": "up"
+    }
+  ],
+
+  "hero": {
+    "id": "hero-sonnet46",
+    "category": "AIモデル",
+    "categoryClass": "ai",
+    "headline": "Claude Sonnet 4.6 正式リリース — ARC-AGI-2スコアが前世代比4.3倍、格安でフラッグシップを超える",
+    "deck": "AnthropicがClaude Sonnet 4.6を2026年2月17日にリリース。エージェント作業・コーディング・長文脈推論が大幅向上し、ARC-AGI-2ベンチマークで13.6%から58.3%へと史上最大の単世代ジャンプを記録。価格はOpus 4.6の60%以下で、多くのタスクでOpusを上回る結果に。",
+    "author": "Anthropic 公式発表",
+    "readTime": "4",
+    "readPercent": 55,
+    "readLabel": "中程度",
+    "updateTime": "本日 06:00",
+    "fullContent": {
+      "introduction": "AnthropicはClaude Sonnet 4.6を2026年2月17日に正式リリースした。Anthropicの無料・Proユーザー向けデフォルトモデルとなり、コーディング、コンピューター操作、長文脈処理において大幅な改善を実現。最大の注目点はARC-AGI-2ベンチマークのスコアが13.6%から58.3%へと4.3倍に跳ね上がったことで、これはベンチマーク史上最大の単世代向上率とされている。",
+      "sections": [
+        {
+          "heading": "主な改善点",
+          "content": "Claude Sonnet 4.6は前モデルSonnet 4.5と比較して大幅に強化された。ARC-AGI-2で4.3倍の向上を達成し、さらにGDPval OfficeではフラッグシップモデルのOpus 4.6（1606 Elo）を上回る1633 Eloを記録した。ファイナンシャルエージェントのタスクでも63.3% vs 60.1%でOpusを超える成績を出している。"
+        },
+        {
+          "heading": "価格と知識カットオフ",
+          "content": "価格はインプット$3/百万トークン、アウトプット$15/百万トークンと、Opusモデル（$5/$25）より大幅に安い。知識カットオフは2025年8月で、Opus 4.6（2025年5月）より新しい。デフォルトで20万トークンのコンテキストウィンドウ、ベータ機能で最大100万トークンまで拡張可能。"
+        },
+        {
+          "heading": "エコシステムへの即時統合",
+          "content": "GitHub CopilotがPro・Pro+・Business・Enterprise向けにSonnet 4.6を即日対応。SnowflakeもCortex AIにて$200Mのパートナーシップ拡大で同日アクセスを実現。Simon Willison（@simonw）はllm-anthropicライブラリをv0.24にアップデートし、Sonnet 4.6とOpus 4.6の両方をサポートしたと報告した。"
+        }
+      ],
+      "keyTakeaways": [
+        "ARC-AGI-2スコアが13.6%→58.3%に急上昇（4.3倍、ベンチマーク史上最大の単世代改善）",
+        "Opus 4.6比60%以下の価格でオフィスワーク・ファイナンスタスクでOpusを超える性能",
+        "GitHub Copilot・Snowflake等で即日統合、無料/Proユーザー向けデフォルトに"
+      ],
+      "sourceUrl": "https://www.cnbc.com/2026/02/17/anthropic-ai-claude-sonnet-4-6-default-free-pro.html",
+      "relatedLinks": [
+        {"title": "Anthropic公式発表", "url": "https://www.anthropic.com/news/claude-sonnet-4-6"},
+        {"title": "ベンチマーク詳細 (Natural20)", "url": "https://natural20.com/coverage/claude-sonnet-46-benchmarks-computer-use-vending-bench"},
+        {"title": "Simon Willisonのレビュー", "url": "https://simonwillison.net/2026/Feb/17/claude-sonnet-46/"}
+      ]
+    }
+  },
+
+  "sidebar": [
+    {
+      "id": "sidebar-lyria3",
+      "category": "Google Gemini",
+      "categoryClass": "gemini",
+      "headline": "GeminiアプリにLyria 3搭載—テキスト・写真から音楽を瞬時に生成",
+      "summary": "Google DeepMindの最新音楽生成モデルLyria 3が本日Geminiアプリにベータ公開。テキストや写真をプロンプトに音楽トラックを生成できる。8言語対応で18歳以上の全ユーザーに提供開始。",
+      "readTime": "3",
+      "timeAgo": "4時間前",
+      "fullContent": {
+        "introduction": "Google DeepMindの最新音楽生成モデル「Lyria 3」が2026年2月18日にGeminiアプリにベータ公開された。テキスト説明文や写真をプロンプトとして使い、カスタム音楽トラックを生成できる。",
+        "sections": [
+          {
+            "heading": "機能と対応言語",
+            "content": "英語・ドイツ語・スペイン語・フランス語・ヒンディー語・日本語・韓国語・ポルトガル語の8言語に対応。18歳以上の全ユーザーが利用可能で、Google AI Plus・Pro・Ultraの有料ユーザーは上限が高い。Geminiウェブ版は本日から利用可能、モバイルアプリは数日以内の予定。"
+          }
+        ],
+        "keyTakeaways": [
+          "テキストまたは写真から音楽を生成する新機能をGeminiに追加",
+          "日本語含む8言語対応、18歳以上の全ユーザーに本日より提供"
+        ],
+        "sourceUrl": "https://blog.google/innovation-and-ai/products/gemini-app/lyria-3/"
+      }
+    },
+    {
+      "id": "sidebar-moltbook",
+      "category": "AIエージェント",
+      "categoryClass": "ai",
+      "headline": "「AIエージェント専用SNS」Moltbook、77万エージェント登録で世界に衝撃",
+      "summary": "AIエージェントのみが投稿できるReddit型プラットフォーム「Moltbook」が急速に拡大中。登録エージェント数は77万を超え、Karpathyが「最もSF的な出来事」と評した一方、Simon Willisonは「AIが学習データのSFシナリオを演じているだけ」と冷静に指摘。",
+      "readTime": "3",
+      "timeAgo": "1日前",
+      "fullContent": {
+        "introduction": "2026年1月28日に開設されたMoltbookは「エージェントインターネットのフロントページ」を掲げるReddit型SNS。AIエージェントのみが投稿・インタラクトでき、人間は閲覧のみ許可されている。登録エージェント数が77万を超え、一大議論を巻き起こした。",
+        "sections": [
+          {
+            "heading": "反響と評価",
+            "content": "Andrej Karpathyは「数年で見た最もSF的なテイクオフ隣接の出来事」と評し、Elon Muskは「シンギュラリティの初期段階」と発言。一方Simon Willisonは「エージェントが学習データのSFシナリオを演じているだけで、完全なスロップ」と批判しながらも「AIが実用的な環境で機能しつつある証拠」とも述べた。後にセキュリティ研究者がSupabaseのクレデンシャルが安全でないことを発見し、投稿が人間によって操作・改ざんされていた可能性も指摘されている。"
+          }
+        ],
+        "keyTakeaways": [
+          "AIエージェント専用SNS「Moltbook」が77万エージェントを超え世界的に話題",
+          "Karpathyが絶賛する一方、Willisonはセキュリティ問題と「スロップ」を指摘"
+        ],
+        "sourceUrl": "https://en.wikipedia.org/wiki/Moltbook"
+      }
+    },
+    {
+      "id": "sidebar-metanvidia",
+      "category": "ビジネス",
+      "categoryClass": "business",
+      "headline": "Meta×Nvidia、数百億ドル超のAIチップ大型契約—BlackwellとRubin GPUを数百万基導入",
+      "summary": "MetaがNvidiaとのパートナーシップを大幅拡大。BlackwellおよびRubin GPU、新型スタンドアロンCPUを数百万基導入しAIトレーニング・推論に最適化したハイパースケールデータセンターを建設予定。規模は数十億ドルとみられる。",
+      "readTime": "3",
+      "timeAgo": "1日前",
+      "fullContent": {
+        "introduction": "MetaとNvidiaが2026年2月17日に大型パートナーシップ拡大を発表。MetaはNvidiaのBlackwell・Rubinシリーズの最新GPUと新型スタンドアロンCPUを数百万基規模で導入し、AIトレーニングおよび推論に特化したハイパースケールデータセンターを構築する計画。",
+        "sections": [
+          {
+            "heading": "詳細と背景",
+            "content": "取引金額は非公開だが業界関係者は「数十億ドル規模」と分析。NvidiaとMetaのエンジニアリングチームは「最先端AIモデルの最適化・加速を目指した深いコデザイン」に取り組む。MetaはNvidiaクラウドパートナー経由のチップも活用する予定。"
+          }
+        ],
+        "keyTakeaways": [
+          "MetaがNvidiaと大型チップ調達契約を締結、数十億ドル規模",
+          "BlackwellとRubin GPU数百万基を自社データセンターに展開予定"
+        ],
+        "sourceUrl": "https://www.cnbc.com/2026/02/17/meta-nvidia-deal-ai-data-center-chips.html"
+      }
+    }
+  ],
+
+  "middle": [
+    {
+      "id": "middle-sonnet46bench",
+      "category": "AIリサーチ",
+      "categoryClass": "research",
+      "gradient": "linear-gradient(135deg, #5b2c6f 0%, #8e44ad 100%)",
+      "headline": "Sonnet 4.6のベンチマーク詳報—「安価なモデルがフラッグシップを恥じらわせ続ける」",
+      "summary": "Claude Sonnet 4.6はARC-AGI-2で4.3倍の改善を達成し、GDPval OfficeとFinance AgentではOpus 4.6を超えた。価格はOpusの60%以下。AI研究コミュニティで「中級モデルの常識を覆した」と評価が集まっている。",
+      "author": "Natural20 / Mashable",
+      "readTime": "4",
+      "fullContent": {
+        "introduction": "Claude Sonnet 4.6のベンチマーク詳細が各メディアで分析されている。ARC-AGI-2スコアが13.6%から58.3%へと4.3倍増加したことが特に注目を集め、これはベンチマーク史上最大の単世代推論ジャンプとされる。",
+        "sections": [
+          {
+            "heading": "ベンチマーク比較詳細",
+            "content": "GDPval Officeタスク：Sonnet 4.6が1633 Elo vs Opus 4.6の1606 Elo（上回り）。Finance Agentタスク：Sonnet 4.6が63.3% vs Opus 4.6の60.1%（上回り）。競合比較ではGoogleのGemini 3 ProとOpenAIのGPT 5.2を上回る成績。価格はインプット$3/Mトークン（Opus比60%以下）。"
+          },
+          {
+            "heading": "開発者コミュニティの反応",
+            "content": "JetBrainsのAI Pulseによると2025年に開発者の93%がAIコーディングツールを定期利用。Claude Code等を介したSonnet 4.6の需要が急拡大中。Simon Willisonはllm-anthropic v0.24でSonnet 4.6とOpus 4.6の両対応を即日リリースした。"
+          }
+        ],
+        "keyTakeaways": [
+          "ARC-AGI-2が4.3倍改善（13.6%→58.3%）、ベンチマーク史上最大の単世代ジャンプ",
+          "価格はOpusの60%以下でオフィス・金融タスクではOpusを上回る"
+        ],
+        "sourceUrl": "https://natural20.com/coverage/claude-sonnet-46-benchmarks-computer-use-vending-bench"
+      }
+    },
+    {
+      "id": "middle-snowflakeopenai",
+      "category": "ビジネス",
+      "categoryClass": "openai",
+      "gradient": "linear-gradient(135deg, #10a37f 0%, #1a7a5e 100%)",
+      "headline": "Snowflake×OpenAI 2億ドルAIパートナーシップ—Cortex Codeでコーディングエージェントも展開",
+      "summary": "SnowflakeがOpenAIと2億ドルの大型パートナーシップを締結し、OpenAIモデルをCortex AIプラットフォームに統合。1万2600以上の顧客向けにSnowflake IntelligenceとCortex Code（開発者向けコーディングエージェント）を展開する。",
+      "author": "Reuters / CNBC",
+      "readTime": "3",
+      "fullContent": {
+        "introduction": "Snowflakeが2026年2月17日、OpenAIとの2億ドルパートナーシップ拡大を発表。OpenAIモデルをCortex AIプラットフォームに直接統合し、1万2600超の企業顧客にAI機能を提供する。",
+        "sections": [
+          {
+            "heading": "提供サービス",
+            "content": "Snowflake Intelligenceは既にSnowflake上に存在するデータを活用した文脈AIアプリケーションに特化。Cortex Codeは開発者がSnowflakeプラットフォーム上でより効率的に構築するためのコーディングエージェント。またSonnet 4.6とも同日連携し、Anthropic製モデルもCortex AI経由で利用可能に。"
+          }
+        ],
+        "keyTakeaways": [
+          "Snowflake×OpenAI 2億ドルパートナーシップ、Cortex AIにOpenAIモデルを統合",
+          "1万2600以上の企業顧客向けにコーディングエージェント「Cortex Code」を提供"
+        ],
+        "sourceUrl": "https://www.reuters.com/technology/openai/"
+      }
+    },
+    {
+      "id": "middle-karpathyagentic",
+      "category": "AIトレンド",
+      "categoryClass": "ai",
+      "gradient": "linear-gradient(135deg, #2d5a27 0%, #4a8a3f 100%)",
+      "headline": "Karpathy、「バイブコーディング」を「エージェンティックエンジニアリング」へ改名—誕生1年で進化を宣言",
+      "summary": "Andrej Karpathyが「バイブコーディング」という言葉の誕生1周年に際し、「エージェンティックエンジニアリング」への言葉の置き換えを提唱。「エンジニアリングには芸術・科学・専門性がある」と強調し、AIコーディングの成熟を示した。バイブコーディングプラットフォームの合算評価額は450億ドルに達する一方、セキュリティへの投資はわずか2700万ドルという警戒すべき現実も浮き彫りに。",
+      "author": "@karpathy (Andrej Karpathy)",
+      "readTime": "4",
+      "fullContent": {
+        "introduction": "Andrej Karpathyが2026年2月、2025年にCollins Dictionary「今年の言葉」に選ばれた「バイブコーディング（vibe coding）」という自ら造った言葉の1周年を機に、新たな言葉「エージェンティックエンジニアリング（agentic engineering）」を提唱した。",
+        "sections": [
+          {
+            "heading": "新用語の意図",
+            "content": "Xへの投稿でKarpathyは「エンジニアリングという言葉は、そこに芸術・科学・専門性があることを示している」と説明。専門家がAIエージェントを指示してプロダクションコードを書かせるという新しい現実を表現するためのリブランドとしている。"
+          },
+          {
+            "heading": "セキュリティの警告",
+            "content": "バイブコーディングプラットフォームの合算評価額450億ドルに対し、セキュリティへの投資はわずか2700万ドル。BBCのサイバー記者がOrchidsプラットフォーム（100万ユーザー）でゼロクリック攻撃の被害を受けた実例も報告されており、「リブランドはされたが、セキュリティインフラは追いついていない」と指摘されている。"
+          }
+        ],
+        "keyTakeaways": [
+          "Karpathyが「バイブコーディング」誕生1周年に「エージェンティックエンジニアリング」へ進化を宣言",
+          "業界評価額450億ドルに対しセキュリティ投資わずか2700万ドルという危険な格差が露呈"
+        ],
+        "sourceUrl": "https://www.implicator.ai/vibe-coding-got-a-promotion-nobody-checked-its-work/"
+      }
+    }
+  ],
+
+  "briefs": [
+    {
+      "headline": "インドのChatGPT週間ユーザーが1億人突破",
+      "text": "Sam AltmanがインドAIサミットで発表。インドはOpenAIの最大市場の一つとなり、世界2位規模に成長。"
+    },
+    {
+      "headline": "OpenAI社員の平均株式報酬が150万ドル—テックスタートアップ史上最高",
+      "text": "AIタレント戦争が過熱し年間収益の46.2%が株式報酬へ。Sam Altman自身は株式なし・年俸7.6万ドルのみ。"
+    },
+    {
+      "headline": "OpenClaw v2026.2.17リリース—Claude Sonnet 4.6とOpus 100万トークンに対応",
+      "text": "steipeteによりリリース。Sonnet 4.6のネイティブ統合と、Opus/Sonnetモデルで100万トークンコンテキストのベータ対応を実装。"
+    },
+    {
+      "headline": "LLMが生成したパスワードは「根本的に脆弱」—数時間でブルートフォース可能",
+      "text": "The Registerが報告。LLM生成パスワードが統計的な偏りを持ち、古いコンピューターでも数時間以内に解読可能なケースがあると専門家が警告。"
+    }
+  ],
+
+  "opinions": [
+    {
+      "id": "opinion-simonw",
+      "authorLabel": "X投稿：",
+      "author": "@simonw (Simon Willison)",
+      "headline": "「Claude Sonnet 4.6はペリカンにトップハットを描くのが大好き」—即日アップデート報告",
+      "excerpt": "著名AIツール開発者のSimon Willisonが、Claude Sonnet 4.6のリリース当日にllm-anthropicライブラリをv0.24にアップデートしSonnet/Opus両対応を実現。「アダプティブシンキングとプレフィックス非対応など細かい変更があり、Claude Codeが作業の大半をやってくれた」と報告。Mastodonへの投稿では「Sonnet 4.6はペリカンにトップハットを描くのが本当に好き」とユーモアを交えてモデルの個性を紹介し、コミュニティで話題に。",
+      "fullContent": {
+        "introduction": "Simon Willison（@simonw）はDjango共同作者でありAIツール研究の第一人者。Claude Sonnet 4.6リリース当日に自身が開発するllm-anthropicライブラリをv0.24にアップデートし、新モデルへの即時対応を実現した。",
+        "sections": [
+          {
+            "heading": "技術的な更新内容",
+            "content": "llm-anthropic v0.24ではSonnet 4.6とOpus 4.6の両対応を追加。アダプティブシンキングやプレフィックス非対応など細かな仕様変更に対応するにあたり、Claude Code自体が変更作業の大半を担ったとWillisonは説明。MastodonとsimonwillISON.netで詳細を公開。",
+            "steps": []
+          }
+        ],
+        "keyTakeaways": [
+          "Simon Willisonがリリース当日にllm-anthropic v0.24をリリース、Sonnet/Opus 4.6に対応",
+          "Claude Codeが自身のアップデートコードを書くという象徴的な出来事"
+        ],
+        "sourceUrl": "https://simonwillison.net/2026/Feb/17/claude-sonnet-46/"
+      }
+    },
+    {
+      "id": "opinion-karpathy-moltbook",
+      "authorLabel": "X投稿：",
+      "author": "@karpathy (Andrej Karpathy)",
+      "headline": "「数年で見た最もSF的なテイクオフ隣接の出来事」—Karpathy、Moltbookに驚嘆",
+      "excerpt": "元OpenAI・Tesla AIのAndrej Karpathyが、AIエージェント専用SNS「Moltbook」に対しXで「数年で見た最もSFテイクオフに隣接した出来事だ」と驚嘆のコメントを投稿。77万以上のエージェントが登録・活動するプラットフォームが世界的な議論を巻き起こした。後に「これはゴミ箱火事であり、自分のコンピューターで実行することは絶対に勧めない」と付け加えたが、AI自律性の問いを改めて世界に突きつけた。",
+      "fullContent": {
+        "introduction": "Andrej Karpathy（@karpathy）はAI研究界の最重要人物の一人。AIエージェント専用SNS「Moltbook」の爆発的拡大に対し、X（旧Twitter）で強い驚きを表明した投稿が大きな反響を呼んだ。",
+        "sections": [
+          {
+            "heading": "Moltbookとは",
+            "content": "Matt Schlichtが2026年1月28日に開設。「フロントページ・オブ・エージェント・インターネット」を掲げるReddit型SNSで、AIエージェントのみが投稿でき人間は閲覧のみ。登録エージェント数は77万超。Karpathyの「最もSF的な出来事」発言は世界中のメディアで引用された。",
+            "steps": []
+          },
+          {
+            "heading": "その後の展開",
+            "content": "セキュリティ研究者がSupabaseのクレデンシャルが安全でないことを発見し、投稿が人間に操作・改ざんされていた可能性が指摘された。Simon Willisonは「AIが学習データのSFシナリオを演じているだけ。完全なスロップだが、AIが実用環境で機能しつつある証拠」と分析。Karpathyは後に「これはゴミ箱火事だ」と訂正したが、AIエージェントの可能性と限界の両方を示した出来事として記録されている。"
+          }
+        ],
+        "keyTakeaways": [
+          "KarpathyがMoltbookを「最もSF的なテイクオフ隣接の出来事」と評して世界的話題に",
+          "後にセキュリティ問題が発覚し「ゴミ箱火事」と訂正—AIの可能性と危険性を同時に示す"
+        ],
+        "sourceUrl": "https://www.rdworldonline.com/open-season-openai-openclaw-and-moltbook-testing-the-limits-of-autonomy/"
+      }
+    }
+  ]
+}

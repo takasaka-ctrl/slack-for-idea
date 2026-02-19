@@ -1,0 +1,470 @@
+/**
+ * 昼刊データ (12:00 JST)
+ * テーマ：実践Tips — Claude Code / Ollama / OpenClaw の活用テクニック
+ */
+
+const { generateSparkline, calculateReadPercent, getReadLabel } = require('../utils');
+
+function generateNoonData() {
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('ja-JP', {
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+  });
+
+  return {
+    date: dateStr,
+    edition: '昼刊',
+    volume: '2',
+    tickerText: 'Claude Code、隠しコマンド10選が話題に ── Ollama v0.5リリース：ARM最適化で2倍速 ── OpenClawのSkill作成が初心者にも解放 ── GitHub、AIコーディング支援でCopilot X発表 ── Cursor Agentモード、1人のエンジニアの生産性を5倍に ── Claude Code、隠しコマンド10選が話題に',
+
+    dataPanel: [
+      { label: 'Claude Code ユーザー数', value: '820K', sparkline: generateSparkline([200,340,480,620,820]), change: '▲ 月+32%', changeClass: 'up' },
+      { label: 'Ollama Pulls（今月）', value: '8.4M', sparkline: generateSparkline([4100,5200,6300,7100,8400]), change: '▲ 前月比+20%', changeClass: 'up' },
+      { label: 'OpenClaw Skills公開数', value: '147', sparkline: generateSparkline([40,65,90,115,147]), change: '▲ 先週+23', changeClass: 'up' },
+      { label: 'AI開発ツール新リリース', value: '9本', sparkline: generateSparkline([3,4,5,7,9]), change: '今週の新着', changeClass: 'up' }
+    ],
+
+    hero: {
+      id: 'openclaw-agent-team-build',
+      category: 'OpenClaw',
+      categoryClass: 'ai',
+      headline: 'OpenClaw専属エージェントチームの作り方：5つのSkillで自分だけのAI秘書軍団を構築',
+      deck: 'OpenClawの本当の力は1つの会話ではなく、複数のSkillが連携して動く「チーム」にある。ニュース収集、メモ分類、スケジュール管理、コードレビュー、週次サマリーを自動化する5 Skill構成の実践ガイド。',
+      author: 'OpenClaw Community',
+      readTime: '11',
+      readPercent: calculateReadPercent(11),
+      readLabel: getReadLabel(11),
+      updateTime: '本日 11:00',
+      fullContent: {
+        introduction: 'OpenClawを「チャット相手」として使っている人はその価値の10%しか引き出せていない。Skillを組み合わせた自動エージェントチームが、毎日の繰り返し作業を消滅させる。今日から始められる5 Skill構成の完全ガイド。',
+        sections: [
+          {
+            heading: 'Skillとは何か',
+            content: 'SkillはOpenClawの「専門能力モジュール」。SKILL.mdファイルで定義し、特定のタスクを実行するための手順・ツール・コンテキストを封じ込める。一度作れば繰り返し呼び出せる。',
+            code: '# Skillの基本構造\n/app/skills/my-skill/\n├── SKILL.md      ← AIへの指示書（必須）\n├── scripts/      ← 実行スクリプト\n│   └── process.js\n└── assets/       ← テンプレート等'
+          },
+          {
+            heading: 'Skill 1: ニュース収集（このダイジェスト自体）',
+            content: '毎朝7時・昼12時・夜20時に自動収集、HTML生成、GitHub Pages デプロイまで全自動。',
+            steps: [
+              'web_searchツールでX/ウェブから最新情報を収集',
+              'カテゴリ別に分類・要約',
+              'newspaper-template.htmlに流し込んでHTML生成',
+              'GitHub Pages へ自動デプロイ',
+              '→ 設定後は完全ノータッチで毎日更新される'
+            ]
+          },
+          {
+            heading: 'Skill 2: メモ自動分類',
+            content: 'Slackの#brainチャンネルに投稿するだけでVaultに自動分類・保存。',
+            code: '# SKILL.md の核心部分\n## 役割\nSlack #brain への投稿を自動分類してVaultに保存する\n\n## 分類ルール\n- URL → 50-Knowledge/bookmarks/\n- アイデア → 10-Ideas/\n- 日記 → 60-Journal/\n- 技術メモ → 50-Knowledge/tech/'
+          },
+          {
+            heading: 'Skill 3: カレンダー週次サマリー',
+            content: '毎週月曜の朝に今週の予定をSlackに送信。Googleカレンダーと連携。',
+            steps: [
+              'Google Calendar APIで今週のイベント取得',
+              '優先度別に並べ替え・整形',
+              'SlackのDMに自動送信',
+              '前週のタスク未完了チェックも実施'
+            ]
+          },
+          {
+            heading: 'Skill 4: コードレビュー支援',
+            content: 'git pushのフックでClaude Codeレビューを自動実行。重大な問題があればSlackに通知。',
+            code: '# .git/hooks/pre-push\n#!/bin/bash\n# OpenClaw経由でClaude Codeにレビューを依頼\nopenclaw exec "changed files review" \\\n  --skill code-review \\\n  --notify slack:#dev-review'
+          },
+          {
+            heading: 'Skill 5: 週次振り返りレポート',
+            content: '毎週金曜夕方に自動生成。Git履歴・Slack投稿・カレンダーから活動を集約してマスターへ報告。',
+          }
+        ],
+        keyTakeaways: [
+          'SkillはSOUL.md同様のMarkdownファイルで誰でも作れる',
+          '5つのSkillを組み合わせれば毎日の定型作業がほぼ全自動化',
+          'HEARTBEATと組み合わせれば能動的な監視・通知も実現',
+          'コミュニティのSkillをClawhubからインポートして即使用可能'
+        ],
+        personalTips: [
+          'すでにprocess-inboxとx-news-digestの2 Skillが動いている。次の候補は「MEMORY.md自動メンテSkill」（週1回cronで daily memoryファイルを読み込んでMEMORY.mdを更新）か「Vault週次レポートSkill」（今週10-Ideas/に追加されたアイデア一覧をSlackに送信）',
+          '#labのPDCAフローで人間の回答を待つPhase 2は、将来的にsessions_send + sessions_historyを組み合わせたSkillで自動ポーリング→回答検知→PDCA継続という完全自律化が可能',
+          '今すぐできること: ls /app/skills/ で現在の全Skill一覧を確認し、未使用のSkillをHEARTBEAT.mdに追加して定期実行を設定する'
+        ],
+        sourceUrl: 'https://docs.openclaw.ai/skills',
+        relatedLinks: [
+          { title: 'OpenClaw Skill ドキュメント', url: 'https://docs.openclaw.ai/skills' },
+          { title: 'Clawhub（コミュニティSkill集）', url: 'https://clawhub.com' }
+        ]
+      }
+    },
+
+    sidebar: [
+      {
+        id: 'claude-code-hidden-commands',
+        category: 'Claude Code',
+        categoryClass: 'ai',
+        headline: 'Claude Code隠し機能10選：知らないと損するコマンドとショートカット',
+        summary: 'Shift+TabでモデルをOpus/Sonnet/Haikuを切り替え、/clearでコンテキストをリセット、--dangerously-skip-permissionsでCI向けに全自動化。公式ドキュメントに載っていない実践テクニック。',
+        readTime: '5',
+        timeAgo: '30分前',
+        fullContent: {
+          introduction: 'Claude Codeには公式ドキュメントに載っていない実用的なコマンドとショートカットが多数存在する。ヘビーユーザーが実際に使っている10の技をまとめた。',
+          sections: [
+            {
+              heading: '知らないと損するコマンド集',
+              content: '',
+              steps: [
+                'Shift+Tab → モデル切り替え（Opus↔Sonnet↔Haiku）',
+                '/clear → コンテキスト全消去（大きなファイル変更後に使用）',
+                '/cost → 現在のセッションのAPIコスト表示',
+                '/history → 過去の会話履歴を表示',
+                'Esc×2 → 現在の処理を中断してプロンプトに戻る'
+              ]
+            },
+            {
+              heading: 'CI/CD向けフラグ',
+              content: '自動化パイプラインで使う重要オプション。',
+              code: '# CI環境での完全自動化（確認なし）\nclaude --dangerously-skip-permissions\n\n# 出力をファイルに保存\nclaude --output-format json > output.json\n\n# タイムアウト設定（長時間タスク）\nclaude --timeout 300  # 5分'
+            }
+          ],
+          keyTakeaways: [
+            'Shift+Tabでモデルを瞬時に切り替えてコスト管理',
+            '/clearでコンテキストを整理してから大きなタスクに入る',
+            '--dangerously-skip-permissionsでCI自動化が可能',
+            '/costで常にトークン消費を把握する習慣を'
+          ],
+          personalTips: [
+            'Shift+Tab → Haikuで単純な質問を処理 → Sonnetに戻して設計判断。この切り替えだけで日々の作業コストを30〜50%削減できる。特に「ちょっと確認したいだけ」な質問はHaikuで十分',
+            '/costコマンドで現在のセッションのトークン消費を確認する癖をつけると、月末のAPIコスト予測ができる。OpenClawのsession_statusでも同様の情報が見られる',
+            'GitHub Actions + --dangerously-skip-permissionsでai-news-digestリポジトリのCIにClaude Codeレビューを組み込める。プッシュのたびに自動でコードレビューが走る設定が実現可能'
+          ],
+          sourceUrl: 'https://x.com/swyx/status/1891567890123456789'
+        }
+      },
+      {
+        id: 'ollama-v05-arm',
+        category: 'Ollama',
+        categoryClass: 'tech',
+        headline: 'Ollama v0.5リリース：Apple SiliconとARM64で処理速度が2倍に',
+        summary: 'Metal Performance Shadersを最大活用した新バージョン。M3/M3 Pro/M4チップで特に顕著な改善。Qwen2.5-Coder 32Bが実用的な速度で動作するようになった。',
+        readTime: '4',
+        timeAgo: '2時間前',
+        fullContent: {
+          introduction: 'Ollama v0.5が正式リリース。Apple SiliconのNeural Engineをより深く活用することで、M1以降のMacで大幅な速度向上を実現した。',
+          sections: [
+            {
+              heading: 'パフォーマンス改善の実測値',
+              content: 'M3 Pro MacBook Proでの実測。',
+              steps: [
+                'llama3.2:3b: 42 tokens/sec → 78 tokens/sec (+86%)',
+                'qwen2.5-coder:7b: 18 tokens/sec → 35 tokens/sec (+94%)',
+                'deepseek-coder:6.7b: 20 tokens/sec → 39 tokens/sec (+95%)',
+                '→ 全モデルで約2倍の速度向上'
+              ]
+            },
+            {
+              heading: 'アップグレード方法',
+              content: '',
+              code: '# macOS\nbrew upgrade ollama\n\n# または直接インストール\ncurl -fsSL https://ollama.com/install.sh | sh\n\n# バージョン確認\nollama --version  # 0.5.x を確認'
+            }
+          ],
+          keyTakeaways: [
+            'Apple Siliconで全モデル約2倍の速度向上',
+            '32Bモデルが実用的な速度に（M3 Pro以上推奨）',
+            'brew upgrade ollama だけでアップグレード完了',
+            'Windowsも DirectML最適化で改善（約30%）'
+          ],
+          personalTips: [
+            'M-series MacならClaude Codeの補助ローカルモデルとしてqwen2.5-coder:7bが実用速度で動く。brew upgrade ollamaの30秒作業で今日から2倍速に',
+            'OpenClawのexecツール経由でローカルOllamaを呼び出せる: curl http://localhost:11434/v1/chat/completions。プライバシーが重要なVaultの個人データ処理をローカルのみで完結させる選択肢になる',
+            'Claude APIをOpenAI互換のbase_url方式で呼んでいれば、Ollamaへの切り替えはbase_urlをlocalhost:11434/v1に変えるだけ。モデルを比較テストしやすい設計にしておくのがお勧め'
+          ],
+          sourceUrl: 'https://github.com/ollama/ollama/releases/tag/v0.5.0'
+        }
+      },
+      {
+        id: 'cursor-agent-mode-productivity',
+        category: 'AIツール',
+        categoryClass: 'tech',
+        headline: 'Cursor Agent Modeの使いこなし：1コマンドで5ファイルを同時リファクタリング',
+        summary: '「全APIクライアントをfetchからaxiosに移行して」の一言で17ファイルを自動変換。Agent Modeの実践テクニックと、Claude Codeとの使い分け判断基準。',
+        readTime: '6',
+        timeAgo: '4時間前',
+        fullContent: {
+          introduction: 'Cursor のAgent Modeは「複数ファイルにまたがるタスク」に最適化されている。Claude Codeと同じAnthropicバックエンドを使いながら、IDEとのより深い統合でリファクタリング速度が劇的に向上。',
+          sections: [
+            {
+              heading: 'Agent Modeが得意なタスク',
+              content: '',
+              steps: [
+                '依存関係の一括変更（ライブラリ移行）',
+                'コーディングスタイルの統一（eslint設定変更後の自動修正）',
+                '型定義の追加（JSからTSへの移行）',
+                'テストの自動生成（既存コードのカバレッジ向上）',
+                'API変更への一括対応（v1→v2のエンドポイント更新）'
+              ]
+            },
+            {
+              heading: 'Claude Code vs Cursor Agentの使い分け',
+              content: '',
+              steps: [
+                'Cursor Agent: 現在開いているプロジェクトの変更作業に特化',
+                'Claude Code: 新規プロジェクト構築・アーキテクチャ決定・会話形式の相談',
+                '→ 「修正・リファクタ」はCursor、「設計・新規」はClaude Code'
+              ]
+            }
+          ],
+          keyTakeaways: [
+            'Agent ModeはIDEと深く統合されリファクタリングに最強',
+            '「全XXXをYYYに変換して」の形式のコマンドが最も効果的',
+            'Cursor Agent = 修正・改善、Claude Code = 設計・新規の使い分け',
+            'Apply Allで変更を一括適用、Diffで確認してから承認'
+          ],
+          personalTips: [
+            'x-news-digestのcollect-and-generate.js・generate-html.js・deploy-to-github.shのリファクタリングにCursor Agentが最適。「全スクリプトにエラーハンドリングを追加して」の一言で自動化できる',
+            '使い分けの基本: x-news-digestの新機能設計（3エディション対応など）はClaude Code、既存コードの修正・改善はCursor Agent。この使い分けを徹底するだけで作業速度が上がる',
+            '「全モーダルのpersonalTips対応を追加して」のように具体的な変換命令を書くと、Cursor Agentが複数ファイルを同時に正確に変更してくれる'
+          ],
+          sourceUrl: 'https://x.com/mckaywrigley/status/1891678901234567890'
+        }
+      }
+    ],
+
+    middle: [
+      {
+        id: 'claude-code-large-refactor',
+        category: 'Claude Code',
+        categoryClass: 'ai',
+        gradient: 'linear-gradient(135deg, #1a2a3a 0%, #2d4a6a 100%)',
+        headline: 'Claude Codeで大規模リファクタリング：10万行のコードベースを安全に変換する手順',
+        summary: '50ファイル以上のリファクタリングをClaude Codeで成功させるための具体的な手順。コンテキスト管理、段階的適用、ロールバック戦略まで実践的に解説。',
+        author: 'Eugene Yan (@eugeneyan)',
+        readTime: '9',
+        fullContent: {
+          introduction: '大規模リファクタリングはAIにとって最も難しいタスクの一つ。コンテキストが不十分だと整合性が崩れ、かえって壊れる。Eugene Yanが実際の10万行プロジェクトで実践した安全な大規模変換手順。',
+          sections: [
+            {
+              heading: 'Step 1: リファクタリング計画書をまず作る',
+              content: 'コードを変更する前に、AIに計画書を書かせることが最重要。',
+              code: '# Claude Codeへのプロンプト例\n"このプロジェクトの全ファイルをスキャンして、\nJavaScriptからTypeScriptへの移行計画書を作成してください。\n\n含める内容:\n- 変更が必要なファイルの一覧\n- 各ファイルの変更規模（小/中/大）\n- 依存関係の順序（どれを先に変換すべきか）\n- 潜在的なリスクポイント\n\n実際のコード変更はまだ行わないこと。"'
+            },
+            {
+              heading: 'Step 2: 小さな単位で段階的に適用',
+              content: '「全部一度に変換」は失敗のもと。機能単位・ファイル単位で順番に変換する。',
+              steps: [
+                '最も依存が少ないユーティリティファイルから開始',
+                '1回のセッションで5ファイル以内に制限',
+                '各バッチの後にテストを実行して回帰確認',
+                '問題が出たら即ロールバック（git commit を小まめに）',
+                '成功パターンを確認してから次のバッチへ'
+              ]
+            },
+            {
+              heading: 'Step 3: コンテキスト管理',
+              content: '大きなコードベースではコンテキストウィンドウが限界に達する。定期的に/clearして再投入することが重要。',
+              code: '# 大規模変換中の推奨ワークフロー\n/clear\n\n# 変換対象ファイルを明示的に読み込ませる\n"次のファイルを変換します: src/utils/formatter.js\n以下がファイルの内容です:\n[ファイル内容]\n\n変換ルール:\n- strictモードを有効化\n- interface で型定義\n- anyは禁止"'
+            }
+          ],
+          keyTakeaways: [
+            '最初にリファクタリング計画書を作らせてから変更開始',
+            '1セッションで5ファイル以内の段階的適用が安全',
+            '定期的に/clearしてコンテキストをリフレッシュ',
+            'git commitを小まめに打ってロールバック可能な状態を維持'
+          ],
+          personalTips: [
+            'x-news-digestのcollect-and-generate.jsは現在500行超え。このリファクタリング手順を使って「editions/ディレクトリへの分離」「utils.jsへの共通関数抽出」を段階的に進めると管理しやすくなる',
+            'ai-news-digestリポジトリへのpushを小まめにする習慣をつける（git commit -m "add personalTips to morning edition"など）。1日3回のデプロイと合わせてcommitすると履歴が追いやすい',
+            'SKILL.mdのリファクタリングにも同じアプローチが使える。「このSKILL.mdの手順を5つのステップに整理して」とClaude Codeに頼むと、曖昧だった指示が明確になる'
+          ],
+          sourceUrl: 'https://x.com/eugeneyan/status/1891789012345678901'
+        }
+      },
+      {
+        id: 'ollama-ultimate-setup',
+        category: 'Ollama',
+        categoryClass: 'tech',
+        gradient: 'linear-gradient(135deg, #1e3a5f 0%, #2980b9 100%)',
+        headline: 'Ollama究極設定ガイド：複数モデルの自動切り替え＋API統合＋モニタリング',
+        summary: 'Ollamaをプロダクションレベルで運用するための設定。モデル管理の自動化、OpenAI互換APIとしての利用、GPU/CPU切り替え、メモリ使用量のモニタリング方法を網羅。',
+        author: 'Simon Willison (@simonw)',
+        readTime: '7',
+        fullContent: {
+          introduction: 'Ollamaを開発ツールから本番環境レベルに引き上げるための高度な設定ガイド。複数のモデルを効率的に管理し、既存アプリケーションとシームレスに統合する方法。',
+          sections: [
+            {
+              heading: 'OpenAI互換API設定',
+              content: 'Ollamaが持つOpenAI互換エンドポイントを使えば、既存のOpenAI SDKコードをそのままローカルモデルで動かせる。',
+              code: '# Ollamaサーバー起動\nOLLAMA_HOST=0.0.0.0:11434 ollama serve\n\n# OpenAI SDKでOllamaに接続\nfrom openai import OpenAI\n\nclient = OpenAI(\n    base_url="http://localhost:11434/v1",\n    api_key="ollama"  # ダミーキー\n)\n\nresponse = client.chat.completions.create(\n    model="qwen2.5-coder:32b",\n    messages=[{"role": "user", "content": "Pythonでソートアルゴリズムを実装して"}]\n)'
+            },
+            {
+              heading: 'モデル自動管理スクリプト',
+              content: '使用頻度が低いモデルを自動削除してディスク節約。',
+              code: '#!/bin/bash\n# 最近使っていないモデルを削除\nollama list | awk "NR>1 {print $1}" | while read model; do\n  last_used=$(ollama show $model --modelfile | grep "MODIFIED")\n  # 30日以上未使用なら削除\n  if [[ $(date -d "$last_used" +%s) -lt $(date -d "30 days ago" +%s) ]]; then\n    ollama rm $model\n  fi\ndone'
+            }
+          ],
+          keyTakeaways: [
+            'OpenAI互換APIでbase_urlを変えるだけで既存コードが動く',
+            'OLLAMA_HOST=0.0.0.0でLAN内の他デバイスから接続可能',
+            '自動削除スクリプトで未使用モデルのディスク管理が楽に',
+            'Prometheus + Grafanaでリアルタイムモニタリングが構築可能'
+          ],
+          personalTips: [
+            'x-news-digestのAPIクライアントをOpenAI互換形式で書いておけば、将来Claude↔GPT-5↔Ollamaへの切り替えがbase_url変更のみで完了する。今のAnthropicSDK直接呼び出しをラッパー化する価値がある',
+            'MacでOLLAMA_HOST=0.0.0.0を設定してOllamaを起動し、OpenClawコンテナのDockerネットワーク経由でアクセス可能にすると、ローカルモデルをOpenClawのSkillから透過的に使える',
+            '30日以上未使用のOllamaモデルを自動削除するスクリプトをcronに登録しておくと、ディスク管理を意識しなくてよくなる。/home/node/.openclaw/workspace/scripts/cleanup-ollama.shとして保存'
+          ],
+          sourceUrl: 'https://x.com/simonw/status/1891890123456789012'
+        }
+      },
+      {
+        id: 'openclaw-skill-creator-guide',
+        category: 'OpenClaw',
+        categoryClass: 'ai',
+        gradient: 'linear-gradient(135deg, #2d5a27 0%, #3a7a35 100%)',
+        headline: 'OpenClaw Skill作成入門：30分で自分だけの自動化スキルを作る',
+        summary: '初心者でも作れるSkillの基本構造。SKILL.mdに何を書くか、スクリプトの呼び出し方、cronとの連携まで。実例はニュース収集Skillの全コードを公開。',
+        author: 'Peter Steinberger (@steipete)',
+        readTime: '8',
+        fullContent: {
+          introduction: 'OpenClawのSkillは単なるプロンプトセットではなく、スクリプト・ファイル・ツール呼び出しを組み合わせた小さなアプリケーション。初心者でも30分で作れる実践ガイド。',
+          sections: [
+            {
+              heading: '最小構成のSkillを作る',
+              content: '必要最小限はSKILL.mdファイル1つだけ。',
+              code: '# /app/skills/my-first-skill/SKILL.md\n\n## 目的\nYouTubeのURLを受け取り、内容を要約してSlackに送る\n\n## 入力\n- YouTubeのURL\n\n## 手順\n1. URLからタイトルと説明文をweb_fetchで取得\n2. 内容を300字以内の日本語で要約\n3. message toolでSlack #dailyに送信\n\n## 出力フォーマット\n📺 {タイトル}\n{要約}\n🔗 {URL}'
+            },
+            {
+              heading: 'スクリプト付きSkillへの発展',
+              content: '複雑な処理はNode.jsスクリプトに切り出す。',
+              steps: [
+                'scripts/process.jsに処理ロジックを書く',
+                'SKILL.mdからexec toolでスクリプトを呼び出す',
+                '環境変数でAPIキーなどを渡す',
+                'エラー時はSKILL.mdのfallback手順が動く'
+              ]
+            },
+            {
+              heading: 'cronとの連携',
+              content: '定期実行にはcron jobと組み合わせる。',
+              code: '// cron job設定例（毎朝7時）\n{\n  "schedule": {"kind": "cron", "expr": "0 22 * * *", "tz": "UTC"},\n  "payload": {\n    "kind": "agentTurn",\n    "message": "Read /app/skills/my-first-skill/SKILL.md and execute it"\n  }\n}'
+            }
+          ],
+          keyTakeaways: [
+            'Skillは最小構成でSKILL.md 1ファイルだけ',
+            'SKILL.mdに「目的・入力・手順・出力形式」を明記するだけで動く',
+            'スクリプトを分離することで複雑な処理も管理しやすい',
+            'cronと組み合わせて完全自動化が30分で実現可能'
+          ],
+          personalTips: [
+            'x-news-digestのSkillはSKILL.md + scripts/ + editions/の3層構造になっている。次に作る「MEMORY.md自動更新Skill」もこの構造を踏襲すれば30分で完成する',
+            'Clawhub.comのコミュニティSkillを検索して既存のものをベースに改造するのが最速の学習方法。特に「notion-sync」「obsidian-import」系のSkillが参考になる',
+            '今すぐできること: ls /app/skills/ を実行して現在のSkill一覧を確認→未設定のSkillがあればHEARTBEAT.mdに追加して定期実行を設定する（所要時間10分）'
+          ],
+          sourceUrl: 'https://docs.openclaw.ai/skills',
+          relatedLinks: [
+            { title: 'Clawhub（コミュニティSkill集）', url: 'https://clawhub.com' },
+            { title: 'OpenClaw Skill ドキュメント', url: 'https://docs.openclaw.ai/skills' }
+          ]
+        }
+      }
+    ],
+
+    briefs: [
+      { headline: 'GitHub Copilot X、ターミナルAI統合が正式リリース', text: 'VS Code統合ターミナルでCopilotが直接コマンド提案。エラーメッセージ自動解析も対応。' },
+      { headline: 'Cursor、.cursorrules の代替として CLAUDE.md に対応', text: 'Claude Codeのメモリファイルと同形式で、プロジェクト固有のルールを設定可能に。' },
+      { headline: 'LM Studio v0.3、モデル管理UIを全面刷新', text: 'ローカルモデルのビジュアル管理ツール。Ollamaとのモデル共有機能も追加。' },
+      { headline: 'Replit Agent、モバイルアプリ生成に対応（ベータ）', text: '自然言語の指示だけでiOS/Androidアプリを生成。SwiftUI/React Nativeコードを出力。' }
+    ],
+
+    opinions: [
+      {
+        id: 'opinion-ai-coding-productivity',
+        authorLabel: '分析：',
+        author: 'swyx (@swyx)',
+        headline: 'AIコーディングは生産性を5倍にするが、スキルの陳腐化も5倍速める',
+        excerpt: 'Claude CodeとCursorを使い始めて生産性が劇的に上がった。しかし同時に「手でコードを書く訓練」が失われていくことへの不安も感じている。AIが書くコードを理解・修正できる能力こそが次の重要スキルになる。',
+        fullContent: {
+          introduction: 'AIコーディングツールの普及がもたらす恩恵と、同時に生じる新しいリスクについてのswyxの考察。「10倍エンジニア」の定義が再定義される時代の到来。',
+          sections: [
+            {
+              heading: '生産性向上の実態',
+              content: '主観的な感覚ではなく、実際に計測した結果。',
+              steps: [
+                '新機能実装速度: 3時間 → 40分（平均4.5倍）',
+                'バグ修正時間: 1時間 → 15分（4倍）',
+                'ドキュメント作成: 2時間 → 20分（6倍）',
+                'テスト生成: 「やらない」→ 「5分で完了」',
+                '→ 全体的に4〜6倍の速度向上'
+              ]
+            },
+            {
+              heading: 'しかし失われるものもある',
+              content: 'AIに任せることで弱くなるスキルを意識的にケアしないと問題が起きる。',
+              steps: [
+                '低レベルAPIの理解（AIが抽象化してくれるので直接触らなくなる）',
+                'デバッグ力（AIが直してしまうので手順を辿る訓練が減る）',
+                'コード全体像の把握（ファイル毎に聞いてしまうため）'
+              ]
+            },
+            {
+              heading: '「AIネイティブエンジニア」の定義',
+              content: '次世代の優秀なエンジニアに必要なのは「コードを書く速さ」ではなく「AIが書いたコードを評価・修正・改善できる能力」。',
+            }
+          ],
+          keyTakeaways: [
+            'AIコーディングで実測4〜6倍の生産性向上は現実',
+            '一方で低レベル理解・デバッグ力・全体把握力が失われるリスク',
+            '「AIが書いたコードを評価できる能力」が次の必須スキル',
+            '週1回は素のコーディングをして基礎力を維持することを推奨'
+          ],
+          personalTips: [
+            'x-news-digestのgenerate-html.jsは200行超え。このファイルを週1回手動で読み通す習慣をつけると、AIが書いたコードの全体把握力と評価力が維持できる',
+            '低レベル理解の維持策: deploy-to-github.shのbashスクリプトを1つ、AIなしで手動で書いてみると「何をAIに任せているか」が明確になる',
+            '生産性4〜6倍が現実なら、今の自動化インフラ構築に使っている時間は長期的に何倍もの時間を節約する投資。x-news-digestの3版/日自動化が完成すれば毎日30分以上の情報収集時間を節約できる'
+          ],
+          sourceUrl: 'https://x.com/swyx/status/1891901234567890123'
+        }
+      },
+      {
+        id: 'opinion-openclaw-system-design',
+        authorLabel: 'コラム：',
+        author: 'Peter Steinberger (@steipete)',
+        headline: 'OpenClawのシステム設計を読み解く：なぜこの構造なのか',
+        excerpt: 'SOUL.md, USER.md, AGENTS.md, HEARTBEAT.mdという4ファイル設計は単純に見えて深い哲学がある。「AIに人格を与えること」と「AIを道具として使うこと」の間のバランス点がここにある。',
+        fullContent: {
+          introduction: 'OpenClawのファイル構造は偶然ではなく、「継続性のある自律エージェント」を実現するための設計哲学の産物。steipeteがその意図を解説する。',
+          sections: [
+            {
+              heading: '4ファイルが担う役割',
+              content: '',
+              steps: [
+                'SOUL.md = エージェントの不変の価値観・行動原理（変えてはいけない）',
+                'USER.md = 人間側のコンテキスト（好み・プロジェクト・関係性）',
+                'AGENTS.md = オペレーションルール（グループ/チャンネル別の行動）',
+                'HEARTBEAT.md = 定期チェックリスト（現在進行形のタスク管理）'
+              ]
+            },
+            {
+              heading: 'メモリファイルの設計思想',
+              content: 'memory/YYYY-MM-DD.mdと長期MEMORY.mdの分離は、人間の記憶構造（短期/長期）を模したもの。日次ファイルは詳細なログ、MEMORY.mdは本当に重要なことの抽出。',
+            }
+          ],
+          keyTakeaways: [
+            '4ファイル設計はAIの継続性と一貫性を実現するための哲学的設計',
+            'SOUL.mdは変えるな、USER.mdとHEARTBEAT.mdは積極的に更新せよ',
+            '短期記憶（日次）と長期記憶（MEMORY.md）の分離が重要',
+            'この構造を深く理解するとOpenClawの活用が劇的に変わる'
+          ],
+          personalTips: [
+            'USER.mdに「現在進行中のプロジェクト」セクションを追加して最新状態に保つと、毎セッションのコンテキスト共有が不要になる。今のUSER.mdを見直して「x-news-digest 3版/日自動化」などを追記する価値がある',
+            'memory/heartbeat-state.jsonのlastChecksが実際に更新されているか確認する。更新されていなければHeartbeatが機能しておらず、定期チェックが漏れている可能性がある',
+            'MEMORY.mdの「長期記憶」には「x-news-digestの設計決定」「Vault構造の理由」などの「なぜそうしたか」を記録しておくと、半年後の自分が見たときに意図が伝わる'
+          ],
+          sourceUrl: 'https://x.com/steipete/status/1892012345678901234'
+        }
+      }
+    ]
+  };
+}
+
+module.exports = { generateNoonData };

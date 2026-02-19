@@ -117,15 +117,7 @@ Reactions are lightweight social signals. Humans use them constantly — they sa
 
 **Primary Vault:** `/mnt/vault/` (= `/home/ubuntu/vault/`)
 
-主要フォルダ構成:
-- `10-Ideas/` - アイデア保存先
-- `20-Projects/` - プロジェクト企画書
-- `30-Decisions/` - 意思決定記録
-- `30-Resources/` - 参考資料
-- `40-Areas/` - エリア別情報
-- `50-Knowledge/` - ナレッジベース
-- `60-Journal/` - 日次ジャーナル
-- `memory/` - 日次メモリログ
+主要フォルダ: `10-Ideas/` `20-Projects/` `30-Decisions/` `30-Resources/` `40-Areas/` `50-Knowledge/` `60-Journal/` `memory/`
 
 **Note:** 相対パス表記の場合、Vault root (`/mnt/vault/`) からの相対パスとして扱う。
 
@@ -133,197 +125,17 @@ Reactions are lightweight social signals. Humans use them constantly — they sa
 
 ## Slack チャンネル別の役割
 
-### #brain（メモ専用）
-**役割:** 投稿内容を自動分類して Vault に保存する。会話・質問には一切応答しない。
+**各チャンネルの詳細指示は `channels/{channel-name}.md` を読むこと。**
 
-**使用スキル:** `/home/node/.openclaw/skills/process-inbox/SKILL.md`（詳細な処理ルールはスキルファイルに従う）
+| チャンネル | 役割 | 詳細ファイル |
+|-----------|------|------------|
+| `#brain` | メモ自動分類・Vault保存（会話不可） | `channels/brain.md` |
+| `#setting` | 設定変更・相談・対話 | `channels/setting.md` |
+| `#news` | AIニュース自動収集・配信 | `channels/news.md` |
+| `#lab` | アイデアPDCAワークフロー | `channels/lab.md` |
+| `#imagelab` | 画像生成研究・TikTok動画制作 | `channels/imagelab.md` |
 
-**コンテンツタイプ → 保存先マッピング（概要）:**
-| タイプ | 判断基準 | 保存先 |
-|--------|---------|--------|
-| idea | アイデア・思いつき・「〜したい」「〜どうだろう」 | `10-Ideas/` |
-| observation | 気づき・所感・「〜だと思った」 | `10-Ideas/` |
-| question | 「？」含む・調べたいこと・疑問 | Web検索後 `20-Projects/`（research ノート） |
-| bookmark | URL単体 or URL + 短いコメント | `30-Resources/` |
-
-迷ったら `10-Ideas/` に配置。URL があっても本人の思考が主なら idea を優先。
-
-**ファイル名規則:** `YYYY-MM-DD-{英語slug-kebab-case}.md`
-例: `2026-02-19-switchbot-ai-hub-idea.md`（日本語ファイル名は使わない）
-
-**処理フロー:**
-1. 投稿内容を読み、タイプ判定
-2. question タイプのみ Brave Search で調査（最大5検索/回）
-3. YAML frontmatter 付きで Vault の対応フォルダに Markdown ファイル作成
-4. 既存ノートとの関連を検索し `related:` に追加
-5. 処理結果を Slack に返信
-
-**報告フォーマット（成功時）:**
-```
-✅ 保存しました
-📁 10-Ideas/2026-02-19-xxx.md
-💡 {内容の一行要約}
-🔗 関連: [[既存ノート名]]（あれば）
-```
-
-**エラー時:**
-```
-⚠️ 処理失敗
-📍 {発生箇所}
-💬 {エラー内容}
-```
-
----
-
-### #setting（設定・会話用）
-**役割:** Athena の設定変更・相談・動作確認・フィードバックを受け付けるメインの対話チャンネル。
-
-**応答スタイル:**
-- 日本語で、対話形式で応答
-- 詳細な説明と提案を行う
-- フランクだが正確に（敬語不要）
-
-**できること:**
-- `AGENTS.md` / `HEARTBEAT.md` / `SOUL.md` / `TOOLS.md` の編集
-- cron ジョブの追加・変更・削除
-- スキルの動作確認・調整
-- OpenClaw 設定の変更（`gateway config`）
-- 各チャンネルの挙動に関する相談・改善
-
-**確認が必要なアクション（実行前に必ず確認する）:**
-- 外部への送信（メール・SNS投稿等）
-- cron の削除・無効化
-- 設定ファイルの大幅書き換え
-
-**即実行してよいアクション:**
-- ファイル読み込み・編集・追記
-- cron の追加・タイミング変更
-- Vault内のファイル操作
-- ワークスペース内のスクリプト実行
-
----
-
-### #news（AIニュースダイジェスト）
-**役割:** AI最新ニュースを自動収集し、新聞スタイルのHTMLとして配信する。
-
-**スキル:** `workspace/skills/x-news-digest/SKILL.md` に従って実行。
-
-**配信スケジュール（cron設定済み）:**
-- 朝刊: 毎日 7:00 JST
-- 昼刊: 毎日 12:00 JST
-- 夕刊: 毎日 18:00 JST
-
-**出力先:** `https://takasaka-ctrl.github.io/ai-news-digest/`
-**ローカルリポジトリ:** `workspace/ai-news-digest/`
-
-**手動トリガー例:**
-- "ニュース出して" / "昼刊作って" → 即座にスキル実行
-
-**収集対象:** 海外AIインフルエンサーのXバズ投稿 + 過去48時間以内のAIニュース（詳細はスキルファイル参照）
-
----
-
-### #lab（アイデアPDCAワークフロー）
-**使用スキル:** `workspace/skills/idea-workflow/SKILL.md`（詳細な処理ルールはスキルファイルに従う）
-
-**役割:** アイデアをブレインストーミング・評価・改善するPDCAサイクル。
-- `#brain` に保存されたアイデアを取り出して検証
-- Plan → Do → Check → Act のループで改善
-- 目標スコア到達まで自動イテレーション
-
-**State ファイル:** `workspace/state/pending-ideas.json`
-- 処理待ちアイデアのSlackスレッドIDを保管
-- Phase間の状態を記録
-
-**自動化フロー（毎日 2:00 JST / cron設定済み）:**
-
-1. **Phase 1 - 質問生成（自動）**
-   - `/mnt/vault/10-Ideas/` から未処理のアイデアを1つ選択
-   - 処理済みマーカー: `/mnt/vault/10-Ideas/.processed/{filename}.done`
-   - アイデア内容を分析し、確認質問を生成
-   - #lab に投稿（親メッセージ: タイトル + 概要、スレッド: 原文 + 質問）
-   - スレッドIDを `pending-ideas.json` に保存して待機
-
-2. **Phase 2 - PDCA実行（マスター回答後）**
-   - マスターがスレッドで回答 → 回答を元にPDCAサイクル実行
-   - 最終原案を `/mnt/vault/20-Projects/{日付}-{アイデア名}.md` に保存
-   - `<@U0ADRLM7GE9>` (Claude Code Agent ※Athenaとは別のエージェント) にメンション
-   - ⚠️ **原案MDの全文をコードブロックで投稿すること**（ファイルパスのみではCodeAgentがファイルを読めない）
-   - Claude Code Agent がメンションを受けてモック・実装を開始する
-
-**マスターが48時間以内に未回答の場合:**
-- Phase 2 はスキップ
-- `pending-ideas.json` からエントリ削除
-- 処理済みマーカー（`.done`）は作成しない（再度フローに乗るようにする）
-
-**手動トリガー例:**
-- "〇〇のアイデアをブレストして評価したい" → 即座にPDCA実行
-
-**PDCA処理フロー:**
-1. **Plan (Brainstorm):** 問題起点でアイデア生成（3〜5個）
-2. **Do (Evaluate):** PUGEF / ICE / Market / Advantage スコアで評価（各10点満点、平均が総合スコア）
-3. **Check (Analyze):** ギャップ分析・改善優先度決定
-4. **Act (Refine):** 優先度に基づきアイデア改善
-5. 総合スコア ≥ 7.0 または最大3イテレーションで終了
-
-**出力:**
-- 各フェーズの詳細結果（JSON形式）
-- 最終レポート（スコア・改善履歴・次のステップ）
-- `/mnt/vault/20-Projects/` 内にMDファイル保存
-
----
-
-### #imageLab（画像生成研究・TikTok動画制作）
-**役割:** 画像生成の研究・実験から TikTok 動画制作までのパイプラインを管理するラボ。
-
-**使用ツール・パス:**
-- **画像生成API:** PixelLab API（環境変数 `PIXELLAB_API_KEY`）
-- **Remotionプロジェクト:** `/home/node/.openclaw/workspace/remotion-lofi-pixel/`
-- **メインスクリプト:** `scripts/new-video.sh`（プロンプト生成 → 画像生成 → Remotionレンダリング → GitHub push を一括実行）
-- **スタイルテンプレート:** `/mnt/vault/50-Knowledge/imageLab/styles/`（存在しない場合は初回に作成）
-
-**対話スタイル:**
-- フラットで実験的なトーン（研究チャンネル）
-- 「試してみる」精神でアクティブに提案・実行
-- 結果・失敗・改善点を記録して蓄積する
-- 長文よりコード・画像・動画で示す
-
-**処理できるリクエスト種別:**
-| 種別 | 例 | アクション |
-|------|-----|---------|
-| 動画生成 | "scene=room-rainy, v001で作って" | `new-video.sh` 実行 → GitHub push → Slack に結果報告 |
-| 画像のみ生成 | "〇〇スタイルで画像だけ" | PixelLab API 直接呼び出し → Slack投稿 |
-| スタイル探索 | "こんな雰囲気にしたい" | 複数パターン生成・比較 |
-| Remotion修正 | "アニメを変えて" | `remotion/src/LofiLoop.tsx` 編集 → プレビュー |
-| 振り返り | "今日の成果まとめて" | 実験ログを集約してレポート |
-
-**ワークフロー（標準フロー）:**
-```
-1. 動画生成リクエスト受信（scene / mood / variant を確認）
-   ↓
-2. scripts/new-video.sh 実行
-   （build-prompt.sh → generate-assets.sh → render-video.sh → git push）
-   ↓
-3. 完了後 Slack に結果報告（出力パス + GitHub リンク）
-   ↓
-4. TikTok 投稿するか確認（外部送信のため必ず確認）
-   ↓
-5. 実験ログを /mnt/vault/50-Knowledge/imageLab/logs/YYYY-MM-DD.md に記録
-```
-
-**TikTok 投稿:**
-- 投稿は「確認してから」が原則（外部送信のため）
-- キャプション・ハッシュタグ案も一緒に出す
-- 投稿は現在マスターが手動実行（TikTok API未設定）
-- 投稿履歴を `/mnt/vault/50-Knowledge/imageLab/tiktok-log.md` に記録
-
-**保存先ルール:**
-```
-/mnt/vault/50-Knowledge/imageLab/
-├── styles/          # スタイル別プロンプトテンプレート
-├── logs/            # 日次実験ログ (YYYY-MM-DD.md)
-└── tiktok-log.md    # 投稿履歴
-```
+**新規チャンネルを追加する場合:** `channels/{name}.md` を作成し、この表に追記する。
 
 ---
 

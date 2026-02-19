@@ -1,0 +1,414 @@
+{
+  "accounts": [
+    {
+      "handle": "steipete",
+      "name": "Peter Steinberger",
+      "category": "OpenClaw",
+      "priority": "critical",
+      "focus": "tips"
+    },
+    {
+      "handle": "swyx",
+      "name": "swyx",
+      "category": "AI Engineering",
+      "priority": "high",
+      "focus": "tips"
+    },
+    {
+      "handle": "simonw",
+      "name": "Simon Willison",
+      "category": "AI Tools",
+      "priority": "high",
+      "focus": "tips"
+    },
+    {
+      "handle": "AnthropicAI",
+      "name": "Anthropic",
+      "category": "Claude",
+      "priority": "critical",
+      "focus": "updates"
+    },
+    {
+      "handle": "alexalbert__",
+      "name": "Alex Albert",
+      "category": "Claude",
+      "priority": "high",
+      "focus": "tips"
+    },
+    {
+      "handle": "karpathy",
+      "name": "Andrej Karpathy",
+      "category": "AI Research",
+      "priority": "high",
+      "focus": "updates"
+    },
+    {
+      "handle": "sama",
+      "name": "Sam Altman",
+      "category": "OpenAI",
+      "priority": "critical",
+      "focus": "updates"
+    },
+    {
+      "handle": "openai",
+      "name": "OpenAI",
+      "category": "OpenAI",
+      "priority": "critical",
+      "focus": "updates"
+    },
+    {
+      "handle": "gdb",
+      "name": "Greg Brockman",
+      "category": "OpenAI",
+      "priority": "high",
+      "focus": "updates"
+    },
+    {
+      "handle": "demishassabis",
+      "name": "Demis Hassabis",
+      "category": "Gemini",
+      "priority": "critical",
+      "focus": "updates"
+    },
+    {
+      "handle": "GoogleDeepMind",
+      "name": "Google DeepMind",
+      "category": "Gemini",
+      "priority": "critical",
+      "focus": "updates"
+    },
+    {
+      "handle": "GoogleAI",
+      "name": "Google AI",
+      "category": "Gemini",
+      "priority": "high",
+      "focus": "updates"
+    },
+    {
+      "handle": "levelsio",
+      "name": "Pieter Levels",
+      "category": "個人開発",
+      "priority": "critical",
+      "focus": "tips"
+    },
+    {
+      "handle": "marc_louvion",
+      "name": "Marc Lou",
+      "category": "個人開発",
+      "priority": "critical",
+      "focus": "tips"
+    },
+    {
+      "handle": "dannypostmaa",
+      "name": "Danny Postma",
+      "category": "個人開発",
+      "priority": "high",
+      "focus": "tips"
+    },
+    {
+      "handle": "tdinh_me",
+      "name": "Tony Dinh",
+      "category": "個人開発",
+      "priority": "high",
+      "focus": "tips"
+    },
+    {
+      "handle": "natmiletic",
+      "name": "Nat Miletic",
+      "category": "個人開発",
+      "priority": "medium",
+      "focus": "tips"
+    },
+    {
+      "handle": "sharifshameem",
+      "name": "Sharif Shameem",
+      "category": "AI Prototyping",
+      "priority": "high",
+      "focus": "tips"
+    },
+    {
+      "handle": "eugeneyan",
+      "name": "Eugene Yan",
+      "category": "AI Engineering",
+      "priority": "high",
+      "focus": "tips"
+    },
+    {
+      "handle": "mckaywrigley",
+      "name": "Mckay Wrigley",
+      "category": "AI Tools",
+      "priority": "medium",
+      "focus": "tips"
+    },
+    {
+      "handle": "_akhaliq",
+      "name": "AK",
+      "category": "AI Research",
+      "priority": "high",
+      "focus": "updates"
+    },
+    {
+      "handle": "danshipper",
+      "name": "Dan Shipper",
+      "category": "AI Workflows",
+      "priority": "medium",
+      "focus": "tips"
+    },
+    {
+      "handle": "altryne",
+      "name": "Alex Volkov",
+      "category": "AI Tools",
+      "priority": "medium",
+      "focus": "tips"
+    },
+    {
+      "handle": "RohanPaul_AI",
+      "name": "Rohan Paul",
+      "category": "AI Tutorials",
+      "priority": "medium",
+      "focus": "tips"
+    },
+    {
+      "handle": "indiemaker_hq",
+      "name": "Indie Maker HQ",
+      "category": "個人開発",
+      "priority": "medium",
+      "focus": "tips"
+    },
+    {
+      "handle": "meiowiz",
+      "name": "Mei",
+      "category": "モバイルアプリ",
+      "priority": "medium",
+      "focus": "tips"
+    },
+    {
+      "handle": "rudrankriyam",
+      "name": "Rudrank Riyam",
+      "category": "iOS開発",
+      "priority": "high",
+      "focus": "tips"
+    },
+    {
+      "handle": "twostraws",
+      "name": "Paul Hudson",
+      "category": "iOS開発",
+      "priority": "critical",
+      "focus": "tips"
+    },
+    {
+      "handle": "mecid",
+      "name": "Majid Jabrayilov",
+      "category": "iOS開発",
+      "priority": "high",
+      "focus": "tips"
+    },
+    {
+      "handle": "johnsundell",
+      "name": "John Sundell",
+      "category": "iOS開発",
+      "priority": "high",
+      "focus": "tips"
+    }
+  ],
+  "topicSearches": [
+    {
+      "topic": "OpenClaw",
+      "keywords": [
+        "OpenClaw tips",
+        "OpenClaw tutorial",
+        "OpenClaw how to",
+        "OpenClaw skill",
+        "OpenClaw automation",
+        "OpenClaw workflow",
+        "OpenClaw security",
+        "OpenClaw SOUL.md",
+        "OpenClaw agent"
+      ],
+      "priority": "critical"
+    },
+    {
+      "topic": "Ollama",
+      "keywords": [
+        "Ollama local model",
+        "Ollama tutorial",
+        "Ollama tips",
+        "Ollama setup",
+        "run Ollama",
+        "Ollama new model",
+        "Ollama update",
+        "ollama pull"
+      ],
+      "priority": "critical"
+    },
+    {
+      "topic": "Claude Code",
+      "keywords": [
+        "Claude Code tips",
+        "Claude Code tutorial",
+        "Claude Code workflow",
+        "Claude Code prompt",
+        "Claude Sonnet coding",
+        "Claude Code agent",
+        "Claude Code trick"
+      ],
+      "priority": "critical"
+    },
+    {
+      "topic": "OpenAI",
+      "keywords": [
+        "GPT-5",
+        "ChatGPT update",
+        "OpenAI API update",
+        "OpenAI new model",
+        "o3 model",
+        "OpenAI announcement"
+      ],
+      "priority": "critical"
+    },
+    {
+      "topic": "Gemini",
+      "keywords": [
+        "Gemini 2.0",
+        "Gemini update",
+        "Google AI announcement",
+        "Gemini Flash",
+        "Gemini Pro",
+        "Google DeepMind release"
+      ],
+      "priority": "critical"
+    },
+    {
+      "topic": "Claude / Anthropic",
+      "keywords": [
+        "Claude 4",
+        "Sonnet update",
+        "Anthropic announcement",
+        "Claude new feature",
+        "Claude API update",
+        "Opus release"
+      ],
+      "priority": "critical"
+    },
+    {
+      "topic": "個人開発 × AI",
+      "keywords": [
+        "indie hacker AI",
+        "solopreneur AI app",
+        "AI SaaS launch",
+        "built with AI",
+        "launched my AI app",
+        "AI product hunt",
+        "MRR AI app",
+        "one person startup AI"
+      ],
+      "priority": "high"
+    },
+    {
+      "topic": "モバイルアプリ × AI",
+      "keywords": [
+        "iOS app AI",
+        "SwiftUI AI integration",
+        "Android AI app",
+        "on-device AI iOS",
+        "Core ML tips",
+        "AI mobile app development",
+        "Claude API iOS",
+        "Gemini iOS SDK"
+      ],
+      "priority": "high"
+    }
+  ],
+  "generalSearches": [
+    {
+      "query": "Claude Anthropic model release",
+      "category": "Claude",
+      "priority": "critical"
+    },
+    {
+      "query": "OpenAI GPT announcement",
+      "category": "OpenAI",
+      "priority": "critical"
+    },
+    {
+      "query": "Gemini Google DeepMind update",
+      "category": "Gemini",
+      "priority": "critical"
+    },
+    {
+      "query": "indie developer AI success story revenue",
+      "category": "個人開発",
+      "priority": "high"
+    },
+    {
+      "query": "iOS SwiftUI AI app tutorial 2026",
+      "category": "モバイルアプリ",
+      "priority": "high"
+    },
+    {
+      "query": "AI research breakthrough paper",
+      "category": "AI Research",
+      "priority": "medium"
+    }
+  ],
+  "settings": {
+    "checkIntervalHours": 24,
+    "maxPostsPerSearch": 5,
+    "minPostAgeHours": 0,
+    "maxPostAgeHours": 72,
+    "deliveryChannel": "slack",
+    "deliveryTarget": "#news",
+    "language": "ja",
+    "summaryStyle": "article",
+    "categories": {
+      "openclaw": {
+        "name": "OpenClaw活用",
+        "description": "OpenClawの活用方法・Tips・自動化事例",
+        "schedule": "daily",
+        "color": "ai"
+      },
+      "ollama": {
+        "name": "Ollamaローカルモデル",
+        "description": "新モデル・セットアップ・活用Tips",
+        "schedule": "daily",
+        "color": "tech"
+      },
+      "claude_code": {
+        "name": "Claude Code",
+        "description": "コーディングTips・ワークフロー改善",
+        "schedule": "daily",
+        "color": "ai"
+      },
+      "openai_updates": {
+        "name": "OpenAI動向",
+        "description": "ChatGPT・GPT系モデルの最新情報",
+        "schedule": "daily",
+        "color": "tech"
+      },
+      "gemini_updates": {
+        "name": "Gemini動向",
+        "description": "Google DeepMind・Geminiモデルの最新情報",
+        "schedule": "daily",
+        "color": "research"
+      },
+      "claude_updates": {
+        "name": "Claude / Anthropic動向",
+        "description": "Claudeモデルのリリース・API更新情報",
+        "schedule": "daily",
+        "color": "ai"
+      },
+      "indie_dev": {
+        "name": "個人開発成功事例",
+        "description": "AIを使った個人開発の成功例・収益化・アイデア",
+        "schedule": "daily",
+        "color": "business"
+      },
+      "mobile_ai": {
+        "name": "iOS / Androidアプリ開発",
+        "description": "SwiftUI・Android AI統合・モバイル開発Tips",
+        "schedule": "weekly",
+        "color": "tech"
+      }
+    }
+  }
+}

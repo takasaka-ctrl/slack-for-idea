@@ -1,0 +1,133 @@
+{
+  "date": "2026年2月16日月曜日",
+  "volume": "1",
+  "tickerText": "OpenClaw 2.0リリース：エージェント連携機能を改善 ── Ollama、DeepSeek-R1対応を追加 ── Claude Code、複数ファイルリファクタリングに対応 ── 今週のAI資金調達額が52億ドルに到達 ── GitHub Copilot Chat、VS Codeターミナルと統合 ── OpenClaw 2.0リリース：エージェント連携機能を改善",
+  "dataPanel": [
+    {
+      "label": "AI資金調達（週次）",
+      "value": "$5.2B",
+      "sparkline": "▁▂▃▄█",
+      "change": "▲ 24%",
+      "changeClass": "up"
+    },
+    {
+      "label": "モデルリリース数",
+      "value": "18",
+      "sparkline": "▁▃▄▅█",
+      "change": "▲ 前週比+6",
+      "changeClass": "up"
+    },
+    {
+      "label": "GitHub Stars（週次）",
+      "value": "+12.4K",
+      "sparkline": "▁▂▄▆█",
+      "change": "▲ OpenClaw +8.2K",
+      "changeClass": "up"
+    },
+    {
+      "label": "X投稿分析数",
+      "value": "847",
+      "sparkline": "▁▂▄▅█",
+      "change": "▲ 15% アクティビティ",
+      "changeClass": "up"
+    }
+  ],
+  "hero": {
+    "category": "OpenClaw",
+    "categoryClass": "ai",
+    "headline": "OpenClaw完全セットアップガイド：30分でゼロから本番環境へ",
+    "deck": "AWS EC2への安全なデプロイ、Docker設定、Google Workspace連携、パーソナライズされたボットメモリのセットアップを網羅した包括的なステップバイステップチュートリアル。Tailscale設定とHTTPブロッキング問題に関する重要な警告も含む。",
+    "author": "Peter Yang (@petergyang)",
+    "readTime": "12",
+    "readPercent": 75,
+    "readLabel": "長文",
+    "updateTime": "2時間前"
+  },
+  "sidebar": [
+    {
+      "category": "Ollama",
+      "categoryClass": "tech",
+      "headline": "Ollama + VSCodeでローカルAIモデルを実行：5ステップで完全セットアップ",
+      "summary": "OpenAI APIを使わないプライベートAIコーディング。Ollamaインストール、deepseek-coder:6.7bをpull、Cline/Roo Code拡張を設定し、ローカルモデルでコーディング開始。",
+      "readTime": "5",
+      "timeAgo": "3時間前"
+    },
+    {
+      "category": "Claude Code",
+      "categoryClass": "ai",
+      "headline": "効果的なClaude Codeワークフロー：計画にOpus、実装にSonnet",
+      "summary": "複数の開発者による実証済み戦略：アーキテクチャ決定にはOpus 4.5を使用し、その後Shift+TabでSonnetに切り替えて高速実装。",
+      "readTime": "4",
+      "timeAgo": "5時間前"
+    },
+    {
+      "category": "AIツール",
+      "categoryClass": "tech",
+      "headline": "Simon Willison、LLM CLIツールに関数呼び出し機能を追加",
+      "summary": "LLMコマンドラインツールがOpenAI、Anthropic、Gemini、Ollama全体でツール呼び出しをサポート。Pythonの関数として定義するか、プラグインにバンドル可能。",
+      "readTime": "3",
+      "timeAgo": "6時間前"
+    }
+  ],
+  "middle": [
+    {
+      "category": "OpenClaw",
+      "categoryClass": "ai",
+      "gradient": "linear-gradient(135deg, #2d5a27 0%, #4a8a3f 100%)",
+      "headline": "ミッションコントロール構築：10個のAIエージェントが実際のチームとして協働",
+      "summary": "開発者が、専門化されたOpenClawエージェントが複雑なタスクで協力する完全なシステムアーキテクチャを共有。実用的なマルチエージェント連携パターンを実証。",
+      "author": "Bhanu (@ayushtweetshere)",
+      "readTime": "7"
+    },
+    {
+      "category": "Ollama",
+      "categoryClass": "tech",
+      "gradient": "linear-gradient(135deg, #1e3a5f 0%, #3498db 100%)",
+      "headline": "Claude Code + Ollama統合：5分でローカルモデルを実行",
+      "summary": "Claude CodeをOllama、llama.cpp、またはKimi、MiniMax、OpenRouterなどの安価な代替手段と接続する詳細ガイド。完全な設定ウォークスルー付き。",
+      "author": "Luong Nguyen (@luongnv89)",
+      "readTime": "8"
+    },
+    {
+      "category": "AI安全性",
+      "categoryClass": "research",
+      "gradient": "linear-gradient(135deg, #5b2c6f 0%, #8e44ad 100%)",
+      "headline": "OpenClawセキュリティベストプラクティス：サンドボックス、ホワイトリスト、監査コマンド",
+      "summary": "Peter Steinbergerが重要なガードレールを概説：サンドボックス有効化、外部コマンド用のホワイトリスト設定、最高のプロンプトインジェクション防御モデルの使用、セキュリティ監査の実行。",
+      "author": "Peter Steinberger (@steipete)",
+      "readTime": "5"
+    }
+  ],
+  "briefs": [
+    {
+      "headline": "DeepSeek-R1がOllamaで利用可能に",
+      "text": "1.5Bおよび7Bパラメータモデルは標準的なデスクトップPCで動作。シンプルなコマンド: ollama run deepseek-r1"
+    },
+    {
+      "headline": "Langflow、ローカルツール呼び出し用にQwen 2.5を追加",
+      "text": "Ollama経由でローカルモデルホスティング、エージェント設定、ツール統合によるプライバシー重視のAI。"
+    },
+    {
+      "headline": "sprites.dev、OpenClaw開発で注目を集める",
+      "text": "OpenClawインスタンスの実行とデプロイに最適化された開発者フレンドリーなプラットフォーム。"
+    },
+    {
+      "headline": "MCPプロトコルの採用が加速",
+      "text": "AnthropicのModel Context Protocolが、シームレスなAIツール統合のために急速にエンタープライズ採用を拡大。"
+    }
+  ],
+  "opinions": [
+    {
+      "authorLabel": "分析：",
+      "author": "Josh Pigford (@Shpigford)",
+      "headline": "OpenClawはビルディングブロック：あなたの脳がそれを組み立てる",
+      "excerpt": "人々は「何に使っているの？」と聞き続けるが、それは要点を見逃している。OpenClawの力は柔軟性にある。問題は何をするかではなく、ピースから何を組み立てられると想像できるかだ。"
+    },
+    {
+      "authorLabel": "コラム：",
+      "author": "Patrick Mineault (@patrickmineault)",
+      "headline": "科学者のためのClaude Code：データ処理と可視化を分離せよ",
+      "excerpt": "重要なヒント：データ処理には純粋なPython/Rを使用し、可視化コードは別にする。AIに処理とグラフ作成が混在したコードを書かせないこと。これにより信頼性と反復速度が劇的に向上する。"
+    }
+  ]
+}

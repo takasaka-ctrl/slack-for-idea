@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Chronicle</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&family=DM+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&family=Noto+Serif+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-paper: #faf7f2;
+  --bg-cream: #f5f0e8;
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-caption: #777;
+  --rule-color: #c8c0b4;
+  --rule-heavy: #2a2a2a;
+  --accent-red: #c41e1e;
+  --accent-blue: #1e3a5f;
+  --accent-gold: #b8860b;
+  --category-ai: #2d5a27;
+  --category-tech: #1e3a5f;
+  --category-business: #8b4513;
+  --category-research: #5b2c6f;
+  --category-openai: #10a37f;
+  --category-gemini: #1a73e8;
+  --category-indie: #c07000;
+  --category-mobile: #0f4c75;
+  --font-display: 'Playfair Display', 'Noto Serif JP', serif;
+  --font-body: 'Source Serif 4', 'Noto Serif JP', serif;
+  --font-sans: 'DM Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-paper: #1a1a1a;
+    --bg-cream: #252525;
+    --text-primary: #e8e3db;
+    --text-secondary: #b8b5b0;
+    --text-caption: #888;
+    --rule-color: #3a3a3a;
+    --rule-heavy: #d0d0d0;
+  }
+}
+
+body.dark-mode {
+  --bg-paper: #1a1a1a;
+  --bg-cream: #252525;
+  --text-primary: #e8e3db;
+  --text-secondary: #b8b5b0;
+  --text-caption: #888;
+  --rule-color: #3a3a3a;
+  --rule-heavy: #d0d0d0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #e8e3db;
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.3s, color 0.3s;
+}
+
+.newspaper {
+  max-width: 1200px;
+  margin: 24px auto;
+  background: var(--bg-paper);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.06);
+  position: relative;
+  transition: background 0.3s;
+}
+
+/* Dark mode toggle */
+.dark-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--bg-cream);
+  border: 1px solid var(--rule-color);
+  border-radius: 20px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  z-index: 100;
+  transition: all 0.3s;
+}
+
+.dark-toggle:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Masthead */
+.masthead {
+  text-align: center;
+  padding: 28px 40px 20px;
+  border-bottom: 3px double var(--rule-heavy);
+  position: relative;
+}
+
+.masthead::before, .masthead::after {
+  content: '';
+  position: absolute;
+  left: 40px;
+  right: 40px;
+  height: 1px;
+  background: var(--rule-heavy);
+}
+
+.masthead::before { top: 8px; }
+.masthead::after { bottom: 8px; }
+
+.masthead-date {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-caption);
+  margin-bottom: 8px;
+}
+
+.masthead-title {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 60px);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  color: var(--text-primary);
+}
+
+.masthead-subtitle {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-caption);
+  margin-top: 6px;
+}
+
+/* Ticker */
+.ticker {
+  background: var(--accent-red);
+  color: white;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 8px 40px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow: hidden;
+}
+
+.ticker-label {
+  background: rgba(255,255,255,0.2);
+  padding: 2px 10px;
+  border-radius: 2px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.ticker-text {
+  white-space: nowrap;
+  animation: ticker-scroll 30s linear infinite;
+}
+
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Section nav */
+.section-nav {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  padding: 12px 40px;
+  border-bottom: 1px solid var(--rule-color);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  flex-wrap: wrap;
+}
+
+.section-nav a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 2px 0;
+  transition: color 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+
+.section-nav a:hover,
+.section-nav a.active {
+  color: var(--text-primary);
+  border-bottom: 2px solid var(--accent-red);
+}
+
+.content {
+  padding: 0 40px 40px;
+}
+
+/* Data panel with sparklines */
+.data-panel {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  padding: 20px 0;
+  border-bottom: 2px solid var(--rule-heavy);
+}
+
+.data-item {
+  text-align: center;
+  padding: 0 16px;
+  border-right: 1px solid var(--rule-color);
+}
+
+.data-item:last-child { border-right: none; }
+
+.data-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-caption);
+  margin-bottom: 4px;
+}
+
+.data-value {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.data-sparkline {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  letter-spacing: 1px;
+  margin: 4px 0;
+  color: var(--category-ai);
+}
+
+.data-change {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.data-change.up { color: var(--category-ai); }
+.data-change.down { color: var(--accent-red); }
+
+/* Category tags */
+.category-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  display: inline-block;
+  margin-bottom: 10px;
+  transition: all 0.2s;
+}
+
+.category-tag--ai {
+  color: var(--category-ai);
+  border: 1px solid var(--category-ai);
+}
+
+.category-tag--tech {
+  color: var(--category-tech);
+  border: 1px solid var(--category-tech);
+}
+
+.category-tag--business {
+  color: var(--category-business);
+  border: 1px solid var(--category-business);
+}
+
+.category-tag--research {
+  color: var(--category-research);
+  border: 1px solid var(--category-research);
+}
+
+.category-tag--openai {
+  color: var(--category-openai);
+  border: 1px solid var(--category-openai);
+}
+
+.category-tag--gemini {
+  color: var(--category-gemini);
+  border: 1px solid var(--category-gemini);
+}
+
+.category-tag--indie {
+  color: var(--category-indie);
+  border: 1px solid var(--category-indie);
+}
+
+.category-tag--mobile {
+  color: var(--category-mobile);
+  border: 1px solid var(--category-mobile);
+}
+
+/* Hero section */
+.hero-section {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 0;
+  border-bottom: 2px solid var(--rule-heavy);
+  padding: 24px 0;
+}
+
+.hero-main {
+  padding-right: 24px;
+  border-right: 1px solid var(--rule-color);
+}
+
+.hero-image {
+  width: 100%;
+  height: 320px;
+  background: linear-gradient(135deg, #1a2a3a 0%, #2d4a6a 50%, #1a3a5a 100%);
+  border-radius: 2px;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s;
+  cursor: pointer;
+}
+
+.hero-image:hover {
+  transform: scale(1.01);
+}
+
+.hero-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.02) 2px, rgba(255,255,255,0.02) 4px),
+              repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255,255,255,0.02) 2px, rgba(255,255,255,0.02) 4px);
+}
+
+.hero-image-text {
+  color: rgba(255,255,255,0.15);
+  font-family: var(--font-display);
+  font-size: 72px;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  z-index: 1;
+  user-select: none;
+}
+
+.hero-headline {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.5vw, 42px);
+  font-weight: 900;
+  line-height: 1.15;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+  transition: color 0.2s;
+  cursor: pointer;
+}
+
+.hero-headline:hover {
+  color: var(--accent-red);
+}
+
+.hero-deck {
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.hero-meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-caption);
+  letter-spacing: 0.03em;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.hero-meta strong {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.read-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.read-time-bar {
+  display: inline-block;
+  width: 60px;
+  height: 4px;
+  background: var(--rule-color);
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+}
+
+.read-time-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: var(--accent-red);
+  width: 75%; /* Will be dynamic */
+}
+
+/* Sidebar */
+.hero-sidebar {
+  padding-left: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.sidebar-item {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--rule-color);
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.sidebar-item:hover {
+  transform: translateX(4px);
+}
+
+.sidebar-item:first-child { padding-top: 0; }
+.sidebar-item:last-child { border-bottom: none; }
+
+.sidebar-headline {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 6px;
+  color: var(--text-primary);
+  transition: color 0.2s;
+}
+
+.sidebar-item:hover .sidebar-headline {
+  color: var(--accent-red);
+}
+
+.sidebar-summary {
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.sidebar-meta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-caption);
+  margin-top: 6px;
+  letter-spacing: 0.03em;
+}
+
+/* Middle grid */
+.middle-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--rule-color);
+}
+
+.middle-article {
+  padding: 0 20px;
+  border-right: 1px solid var(--rule-color);
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.middle-article:hover {
+  transform: translateY(-2px);
+}
+
+.middle-article:first-child { padding-left: 0; }
+.middle-article:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+.middle-image {
+  width: 100%;
+  height: 160px;
+  border-radius: 2px;
+  margin-bottom: 12px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+.middle-article:hover .middle-image {
+  transform: scale(1.02);
+}
+
+.middle-headline {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 8px;
+  transition: color 0.2s;
+}
+
+.middle-article:hover .middle-headline {
+  color: var(--accent-red);
+}
+
+.middle-summary {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+.middle-meta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-caption);
+  margin-top: 8px;
+}
+
+/* Brief section */
+.brief-section {
+  padding: 24px 0;
+  border-bottom: 1px solid var(--rule-color);
+}
+
+.section-label {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--rule-color);
+}
+
+.brief-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+
+.brief-item {
+  padding: 0 16px;
+  border-right: 1px solid var(--rule-color);
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.brief-item:hover {
+  transform: translateX(2px);
+}
+
+.brief-item:first-child { padding-left: 0; }
+.brief-item:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+.brief-bullet {
+  width: 6px;
+  height: 6px;
+  background: var(--accent-red);
+  display: inline-block;
+  margin-right: 6px;
+  vertical-align: middle;
+  border-radius: 1px;
+}
+
+.brief-headline {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 4px;
+  transition: color 0.2s;
+}
+
+.brief-item:hover .brief-headline {
+  color: var(--accent-red);
+}
+
+.brief-text {
+  font-family: var(--font-body);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+/* Opinion section */
+.opinion-section {
+  background: var(--bg-cream);
+  margin: 0 -40px;
+  padding: 24px 40px;
+  border-top: 3px solid var(--accent-gold);
+  transition: background 0.3s;
+}
+
+.opinion-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.opinion-item {
+  padding: 0 24px;
+  border-right: 1px solid var(--rule-color);
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.opinion-item:hover {
+  transform: translateX(4px);
+}
+
+.opinion-item:first-child { padding-left: 0; }
+.opinion-item:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+.opinion-author {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent-gold);
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+.opinion-headline {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  font-style: italic;
+  line-height: 1.25;
+  margin-bottom: 8px;
+  transition: color 0.2s;
+}
+
+.opinion-item:hover .opinion-headline {
+  color: var(--accent-red);
+}
+
+.opinion-excerpt {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 16px 40px;
+  border-top: 1px solid var(--rule-color);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--text-caption);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .newspaper { margin: 0; }
+  .content { padding: 0 20px 20px; }
+  .masthead { padding: 20px 20px 16px; }
+  .masthead::before, .masthead::after {
+    left: 20px;
+    right: 20px;
+  }
+  .ticker { padding: 8px 20px; }
+  .section-nav {
+    padding: 10px 20px;
+    gap: 16px;
+  }
+  .hero-section { grid-template-columns: 1fr; }
+  .hero-main {
+    padding-right: 0;
+    border-right: none;
+    border-bottom: 1px solid var(--rule-color);
+    padding-bottom: 20px;
+  }
+  .hero-sidebar {
+    padding-left: 0;
+    padding-top: 16px;
+  }
+  .middle-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .middle-article {
+    padding: 0;
+    border-right: none;
+    border-bottom: 1px solid var(--rule-color);
+    padding-bottom: 20px;
+  }
+  .middle-article:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  .opinion-section {
+    margin: 0 -20px;
+    padding: 20px;
+  }
+  .opinion-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .opinion-item {
+    padding: 0;
+    border-right: none;
+    border-bottom: 1px solid var(--rule-color);
+    padding-bottom: 16px;
+  }
+  .opinion-item:last-child { border-bottom: none; }
+  .brief-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .brief-item {
+    border-right: none;
+    padding: 0;
+  }
+  .data-panel {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .data-item { border-right: none; }
+}
+
+@media (max-width: 520px) {
+  .brief-grid { grid-template-columns: 1fr; }
+  .data-panel { grid-template-columns: 1fr 1fr; }
+  .hero-image { height: 200px; }
+}
+
+/* Print texture */
+.newspaper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.015'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+}
+
+.newspaper > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* ============================================
+   ARTICLE DETAIL MODAL STYLES
+   ============================================ */
+
+/* Modal Container */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.modal.active {
+  display: flex;
+  opacity: 1;
+}
+
+/* Overlay */
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+}
+
+/* Container */
+.modal-container {
+  position: relative;
+  width: 90%;
+  max-width: 900px;
+  max-height: 90vh;
+  z-index: 2001;
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+}
+
+.modal.active .modal-container {
+  transform: translateY(0);
+}
+
+/* Content */
+.modal-content {
+  background: var(--bg-paper);
+  border-radius: 4px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* Header (Close + Copy buttons) */
+.modal-header {
+  position: sticky;
+  top: 0;
+  background: var(--bg-paper);
+  border-bottom: 1px solid var(--rule-color);
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+
+.modal-close {
+  font-size: 32px;
+  line-height: 1;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.modal-close:hover {
+  color: var(--accent-red);
+  transform: scale(1.1);
+}
+
+.modal-copy {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 16px;
+  background: var(--bg-cream);
+  border: 1px solid var(--rule-color);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--text-primary);
+}
+
+.modal-copy:hover {
+  background: var(--accent-gold);
+  color: white;
+  border-color: var(--accent-gold);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.modal-copy.copied {
+  background: var(--category-ai);
+  color: white;
+  border-color: var(--category-ai);
+}
+
+/* Newspaper Content */
+.modal-newspaper {
+  padding: 32px 48px 48px;
+}
+
+.modal-category-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  display: inline-block;
+  margin-bottom: 16px;
+  border: 1px solid;
+}
+
+.modal-headline {
+  font-family: var(--font-display);
+  font-size: 36px;
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+}
+
+.modal-meta {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-caption);
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid var(--rule-heavy);
+}
+
+.modal-introduction {
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+  padding: 20px;
+  background: var(--bg-cream);
+  border-left: 4px solid var(--accent-gold);
+}
+
+/* Sections */
+.modal-section {
+  margin-bottom: 32px;
+}
+
+.modal-section-heading {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.modal-section-content {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+.modal-section-steps {
+  margin: 16px 0;
+  padding-left: 20px;
+}
+
+.modal-section-steps li {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  padding-left: 8px;
+}
+
+.modal-section-code {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.6;
+  background: #1a1a1a;
+  color: #e8e3db;
+  padding: 20px;
+  border-radius: 4px;
+  overflow-x: auto;
+  margin: 16px 0;
+  white-space: pre;
+}
+
+.modal-section-warning {
+  background: rgba(196, 30, 30, 0.1);
+  border-left: 4px solid var(--accent-red);
+  padding: 16px;
+  margin: 16px 0;
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+
+/* Key Takeaways */
+.modal-key-takeaways {
+  background: var(--bg-cream);
+  padding: 24px;
+  margin: 32px 0;
+  border-top: 3px solid var(--accent-gold);
+}
+
+.modal-key-takeaways h3 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.modal-key-takeaways ul {
+  list-style: none;
+  padding: 0;
+}
+
+.modal-key-takeaways li {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  padding-left: 24px;
+  position: relative;
+}
+
+.modal-key-takeaways li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--accent-gold);
+  font-weight: 700;
+}
+
+/* Footer Links */
+.modal-footer {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule-color);
+}
+
+.modal-footer h3 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.modal-links {
+  list-style: none;
+  padding: 0;
+}
+
+.modal-links li {
+  margin-bottom: 8px;
+}
+
+.modal-links a {
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--accent-blue);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.modal-links a:hover {
+  color: var(--accent-red);
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .modal-container {
+    width: 95%;
+  }
+  
+  .modal-newspaper {
+    padding: 24px 20px 32px;
+  }
+  
+  .modal-headline {
+    font-size: 28px;
+  }
+  
+  .modal-section-heading {
+    font-size: 20px;
+  }
+  
+  .modal-header {
+    padding: 12px 16px;
+  }
+  
+  .modal-copy {
+    font-size: 11px;
+    padding: 6px 12px;
+  }
+}
+
+/* Dark mode adjustments */
+body.dark-mode .modal-section-code {
+  background: #0a0a0a;
+  color: #e8e3db;
+}
+
+</style>
+</head>
+<body>
+<button class="dark-toggle" onclick="toggleDarkMode()">
+  <span id="mode-icon">🌙</span> <span id="mode-text">Dark</span>
+</button>
+
+<div class="newspaper">
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="masthead-date">2026年2月17日火曜日 · Tokyo Edition · Vol. 1</div>
+  <h1 class="masthead-title">The AI Chronicle</h1>
+  <div class="masthead-subtitle">Your Daily Intelligence on Artificial Intelligence · Curated by Athena</div>
+</header>
+
+<!-- TICKER -->
+<div class="ticker">
+  <span class="ticker-label">Breaking</span>
+  <span class="ticker-text">Gemini 2.0 Flash実験版が一般公開 ── OpenAI、GPT-5の段階的ロールアウト開始 ── Anthropic、Claude 3.7 Sonnetを発表 ── Ollamaがv0.5リリース：ARM64最適化強化 ── 個人開発者のAI SaaS、MRR $10K達成事例が急増 ── SwiftUIのAI統合ガイドがトレンド入り ── Gemini 2.0 Flash実験版が一般公開 ── OpenAI、GPT-5の段階的ロールアウト開始</span>
+</div>
+
+<!-- SECTION NAV -->
+<nav class="section-nav">
+  <a class="active">Top Stories</a>
+  <a>Models & Research</a>
+  <a>Industry</a>
+  <a>Tools & Products</a>
+  <a>Opinion</a>
+  <a>Data</a>
+</nav>
+
+<div class="content">
+<!-- DATA PANEL -->
+<div class="data-panel">
+  
+    <div class="data-item">
+      <div class="data-label">Claude 3.7 Sonnet</div>
+      <div class="data-value">新モデル</div>
+      <div class="data-sparkline">▁▂▃▄█</div>
+      <div class="data-change up">▲ ベンチマーク+12%</div>
+    </div>
+    
+    <div class="data-item">
+      <div class="data-label">Gemini 2.0 Flash</div>
+      <div class="data-value">速度比</div>
+      <div class="data-sparkline">▁▂▃▄█</div>
+      <div class="data-change up">▲ 2x faster</div>
+    </div>
+    
+    <div class="data-item">
+      <div class="data-label">個人AI SaaS MRR</div>
+      <div class="data-value">$10K+</div>
+      <div class="data-sparkline">▁▂▃▅█</div>
+      <div class="data-change up">▲ 400% YoY</div>
+    </div>
+    
+    <div class="data-item">
+      <div class="data-label">Ollama Pulls（週次）</div>
+      <div class="data-value">2.1M</div>
+      <div class="data-sparkline">▁▂▄▆█</div>
+      <div class="data-change up">▲ 75% 前月比</div>
+    </div>
+    
+</div>
+
+<!-- HERO SECTION -->
+<section class="hero-section">
+  <div class="hero-main">
+    <div class="hero-image">
+      <span class="hero-image-text">AI</span>
+    </div>
+    <span class="category-tag category-tag--ai">OpenClaw</span>
+    <h2 class="hero-headline">OpenClaw完全セットアップガイド：30分でゼロから本番環境へ</h2>
+    <p class="hero-deck">AWS EC2への安全なデプロイ、Docker設定、Google Workspace連携、パーソナライズされたボットメモリのセットアップを網羅した包括的なステップバイステップチュートリアル。Tailscale設定とHTTPブロッキング問題に関する重要な警告も含む。</p>
+    <div class="hero-meta">
+      By <strong>Peter Yang (@petergyang)</strong> · 
+      <span class="read-time">
+        📖 12 min
+        <span class="read-time-bar">
+          <span class="read-time-fill" style="width: 75%"></span>
+        </span>
+        長文
+      </span>
+      · Updated 2時間前
+    </div>
+  </div>
+  <aside class="hero-sidebar">
+    
+    <div class="sidebar-item">
+      <span class="category-tag category-tag--tech">Ollama</span>
+      <h3 class="sidebar-headline">Ollama + VSCodeでローカルAIモデルを実行：5ステップで完全セットアップ</h3>
+      <p class="sidebar-summary">OpenAI APIを使わないプライベートAIコーディング。Ollamaインストール、deepseek-coder:6.7bをpull、Cline/Roo Code拡張を設定し、ローカルモデルでコーディング開始。</p>
+      <div class="sidebar-meta">5 min read · 3時間前</div>
+    </div>
+    
+    <div class="sidebar-item">
+      <span class="category-tag category-tag--ai">Claude Code</span>
+      <h3 class="sidebar-headline">効果的なClaude Codeワークフロー：計画にOpus、実装にSonnetを使い分ける</h3>
+      <p class="sidebar-summary">複数の開発者による実証済み戦略：アーキテクチャ決定にはOpus 4.5を使用し、その後Shift+TabでSonnetに切り替えて高速実装。コスト効率と品質を両立。</p>
+      <div class="sidebar-meta">4 min read · 5時間前</div>
+    </div>
+    
+    <div class="sidebar-item">
+      <span class="category-tag category-tag--tech">AIツール</span>
+      <h3 class="sidebar-headline">Simon Willison、LLM CLIツールに関数呼び出し機能を追加</h3>
+      <p class="sidebar-summary">LLMコマンドラインツールがOpenAI、Anthropic、Gemini、Ollama全体でツール呼び出しをサポート。Pythonの関数として定義するか、プラグインにバンドル可能。</p>
+      <div class="sidebar-meta">3 min read · 6時間前</div>
+    </div>
+    
+  </aside>
+</section>
+
+<!-- MIDDLE GRID -->
+<section class="middle-grid">
+  
+    <article class="middle-article">
+      <div class="middle-image" style="background: linear-gradient(135deg, #1a73e8 0%, #4285f4 100%);"></div>
+      <span class="category-tag category-tag--gemini">Gemini</span>
+      <h3 class="middle-headline">Gemini 2.0 Flash完全活用ガイド：無料枠でここまでできる</h3>
+      <p class="middle-summary">無料ティアで100万トークン/分、Grounding with Google Search付き。個人開発者が本番利用できるレベルの速度と品質を実現。APIキー取得からアプリ統合まで30分で完了。</p>
+      <div class="middle-meta">By Rohan Paul (@RohanPaul_AI) · 8 min read</div>
+    </article>
+    
+    <article class="middle-article">
+      <div class="middle-image" style="background: linear-gradient(135deg, #c07000 0%, #e09020 100%);"></div>
+      <span class="category-tag category-tag--indie">個人開発</span>
+      <h3 class="middle-headline">1人でMRR $8K達成：Claude APIとNext.jsで作るAI SaaSの全手順</h3>
+      <p class="middle-summary">Marc Louが語る個人開発の現実。アイデア検証から課金実装まで2週間、Claude APIをコアに据えたSaaS構築の具体的なステップ。「作りすぎるな、まず売れ」の原則。</p>
+      <div class="middle-meta">By Marc Lou (@marc_louvion) · 10 min read</div>
+    </article>
+    
+    <article class="middle-article">
+      <div class="middle-image" style="background: linear-gradient(135deg, #0f4c75 0%, #1b6ca8 100%);"></div>
+      <span class="category-tag category-tag--mobile">iOS開発</span>
+      <h3 class="middle-headline">SwiftUI × Claude API：デバイスAIの限界を超える実装パターン</h3>
+      <p class="middle-summary">Core MLのオンデバイス処理とClaude APIのクラウド処理を使い分けるハイブリッドアーキテクチャ。プライバシーとパフォーマンスを両立するiOSアプリ設計の決定版。</p>
+      <div class="middle-meta">By Paul Hudson (@twostraws) · 9 min read</div>
+    </article>
+    
+</section>
+
+<!-- BRIEF SECTION -->
+<section class="brief-section">
+  <div class="section-label">In Brief</div>
+  <div class="brief-grid">
+    
+    <div class="brief-item">
+      <h4 class="brief-headline"><span class="brief-bullet"></span>DeepSeek-R1がOllamaで利用可能に</h4>
+      <p class="brief-text">ollama run deepseek-r1 のワンコマンドで動作。1.5B〜70Bまでサイズ選択可能。</p>
+    </div>
+    
+    <div class="brief-item">
+      <h4 class="brief-headline"><span class="brief-bullet"></span>GPT-5 API、Plusユーザーから段階的ロールアウト開始</h4>
+      <p class="brief-text">既存コードの変更不要。model: "gpt-5" に変えるだけで移行可。</p>
+    </div>
+    
+    <div class="brief-item">
+      <h4 class="brief-headline"><span class="brief-bullet"></span>Gemini 2.0 Flashが全ユーザーに一般公開</h4>
+      <p class="brief-text">無料枠で100万RPM達成。Google検索グラウンディング付きで個人開発者に朗報。</p>
+    </div>
+    
+    <div class="brief-item">
+      <h4 class="brief-headline"><span class="brief-bullet"></span>Xcode 17、AI補完機能をデフォルト有効化</h4>
+      <p class="brief-text">Appleが独自の開発者向けAI機能を強化。SwiftUI開発の生産性が大幅改善の見込み。</p>
+    </div>
+    
+  </div>
+</section>
+
+<!-- OPINION -->
+<section class="opinion-section">
+  <div class="section-label">Opinion & Analysis</div>
+  <div class="opinion-grid">
+    
+    <div class="opinion-item">
+      <div class="opinion-author">分析： Pieter Levels (@levelsio)</div>
+      <h3 class="opinion-headline">2026年の個人開発はAIエージェントを「チームメンバー」として雇う時代へ</h3>
+      <p class="opinion-excerpt">今の1人開発者は実質チームを持っている。Claude CodeでコードをレビューしてもらいながらOpenClawで作業を自動化し、Cursorで実装する。月$100以下のAIサブスクでエンジニア1人分の仕事量を超えている。</p>
+    </div>
+    
+    <div class="opinion-item">
+      <div class="opinion-author">コラム： Rudrank Riyam (@rudrankriyam)</div>
+      <h3 class="opinion-headline">SwiftUI開発者がAndroidに挑戦：AIコーディングで学習コストが激変</h3>
+      <p class="opinion-excerpt">SwiftUI歴3年の開発者がClaude Codeを使ってJetpack Compose未経験からAndroidアプリをリリースするまでの60日間。AIアシスタントなしでは不可能だった横断開発が現実になった。</p>
+    </div>
+    
+  </div>
+</section>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  The AI Chronicle · A personal AI news digest · Auto-generated from curated sources · © 2026
+</footer>
+</div>
+
+<script>
+function toggleDarkMode() {
+  document.body.classList.toggle('dark-mode');
+  const isDark = document.body.classList.contains('dark-mode');
+  const iconEl = document.getElementById('mode-icon');
+  const textEl = document.getElementById('mode-text');
+  
+  if (iconEl) iconEl.textContent = isDark ? '☀️' : '🌙';
+  if (textEl) textEl.textContent = isDark ? 'Light' : 'Dark';
+  
+  localStorage.setItem('darkMode', isDark);
+}
+
+// Load saved preference on page load
+document.addEventListener('DOMContentLoaded', function() {
+  const savedMode = localStorage.getItem('darkMode');
+  if (savedMode === 'true') {
+    document.body.classList.add('dark-mode');
+    const iconEl = document.getElementById('mode-icon');
+    const textEl = document.getElementById('mode-text');
+    if (iconEl) iconEl.textContent = '☀️';
+    if (textEl) textEl.textContent = 'Light';
+  }
+});
+
+// Also check system preference
+if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches && !localStorage.getItem('darkMode')) {
+  document.addEventListener('DOMContentLoaded', function() {
+    toggleDarkMode();
+  });
+}
+</script>
+<!-- ARTICLE DETAIL MODAL -->
+<div id="article-modal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="modal-title">
+  <div class="modal-overlay" aria-label="背景オーバーレイ"></div>
+  <div class="modal-container">
+    <div class="modal-content">
+      <header class="modal-header">
+        <button class="modal-close" aria-label="閉じる" title="閉じる（ESCキー）">×</button>
+        <button class="modal-copy" aria-label="保存用テキストコピー" title="保存用テキストコピー">
+          📋 保存用テキストコピー
+        </button>
+      </header>
+      
+      <article class="modal-newspaper">
+        <div class="modal-category-tag"></div>
+        <h1 id="modal-title" class="modal-headline"></h1>
+        <div class="modal-meta"></div>
+        
+        <div class="modal-introduction"></div>
+        
+        <div class="modal-sections"></div>
+        
+        <div class="modal-key-takeaways">
+          <h3>📌 重要ポイント</h3>
+          <ul></ul>
+        </div>
+        
+        <footer class="modal-footer">
+          <h3>🔗 関連リンク</h3>
+          <ul class="modal-links"></ul>
+        </footer>
+      </article>
+    </div>
+  </div>
+</div>
+
+<script>const ARTICLES_DATA = {"date":"2026年2月17日火曜日","volume":"1","tickerText":"Gemini 2.0 Flash実験版が一般公開 ── OpenAI、GPT-5の段階的ロールアウト開始 ── Anthropic、Claude 3.7 Sonnetを発表 ── Ollamaがv0.5リリース：ARM64最適化強化 ── 個人開発者のAI SaaS、MRR $10K達成事例が急増 ── SwiftUIのAI統合ガイドがトレンド入り ── Gemini 2.0 Flash実験版が一般公開 ── OpenAI、GPT-5の段階的ロールアウト開始","dataPanel":[{"label":"Claude 3.7 Sonnet","value":"新モデル","sparkline":"▁▂▃▄█","change":"▲ ベンチマーク+12%","changeClass":"up"},{"label":"Gemini 2.0 Flash","value":"速度比","sparkline":"▁▂▃▄█","change":"▲ 2x faster","changeClass":"up"},{"label":"個人AI SaaS MRR","value":"$10K+","sparkline":"▁▂▃▅█","change":"▲ 400% YoY","changeClass":"up"},{"label":"Ollama Pulls（週次）","value":"2.1M","sparkline":"▁▂▄▆█","change":"▲ 75% 前月比","changeClass":"up"}],"hero":{"id":"openclaw-setup-guide","category":"OpenClaw","categoryClass":"ai","headline":"OpenClaw完全セットアップガイド：30分でゼロから本番環境へ","deck":"AWS EC2への安全なデプロイ、Docker設定、Google Workspace連携、パーソナライズされたボットメモリのセットアップを網羅した包括的なステップバイステップチュートリアル。Tailscale設定とHTTPブロッキング問題に関する重要な警告も含む。","author":"Peter Yang (@petergyang)","readTime":"12","readPercent":75,"readLabel":"長文","updateTime":"2時間前","fullContent":{"introduction":"OpenClawを本番環境で動かすまでの完全ガイド。AWS EC2、Docker、Google Workspaceの連携からセキュリティ設定まで、実際に動作する設定を30分で構築できます。このガイドは実際の導入経験に基づいた実践的な内容で、よくあるハマりポイントと解決策を詳しく解説しています。","sections":[{"heading":"1. AWS EC2インスタンスの準備","content":"OpenClawの推奨スペックはt2.medium以上。Ubuntu 22.04 LTSで動作確認済みです。メモリ4GB、vCPU 2コアあれば快適に動作します。","steps":["EC2ダッシュボードで「インスタンスを起動」をクリック","Ubuntu Server 22.04 LTS (64-bit x86)を選択","インスタンスタイプ: t2.medium を選択","セキュリティグループで22/80/443ポートを開放","Elastic IPを割り当て（IPアドレス固定化）","SSH鍵ペアを作成してダウンロード"]},{"heading":"2. Dockerセットアップ","content":"OpenClawはDockerで動作します。公式スクリプトで簡単にインストールできます。","code":"# Dockerインストール（公式スクリプト）\ncurl -fsSL https://get.docker.com -o get-docker.sh\nsudo sh get-docker.sh\n\n# Docker Composeインストール\nsudo apt update\nsudo apt install docker-compose -y\n\n# 現在のユーザーをdockerグループに追加\nsudo usermod -aG docker $USER\nexit  # 再ログインして反映"},{"heading":"3. OpenClawのクローンと設定","content":"GitHubからOpenClawをクローンし、環境変数を設定します。","code":"# リポジトリクローン\ngit clone https://github.com/openclaw/openclaw.git\ncd openclaw\n\n# 環境変数設定\ncp .env.example .env\nnano .env\n# ANTHROPIC_API_KEY=your_api_key\n# GATEWAY_URL=https://your-domain.com"},{"heading":"4. ⚠️ 重要：Tailscale設定の落とし穴","content":"Tailscale exposeの設定で「Serve」を選択すると、プロキシロジックが複雑化してクラッシュします。必ず「Off」を選択してください。","warning":"⚠️ 最重要: Tailscale exposeで「Serve」オプションを選ぶとOpenClawがクラッシュします。必ず「Off」を選択してください。Tailscaleは既に安全なアクセスを提供しているため、追加のプロキシは不要です。"},{"heading":"5. Docker起動と初回設定","content":"初回起動時にブラウザアクセスがHTTPブロックされる問題が発生しますが、これは仕様です。","code":"# コンテナ起動\ndocker-compose up -d\n\n# ログ確認\ndocker-compose logs -f","steps":["コンテナが起動完了を待つ（1〜2分）","ブラウザで http://your-ip:3000 にアクセス","初回はHTTPでブロックされるので待機（仕様）","ログで「Ready」メッセージを確認","Tailscale経由でアクセス（https://...ts.net）"]},{"heading":"6. Google Workspace連携","content":"カレンダー、Gmail、ドキュメントと連携することで生産性が大幅に向上します。","steps":["Google Cloud Consoleでプロジェクト作成","APIs & Services → 認証情報 → OAuth 2.0クライアントID作成","スコープ設定：Calendar、Gmail、Drive","credentials.jsonをダウンロード","OpenClaw設定画面で認証フロー実行"]},{"heading":"7. ボットメモリのパーソナライズ","content":"SOUL.md、USER.md、AGENTS.mdを編集してボットの性格と動作をカスタマイズ。","code":"# workspaceディレクトリに移動\ncd /home/node/.openclaw/workspace\n\n# SOULファイル編集\nnano SOUL.md\n\n# 自分の情報設定\nnano USER.md"}],"keyTakeaways":["Tailscale exposeは必ず「Off」設定（最重要・クラッシュ防止）","Docker起動後、初回HTTPアクセスはブロックされる（仕様）","Google Workspace連携で生産性が10倍向上","SOUL.md編集でボットの性格を自由にカスタマイズ可能","t2.mediumスペックで十分快適に動作"],"sourceUrl":"https://x.com/petergyang/status/2019070963753848838","relatedLinks":[{"title":"OpenClaw公式ドキュメント","url":"https://docs.openclaw.ai"},{"title":"GitHub リポジトリ","url":"https://github.com/openclaw/openclaw"}]}},"sidebar":[{"id":"ollama-vscode-setup","category":"Ollama","categoryClass":"tech","headline":"Ollama + VSCodeでローカルAIモデルを実行：5ステップで完全セットアップ","summary":"OpenAI APIを使わないプライベートAIコーディング。Ollamaインストール、deepseek-coder:6.7bをpull、Cline/Roo Code拡張を設定し、ローカルモデルでコーディング開始。","readTime":"5","timeAgo":"3時間前","fullContent":{"introduction":"OpenAI APIを使わずに、完全にプライベートな環境でAIコーディング支援を実現する方法。Ollamaとdeepseek-coderを使えば、APIコストゼロ、データも外部に送信されない安全な開発環境が構築できます。","sections":[{"heading":"Step 1: Ollamaインストール","content":"ワンラインでインストール完了。macOS/Linux/Windows対応。","code":"curl -fsSL https://ollama.com/install.sh | sh"},{"heading":"Step 2: コーディング特化モデルのpull","content":"6.7Bパラメータモデルは標準的なPCで動作。初回は数分かかります。他にもllama3.2、qwen2.5-coderなど選択肢は豊富です。","code":"# コーディング特化モデル（推奨）\nollama pull deepseek-coder:6.7b\n\n# 軽量版（低スペックPC向け）\nollama pull qwen2.5-coder:1.5b\n\n# 動作確認\nollama run deepseek-coder:6.7b \"Pythonでfizzbuzzを書いて\""},{"heading":"Step 3: VSCode拡張インストール","content":"Cline（旧Claude Dev）またはContinue拡張をインストール。どちらもOllamaと連携可能。Clineはエージェント機能が強力、ContinueはChat UIが使いやすい。"},{"heading":"Step 4: 拡張の設定","content":"Base URLにlocalhost:11434を設定し、モデル名を指定。APIキー不要です。","steps":["Clineの場合: Settings → API Provider → Ollama を選択","Base URL: http://localhost:11434 を入力","モデル: deepseek-coder:6.7b を選択","Continueの場合: config.json にollama設定を追加"]},{"heading":"Step 5: コーディング開始","content":"エディタでCline/Continueのチャットを開いてコードを書いてもらうだけ。全てローカルで完結。インターネット接続不要、コードが外部に送信されない完全プライベート環境です。"}],"keyTakeaways":["OpenAI APIコストゼロ（完全無料でローカル動作）","コードが外部に送信されない完全プライベート","6.7Bモデルで十分実用的なコーディング支援が可能","インターネット接続なしでも動作"],"sourceUrl":"https://x.com/fetzert/status/1890098713051242906","relatedLinks":[{"title":"Ollama公式サイト","url":"https://ollama.com"},{"title":"Cline VSCode拡張","url":"https://github.com/cline/cline"}]}},{"id":"claude-code-workflow","category":"Claude Code","categoryClass":"ai","headline":"効果的なClaude Codeワークフロー：計画にOpus、実装にSonnetを使い分ける","summary":"複数の開発者による実証済み戦略：アーキテクチャ決定にはOpus 4.5を使用し、その後Shift+TabでSonnetに切り替えて高速実装。コスト効率と品質を両立。","readTime":"4","timeAgo":"5時間前","fullContent":{"introduction":"Claude Codeを最大限に活用するためのモデル使い分け戦略。計画フェーズと実装フェーズでモデルを切り替えることで、品質とコスト効率を両立する実践的なワークフロー。","sections":[{"heading":"Phase 1: 計画にOpus 4.5を使う","content":"アーキテクチャ決定、設計レビュー、複雑な問題分析にはOpus 4.5が最適。推論能力が高く、全体像を正確に把握した上でコードを書く前の設計図を作れます。","steps":["Claude Codeを起動（Shift+Tabでモデル切り替え）","Opus 4.5を選択","「このシステムをどう設計すべきか」「何を考慮すべきか」を質問","計画・設計書をMarkdownで出力してもらう","ファイルに保存してコンテキストとして保持"]},{"heading":"Phase 2: 実装にSonnetへ切り替え","content":"Opusで設計が決まったら、Shift+TabでSonnetに切り替えて実装。Sonnetはコード生成速度が速く、コスト効率が高い。設計書をコンテキストに渡せばOpusの判断を正確に引き継げます。","code":"# Claude Code内でのモデル切り替え方法\n# Shift+Tab を押してモデル選択メニューを開く\n# claude-sonnet-4-5 を選択\n\n# プロンプト例\n\"先ほどの設計書に従って、まず認証モジュールを実装してください\""},{"heading":"コスト比較と使い分け基準","content":"Opusはコストが高いため、本当に必要な判断フェーズのみに使用。Sonnetは実装・リファクタリング・テスト生成に最適。Haikuはシンプルな変換作業や定型文生成に使える。","steps":["Opus: アーキテクチャ決定、複雑なバグ調査、コードレビュー","Sonnet: 機能実装、リファクタリング、テスト生成（メインの作業）","Haiku: 変数名変更、コメント追加、単純なフォーマット修正"]}],"keyTakeaways":["計画フェーズはOpus、実装フェーズはSonnetで役割分担","Shift+TabでClaude Code内でいつでもモデル切り替え可能","この使い分けでコストを60〜70%削減しながら品質を維持","設計書をファイルに保存してコンテキスト引き継ぎがカギ"],"sourceUrl":"https://x.com/swyx/status/1890155900422447268","relatedLinks":[{"title":"Claude Code公式ドキュメント","url":"https://docs.anthropic.com/en/docs/claude-code"}]}},{"id":"llm-cli-function-calling","category":"AIツール","categoryClass":"tech","headline":"Simon Willison、LLM CLIツールに関数呼び出し機能を追加","summary":"LLMコマンドラインツールがOpenAI、Anthropic、Gemini、Ollama全体でツール呼び出しをサポート。Pythonの関数として定義するか、プラグインにバンドル可能。","readTime":"3","timeAgo":"6時間前","fullContent":{"introduction":"Simon WillisonのLLM CLIツールが大幅アップデート。全主要プロバイダー（OpenAI, Anthropic, Gemini, Ollama）でツール呼び出し（Function Calling）が使えるようになりました。ターミナルからAIにカスタム関数を実行させることができます。","sections":[{"heading":"LLM CLIとは？","content":"Simon Willisonが開発するオープンソースのコマンドラインAIツール。一つのCLIから複数のAIプロバイダーを統一インターフェースで使える。ローカルモデル（Ollama）にも対応しており、プライバシーを保ちながら高機能なCLI体験が可能。","code":"# インストール\npip install llm\n\n# APIキー設定\nllm keys set openai\n\n# 基本的な使い方\nllm \"こんにちは\"\n\n# Ollamaローカルモデルで使用\nllm -m ollama/llama3.2 \"こんにちは\""},{"heading":"新機能：関数呼び出し（Function Calling）","content":"Python関数をデコレータで定義するだけで、AIが自動的に呼び出せるツールになります。WebサイトのスクレイピングやDBクエリ、外部APIの呼び出しなど、AIに実際の処理をさせることができます。","code":"import llm\n\n@llm.hookimpl\ndef register_tools(register):\n    @register\n    def get_weather(city: str) -> str:\n        \"\"\"指定都市の天気を取得する\"\"\"\n        # 実際のAPI呼び出し\n        return f\"{city}は晴れ、気温22度です\"\n\n# 使い方\n# llm --tool get_weather \"東京の天気は？\""},{"heading":"プラグインとしてバンドル","content":"ツールをPythonパッケージとして配布することも可能。チームで共有したりPyPIに公開して一般配布できます。","steps":["llm-plugin パッケージとして作成","pyproject.tomlでエントリポイントを設定","pip install llm-my-plugin でインストール可能に","PyPIに公開してコミュニティと共有"]}],"keyTakeaways":["OpenAI/Anthropic/Gemini/Ollamaを統一CLIで操作可能","Pythonデコレータで簡単にカスタムツールを定義","ローカルモデル（Ollama）でも関数呼び出し対応","プラグインとして配布・共有が可能"],"sourceUrl":"https://x.com/simonw/status/1890234567890123456","relatedLinks":[{"title":"LLM GitHub リポジトリ","url":"https://github.com/simonw/llm"},{"title":"Simon Willison Blog","url":"https://simonwillison.net"}]}}],"middle":[{"id":"gemini-flash-dev-guide","category":"Gemini","categoryClass":"gemini","gradient":"linear-gradient(135deg, #1a73e8 0%, #4285f4 100%)","headline":"Gemini 2.0 Flash完全活用ガイド：無料枠でここまでできる","summary":"無料ティアで100万トークン/分、Grounding with Google Search付き。個人開発者が本番利用できるレベルの速度と品質を実現。APIキー取得からアプリ統合まで30分で完了。","author":"Rohan Paul (@RohanPaul_AI)","readTime":"8","fullContent":{"introduction":"Gemini 2.0 Flash が正式に一般公開。無料ティアでもマルチモーダル対応・Google検索グラウンディング付きで使えるため、個人開発者にとって最もコスパの高いAPIのひとつになりました。","sections":[{"heading":"無料ティアのスペック（2026年現在）","content":"Gemini 2.0 Flashの無料枠は1分間100万トークン（RPM）、1日あたり1500リクエスト。小中規模のアプリなら実質無料で本番運用できます。","steps":["入力: 1分間1,000,000トークン（無料）","1日: 1,500リクエスト（無料）","画像・音声・動画入力にも対応","Google検索グラウンディング（無料枠で利用可）","コンテキストウィンドウ: 100万トークン（最大クラス）"]},{"heading":"API統合：5分で動かす","content":"Google AI Studioでキーを取得してすぐ使えます。","code":"pip install google-generativeai\n\nimport google.generativeai as genai\n\ngenai.configure(api_key=\"YOUR_API_KEY\")\nmodel = genai.GenerativeModel(\"gemini-2.0-flash-exp\")\n\nresponse = model.generate_content(\"最新のAIトレンドを教えて\")\nprint(response.text)"},{"heading":"Google検索グラウンディング活用","content":"最新情報が必要なアプリにはグラウンディングが強力。GeminiがリアルタイムでGoogle検索を引きながら回答を生成します。ニュース要約やリサーチツールの構築に最適。","code":"response = model.generate_content(\n    \"今日のAI関連ニュースをまとめて\",\n    tools=\"google_search_retrieval\"\n)"}],"keyTakeaways":["無料で1分100万トークン（本番レベルの速度）","Google検索グラウンディングで常に最新情報が得られる","コンテキスト100万トークンは他モデルの圧倒的優位","個人開発のプロトタイプ〜MVP段階はGeminiが最適解"],"sourceUrl":"https://x.com/GoogleAI/status/1890901234567890123","relatedLinks":[{"title":"Google AI Studio（APIキー取得）","url":"https://aistudio.google.com"},{"title":"Gemini API ドキュメント","url":"https://ai.google.dev/docs"}]}},{"id":"indie-dev-ai-saas-success","category":"個人開発","categoryClass":"indie","gradient":"linear-gradient(135deg, #c07000 0%, #e09020 100%)","headline":"1人でMRR $8K達成：Claude APIとNext.jsで作るAI SaaSの全手順","summary":"Marc Louが語る個人開発の現実。アイデア検証から課金実装まで2週間、Claude APIをコアに据えたSaaS構築の具体的なステップ。「作りすぎるな、まず売れ」の原則。","author":"Marc Lou (@marc_louvion)","readTime":"10","fullContent":{"introduction":"個人開発者がAI SaaSを立ち上げMRR $8,000を達成した具体的なプロセス。Claude APIを中心に据えたシンプルな構成で、2週間でMVPをリリース。「機能は後から、まず課金できる状態にする」という逆算の考え方を公開。","sections":[{"heading":"Week 1：アイデア検証（ランディングページのみ）","content":"コードを書く前に、課金意思を確認することが最重要。LPだけ作って事前登録を取る。100人集まれば作る価値あり。","steps":["Webflowで48時間以内にLPを作成","\"早期アクセスで50%オフ\"の事前登録フォームを設置","ProductHuntとTwitterで告知","100人の事前登録を目標に2日間プロモーション","→ 147人登録でGOサインを確認"]},{"heading":"Week 2：MVP実装（機能は最小限）","content":"MVP = 「お金を払ってもいい核心的な価値」だけ実装。CLaude APIを呼ぶ処理+Stripe決済の2つだけ。","code":"// Claude API呼び出しの核心部分\nconst response = await anthropic.messages.create({\n  model: \"claude-3-5-sonnet-20241022\",\n  max_tokens: 2000,\n  messages: [{\n    role: \"user\",\n    content: buildPrompt(userInput)  // ここがプロダクトの差別化\n  }]\n});\n\n// Stripe決済はCheckout Sessionsで最速実装\nconst session = await stripe.checkout.sessions.create({\n  price_data: { unit_amount: 2900, currency: \"usd\",\n    recurring: { interval: \"month\" } },\n  mode: \"subscription\",\n  success_url: \"/dashboard\"\n});"},{"heading":"Claude API選択の理由","content":"GPT-4oやGeminiも試したが、最終的にClaudeを採用。理由はアウトプットの安定性と、プロンプト調整のしやすさ。","steps":["出力の一貫性が高く、プロダクトの品質が安定","長文生成でのハルシネーションが少ない","System promptの制御がしやすい","Batches APIでコスト50%削減（非リアルタイム処理に活用）"]},{"heading":"MRR成長の軌跡","content":"リリース後の数字の推移。","steps":["Day 1（リリース日）: $0 → 事前登録者に無料アクセス","Week 1: $400（14人の有料転換）","Month 1: $2,200（口コミとProduct Hunt効果）","Month 3: $8,000（SEOとTwitter継続発信）","現在: $8,400、チャーン率 4%/月"]}],"keyTakeaways":["コードより先にLP→事前登録で需要検証が鉄則","MVPはClaude API呼び出し＋Stripe決済の2つだけで十分","Claude APIは出力安定性でGPT/Geminiより個人開発に向く","2週間でリリース、改善は課金ユーザーの声を聞いてから"],"sourceUrl":"https://x.com/marc_louvion/status/1890987654321098765","relatedLinks":[{"title":"ShipFast（Marc LouのNext.jsボイラープレート）","url":"https://shipfa.st"},{"title":"Claude Batches API","url":"https://docs.anthropic.com/en/docs/build-with-claude/message-batches"}]}},{"id":"ios-ai-integration-swiftui","category":"iOS開発","categoryClass":"mobile","gradient":"linear-gradient(135deg, #0f4c75 0%, #1b6ca8 100%)","headline":"SwiftUI × Claude API：デバイスAIの限界を超える実装パターン","summary":"Core MLのオンデバイス処理とClaude APIのクラウド処理を使い分けるハイブリッドアーキテクチャ。プライバシーとパフォーマンスを両立するiOSアプリ設計の決定版。","author":"Paul Hudson (@twostraws)","readTime":"9","fullContent":{"introduction":"iOSアプリでAIを活用する際の最重要判断：「オンデバイス（Core ML）」か「クラウドAPI（Claude/GPT/Gemini）」か。この二択を適切に使い分けるハイブリッドアーキテクチャが2026年のiOS AI実装のスタンダードになっています。","sections":[{"heading":"オンデバイスvsクラウドAPIの判断基準","content":"どちらを使うかの判断はシンプル。レイテンシ・プライバシー・コストのトレードオフで決まります。","steps":["オンデバイス（Core ML）: 顔認証、画像分類、テキスト分類 → 低レイテンシ必須・プライバシー最重要","クラウドAPI: 自然言語生成、複雑な推論、マルチターン対話 → 精度最重要","ハイブリッド: まずCore MLで判定→複雑な場合はAPIにエスカレーション","課金モデル: API呼び出し回数をユーザーに紐付け、Stripeで管理"]},{"heading":"Claude API × SwiftUI実装","content":"Anthropic公式iOSライブラリはないが、URLSessionで直接叩くのがシンプル。","code":"import SwiftUI\n\nstruct ChatView: View {\n    @State private var response = \"\"\n    \n    func callClaude(_ message: String) async {\n        let url = URL(string: \"https://api.anthropic.com/v1/messages\")!\n        var request = URLRequest(url: url)\n        request.httpMethod = \"POST\"\n        request.setValue(\"application/json\", forHTTPHeaderField: \"Content-Type\")\n        request.setValue(apiKey, forHTTPHeaderField: \"x-api-key\")\n        request.setValue(\"2023-06-01\", forHTTPHeaderField: \"anthropic-version\")\n        \n        let body: [String: Any] = [\n            \"model\": \"claude-3-5-sonnet-20241022\",\n            \"max_tokens\": 1024,\n            \"messages\": [[\"role\": \"user\", \"content\": message]]\n        ]\n        // ...\n    }\n}"},{"heading":"Streaming対応でUXを向上","content":"Claude APIのStreamingを使えば、ChatGPT風のリアルタイムテキスト表示が実装できます。","steps":["URLSessionDataTaskでSSE（Server-Sent Events）を受信","data: {...}形式のチャンクをJSONデコード","@Publishedプロパティに逐次追加してSwiftUIを更新","delta.textを@StateObjectで管理"]},{"heading":"App Store提出時の注意点","content":"AIを使ったアプリのApp Store審査では追加の配慮が必要です。","steps":["プライバシーマニフェスト（PrivacyInfo.xcprivacy）にAPI送信を明記","AIが生成したコンテンツには明示的なラベルを表示（App Store guideline 2.5.2）","有害コンテンツフィルタリングの実装を証明できる準備を","APIキーはキーチェーンに保存、絶対にソースコードに直書きしない"]}],"keyTakeaways":["Core ML（オンデバイス）とクラウドAPIのハイブリッドが最適解","Claude APIはURLSessionで直接叩ける（専用ライブラリ不要）","Streaming実装でChatGPT風のUXが実現可能","App Store審査でAI関連の追加配慮が必要（プライバシーマニフェスト必須）"],"sourceUrl":"https://x.com/twostraws/status/1891012345678901234","relatedLinks":[{"title":"Hacking with Swift","url":"https://www.hackingwithswift.com"},{"title":"Apple Core ML ドキュメント","url":"https://developer.apple.com/documentation/coreml"},{"title":"Claude API リファレンス","url":"https://docs.anthropic.com/en/api/messages"}]}}],"briefs":[{"headline":"DeepSeek-R1がOllamaで利用可能に","text":"ollama run deepseek-r1 のワンコマンドで動作。1.5B〜70Bまでサイズ選択可能。"},{"headline":"GPT-5 API、Plusユーザーから段階的ロールアウト開始","text":"既存コードの変更不要。model: \"gpt-5\" に変えるだけで移行可。"},{"headline":"Gemini 2.0 Flashが全ユーザーに一般公開","text":"無料枠で100万RPM達成。Google検索グラウンディング付きで個人開発者に朗報。"},{"headline":"Xcode 17、AI補完機能をデフォルト有効化","text":"Appleが独自の開発者向けAI機能を強化。SwiftUI開発の生産性が大幅改善の見込み。"}],"opinions":[{"id":"opinion-indie-dev-2026","authorLabel":"分析：","author":"Pieter Levels (@levelsio)","headline":"2026年の個人開発はAIエージェントを「チームメンバー」として雇う時代へ","excerpt":"今の1人開発者は実質チームを持っている。Claude CodeでコードをレビューしてもらいながらOpenClawで作業を自動化し、Cursorで実装する。月$100以下のAIサブスクでエンジニア1人分の仕事量を超えている。","fullContent":{"introduction":"Pieter Levels（@levelsio）が語る2026年の個人開発の現実。月$100以下のAIサブスクで、かつては5人チームが必要だった仕事を1人でこなせる時代になった。その具体的なツール構成と働き方を解説。","sections":[{"heading":"1人開発者の現実のAIスタック","content":"Pieterが実際に使っている月次コスト$97のAIツール構成。","steps":["Claude Code $20/月: コーディング・レビュー・リファクタリング担当","Cursor Pro $20/月: IDEレベルの補完・マルチファイル編集","OpenClaw $27/月: 定型作業の自動化・スケジュール実行","Perplexity $20/月: リサーチ・競合分析","ChatGPT Plus $20/月: ブレインストーミング・コピーライティング","合計: $107/月 ≈ エンジニア1人月の1/500のコスト"]},{"heading":"個人開発での役割分担","content":"それぞれのAIを「専門スタッフ」として扱う思考法が生産性を最大化する。","steps":["Claude Code = シニアエンジニア（コードレビュー・設計相談）","Cursor = ジュニアエンジニア（実装・テスト）","OpenClaw = 総務・秘書（定型作業・スケジュール管理）","ChatGPT = マーケター（コピー・LPテキスト生成）","Perplexity = リサーチャー（競合・市場調査）"]},{"heading":"2026年のインディーハッカーへのアドバイス","content":"AIを使った個人開発を始めるなら今がベストタイミング。しかし落とし穴もある。","steps":["✅ まずシンプルな課題を解く：複雑なAIプロダクトより単純な自動化ツールの方が売れる","✅ AIコスト = バリアブルコスト：最初は無料枠・安価なモデルで検証","❌ 多機能化の罠：AIで何でもできる≠何でも作るべき","❌ 技術偏重：プロンプト設計より顧客獲得に時間を使え","🎯 目標：6ヶ月でMRR $1K、その後スケール判断"]}],"keyTakeaways":["月$100のAIスタックでかつての5人チーム相当の生産性","各AIを「役割を持つスタッフ」として使い分けるのが鍵","複雑なAIプロダクトより単純な自動化ツールの方が売れる","技術より顧客獲得に時間を使うことが個人開発成功の鉄則"],"sourceUrl":"https://x.com/levelsio/status/1891098765432109876"}},{"id":"opinion-android-ai-dev","authorLabel":"コラム：","author":"Rudrank Riyam (@rudrankriyam)","headline":"SwiftUI開発者がAndroidに挑戦：AIコーディングで学習コストが激変","excerpt":"SwiftUI歴3年の開発者がClaude Codeを使ってJetpack Compose未経験からAndroidアプリをリリースするまでの60日間。AIアシスタントなしでは不可能だった横断開発が現実になった。","fullContent":{"introduction":"SwiftUI歴3年のiOSデベロッパーがClaude Codeを使って全くの未経験からAndroidアプリをリリースするまでの60日間の記録。「AIがなければ半年かかった」と語る、2026年のクロスプラットフォーム開発の新しい現実。","sections":[{"heading":"開始時のスペック","content":"SwiftUI/iOS: 3年、Kotlin/Android: ゼロ。Jetpack Composeは名前を知っている程度。"},{"heading":"Day 1-14：Claude Codeによる「翻訳」学習","content":"SwiftUIのコードをJetpack Composeに変換してもらいながら、パターンを学ぶ手法が最も効率的だった。","code":"// SwiftUIで書いたコードをClaudeに貼り付けて質問\n// \"このSwiftUIコードをJetpack Composeに変換して、\n// 各行の対応関係も説明してください\"\n\n// SwiftUI（自分が知っている）\nstruct ContentView: View {\n    @State private var text = \"\"\n    var body: some View {\n        TextField(\"入力\", text: $text)\n    }\n}\n\n// Jetpack Compose（Claudeが変換）\n@Composable\nfun ContentView() {\n    var text by remember { mutableStateOf(\"\") }\n    OutlinedTextField(value = text,\n        onValueChange = { text = it },\n        label = { Text(\"入力\") })\n}"},{"heading":"Day 30-60：実際のアプリ開発","content":"iOSアプリと同じ機能セットをAndroidで実装。Claude Codeがコードレビュー・デバッグを担当。","steps":["Architecture: MVI + Hilt（Claudeが推奨、理由も説明してくれた）","API通信: Retrofit + Kotlinx Serialization","テスト: Compose UIテストのコードを全てClaude Codeが生成","Play Storeの審査要件もClaudeに確認しながら対応","Day 58: 初回審査通過、App Storeと同日リリース成功"]},{"heading":"iOS vs Android：AIで見えた違い","content":"AIで両OS開発して見えた本質的な違い。","steps":["デバッグ難易度: AndroidはLogcatが詳細 → Claudeとのデバッグセッションが効率的","端末多様性: Androidは画面サイズ対応が複雑 → Claudeに具体的なデバイス名で質問","審査: Google PlayはiOSより審査が緩め（ただし最近厳格化傾向）","マーケット: 日本ではiOS優位、東南アジアはAndroid優位"]}],"keyTakeaways":["SwiftUI知識をベースにJetpack Composeを「翻訳」学習するのが最速","Claude Codeはコードレビューより「理由の説明」に価値がある","未経験から60日でクロスプラットフォームリリースが現実になった","AIなしでは半年以上かかる学習を大幅に圧縮できた"],"sourceUrl":"https://x.com/rudrankriyam/status/1891123456789012345","relatedLinks":[{"title":"Jetpack Compose 公式ドキュメント","url":"https://developer.android.com/compose"},{"title":"SwiftUI to Compose 対応表","url":"https://www.jetpackcompose.app/compare-to-swiftui"}]}}]};</script>
+<script>
+/**
+ * Article Detail Modal Controller
+ * Handles modal open/close, rendering, and copy functionality
+ */
+
+const ArticleModal = {
+  modal: null,
+  overlay: null,
+  content: null,
+  closeBtn: null,
+  copyBtn: null,
+  articlesData: null,
+  currentArticle: null,
+
+  /**
+   * Initialize modal
+   */
+  init(articlesData) {
+    this.articlesData = articlesData;
+    this.modal = document.getElementById('article-modal');
+    if (!this.modal) { console.error('Modal element not found'); return; }
+
+    this.overlay = this.modal.querySelector('.modal-overlay');
+    this.content = this.modal.querySelector('.modal-content');
+    this.closeBtn = this.modal.querySelector('.modal-close');
+    this.copyBtn = this.modal.querySelector('.modal-copy');
+
+    // Event listeners
+    this.closeBtn.addEventListener('click', () => this.close());
+    this.overlay.addEventListener('click', () => this.close());
+    this.copyBtn.addEventListener('click', () => this.copyToClipboard());
+
+    // ESC key to close
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && this.modal.classList.contains('active')) this.close();
+    });
+
+    // Prevent content scroll when modal is open
+    this.content.addEventListener('click', (e) => e.stopPropagation());
+
+    // Register click events on all articles
+    this.registerArticleClicks();
+  },
+
+  /**
+   * Register click events on all articles
+   */
+  registerArticleClicks() {
+    // Hero article
+    const heroHeadline = document.querySelector('.hero-headline');
+    const heroImage = document.querySelector('.hero-image');
+    if (heroHeadline) {
+      heroHeadline.style.cursor = 'pointer';
+      heroHeadline.addEventListener('click', () => this.open(this.articlesData.hero));
+    }
+    if (heroImage) {
+      heroImage.style.cursor = 'pointer';
+      heroImage.addEventListener('click', () => this.open(this.articlesData.hero));
+    }
+
+    // Sidebar articles
+    document.querySelectorAll('.sidebar-item').forEach((item, index) => {
+      if (this.articlesData.sidebar[index]) {
+        item.style.cursor = 'pointer';
+        item.addEventListener('click', () => this.open(this.articlesData.sidebar[index]));
+      }
+    });
+
+    // Middle articles
+    document.querySelectorAll('.middle-article').forEach((item, index) => {
+      if (this.articlesData.middle[index]) {
+        item.style.cursor = 'pointer';
+        item.addEventListener('click', () => this.open(this.articlesData.middle[index]));
+      }
+    });
+
+    // Opinion articles
+    document.querySelectorAll('.opinion-item').forEach((item, index) => {
+      if (this.articlesData.opinions[index]) {
+        item.style.cursor = 'pointer';
+        item.addEventListener('click', () => this.open(this.articlesData.opinions[index]));
+      }
+    });
+  },
+
+  /**
+   * Open modal with article data
+   */
+  open(articleData) {
+    if (!articleData) return;
+
+    // If no fullContent, build a minimal one from available fields
+    if (!articleData.fullContent) {
+      articleData = {
+        ...articleData,
+        fullContent: {
+          introduction: articleData.summary || articleData.excerpt || articleData.deck || '',
+          sections: [],
+          keyTakeaways: [],
+          sourceUrl: null,
+          relatedLinks: []
+        }
+      };
+    }
+
+    this.currentArticle = articleData;
+    this.render(articleData);
+    this.modal.classList.add('active');
+    this.modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+
+    // Scroll modal to top
+    this.content.scrollTop = 0;
+  },
+
+  /**
+   * Close modal
+   */
+  close() {
+    this.modal.classList.remove('active');
+    this.modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    this.currentArticle = null;
+  },
+
+  /**
+   * Render article content into modal
+   */
+  render(article) {
+    const { category, categoryClass, headline, author, readTime, authorLabel, fullContent } = article;
+
+    // Category tag
+    const categoryTag = this.modal.querySelector('.modal-category-tag');
+    categoryTag.textContent = category;
+    categoryTag.className = `modal-category-tag category-tag--${categoryClass || 'ai'}`;
+
+    // Headline
+    this.modal.querySelector('.modal-headline').textContent = headline;
+
+    // Meta
+    const byline = authorLabel ? `${authorLabel} ${author}` : `By ${author}`;
+    const readPart = readTime ? ` · ${readTime} min read` : '';
+    this.modal.querySelector('.modal-meta').textContent = byline + readPart;
+
+    // Introduction
+    const introEl = this.modal.querySelector('.modal-introduction');
+    if (fullContent.introduction) {
+      introEl.textContent = fullContent.introduction;
+      introEl.style.display = '';
+    } else {
+      introEl.style.display = 'none';
+    }
+
+    // Sections
+    const sectionsEl = this.modal.querySelector('.modal-sections');
+    sectionsEl.innerHTML = '';
+    if (fullContent.sections && fullContent.sections.length > 0) {
+      fullContent.sections.forEach(section => {
+        const sectionDiv = document.createElement('div');
+        sectionDiv.className = 'modal-section';
+
+        const headingEl = document.createElement('h2');
+        headingEl.className = 'modal-section-heading';
+        headingEl.textContent = section.heading;
+        sectionDiv.appendChild(headingEl);
+
+        if (section.content) {
+          const contentEl = document.createElement('p');
+          contentEl.className = 'modal-section-content';
+          contentEl.textContent = section.content;
+          sectionDiv.appendChild(contentEl);
+        }
+        if (section.steps && section.steps.length > 0) {
+          const stepsList = document.createElement('ol');
+          stepsList.className = 'modal-section-steps';
+          section.steps.forEach(step => {
+            const li = document.createElement('li');
+            li.textContent = step;
+            stepsList.appendChild(li);
+          });
+          sectionDiv.appendChild(stepsList);
+        }
+        if (section.code) {
+          const codeEl = document.createElement('pre');
+          codeEl.className = 'modal-section-code';
+          codeEl.textContent = section.code;
+          sectionDiv.appendChild(codeEl);
+        }
+        if (section.warning) {
+          const warningEl = document.createElement('div');
+          warningEl.className = 'modal-section-warning';
+          warningEl.textContent = section.warning;
+          sectionDiv.appendChild(warningEl);
+        }
+
+        sectionsEl.appendChild(sectionDiv);
+      });
+    }
+
+    // Key Takeaways
+    const takeawaysBox = this.modal.querySelector('.modal-key-takeaways');
+    const takeawaysUl = takeawaysBox.querySelector('ul');
+    takeawaysUl.innerHTML = '';
+    if (fullContent.keyTakeaways && fullContent.keyTakeaways.length > 0) {
+      fullContent.keyTakeaways.forEach(point => {
+        const li = document.createElement('li');
+        li.textContent = point;
+        takeawaysUl.appendChild(li);
+      });
+      takeawaysBox.style.display = '';
+    } else {
+      takeawaysBox.style.display = 'none';
+    }
+
+    // Related Links
+    const linksUl = this.modal.querySelector('.modal-links');
+    const footerEl = this.modal.querySelector('.modal-footer');
+    linksUl.innerHTML = '';
+    const hasLinks = fullContent.sourceUrl || (fullContent.relatedLinks && fullContent.relatedLinks.length > 0);
+
+    if (hasLinks) {
+      if (fullContent.sourceUrl) {
+        const sourceLi = document.createElement('li');
+        const sourceA = document.createElement('a');
+        sourceA.href = fullContent.sourceUrl;
+        sourceA.target = '_blank';
+        sourceA.rel = 'noopener noreferrer';
+        sourceA.textContent = '→ 元ポスト（X / Twitter）';
+        sourceLi.appendChild(sourceA);
+        linksUl.appendChild(sourceLi);
+      }
+      if (fullContent.relatedLinks) {
+        fullContent.relatedLinks.forEach(link => {
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = link.url;
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+          a.textContent = `→ ${link.title}`;
+          li.appendChild(a);
+          linksUl.appendChild(li);
+        });
+      }
+      footerEl.style.display = '';
+    } else {
+      footerEl.style.display = 'none';
+    }
+  },
+
+  /**
+   * Copy article to clipboard as formatted memo
+   */
+  copyToClipboard() {
+    if (!this.currentArticle) return;
+
+    const { category, headline, fullContent } = this.currentArticle;
+    const date = new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' });
+
+    let text = `📰 AI Daily Chronicle - 保存メモ\n`;
+    text += `${'═'.repeat(50)}\n\n`;
+    text += `■ タイトル\n${headline}\n\n`;
+    text += `■ カテゴリ\n${category}\n\n`;
+
+    if (fullContent && fullContent.keyTakeaways && fullContent.keyTakeaways.length > 0) {
+      text += `■ 重要ポイント\n`;
+      fullContent.keyTakeaways.forEach(point => { text += `• ${point}\n`; });
+      text += `\n`;
+    }
+
+    if (fullContent && fullContent.introduction) {
+      text += `■ 概要\n${fullContent.introduction}\n\n`;
+    }
+
+    if (fullContent && fullContent.sections && fullContent.sections.length > 0) {
+      text += `■ 詳細\n`;
+      fullContent.sections.forEach(section => {
+        text += `\n【${section.heading}】\n`;
+        if (section.content) text += `${section.content}\n`;
+        if (section.steps) {
+          section.steps.forEach((step, i) => { text += `${i + 1}. ${step}\n`; });
+        }
+        if (section.code) text += `\n\`\`\`\n${section.code}\n\`\`\`\n`;
+        if (section.warning) text += `\n⚠️ ${section.warning}\n`;
+      });
+      text += `\n`;
+    }
+
+    if (fullContent && (fullContent.sourceUrl || (fullContent.relatedLinks && fullContent.relatedLinks.length > 0))) {
+      text += `■ 参考リンク\n`;
+      if (fullContent.sourceUrl) text += `- 元ポスト: ${fullContent.sourceUrl}\n`;
+      if (fullContent.relatedLinks) {
+        fullContent.relatedLinks.forEach(link => { text += `- ${link.title}: ${link.url}\n`; });
+      }
+      text += `\n`;
+    }
+
+    text += `${'─'.repeat(50)}\n`;
+    text += `保存日時: ${date}\n`;
+    text += `出典: AI Daily Chronicle\n`;
+
+    navigator.clipboard.writeText(text).then(() => {
+      const originalText = this.copyBtn.innerHTML;
+      this.copyBtn.innerHTML = '✅ コピーしました';
+      this.copyBtn.classList.add('copied');
+      setTimeout(() => {
+        this.copyBtn.innerHTML = originalText;
+        this.copyBtn.classList.remove('copied');
+      }, 2500);
+    }).catch(() => {
+      // Fallback for non-secure contexts
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      const originalText = this.copyBtn.innerHTML;
+      this.copyBtn.innerHTML = '✅ コピーしました';
+      this.copyBtn.classList.add('copied');
+      setTimeout(() => {
+        this.copyBtn.innerHTML = originalText;
+        this.copyBtn.classList.remove('copied');
+      }, 2500);
+    });
+  }
+};
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof ARTICLES_DATA !== 'undefined') {
+    ArticleModal.init(ARTICLES_DATA);
+  }
+});
+
+</script>
+</body>
+</html>

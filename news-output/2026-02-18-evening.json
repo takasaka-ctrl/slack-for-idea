@@ -1,0 +1,305 @@
+{
+  "date": "2026年2月18日（水曜日）",
+  "edition": "夕刊",
+  "volume": "1",
+  "tickerText": "Claude 4.6 Sonnet、100万トークンコンテキスト対応で開発者の標準に ── Xcode 26.3にClaude AgentとCodexが統合、エージェントコーディング解禁 ── Google I/O 2026確定、5月19〜20日開催・Android 17とGemini深化 ── ソロ創業者がAIエージェント15体で週20時間節約の衝撃 ── 2026年初頭にAIスタートアップ17社が1億ドル超の資金調達 ── SaaS産業にAI崩壊の波、Wall Streetが株式を投げ売り ── Claude 4.6 Sonnet、100万トークンコンテキスト対応で開発者の標準に",
+
+  "dataPanel": [
+    {
+      "label": "AIスタートアップ資金調達（2026年初頭）",
+      "value": "17社 / $100M+",
+      "sparkline": "▁▂▃▅▇█",
+      "change": "▲ 2ヶ月で過去最高ペース",
+      "changeClass": "up"
+    },
+    {
+      "label": "Cursor 年間収益",
+      "value": "$1B",
+      "sparkline": "▁▂▄▆▇█",
+      "change": "▲ B2B史上最速達成",
+      "changeClass": "up"
+    },
+    {
+      "label": "Claude 4.6 SWE-bench",
+      "value": "79.6%",
+      "sparkline": "▁▃▄▅▆█",
+      "change": "▲ 前世代比 +30.6pt",
+      "changeClass": "up"
+    },
+    {
+      "label": "AI週間節約時間（ソロ創業者）",
+      "value": "20時間/週",
+      "sparkline": "▁▂▃▅▇█",
+      "change": "▲ 15エージェント運用",
+      "changeClass": "up"
+    }
+  ],
+
+  "hero": {
+    "id": "claude46-sonnet-release",
+    "category": "AI開発",
+    "categoryClass": "ai",
+    "headline": "Claude 4.6 Sonnet 電撃リリース——100万トークン・Adaptive Thinking搭載で個人開発者の武器が刷新",
+    "deck": "AnthropicがClaude 4.6 Sonnetを正式リリース。100万トークンコンテキスト、新型「Adaptive Thinking」エンジン、動的Webフィルタリングを搭載し、SWE-benchで79.6%を達成。価格据え置きでAPIから即日利用可能。",
+    "author": "Anthropic公式 / MarkTechPost",
+    "readTime": "5",
+    "readPercent": 55,
+    "readLabel": "中程度",
+    "updateTime": "本日 14時間前",
+    "fullContent": {
+      "introduction": "AnthropicはClaude 4.6 Sonnetを2026年2月17日にリリースした。本モデルは開発者・データサイエンティストを主なターゲットとし、複雑なロジック処理とリアルタイム検索能力を大幅に強化している。価格モデルは変更なく、Claude.ai、API、各種クラウドプラットフォームから即日利用が可能だ。",
+      "sections": [
+        {
+          "heading": "Adaptive Thinkingエンジンとは",
+          "content": "Extended Thinking APIからアクセスできる新機能「Adaptive Thinking」により、モデルは最終回答を生成する前に内部で論理パスをテストする「一時停止・思考」フェーズを持つ。複雑なレースコンディションのデバッグや、汚れたデータセットの処理において、ハルシネーションを大幅に削減することが実証されている。"
+        },
+        {
+          "heading": "ベンチマーク：旗艦Opusに肉薄",
+          "content": "SWE-bench Verified: 49.0%（3.5 Sonnet）→ 79.6%（4.6 Sonnet）。OSWorld（Computer Use）: 14.9% → 72.5%という驚異的な伸び。MATHベンチマーク: 71.1% → 88.0%。BrowseComp（検索精度）: 33.3% → 46.6%。特にOSWorld 72.5%は、スプレッドシート・ブラウザ・ローカルファイルをほぼ人間並みの精度でナビゲートできることを示す。",
+          "steps": [
+            "SWE-bench: バグ修正・マルチファイル編集で前世代比+30.6pt",
+            "OSWorld: 自律UIナビゲーション・ツール使用で+57.6pt（最大の伸び）",
+            "MATH: 高度なアルゴリズム論理推論で+16.9pt",
+            "BrowseComp: ネイティブPythonによる動的フィルタリングで+13.3pt"
+          ]
+        },
+        {
+          "heading": "Dynamic Filtering：検索×Python統合",
+          "content": "Improved Web Search with Dynamic Filteringは、従来のAI検索ツールが単純にスクレイピングするのとは異なり、内部コード実行によってリアルタイムでファクトチェックを行う。これにより情報の信頼性が大幅に向上し、エージェント型アプリケーション開発の可能性が広がる。"
+        }
+      ],
+      "keyTakeaways": [
+        "SWE-bench 79.6%・OSWorld 72.5%で旗艦Opusに匹敵するパフォーマンスを価格据え置きで提供",
+        "Adaptive Thinkingにより複雑なデバッグ・データ処理でのハルシネーションが激減",
+        "100万トークンコンテキストで大規模コードベース全体を一度に処理可能になった"
+      ],
+      "sourceUrl": "https://www.marktechpost.com/2026/02/17/anthropic-releases-claude-4-6-sonnet-with-1-million-token-context-to-solve-complex-coding-and-search-for-developers/",
+      "relatedLinks": [
+        {"title": "Anthropic公式発表", "url": "https://www.anthropic.com/news/claude-sonnet-4-6"},
+        {"title": "Claude vs OpenAI Codex 2026比較", "url": "https://dev.to/shehzan/claude-code-vs-openai-codex-architecture-guide-2026-l9c"}
+      ]
+    }
+  },
+
+  "sidebar": [
+    {
+      "id": "xcode-263-agentic-coding",
+      "category": "iOS開発",
+      "categoryClass": "mobile",
+      "headline": "Xcode 26.3がエージェントコーディングを解禁——Claude AgentとCodexが直接統合",
+      "summary": "Appleが2月3日リリースのXcode 26.3で、Claude AgentとOpenAI Codexの直接統合をサポート。ドキュメント検索・ファイル構造の探索・プロジェクト設定更新・Xcodeプレビューのキャプチャまで、開発ライフサイクル全体をエージェントが自律的にこなす時代に突入した。",
+      "readTime": "4",
+      "timeAgo": "2日前",
+      "fullContent": {
+        "introduction": "Appleは2026年2月3日、Xcode 26.3を公開しエージェントコーディングサポートを追加した。これによりAnthropicのClaude AgentとOpenAI Codexが、Xcodeの機能に直接アクセスして複雑なタスクを自律的に実行できるようになる。",
+        "sections": [
+          {
+            "heading": "エージェントが担う新しい開発体験",
+            "content": "エージェントはドキュメントを検索し、ファイル構造を探索し、プロジェクト設定を更新し、Xcodeプレビューをキャプチャして自身の作業を視覚的に検証しながらビルド・修正のサイクルを繰り返す。AppleのSusan Prescott副社長は「エージェントコーディングは生産性と創造性を超加速させ、イノベーションに集中できる環境を提供する」と述べた。"
+          }
+        ],
+        "keyTakeaways": [
+          "SwiftUIアプリ開発でClaude AgentとCodexが設計〜実装〜検証まで自律実行",
+          "Xcodeプレビューのキャプチャでビジュアルフィードバックループが完結"
+        ],
+        "sourceUrl": "https://www.apple.com/newsroom/2026/02/xcode-26-point-3-unlocks-the-power-of-agentic-coding/"
+      }
+    },
+    {
+      "id": "google-io-2026-android17-gemini",
+      "category": "Android開発",
+      "categoryClass": "gemini",
+      "headline": "Google I/O 2026が5月19〜20日に決定——Android 17とGemini深化で開発者が注目",
+      "summary": "GoogleがI/O 2026の日程を5月19〜20日（マウンテンビュー）に正式確定。Gemini AIのSearch・Workspace・Chrome・Android全体への深い統合と、Android 17の大幅プライバシー強化が発表される見込み。グローバルライブストリームも実施予定。",
+      "readTime": "3",
+      "timeAgo": "2時間前",
+      "fullContent": {
+        "introduction": "Google I/O 2026はカリフォルニア州マウンテンビューのShoreline Amphitheatreで5月19〜20日に開催が確定した。AIをコアアイデンティティとして掲げるGoogleにとって、今年の最大テーマはGeminiの全製品統合とAndroid 17だ。",
+        "sections": [
+          {
+            "heading": "Android 17の注目機能",
+            "content": "Android 17ではアプリ権限のきめ細かい制御、オンデバイス処理能力の強化によるプライバシー保護の向上、Gemini AIとのより深いシステムレベル統合が予定されている。古いデバイスへのアップデートでも恩恵が受けられる設計が検討されている。"
+          }
+        ],
+        "keyTakeaways": [
+          "Gemini AIがSearch・Workspace・Chrome・Androidに横断的に深く統合される",
+          "Android 17はプライバシー強化とオンデバイスAI推論が主軸"
+        ],
+        "sourceUrl": "https://techgenyz.com/google-i-o-official-gemini-ai-push-expands-android/"
+      }
+    },
+    {
+      "id": "solo-founder-15-ai-agents",
+      "category": "個人開発",
+      "categoryClass": "indie",
+      "headline": "「従業員ゼロ・AIエージェント15体」でビジネスを回すソロ創業者——週20時間を取り戻す",
+      "summary": "フロリダ州の防衛テック系ソロ創業者Aaron Sneedが、ChatGPT上に「The Council」と名付けた15体のカスタムAIエージェント群を構築。法務・HR・財務・社長秘書を全てAIで代替し、週20時間以上を節約。ソロプレナーの新しい経営スタイルとして注目を集めている。",
+      "readTime": "4",
+      "timeAgo": "5日前",
+      "fullContent": {
+        "introduction": "Business Insiderが取材した事例。防衛テック分野でのソロ創業者Aaron Sneedは、資金不足で弁護士・HRコンサルタントを雇えない現実をAIで解決した。Nvidia GPUを基盤に、OpenAI ChatGPTビジネスプラットフォーム上でカスタムGPTを組み合わせた「The Council」を運用している。",
+        "sections": [
+          {
+            "heading": "The Councilの構成",
+            "content": "15体のカスタムエージェントには、チーフ・オブ・スタッフAI、法務AI、HR AI、財務AIなどが含まれる。10年以上自律プラットフォームの開発に携わってきた経験が、この活用を可能にした。エージェントへの指示の出し方と役割定義が成功の鍵だという。"
+          }
+        ],
+        "keyTakeaways": [
+          "法務・HR・財務の外部委託コストをAIエージェントで置き換え",
+          "週20時間節約（保守的な見積もり）でソロ経営の限界を突破"
+        ],
+        "sourceUrl": "https://www.businessinsider.com/solo-founder-runs-company-with-15-ai-agents-heres-how-2026-2"
+      }
+    }
+  ],
+
+  "middle": [
+    {
+      "id": "claude-vs-gemini-swiftui-code",
+      "category": "iOS開発",
+      "categoryClass": "mobile",
+      "gradient": "linear-gradient(135deg, #0f4c75 0%, #1b6ca8 100%)",
+      "headline": "SwiftUI開発でClaudeとGeminiを徹底比較——「勝負にならない」と評者が断言",
+      "summary": "HowToGeekのPatrick Campanaleが両AI でSwiftUIアプリを実際にvibe-codingして比較。Geminiは頻繁に余分な波カッコを挿入するなどSwiftUIファイルのエラーが多発。Claudeは直接ポイントを突いたコードを生成し、修正が「まれ」になったという体験を報告。",
+      "author": "Patrick Campanale / HowToGeek",
+      "readTime": "4",
+      "fullContent": {
+        "introduction": "2026年2月16日公開のレビュー記事。著者のPatrick Campanaleは10年以上のテック経験を持ち、モバイルアプリ開発の経歴を持つライター。Claude CodeとGeminiの両方を実際のSwiftUI開発で使用し、その差を詳細にレポートしている。",
+        "sections": [
+          {
+            "heading": "実際の差はどこに出るか",
+            "content": "著者いわく、Geminiでは頻繁にSwiftUIファイル中に余分な波カッコ（}）が挿入されるエラーが発生。一方のClaude Codeでは「vibe codingの本質、AIにコードを書かせること」に集中できた。生成されたファイルはコンピュータ上にそのまま残り、IDEで編集する機会は「まれ」になったという。"
+          }
+        ],
+        "keyTakeaways": [
+          "SwiftUI開発においてClaude CodeはGeminiより正確なコードを生成",
+          "Geminiは特殊なAntigravityツールで優位な場面もあるが、全体ではClaudeが上回る"
+        ],
+        "sourceUrl": "https://www.howtogeek.com/claude-vs-gemini-which-one-actually-writes-better-code/"
+      }
+    },
+    {
+      "id": "claude-code-ollama-tutorial",
+      "category": "AI開発",
+      "categoryClass": "ai",
+      "gradient": "linear-gradient(135deg, #2d5a27 0%, #4a8a3f 100%)",
+      "headline": "OllamaでClaude Codeをローカル実行——API代ゼロでJavaアプリを自動生成するチュートリアル",
+      "summary": "開発者ブログPiotr's TechBlogが、Claude CodeをOllamaで動作させてJavaアプリを生成する手順を詳解。qwen3-coder:480bやglm-5など複数のモデルを比較し、API費用を抑えたいインディー開発者向けの実践的なガイドを公開した。",
+      "author": "Piotr Minkowski / piotrminkowski.com",
+      "readTime": "6",
+      "fullContent": {
+        "introduction": "2026年2月17日公開のチュートリアル記事。OllamaがClaude CodeやCodexとのビルトイン統合を提供したことで、ローカルモデルでAIコード生成が可能になった。著者はSpring AI・Javaの専門家で、複数モデルで同じプロンプトからアプリを生成しGitHubのPRで比較評価している。",
+        "sections": [
+          {
+            "heading": "使用モデルと比較結果",
+            "content": "対象モデル: glm-5, gpt-oss, minimax, qwen3-coder (ローカル/クラウド両対応)。各ブランチに同プロンプトから生成したアプリが格納され、コードレビューコメント数で品質を比較。現時点でmasterブランチにはglm-5生成版がマージされている。",
+            "code": "ollama launch claude --model qwen3-coder:480b-cloud"
+          }
+        ],
+        "keyTakeaways": [
+          "OllamaがClaude Code・Codexとのビルトイン統合を提供し、ローカルAI開発が現実的に",
+          "API費用ゼロでAIコード生成を試せるため、インディー開発者にとって最初の一歩に最適"
+        ],
+        "sourceUrl": "https://piotrminkowski.com/2026/02/17/create-apps-with-claude-code-on-ollama/"
+      }
+    },
+    {
+      "id": "ai-startup-funding-2026",
+      "category": "ビジネス",
+      "categoryClass": "business",
+      "gradient": "linear-gradient(135deg, #8b4513 0%, #a0522d 100%)",
+      "headline": "AIスタートアップへの投資が爆速——2ヶ月で17社が1億ドル超を調達し過去最高ペース",
+      "summary": "2026年1〜2月の米国AIスタートアップ資金調達が記録的ペースで進行。17社以上が$100M超のラウンドを完了し、2025年の記録投資の勢いを継続。ヘルスケア・法律テック・産業自動化のバーティカルAIが特に注目されている。",
+      "author": "IndexBox / BitcoinWorld",
+      "readTime": "3",
+      "fullContent": {
+        "introduction": "2026年初頭のAI投資動向分析。2025年に続いて2026年も記録的なペースで資金調達が進んでいる。バーティカルAIスタートアップへの資金は2025年に70%以上増加し、その勢いが2026年も継続している。",
+        "sections": [
+          {
+            "heading": "注目されているセクター",
+            "content": "ヘルスケアAI、法律テック、産業自動化が最も多くの投資を集めている。Cursorはすでに年間収益$1BをB2B史上最速で達成。Microsoft Copilotは470万人の有料サブスクライバーを確保。Gartnerは2026年のAI全体支出を2.52兆ドルと予測している。"
+          }
+        ],
+        "keyTakeaways": [
+          "2026年1〜2月で17社超が$100M超調達、記録的ペースが継続",
+          "ヘルスケア・法律テック・産業自動化のバーティカルAIが投資の中心"
+        ],
+        "sourceUrl": "https://www.indexbox.io/blog/us-ai-startups-secure-100m-rounds-in-early-2026/"
+      }
+    }
+  ],
+
+  "briefs": [
+    {
+      "headline": "Android 17、プライバシー強化でGemini統合が加速",
+      "text": "Google I/O 2026（5月19〜20日）でAndroid 17が発表予定。アプリ権限の細粒化とオンデバイスGemini処理でプライバシーとAI機能を両立させる設計が進行中。"
+    },
+    {
+      "headline": "2026年SaaSアポカリプス——Wall Streetがソフトウェア株を投げ売り",
+      "text": "2月第1週（SaaSポカリプス）にエンタープライズSaaS株が大幅下落。AIが既存ソフトウェアを代替するとの見方が広がり、Wall Street幹部が「次の印刷メディア・百貨店になる」と警告。"
+    },
+    {
+      "headline": "Claude Cowork、非技術者向けGUI版が2026年1月リリース",
+      "text": "AnthropicがClaude Codeのグラフィカルユーザーインターフェース版「Claude Cowork」をリサーチプレビューとして1月公開。ノーコードでのアプリ開発支援を目指している。"
+    },
+    {
+      "headline": "Swift月次アップデート、Linux・サーバーサイド活用事例が拡大",
+      "text": "Swift.orgが1月版「What's new in Swift」を公開。Linux上のSwift活用と、サーバーサイドSwiftコンファレンスのハイライトが特集された。クラウドサービス向け入門チュートリアルも追加。"
+    }
+  ],
+
+  "opinions": [
+    {
+      "id": "saas-disruption-analysis",
+      "authorLabel": "分析：",
+      "author": "Business of Apps 調査チーム",
+      "headline": "SaaSファウンダーはAI崩壊をどう乗り越えているか——技術系と非技術系で戦略が二分",
+      "excerpt": "AI統合はSaaSにとってもはや差別化要因ではなく生存条件だ。調査によれば、技術系創業者はアーキテクチャへの影響とコストを重視する一方、非技術系創業者はユーザー価値と製品差別化を優先する。重要なのはこの二つの視点が対立ではなく相補的に機能することだ。",
+      "fullContent": {
+        "introduction": "Business of Appsがヘルスケア・マーケティング・スポーツテック・IoT・B2Bツールなど多業種のSaaS創業者・プロダクトマネージャー・オペレーターを対象に行ったクロスインダストリー調査の分析。",
+        "sections": [
+          {
+            "heading": "AIを組み込む際の最優先課題",
+            "content": "調査を通じて一貫して挙がったのは、派手な実験的AI機能よりも実用的・効率化に特化したユースケースだ。請求・調整・手動タスクの自動化、カスタマー価値の加速、データ駆動の意思決定支援が上位を占めた。",
+            "steps": [
+              "請求・調整・手動タスクの内部自動化を最優先",
+              "ユーザー向けのAI機能は信頼性・誤機能への懸念から慎重に評価",
+              "ロードマップへのAI統合は段階的に、MVPで検証する"
+            ]
+          }
+        ],
+        "keyTakeaways": [
+          "技術系創業者はアーキテクチャ・コスト、非技術系は価値・差別化にフォーカス",
+          "派手な実験よりも実用的な自動化・効率化が生き残りの鍵"
+        ],
+        "sourceUrl": "https://www.businessofapps.com/insights/ai-disruption-in-2026-what-saas-founders-are-actually-doing"
+      }
+    },
+    {
+      "id": "ai-indie-dev-era",
+      "authorLabel": "分析：",
+      "author": "Piotr Minkowski (@pminkowski)",
+      "headline": "「AI＋ローカルモデル」がインディー開発者の武器になる——API費用という壁の崩壊",
+      "excerpt": "OllamaによるClaude Code統合が示すのは、AIコード生成がもはや有料APIにロックインされる時代の終わりだ。glm-5やqwen3-coderのようなオープンモデルが十分な品質を持ち始め、個人開発者がゼロコストで本格的なAIアシスト開発を実験できる環境が整いつつある。",
+      "fullContent": {
+        "introduction": "2026年2月17日に公開されたPiotr Minkowski氏の実践レポートを基にした考察。著者は実際に複数のローカル・クラウドモデルで同一プロンプトからJavaアプリを生成し、コードレビュー品質で比較評価している。",
+        "sections": [
+          {
+            "heading": "ローカルモデルの実力は今どこにあるか",
+            "content": "同一プロンプトによる生成品質の比較では、glm-5がコードレビューコメント最少（＝品質最高）という結果でmasterブランチにマージされた。qwen3-coder:480bはOllamaクラウドモデルとして利用でき、ローカルGPU不要でも高性能を発揮する。",
+            "steps": [
+              "OllamaをインストールしClaude Codeとの統合を有効化",
+              "CLAUDE.mdに要件定義を記述しプロジェクト構造を指示",
+              "複数モデルで同プロンプトを実行し品質を比較・最適モデルを選定"
+            ]
+          }
+        ],
+        "keyTakeaways": [
+          "OllamaのClaude Code統合でAPI費用ゼロのAI開発が現実的に",
+          "glm-5・qwen3-coderなどオープンモデルが商用APIに匹敵する品質を発揮し始めた"
+        ],
+        "sourceUrl": "https://piotrminkowski.com/2026/02/17/create-apps-with-claude-code-on-ollama/"
+      }
+    }
+  ]
+}
