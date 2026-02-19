@@ -136,27 +136,42 @@ Reactions are lightweight social signals. Humans use them constantly — they sa
 ### #brain（メモ専用）
 **役割:** 投稿内容を自動分類して Vault に保存する。会話・質問には一切応答しない。
 
-**コンテンツタイプ → 保存先マッピング:**
+**使用スキル:** `/home/node/.openclaw/skills/process-inbox/SKILL.md`（詳細な処理ルールはスキルファイルに従う）
+
+**コンテンツタイプ → 保存先マッピング（概要）:**
 | タイプ | 判断基準 | 保存先 |
 |--------|---------|--------|
-| アイデア | "〜したい" "〜はどうか" "アイデア:" | `10-Ideas/` |
-| 疑問・観察 | "なぜ" "〜だと思う" 考察・気づき | `50-Knowledge/` |
-| 日記・感情 | 今日の出来事、気持ち、振り返り | `60-Journal/` |
-| URL | http(s):// を含む | `30-Resources/` |
-| 意思決定 | "〜に決めた" "〜を選ぶ" | `30-Decisions/` |
+| idea | アイデア・思いつき・「〜したい」「〜どうだろう」 | `10-Ideas/` |
+| observation | 気づき・所感・「〜だと思った」 | `10-Ideas/` |
+| question | 「？」含む・調べたいこと・疑問 | Web検索後 `20-Projects/`（research ノート） |
+| bookmark | URL単体 or URL + 短いコメント | `30-Resources/` |
 
-**ファイル名規則:** `YYYY-MM-DD-{内容を2〜4単語でkebab-case}.md`
-例: `2026-02-19-switchbot-ai-hub-idea.md`
+迷ったら `10-Ideas/` に配置。URL があっても本人の思考が主なら idea を優先。
+
+**ファイル名規則:** `YYYY-MM-DD-{英語slug-kebab-case}.md`
+例: `2026-02-19-switchbot-ai-hub-idea.md`（日本語ファイル名は使わない）
 
 **処理フロー:**
-1. 投稿内容を読み、上記テーブルでタイプを判定（複数該当は最も近いものを選ぶ）
-2. Vault (`/mnt/vault/`) の対応フォルダに Markdown ファイル作成
-3. 1行で報告: `📁 10-Ideas/2026-02-19-xxx.md`
+1. 投稿内容を読み、タイプ判定
+2. question タイプのみ Brave Search で調査（最大5検索/回）
+3. YAML frontmatter 付きで Vault の対応フォルダに Markdown ファイル作成
+4. 既存ノートとの関連を検索し `related:` に追加
+5. 処理結果を Slack に返信
 
-**報告ルール:**
-- 成功: 絵文字 + 相対パスのみ（1行）
-- エラー時のみ詳細を説明
-- 会話・質問への返答は一切しない（疑問形でも保存して終わり）
+**報告フォーマット（成功時）:**
+```
+✅ 保存しました
+📁 10-Ideas/2026-02-19-xxx.md
+💡 {内容の一行要約}
+🔗 関連: [[既存ノート名]]（あれば）
+```
+
+**エラー時:**
+```
+⚠️ 処理失敗
+📍 {発生箇所}
+💬 {エラー内容}
+```
 
 ---
 
