@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>コマンド王国 - RPG風プログラミング学習ツール</title>
+  <style>
+    /* Base Reset */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* Pixel Font */
+    @import url('https://fonts.googleapis.com/css2?family=DotGothic16&display=swap');
+
+    :root {
+      --bg-dark: #1a1a2e;
+      --bg-panel: #16213e;
+      --border-light: #e8d4b8;
+      --border-dark: #8b7355;
+      --text-white: #ffffff;
+      --text-gold: #ffd700;
+      --text-cyan: #00ffff;
+      --text-green: #00ff00;
+      --text-red: #ff6b6b;
+      --hp-green: #22c55e;
+      --mp-blue: #3b82f6;
+      --exp-yellow: #eab308;
+    }
+
+    body {
+      font-family: 'DotGothic16', monospace;
+      background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+      min-height: 100vh;
+      color: var(--text-white);
+      overflow: hidden;
+    }
+
+    /* RPG Window Frame */
+    .rpg-window {
+      background: linear-gradient(180deg, #2a2a5a 0%, #1a1a3a 100%);
+      border: 4px solid var(--border-light);
+      border-radius: 8px;
+      box-shadow:
+        inset 0 0 0 2px var(--border-dark),
+        0 8px 32px rgba(0,0,0,0.5);
+      position: relative;
+    }
+
+    .rpg-window::before {
+      content: '';
+      position: absolute;
+      top: 4px; left: 4px; right: 4px; bottom: 4px;
+      border: 2px solid rgba(255,255,255,0.1);
+      border-radius: 4px;
+      pointer-events: none;
+    }
+
+    /* Game Container */
+    .game-container {
+      width: 100vw;
+      height: 100vh;
+      display: grid;
+      grid-template-columns: 280px 1fr 240px;
+      grid-template-rows: auto 1fr auto;
+      gap: 12px;
+      padding: 16px;
+    }
+
+    /* Header */
+    .game-header {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+    }
+
+    .game-title {
+      font-size: 24px;
+      color: var(--text-gold);
+      text-shadow: 2px 2px 0 #8b6914, 0 0 20px rgba(255,215,0,0.3);
+      letter-spacing: 4px;
+    }
+
+    .mode-toggle {
+      display: flex;
+      gap: 8px;
+    }
+
+    .mode-btn {
+      padding: 8px 16px;
+      background: rgba(255,255,255,0.1);
+      border: 2px solid var(--border-light);
+      border-radius: 4px;
+      color: var(--text-white);
+      font-family: inherit;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .mode-btn.active {
+      background: linear-gradient(180deg, #4a4a8a 0%, #3a3a6a 100%);
+      color: var(--text-gold);
+    }
+
+    .mode-btn:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    /* Status Panel */
+    .status-panel {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .character-info {
+      text-align: center;
+      padding-bottom: 16px;
+      border-bottom: 2px dashed rgba(255,255,255,0.2);
+    }
+
+    .character-sprite {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 8px;
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      animation: bounce 1s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    .character-name {
+      font-size: 18px;
+      color: var(--text-gold);
+      margin-bottom: 4px;
+    }
+
+    .character-title {
+      font-size: 12px;
+      color: var(--text-cyan);
+    }
+
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+    }
+
+    .stat-label {
+      color: rgba(255,255,255,0.7);
+    }
+
+    .stat-value {
+      color: var(--text-gold);
+    }
+
+    .bar-container {
+      margin-top: 4px;
+    }
+
+    .bar-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    .bar {
+      height: 12px;
+      background: rgba(0,0,0,0.5);
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .bar-fill {
+      height: 100%;
+      transition: width 0.5s ease;
+    }
+
+    .bar-hp .bar-fill { background: linear-gradient(90deg, #16a34a 0%, #22c55e 100%); }
+    .bar-mp .bar-fill { background: linear-gradient(90deg, #2563eb 0%, #3b82f6 100%); }
+    .bar-exp .bar-fill { background: linear-gradient(90deg, #ca8a04 0%, #eab308 100%); }
+
+    .commands-learned {
+      margin-top: auto;
+    }
+
+    .commands-learned h3 {
+      font-size: 14px;
+      color: var(--text-cyan);
+      margin-bottom: 8px;
+    }
+
+    .command-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .command-tag {
+      padding: 4px 8px;
+      background: rgba(0,255,255,0.1);
+      border: 1px solid var(--text-cyan);
+      border-radius: 4px;
+      font-size: 12px;
+      color: var(--text-cyan);
+    }
+
+    .command-tag.locked {
+      opacity: 0.3;
+      border-style: dashed;
+    }
+
+    /* Main Game Area */
+    .main-area {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .scene-window {
+      flex: 1;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .scene-title {
+      font-size: 20px;
+      color: var(--text-gold);
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .scene-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .scene-art {
+      font-size: 48px;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .file-system-view {
+      width: 100%;
+      max-width: 500px;
+      background: rgba(0,0,0,0.3);
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .current-path {
+      font-size: 14px;
+      color: var(--text-cyan);
+      margin-bottom: 12px;
+      padding: 8px;
+      background: rgba(0,255,255,0.1);
+      border-radius: 4px;
+    }
+
+    .file-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 12px;
+    }
+
+    .file-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 12px 8px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .file-item:hover {
+      background: rgba(255,255,255,0.1);
+      transform: translateY(-2px);
+    }
+
+    .file-item.selected {
+      background: rgba(255,215,0,0.2);
+      border: 2px solid var(--text-gold);
+    }
+
+    .file-icon {
+      font-size: 32px;
+    }
+
+    .file-name {
+      font-size: 11px;
+      text-align: center;
+      word-break: break-all;
+      color: var(--text-white);
+    }
+
+    .file-item.directory .file-name {
+      color: var(--text-cyan);
+    }
+
+    /* Terminal Window */
+    .terminal-window {
+      padding: 16px;
+    }
+
+    .terminal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .terminal-title {
+      color: var(--text-green);
+      font-size: 14px;
+    }
+
+    .terminal-output {
+      background: rgba(0,0,0,0.5);
+      border-radius: 4px;
+      padding: 12px;
+      height: 120px;
+      overflow-y: auto;
+      font-size: 13px;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+
+    .output-line {
+      margin-bottom: 4px;
+    }
+
+    .output-line.command {
+      color: var(--text-green);
+    }
+
+    .output-line.result {
+      color: var(--text-white);
+    }
+
+    .output-line.error {
+      color: var(--text-red);
+    }
+
+    .output-line.success {
+      color: var(--text-gold);
+    }
+
+    .terminal-input-container {
+      display: flex;
+      gap: 8px;
+    }
+
+    .terminal-prompt {
+      color: var(--text-green);
+      font-size: 14px;
+    }
+
+    .terminal-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--text-green);
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+    }
+
+    /* Quest Panel */
+    .quest-panel {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .quest-title {
+      font-size: 16px;
+      color: var(--text-gold);
+      text-align: center;
+      padding-bottom: 12px;
+      border-bottom: 2px dashed rgba(255,255,255,0.2);
+    }
+
+    .quest-item {
+      padding: 12px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 8px;
+      border-left: 4px solid var(--text-cyan);
+    }
+
+    .quest-item.completed {
+      border-left-color: var(--hp-green);
+      opacity: 0.7;
+    }
+
+    .quest-item.active {
+      border-left-color: var(--text-gold);
+      background: rgba(255,215,0,0.1);
+    }
+
+    .quest-name {
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .quest-desc {
+      font-size: 11px;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .quest-reward {
+      font-size: 11px;
+      color: var(--text-gold);
+      margin-top: 8px;
+    }
+
+    /* Message Box */
+    .message-box {
+      grid-column: 1 / -1;
+      padding: 20px 24px;
+      min-height: 100px;
+    }
+
+    .message-content {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .speaker-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    .message-text {
+      flex: 1;
+    }
+
+    .speaker-name {
+      font-size: 14px;
+      color: var(--text-gold);
+      margin-bottom: 8px;
+    }
+
+    .message-body {
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    .message-body .typing-cursor {
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    .message-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .action-btn {
+      padding: 8px 20px;
+      background: linear-gradient(180deg, #4a4a8a 0%, #3a3a6a 100%);
+      border: 2px solid var(--border-light);
+      border-radius: 4px;
+      color: var(--text-white);
+      font-family: inherit;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .action-btn:hover {
+      background: linear-gradient(180deg, #5a5a9a 0%, #4a4a7a 100%);
+      transform: translateY(-2px);
+    }
+
+    .action-btn.primary {
+      background: linear-gradient(180deg, #ca8a04 0%, #a16207 100%);
+      color: var(--text-white);
+    }
+
+    /* Navigator Mode */
+    .navigator-panel {
+      display: none;
+      grid-column: 1 / -1;
+      padding: 16px;
+      background: rgba(59, 130, 246, 0.1);
+      border: 2px solid var(--mp-blue);
+    }
+
+    .navigator-panel.visible {
+      display: block;
+    }
+
+    .navigator-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .navigator-title {
+      color: var(--mp-blue);
+      font-size: 16px;
+    }
+
+    .hint-cards {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .hint-card {
+      padding: 12px 16px;
+      background: rgba(59, 130, 246, 0.2);
+      border-radius: 8px;
+      border: 1px solid var(--mp-blue);
+    }
+
+    .hint-card h4 {
+      font-size: 12px;
+      color: var(--text-cyan);
+      margin-bottom: 4px;
+    }
+
+    .hint-card p {
+      font-size: 14px;
+    }
+
+    /* Start Screen */
+    .start-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .start-screen.hidden {
+      display: none;
+    }
+
+    .start-logo {
+      font-size: 48px;
+      margin-bottom: 20px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .start-title {
+      font-size: 36px;
+      color: var(--text-gold);
+      text-shadow: 2px 2px 0 #8b6914, 0 0 30px rgba(255,215,0,0.5);
+      margin-bottom: 8px;
+      letter-spacing: 8px;
+    }
+
+    .start-subtitle {
+      font-size: 16px;
+      color: var(--text-cyan);
+      margin-bottom: 40px;
+    }
+
+    .start-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .start-btn {
+      padding: 16px 48px;
+      background: linear-gradient(180deg, #4a4a8a 0%, #3a3a6a 100%);
+      border: 3px solid var(--border-light);
+      border-radius: 8px;
+      color: var(--text-white);
+      font-family: inherit;
+      font-size: 18px;
+      cursor: pointer;
+      transition: all 0.2s;
+      min-width: 280px;
+    }
+
+    .start-btn:hover {
+      background: linear-gradient(180deg, #5a5a9a 0%, #4a4a7a 100%);
+      transform: scale(1.05);
+    }
+
+    .start-btn.selected {
+      background: linear-gradient(180deg, #ca8a04 0%, #a16207 100%);
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255,215,0,0.4); }
+      50% { box-shadow: 0 0 0 10px rgba(255,215,0,0); }
+    }
+
+    .start-hint {
+      margin-top: 40px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* Level Up Animation */
+    .level-up-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .level-up-overlay.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .level-up-content {
+      text-align: center;
+      animation: levelUpBounce 0.5s ease-out;
+    }
+
+    @keyframes levelUpBounce {
+      0% { transform: scale(0.5); opacity: 0; }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .level-up-text {
+      font-size: 48px;
+      color: var(--text-gold);
+      text-shadow: 0 0 30px rgba(255,215,0,0.8);
+      margin-bottom: 20px;
+    }
+
+    .level-up-detail {
+      font-size: 24px;
+      color: var(--text-white);
+    }
+
+    .new-command {
+      margin-top: 20px;
+      padding: 16px 24px;
+      background: rgba(0,255,255,0.2);
+      border: 2px solid var(--text-cyan);
+      border-radius: 8px;
+    }
+
+    .new-command h4 {
+      font-size: 14px;
+      color: var(--text-cyan);
+      margin-bottom: 8px;
+    }
+
+    .new-command code {
+      font-size: 24px;
+      color: var(--text-gold);
+    }
+
+    /* Toast Notifications */
+    .toast-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 3000;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .toast {
+      padding: 12px 20px;
+      background: linear-gradient(180deg, #2a2a5a 0%, #1a1a3a 100%);
+      border: 2px solid var(--border-light);
+      border-radius: 8px;
+      animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .toast.exp {
+      border-color: var(--exp-yellow);
+    }
+
+    .toast.success {
+      border-color: var(--hp-green);
+    }
+
+    .toast.error {
+      border-color: var(--text-red);
+    }
+  </style>
+</head>
+<body>
+  <!-- Start Screen -->
+  <div class="start-screen" id="startScreen">
+    <div class="start-logo">
+      <span style="font-size: 64px;">🏰</span>
+    </div>
+    <h1 class="start-title">コマンド王国</h1>
+    <p class="start-subtitle">〜 RPG風プログラミング学習ツール 〜</p>
+
+    <div class="start-menu">
+      <button class="start-btn selected" onclick="startGame('hero')">
+        ⚔️ 勇者モードで始める
+      </button>
+      <button class="start-btn" onclick="startGame('navigator')">
+        📖 ナビゲーターモードで始める
+      </button>
+      <button class="start-btn" onclick="startGame('continue')" id="continueBtn" style="display: none;">
+        📜 続きから始める
+      </button>
+    </div>
+
+    <p class="start-hint">
+      ※ 勇者モード: コマンドを入力して冒険<br>
+      ※ ナビゲーターモード: ヒントを見ながらサポート
+    </p>
+  </div>
+
+  <!-- Game Container -->
+  <div class="game-container" id="gameContainer" style="display: none;">
+
+    <!-- Header -->
+    <header class="game-header rpg-window">
+      <h1 class="game-title">🏰 コマンド王国</h1>
+      <div class="mode-toggle">
+        <button class="mode-btn active" id="heroModeBtn" onclick="setMode('hero')">⚔️ 勇者</button>
+        <button class="mode-btn" id="navModeBtn" onclick="setMode('navigator')">📖 ナビゲーター</button>
+      </div>
+    </header>
+
+    <!-- Status Panel -->
+    <aside class="status-panel rpg-window">
+      <div class="character-info">
+        <div class="character-sprite">⚔️</div>
+        <div class="character-name" id="playerName">コマンダー</div>
+        <div class="character-title" id="playerTitle">見習い勇者</div>
+      </div>
+
+      <div class="stat-row">
+        <span class="stat-label">レベル</span>
+        <span class="stat-value" id="playerLevel">1</span>
+      </div>
+
+      <div class="bar-container">
+        <div class="bar-label">
+          <span>HP</span>
+          <span id="hpValue">100/100</span>
+        </div>
+        <div class="bar bar-hp">
+          <div class="bar-fill" id="hpBar" style="width: 100%"></div>
+        </div>
+      </div>
+
+      <div class="bar-container">
+        <div class="bar-label">
+          <span>MP</span>
+          <span id="mpValue">50/50</span>
+        </div>
+        <div class="bar bar-mp">
+          <div class="bar-fill" id="mpBar" style="width: 100%"></div>
+        </div>
+      </div>
+
+      <div class="bar-container">
+        <div class="bar-label">
+          <span>経験値</span>
+          <span id="expValue">0/100</span>
+        </div>
+        <div class="bar bar-exp">
+          <div class="bar-fill" id="expBar" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <div class="commands-learned">
+        <h3>習得した呪文</h3>
+        <div class="command-list" id="commandList">
+          <span class="command-tag">pwd</span>
+          <span class="command-tag locked">ls</span>
+          <span class="command-tag locked">cd</span>
+          <span class="command-tag locked">cat</span>
+          <span class="command-tag locked">mkdir</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Game Area -->
+    <main class="main-area">
+      <section class="scene-window rpg-window">
+        <h2 class="scene-title" id="sceneTitle">第1章: ファイルの森</h2>
+        <div class="scene-content">
+          <div class="scene-art" id="sceneArt">
+            🌲🌲🌲<br>
+            🌲🧙‍♂️🌲<br>
+            🌲🌲🌲
+          </div>
+
+          <div class="file-system-view" id="fileSystemView">
+            <div class="current-path" id="currentPath">📂 /forest</div>
+            <div class="file-list" id="fileList">
+              <!-- Files will be rendered here -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Terminal -->
+      <section class="terminal-window rpg-window">
+        <div class="terminal-header">
+          <span class="terminal-title">🖥️ コマンド入力</span>
+          <span style="font-size: 12px; color: rgba(255,255,255,0.5);">呪文を唱えよ</span>
+        </div>
+        <div class="terminal-output" id="terminalOutput">
+          <div class="output-line result">ファイルの森へようこそ！</div>
+          <div class="output-line result">まずは「pwd」と入力して、現在地を確認しよう。</div>
+        </div>
+        <div class="terminal-input-container">
+          <span class="terminal-prompt">$ </span>
+          <input type="text" class="terminal-input" id="terminalInput" placeholder="コマンドを入力..." autocomplete="off">
+        </div>
+      </section>
+    </main>
+
+    <!-- Quest Panel -->
+    <aside class="quest-panel rpg-window">
+      <h2 class="quest-title">📜 クエスト</h2>
+      <div id="questList">
+        <div class="quest-item active" id="quest1">
+          <div class="quest-name">1. 現在地を確認せよ</div>
+          <div class="quest-desc">pwdコマンドで今いる場所を調べよう</div>
+          <div class="quest-reward">報酬: 経験値 +20</div>
+        </div>
+        <div class="quest-item" id="quest2">
+          <div class="quest-name">2. 森を見渡せ</div>
+          <div class="quest-desc">lsコマンドで周りにあるものを見よう</div>
+          <div class="quest-reward">報酬: 経験値 +30</div>
+        </div>
+        <div class="quest-item" id="quest3">
+          <div class="quest-name">3. 宝箱の洞窟へ</div>
+          <div class="quest-desc">cdコマンドでcaveに移動しよう</div>
+          <div class="quest-reward">報酬: 経験値 +50</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Navigator Panel -->
+    <div class="navigator-panel rpg-window" id="navigatorPanel">
+      <div class="navigator-header">
+        <span class="navigator-title">📖 ナビゲーターモード</span>
+        <span style="font-size: 12px; color: rgba(255,255,255,0.5);">勇者をサポートしよう</span>
+      </div>
+      <div class="hint-cards" id="hintCards">
+        <div class="hint-card">
+          <h4>今のクエスト</h4>
+          <p id="currentQuestHint">「pwd」を入力すると現在地がわかるよ</p>
+        </div>
+        <div class="hint-card">
+          <h4>入力例</h4>
+          <p id="commandExample">pwd</p>
+        </div>
+        <div class="hint-card">
+          <h4>励まし</h4>
+          <p>できるよ！ゆっくりやってみよう</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Message Box -->
+    <section class="message-box rpg-window" id="messageBox">
+      <div class="message-content">
+        <div class="speaker-icon" id="speakerIcon">🧙</div>
+        <div class="message-text">
+          <div class="speaker-name" id="speakerName">森の賢者</div>
+          <div class="message-body" id="messageBody">
+            ようこそ、若き勇者よ。<br>
+            ここは<span style="color: #00ffff;">ファイルの森</span>。コマンド王国への入り口じゃ。<br>
+            まずは「<span style="color: #ffd700;">pwd</span>」という呪文を唱えて、今いる場所を確認するのじゃ。
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Level Up Overlay -->
+  <div class="level-up-overlay" id="levelUpOverlay">
+    <div class="level-up-content">
+      <div class="level-up-text">✨ レベルアップ！✨</div>
+      <div class="level-up-detail" id="levelUpDetail">レベル 2 になった！</div>
+      <div class="new-command" id="newCommand" style="display: none;">
+        <h4>新しい呪文を習得！</h4>
+        <code id="newCommandName">ls</code>
+      </div>
+      <button class="action-btn primary" style="margin-top: 24px;" onclick="closeLevelUp()">OK</button>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script>
+    // ==================== GAME STATE ====================
+    const gameState = {
+      mode: 'hero',
+      level: 1,
+      exp: 0,
+      expToNext: 100,
+      hp: 100,
+      maxHp: 100,
+      mp: 50,
+      maxMp: 50,
+      currentPath: '/forest',
+      unlockedCommands: ['pwd'],
+      completedQuests: [],
+      currentQuest: 1
+    };
+
+    // ==================== VIRTUAL FILE SYSTEM ====================
+    const virtualFS = {
+      '/forest': {
+        type: 'directory',
+        children: ['cave', 'river', 'tree.txt', 'map.txt'],
+        art: '🌲🌲🌲\n🌲🧙‍♂️🌲\n🌲🌲🌲'
+      },
+      '/forest/cave': {
+        type: 'directory',
+        children: ['treasure.txt', 'deeper'],
+        art: '🪨🕳️🪨\n🕯️  🕯️\n🪨🪨🪨'
+      },
+      '/forest/cave/deeper': {
+        type: 'directory',
+        children: ['secret.txt'],
+        art: '⬛⬛⬛\n⬛👁️⬛\n⬛⬛⬛'
+      },
+      '/forest/river': {
+        type: 'directory',
+        children: ['fish.txt', 'boat.txt'],
+        art: '🌊🌊🌊\n🚣🐟🌊\n🌊🌊🌊'
+      },
+      '/forest/tree.txt': {
+        type: 'file',
+        content: '大きな木がそびえ立っている。\n木の幹には「コマンドを学べば道は開ける」と刻まれている。'
+      },
+      '/forest/map.txt': {
+        type: 'file',
+        content: '=== ファイルの森 地図 ===\n\n[森の入口] → [洞窟(cave)] → [奥深く(deeper)]\n           → [川(river)]\n\nヒント: cdコマンドで移動できる'
+      },
+      '/forest/cave/treasure.txt': {
+        type: 'file',
+        content: '✨ 宝箱を見つけた！✨\n\n中には「lsの巻物」が入っていた。\nこれで周りにあるものを見渡せるようになる！'
+      },
+      '/forest/cave/deeper/secret.txt': {
+        type: 'file',
+        content: '🌟 隠された秘密 🌟\n\nよくぞここまで来た、勇者よ。\n次の章「テキストの塔」への道が開かれた。'
+      },
+      '/forest/river/fish.txt': {
+        type: 'file',
+        content: '🐟 魚が泳いでいる。\n\n魚「コマンドを覚えたら、もっと遠くまで行けるよ！」'
+      },
+      '/forest/river/boat.txt': {
+        type: 'file',
+        content: '🚣 小さなボートがある。\n\nまだ使い方がわからない...\n（第2章で解放される）'
+      }
+    };
+
+    // ==================== QUEST DEFINITIONS ====================
+    const quests = {
+      1: {
+        name: '現在地を確認せよ',
+        description: 'pwdコマンドで今いる場所を調べよう',
+        command: 'pwd',
+        reward: 20,
+        hint: '「pwd」を入力すると現在地がわかるよ',
+        example: 'pwd',
+        onComplete: () => {
+          showMessage('森の賢者', '素晴らしい！現在地がわかったな。\n次は「ls」を習得して、周りを見渡すのじゃ。', '🧙');
+        }
+      },
+      2: {
+        name: '森を見渡せ',
+        description: 'lsコマンドで周りにあるものを見よう',
+        command: 'ls',
+        reward: 30,
+        hint: '「ls」を入力すると周りにあるものがわかるよ',
+        example: 'ls',
+        unlock: 'ls',
+        onComplete: () => {
+          unlockCommand('ls');
+          showMessage('森の賢者', 'lsの呪文を習得したな！\n周りに洞窟(cave)があるようじゃ。「cd cave」で移動してみるのじゃ。', '🧙');
+        }
+      },
+      3: {
+        name: '宝箱の洞窟へ',
+        description: 'cdコマンドでcaveに移動しよう',
+        command: 'cd cave',
+        reward: 50,
+        hint: '「cd cave」と入力すると洞窟に移動できるよ',
+        example: 'cd cave',
+        unlock: 'cd',
+        onComplete: () => {
+          unlockCommand('cd');
+          showMessage('森の賢者', '見事じゃ！洞窟に到達した。\nこれで基本の呪文をすべて習得した。第1章クリアじゃ！', '🧙');
+          showToast('第1章「ファイルの森」クリア！', 'success');
+        }
+      }
+    };
+
+    // ==================== GAME FUNCTIONS ====================
+    function startGame(mode) {
+      document.getElementById('startScreen').classList.add('hidden');
+      document.getElementById('gameContainer').style.display = 'grid';
+
+      if (mode === 'navigator') {
+        setMode('navigator');
+      } else {
+        setMode('hero');
+      }
+
+      renderFileList();
+      document.getElementById('terminalInput').focus();
+    }
+
+    function setMode(mode) {
+      gameState.mode = mode;
+      document.getElementById('heroModeBtn').classList.toggle('active', mode === 'hero');
+      document.getElementById('navModeBtn').classList.toggle('active', mode === 'navigator');
+      document.getElementById('navigatorPanel').classList.toggle('visible', mode === 'navigator');
+
+      if (mode === 'navigator') {
+        updateNavigatorHints();
+      }
+    }
+
+    function updateNavigatorHints() {
+      const quest = quests[gameState.currentQuest];
+      if (quest) {
+        document.getElementById('currentQuestHint').textContent = quest.hint;
+        document.getElementById('commandExample').textContent = quest.example;
+      }
+    }
+
+    function renderFileList() {
+      const fsEntry = virtualFS[gameState.currentPath];
+      const fileList = document.getElementById('fileList');
+
+      if (!fsEntry || fsEntry.type !== 'directory') {
+        fileList.innerHTML = '<div style="color: #ff6b6b;">ディレクトリが見つかりません</div>';
+        return;
+      }
+
+      document.getElementById('currentPath').textContent = `📂 ${gameState.currentPath}`;
+
+      // Update scene art
+      if (fsEntry.art) {
+        document.getElementById('sceneArt').innerHTML = fsEntry.art.replace(/\n/g, '<br>');
+      }
+
+      // Check if ls is unlocked
+      if (!gameState.unlockedCommands.includes('ls')) {
+        fileList.innerHTML = '<div style="color: rgba(255,255,255,0.5); font-size: 14px; text-align: center; padding: 20px;">（lsコマンドを習得すると見えるようになる）</div>';
+        return;
+      }
+
+      let html = '';
+
+      // Add parent directory if not at root
+      if (gameState.currentPath !== '/forest') {
+        html += `
+          <div class="file-item directory" onclick="executeCommand('cd ..')">
+            <span class="file-icon">📁</span>
+            <span class="file-name">..</span>
+          </div>
+        `;
+      }
+
+      // Add children
+      fsEntry.children.forEach(child => {
+        const childPath = `${gameState.currentPath}/${child}`;
+        const childEntry = virtualFS[childPath];
+        const isDir = childEntry && childEntry.type === 'directory';
+
+        html += `
+          <div class="file-item ${isDir ? 'directory' : ''}" onclick="executeCommand('${isDir ? 'cd ' + child : 'cat ' + child}')">
+            <span class="file-icon">${isDir ? '📁' : '📄'}</span>
+            <span class="file-name">${child}</span>
+          </div>
+        `;
+      });
+
+      fileList.innerHTML = html;
+    }
+
+    function executeCommand(cmd) {
+      const input = cmd.trim();
+      if (!input) return;
+
+      const output = document.getElementById('terminalOutput');
+      output.innerHTML += `<div class="output-line command">$ ${input}</div>`;
+
+      const parts = input.split(' ');
+      const command = parts[0];
+      const args = parts.slice(1);
+
+      // Check if command is unlocked
+      if (!gameState.unlockedCommands.includes(command) && command !== 'help') {
+        output.innerHTML += `<div class="output-line error">まだ「${command}」の呪文を習得していない...</div>`;
+        output.scrollTop = output.scrollHeight;
+        return;
+      }
+
+      let result = '';
+      let isError = false;
+
+      switch (command) {
+        case 'pwd':
+          result = gameState.currentPath;
+          checkQuestCompletion('pwd');
+          break;
+
+        case 'ls':
+          const currentDir = virtualFS[gameState.currentPath];
+          if (currentDir && currentDir.type === 'directory') {
+            result = currentDir.children.map(c => {
+              const childPath = `${gameState.currentPath}/${c}`;
+              const isDir = virtualFS[childPath] && virtualFS[childPath].type === 'directory';
+              return isDir ? `<span style="color: #00ffff;">${c}/</span>` : c;
+            }).join('  ');
+          }
+          checkQuestCompletion('ls');
+          break;
+
+        case 'cd':
+          if (!args[0]) {
+            result = 'どこに移動する？（例: cd cave）';
+          } else if (args[0] === '..') {
+            const pathParts = gameState.currentPath.split('/').filter(p => p);
+            if (pathParts.length > 1) {
+              pathParts.pop();
+              gameState.currentPath = '/' + pathParts.join('/');
+              result = `${gameState.currentPath} に移動した`;
+              renderFileList();
+            } else {
+              result = 'これ以上戻れない';
+              isError = true;
+            }
+          } else {
+            const newPath = `${gameState.currentPath}/${args[0]}`;
+            if (virtualFS[newPath] && virtualFS[newPath].type === 'directory') {
+              gameState.currentPath = newPath;
+              result = `${args[0]} に移動した！`;
+              renderFileList();
+              checkQuestCompletion(`cd ${args[0]}`);
+            } else {
+              result = `${args[0]} という場所は見つからない...`;
+              isError = true;
+            }
+          }
+          break;
+
+        case 'cat':
+          if (!args[0]) {
+            result = '何を読む？（例: cat tree.txt）';
+          } else {
+            const filePath = `${gameState.currentPath}/${args[0]}`;
+            const file = virtualFS[filePath];
+            if (file && file.type === 'file') {
+              result = file.content.replace(/\n/g, '<br>');
+              gainExp(10);
+            } else {
+              result = `${args[0]} は読めない...`;
+              isError = true;
+            }
+          }
+          break;
+
+        case 'help':
+          result = `
+=== 使える呪文一覧 ===<br>
+<span style="color: #ffd700;">pwd</span> - 現在地を表示<br>
+<span style="color: #ffd700;">ls</span> - 周りにあるものを見る<br>
+<span style="color: #ffd700;">cd [場所]</span> - 移動する<br>
+<span style="color: #ffd700;">cat [ファイル]</span> - ファイルを読む<br>
+<span style="color: #ffd700;">help</span> - このヘルプを表示
+          `;
+          break;
+
+        default:
+          result = `「${command}」という呪文は知らない...`;
+          isError = true;
+      }
+
+      output.innerHTML += `<div class="output-line ${isError ? 'error' : 'result'}">${result}</div>`;
+      output.scrollTop = output.scrollHeight;
+    }
+
+    function checkQuestCompletion(command) {
+      const quest = quests[gameState.currentQuest];
+      if (!quest) return;
+
+      if (quest.command === command || command.startsWith(quest.command.split(' ')[0])) {
+        completeQuest(gameState.currentQuest);
+      }
+    }
+
+    function completeQuest(questId) {
+      if (gameState.completedQuests.includes(questId)) return;
+
+      gameState.completedQuests.push(questId);
+      const quest = quests[questId];
+
+      // Update quest UI
+      const questEl = document.getElementById(`quest${questId}`);
+      if (questEl) {
+        questEl.classList.remove('active');
+        questEl.classList.add('completed');
+      }
+
+      // Give reward
+      gainExp(quest.reward);
+      showToast(`クエスト完了！ +${quest.reward} EXP`, 'exp');
+
+      // Run completion callback
+      if (quest.onComplete) {
+        setTimeout(quest.onComplete, 500);
+      }
+
+      // Move to next quest
+      gameState.currentQuest++;
+      const nextQuestEl = document.getElementById(`quest${gameState.currentQuest}`);
+      if (nextQuestEl) {
+        nextQuestEl.classList.add('active');
+      }
+
+      updateNavigatorHints();
+    }
+
+    function gainExp(amount) {
+      gameState.exp += amount;
+
+      if (gameState.exp >= gameState.expToNext) {
+        levelUp();
+      }
+
+      updateStatusBars();
+    }
+
+    function levelUp() {
+      gameState.level++;
+      gameState.exp = gameState.exp - gameState.expToNext;
+      gameState.expToNext = Math.floor(gameState.expToNext * 1.5);
+      gameState.maxHp += 10;
+      gameState.hp = gameState.maxHp;
+      gameState.maxMp += 5;
+      gameState.mp = gameState.maxMp;
+
+      // Show level up overlay
+      const overlay = document.getElementById('levelUpOverlay');
+      document.getElementById('levelUpDetail').textContent = `レベル ${gameState.level} になった！`;
+      overlay.classList.add('visible');
+
+      // Check for new command unlock
+      const newCommandEl = document.getElementById('newCommand');
+      if (gameState.level === 2) {
+        newCommandEl.style.display = 'block';
+        document.getElementById('newCommandName').textContent = 'ls';
+      } else if (gameState.level === 3) {
+        newCommandEl.style.display = 'block';
+        document.getElementById('newCommandName').textContent = 'cd';
+      } else {
+        newCommandEl.style.display = 'none';
+      }
+
+      document.getElementById('playerLevel').textContent = gameState.level;
+      updateTitles();
+    }
+
+    function closeLevelUp() {
+      document.getElementById('levelUpOverlay').classList.remove('visible');
+    }
+
+    function unlockCommand(cmd) {
+      if (!gameState.unlockedCommands.includes(cmd)) {
+        gameState.unlockedCommands.push(cmd);
+
+        // Update command list UI
+        const commandList = document.getElementById('commandList');
+        const tags = commandList.querySelectorAll('.command-tag');
+        tags.forEach(tag => {
+          if (tag.textContent === cmd) {
+            tag.classList.remove('locked');
+          }
+        });
+
+        showToast(`新しい呪文「${cmd}」を習得！`, 'success');
+        renderFileList();
+      }
+    }
+
+    function updateStatusBars() {
+      document.getElementById('hpValue').textContent = `${gameState.hp}/${gameState.maxHp}`;
+      document.getElementById('hpBar').style.width = `${(gameState.hp / gameState.maxHp) * 100}%`;
+
+      document.getElementById('mpValue').textContent = `${gameState.mp}/${gameState.maxMp}`;
+      document.getElementById('mpBar').style.width = `${(gameState.mp / gameState.maxMp) * 100}%`;
+
+      document.getElementById('expValue').textContent = `${gameState.exp}/${gameState.expToNext}`;
+      document.getElementById('expBar').style.width = `${(gameState.exp / gameState.expToNext) * 100}%`;
+    }
+
+    function updateTitles() {
+      const titles = {
+        1: '見習い勇者',
+        2: 'コマンド使い',
+        3: 'ファイル探索者',
+        4: 'ディレクトリマスター',
+        5: 'コマンド王国の騎士'
+      };
+      document.getElementById('playerTitle').textContent = titles[gameState.level] || titles[5];
+    }
+
+    function showMessage(speaker, message, icon = '🧙') {
+      document.getElementById('speakerName').textContent = speaker;
+      document.getElementById('messageBody').innerHTML = message.replace(/\n/g, '<br>');
+      document.getElementById('speakerIcon').textContent = icon;
+    }
+
+    function showToast(message, type = 'exp') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.textContent = message;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(100%)';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    // ==================== EVENT LISTENERS ====================
+    document.getElementById('terminalInput').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const input = e.target.value;
+        executeCommand(input);
+        e.target.value = '';
+      }
+    });
+
+    // Check for saved game
+    const savedGame = localStorage.getItem('commandKingdomSave');
+    if (savedGame) {
+      document.getElementById('continueBtn').style.display = 'block';
+    }
+
+    // Initialize
+    updateStatusBars();
+  </script>
+</body>
+</html>
