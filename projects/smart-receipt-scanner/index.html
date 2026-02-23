@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Receipt Scanner - AI領収書読み取り</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              200: '#c7d2fe',
+              300: '#a5b4fc',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+            },
+          },
+          fontFamily: {
+            heading: ['"Space Grotesk"', '"Noto Sans JP"', 'sans-serif'],
+            body: ['"DM Sans"', '"Noto Sans JP"', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-feature-settings: "palt" 1;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .upload-zone {
+      transition: all 0.3s ease;
+    }
+    .upload-zone.dragover {
+      border-color: #6366f1;
+      background: #eef2ff;
+      transform: scale(1.01);
+    }
+
+    .processing-animation {
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .scan-line {
+      animation: scanMove 2s ease-in-out infinite;
+    }
+    @keyframes scanMove {
+      0%, 100% { top: 10%; }
+      50% { top: 85%; }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.5s ease-out forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .slide-in {
+      animation: slideIn 0.4s ease-out forwards;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .progress-fill {
+      transition: width 0.8s ease;
+    }
+
+    .table-row-enter {
+      animation: tableRowEnter 0.3s ease-out forwards;
+    }
+    @keyframes tableRowEnter {
+      from { opacity: 0; background: #eef2ff; }
+      to { opacity: 1; background: transparent; }
+    }
+
+    .shimmer {
+      background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+    }
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    .glow-button {
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+    }
+    .glow-button:hover {
+      box-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
+    }
+  </style>
+</head>
+
+<body class="font-body bg-slate-50 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-400 flex items-center justify-center shadow-lg">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+          </div>
+          <div>
+            <h1 class="font-heading font-bold text-lg text-slate-900">Smart Receipt Scanner</h1>
+            <p class="text-[11px] text-slate-400">GPT-4 Vision 搭載</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <div class="hidden sm:flex items-center gap-2 bg-green-50 text-green-600 text-xs font-medium px-3 py-1.5 rounded-full">
+            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+            AI Ready
+          </div>
+          <button class="text-sm text-slate-600 hover:text-slate-900 font-medium">履歴</button>
+          <button class="text-sm text-slate-600 hover:text-slate-900 font-medium">設定</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-6xl mx-auto px-6 py-8">
+
+    <div class="grid lg:grid-cols-3 gap-8">
+
+      <!-- Left Column: Upload & Stats -->
+      <div class="lg:col-span-1 space-y-6">
+
+        <!-- Upload Zone -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+          <h2 class="font-heading font-semibold text-sm text-slate-700 mb-4 flex items-center gap-2">
+            <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+            領収書をアップロード
+          </h2>
+
+          <div class="upload-zone border-2 border-dashed border-slate-300 rounded-xl p-8 text-center cursor-pointer hover:border-indigo-400 hover:bg-indigo-50/30 transition-all" id="uploadZone" onclick="triggerUpload()">
+            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center">
+              <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+              </svg>
+            </div>
+            <p class="text-sm text-slate-600 mb-1">ドラッグ&ドロップ</p>
+            <p class="text-xs text-slate-400">または クリックしてファイル選択</p>
+          </div>
+
+          <div class="flex gap-2 mt-4">
+            <button class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-600 hover:bg-slate-50 transition" onclick="openCamera()">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+              カメラ
+            </button>
+            <button class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-600 hover:bg-slate-50 transition" onclick="triggerUpload()">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+              ファイル
+            </button>
+          </div>
+
+          <input type="file" id="fileInput" class="hidden" accept="image/*,.pdf" multiple onchange="handleFiles(this.files)">
+        </div>
+
+        <!-- Stats Card -->
+        <div class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-2xl p-6 text-white shadow-lg">
+          <h3 class="font-heading font-semibold text-sm opacity-90 mb-4">今月の成果</h3>
+
+          <div class="grid grid-cols-2 gap-4 mb-4">
+            <div class="bg-white/10 backdrop-blur rounded-xl p-3">
+              <p class="text-2xl font-bold">47</p>
+              <p class="text-xs opacity-80">処理枚数</p>
+            </div>
+            <div class="bg-white/10 backdrop-blur rounded-xl p-3">
+              <p class="text-2xl font-bold">2.8h</p>
+              <p class="text-xs opacity-80">節約時間</p>
+            </div>
+          </div>
+
+          <div class="bg-white/10 backdrop-blur rounded-xl p-3">
+            <div class="flex items-center justify-between mb-2">
+              <p class="text-xs opacity-80">読み取り精度</p>
+              <p class="text-sm font-semibold">98.2%</p>
+            </div>
+            <div class="h-1.5 bg-white/20 rounded-full overflow-hidden">
+              <div class="h-full bg-white rounded-full progress-fill" style="width: 98%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Tips -->
+        <div class="bg-amber-50 border border-amber-100 rounded-2xl p-4">
+          <div class="flex items-start gap-3">
+            <div class="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center flex-shrink-0">
+              <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="text-xs font-semibold text-amber-800 mb-1">Tips</p>
+              <p class="text-[11px] text-amber-700 leading-relaxed">領収書は明るい場所で平らに置いて撮影すると、AI読み取り精度が向上します。</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Results -->
+      <div class="lg:col-span-2 space-y-6">
+
+        <!-- Processing State (Hidden by default, shown during demo) -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hidden" id="processingCard">
+          <div class="flex items-center gap-4">
+            <div class="relative w-20 h-28 bg-slate-100 rounded-lg overflow-hidden">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <svg class="w-8 h-8 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+              </div>
+              <div class="scan-line absolute left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-indigo-500 to-transparent"></div>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-2">
+                <div class="w-5 h-5 rounded-full border-2 border-indigo-500 border-t-transparent animate-spin"></div>
+                <span class="text-sm font-medium text-slate-700">GPT-4 Vision で解析中...</span>
+              </div>
+              <div class="space-y-1">
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                  <span class="text-xs text-slate-500">画像読み込み完了</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
+                  <span class="text-xs text-slate-500">テキスト抽出中...</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-slate-300"></span>
+                  <span class="text-xs text-slate-400">データ構造化</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Results Table -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+          <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <h2 class="font-heading font-semibold text-slate-700">抽出データ</h2>
+              <span class="text-xs font-medium px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-600" id="itemCount">3件</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition" onclick="selectAll()">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                </svg>
+                全選択
+              </button>
+              <button class="glow-button flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-xs font-medium bg-indigo-500 text-white hover:bg-indigo-600 transition" onclick="exportCSV()">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                </svg>
+                CSV出力
+              </button>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead class="bg-slate-50">
+                <tr>
+                  <th class="w-10 px-4 py-3">
+                    <input type="checkbox" class="w-4 h-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" id="selectAllCheckbox" onchange="toggleSelectAll()">
+                  </th>
+                  <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wide">日付</th>
+                  <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wide">店舗名</th>
+                  <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wide">明細</th>
+                  <th class="px-4 py-3 text-right text-xs font-semibold text-slate-600 uppercase tracking-wide">税額</th>
+                  <th class="px-4 py-3 text-right text-xs font-semibold text-slate-600 uppercase tracking-wide">合計金額</th>
+                  <th class="px-4 py-3 text-center text-xs font-semibold text-slate-600 uppercase tracking-wide">確度</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100" id="dataTableBody">
+                <!-- Sample Data Rows -->
+                <tr class="hover:bg-slate-50 transition table-row-enter" style="animation-delay: 0.1s">
+                  <td class="px-4 py-4">
+                    <input type="checkbox" class="row-checkbox w-4 h-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" checked>
+                  </td>
+                  <td class="px-4 py-4">
+                    <span class="text-sm text-slate-700 font-medium">2026/02/23</span>
+                  </td>
+                  <td class="px-4 py-4">
+                    <div class="flex items-center gap-2">
+                      <div class="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center text-sm">
+                        <span>A</span>
+                      </div>
+                      <span class="text-sm text-slate-700">Amazon.co.jp</span>
+                    </div>
+                  </td>
+                  <td class="px-4 py-4">
+                    <span class="text-sm text-slate-600">USBケーブル Type-C x2</span>
+                  </td>
+                  <td class="px-4 py-4 text-right">
+                    <span class="text-sm text-slate-500">¥180</span>
+                  </td>
+                  <td class="px-4 py-4 text-right">
+                    <span class="text-sm font-semibold text-slate-700">¥1,980</span>
+                  </td>
+                  <td class="px-4 py-4 text-center">
+                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-50 text-green-700">99%</span>
+                  </td>
+                </tr>
+
+                <tr class="hover:bg-slate-50 transition table-row-enter" style="animation-delay: 0.2s">
+                  <td class="px-4 py-4">
+                    <input type="checkbox" class="row-checkbox w-4 h-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" checked>
+                  </td>
+                  <td class="px-4 py-4">
+                    <span class="text-sm text-slate-700 font-medium">2026/02/22</span>
+                  </td>
+                  <td class="px-4 py-4">
+                    <div class="flex items-center gap-2">
+                      <div class="w-8 h-8 rounded-lg bg-green-50 flex items-center justify-center text-sm">
+                        <span>S</span>
+                      </div>
+                      <span class="text-sm text-slate-700">スターバックス 渋谷店</span>
+                    </div>
+                  </td>
+                  <td class="px-4 py-4">
+                    <span class="text-sm text-slate-600">カフェラテ Grande, クロワッサン</span>
+                  </td>
+                  <td class="px-4 py-4 text-right">
+                    <span class="text-sm text-slate-500">¥72</span>
+                  </td>
+                  <td class="px-4 py-4 text-right">
+                    <span class="text-sm font-semibold text-slate-700">¥792</span>
+                  </td>
+                  <td class="px-4 py-4 text-center">
+                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-50 text-green-700">97%</span>
+                  </td>
+                </tr>
+
+                <tr class="hover:bg-slate-50 transition table-row-enter" style="animation-delay: 0.3s">
+                  <td class="px-4 py-4">
+                    <input type="checkbox" class="row-checkbox w-4 h-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" checked>
+                  </td>
+                  <td class="px-4 py-4">
+                    <span class="text-sm text-slate-700 font-medium">2026/02/21</span>
+                  </td>
+                  <td class="px-4 py-4">
+                    <div class="flex items-center gap-2">
+                      <div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center text-sm">
+                        <span>B</span>
+                      </div>
+                      <span class="text-sm text-slate-700">ビックカメラ 新宿西口店</span>
+                    </div>
+                  </td>
+                  <td class="px-4 py-4">
+                    <span class="text-sm text-slate-600">SDカード 128GB SanDisk</span>
+                  </td>
+                  <td class="px-4 py-4 text-right">
+                    <span class="text-sm text-slate-500">¥236</span>
+                  </td>
+                  <td class="px-4 py-4 text-right">
+                    <span class="text-sm font-semibold text-slate-700">¥2,598</span>
+                  </td>
+                  <td class="px-4 py-4 text-center">
+                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-amber-50 text-amber-700">92%</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Table Footer -->
+          <div class="px-6 py-4 border-t border-slate-100 bg-slate-50 flex items-center justify-between">
+            <p class="text-xs text-slate-500">選択中: <span class="font-medium text-slate-700" id="selectedCount">3</span>件</p>
+            <div class="flex items-center gap-4">
+              <p class="text-xs text-slate-500">合計金額: <span class="font-semibold text-indigo-600 text-sm" id="totalAmount">¥5,370</span></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent History -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="font-heading font-semibold text-slate-700 flex items-center gap-2">
+              <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              最近の処理履歴
+            </h2>
+            <button class="text-xs text-indigo-500 font-medium hover:text-indigo-700">すべて見る</button>
+          </div>
+
+          <div class="space-y-3">
+            <div class="flex items-center gap-4 p-3 rounded-xl bg-slate-50 hover:bg-slate-100 transition cursor-pointer">
+              <div class="w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center">
+                <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+              </div>
+              <div class="flex-1">
+                <p class="text-sm font-medium text-slate-700">Amazon.co.jp - ¥1,980</p>
+                <p class="text-xs text-slate-400">2分前に処理完了</p>
+              </div>
+              <span class="px-2 py-0.5 rounded-full text-xs font-medium bg-green-50 text-green-600">完了</span>
+            </div>
+
+            <div class="flex items-center gap-4 p-3 rounded-xl bg-slate-50 hover:bg-slate-100 transition cursor-pointer">
+              <div class="w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center">
+                <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+              </div>
+              <div class="flex-1">
+                <p class="text-sm font-medium text-slate-700">スターバックス - ¥792</p>
+                <p class="text-xs text-slate-400">5分前に処理完了</p>
+              </div>
+              <span class="px-2 py-0.5 rounded-full text-xs font-medium bg-green-50 text-green-600">完了</span>
+            </div>
+
+            <div class="flex items-center gap-4 p-3 rounded-xl bg-slate-50 hover:bg-slate-100 transition cursor-pointer">
+              <div class="w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center">
+                <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+              </div>
+              <div class="flex-1">
+                <p class="text-sm font-medium text-slate-700">ビックカメラ - ¥2,598</p>
+                <p class="text-xs text-slate-400">10分前に処理完了</p>
+              </div>
+              <span class="px-2 py-0.5 rounded-full text-xs font-medium bg-green-50 text-green-600">完了</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Toast Notification -->
+  <div class="fixed bottom-6 right-6 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-lg hidden flex items-center gap-3" id="toast">
+    <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+    </svg>
+    <span class="text-sm" id="toastMessage">CSVをダウンロードしました</span>
+  </div>
+
+  <script>
+    // Drag and Drop
+    const uploadZone = document.getElementById('uploadZone');
+
+    uploadZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadZone.classList.add('dragover');
+    });
+
+    uploadZone.addEventListener('dragleave', () => {
+      uploadZone.classList.remove('dragover');
+    });
+
+    uploadZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadZone.classList.remove('dragover');
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        handleFiles(files);
+      }
+    });
+
+    // File Input
+    function triggerUpload() {
+      document.getElementById('fileInput').click();
+    }
+
+    function handleFiles(files) {
+      showProcessing();
+      setTimeout(() => {
+        hideProcessing();
+        showToast('領収書を解析しました');
+      }, 3000);
+    }
+
+    // Camera (Demo)
+    function openCamera() {
+      showToast('カメラ機能はデモ版では利用できません');
+    }
+
+    // Processing State
+    function showProcessing() {
+      document.getElementById('processingCard').classList.remove('hidden');
+    }
+
+    function hideProcessing() {
+      document.getElementById('processingCard').classList.add('hidden');
+    }
+
+    // CSV Export
+    function exportCSV() {
+      const selectedCount = document.querySelectorAll('.row-checkbox:checked').length;
+      if (selectedCount === 0) {
+        showToast('エクスポートする項目を選択してください');
+        return;
+      }
+
+      // Create CSV content
+      const headers = ['日付', '店舗名', '明細', '税額', '合計金額'];
+      const rows = [
+        ['2026/02/23', 'Amazon.co.jp', 'USBケーブル Type-C x2', '180', '1980'],
+        ['2026/02/22', 'スターバックス 渋谷店', 'カフェラテ Grande, クロワッサン', '72', '792'],
+        ['2026/02/21', 'ビックカメラ 新宿西口店', 'SDカード 128GB SanDisk', '236', '2598']
+      ];
+
+      let csv = headers.join(',') + '\n';
+      rows.forEach(row => {
+        csv += row.join(',') + '\n';
+      });
+
+      // Download
+      const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'receipts_export_' + new Date().toISOString().split('T')[0] + '.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+
+      showToast('CSVをダウンロードしました');
+    }
+
+    // Select All
+    function toggleSelectAll() {
+      const selectAll = document.getElementById('selectAllCheckbox');
+      const checkboxes = document.querySelectorAll('.row-checkbox');
+      checkboxes.forEach(cb => cb.checked = selectAll.checked);
+      updateSelectedCount();
+    }
+
+    function selectAll() {
+      document.getElementById('selectAllCheckbox').checked = true;
+      toggleSelectAll();
+    }
+
+    function updateSelectedCount() {
+      const count = document.querySelectorAll('.row-checkbox:checked').length;
+      document.getElementById('selectedCount').textContent = count;
+    }
+
+    // Add event listeners to row checkboxes
+    document.querySelectorAll('.row-checkbox').forEach(cb => {
+      cb.addEventListener('change', updateSelectedCount);
+    });
+
+    // Toast Notification
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastMessage').textContent = message;
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3000);
+    }
+  </script>
+
+</body>
+</html>
