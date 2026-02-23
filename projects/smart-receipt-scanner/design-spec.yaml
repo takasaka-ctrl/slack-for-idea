@@ -1,0 +1,60 @@
+project:
+  name: "Smart Receipt Scanner"
+  type: "dashboard"
+  market: "japan"
+
+design:
+  style: "Stripe-Inspired Precision"
+  axes:
+    density: 3
+    tone: 3
+    era: 4
+    saturation: 3
+
+  colors:
+    primary: "#0a0f1e"      # Navy - Dark sidebar
+    secondary: "#635bff"    # Brand indigo
+    accent: "#10b981"       # Mint - Success states
+    background: "#f8fafc"   # Slate-50 - Workspace
+    text: "#1e293b"         # Slate-800
+
+  typography:
+    heading: "Space Grotesk"
+    body: "DM Sans"
+    mono: "JetBrains Mono"
+    japanese: "Noto Sans JP"
+
+quality_check:
+  ai_detection:
+    violations: []
+    unjustified_count: 0
+    overall: "PASS"
+    notes: |
+      - No purple-blue gradient on white background
+      - Dark sidebar provides distinctive identity
+      - Monospace font for data adds character
+      - Glassmorphism stats cards as memorable element
+
+  ux_principles: "PASS"
+  overall: "PASS"
+
+design_rationale:
+  why_this_works: |
+    ターゲットユーザー（フリーランス・個人事業主）に対し、
+    Stripe/Linear風のダークサイドバー + ライトワークスペース構成で
+    プロフェッショナルな印象を与える。数字表示にモノスペースフォント
+    （JetBrains Mono）を使用し、金額・日付の視認性を高めている。
+
+  differentiator: |
+    記憶に残る要素:
+    - ダークサイドバーのGlassmorphism統計カード
+    - アップロードゾーンのパルスアニメーション
+    - 処理履歴のチェックマークアニメーション
+    - KPIカードのホバーリフトエフェクト
+
+  japan_market_compliance: |
+    - line-height 1.8 for Japanese text
+    - letter-spacing -0.02em for body text
+    - font-feature-settings "palt" enabled
+    - Proper date format (YYYY/MM/DD)
+    - Currency format with yen symbol
