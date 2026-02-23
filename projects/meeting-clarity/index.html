@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meeting Clarity - AI議事録の真実性可視化ツール</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              300: '#93c5fd',
+              400: '#60a5fa',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            },
+            navy: {
+              800: '#1e3a5f',
+              900: '#0f172a',
+            },
+          },
+          fontFamily: {
+            sans: ['Inter', 'Noto Sans JP', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-feature-settings: "palt" 1;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .confidence-high { --confidence-color: #059669; }
+    .confidence-medium { --confidence-color: #d97706; }
+    .confidence-low { --confidence-color: #dc2626; }
+
+    .confidence-badge {
+      background-color: color-mix(in srgb, var(--confidence-color) 10%, transparent);
+      color: var(--confidence-color);
+      border: 1px solid color-mix(in srgb, var(--confidence-color) 20%, transparent);
+    }
+
+    .transcript-item:hover .source-link {
+      opacity: 1;
+    }
+
+    .source-link {
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .verified-glow {
+      box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
+    }
+
+    .pending-pulse {
+      animation: pendingPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pendingPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+  </style>
+</head>
+
+<body class="font-sans bg-slate-50 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-3">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-lg bg-navy-800 flex items-center justify-center">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+          </div>
+          <div>
+            <h1 class="font-semibold text-slate-900 text-sm">Meeting Clarity</h1>
+            <p class="text-[11px] text-slate-500">AI議事録の真実性可視化</p>
+          </div>
+        </div>
+
+        <nav class="hidden md:flex items-center gap-1">
+          <a href="#" class="px-3 py-1.5 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-md transition">ダッシュボード</a>
+          <a href="#" class="px-3 py-1.5 text-sm text-primary-600 bg-primary-50 rounded-md font-medium">議事録</a>
+          <a href="#" class="px-3 py-1.5 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-md transition">設定</a>
+        </nav>
+
+        <div class="flex items-center gap-3">
+          <button class="relative p-2 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+            </svg>
+            <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"></span>
+          </button>
+          <div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-sm font-medium text-slate-600">
+            T
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-6 py-6">
+
+    <!-- Meeting Header -->
+    <div class="bg-white rounded-xl border border-slate-200 p-6 mb-6">
+      <div class="flex items-start justify-between">
+        <div>
+          <div class="flex items-center gap-3 mb-2">
+            <h2 class="text-xl font-semibold text-slate-900">Q1プロダクト戦略会議</h2>
+            <span class="px-2 py-0.5 rounded text-xs font-medium bg-green-50 text-green-700 border border-green-100">確認完了 4/5</span>
+          </div>
+          <div class="flex items-center gap-4 text-sm text-slate-500">
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+              </svg>
+              2026年2月23日 14:00-15:30
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+              </svg>
+              5名参加
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              90分
+            </span>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button class="flex items-center gap-2 px-3 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            PDF出力
+          </button>
+          <button class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-navy-800 hover:bg-navy-900 rounded-lg transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+            </svg>
+            共有
+          </button>
+        </div>
+      </div>
+
+      <!-- Participants -->
+      <div class="mt-4 pt-4 border-t border-slate-100">
+        <p class="text-xs font-medium text-slate-500 mb-2">参加者</p>
+        <div class="flex items-center gap-2">
+          <div class="flex items-center gap-1 px-2 py-1 bg-slate-100 rounded-full">
+            <div class="w-5 h-5 rounded-full bg-blue-500 flex items-center justify-center text-[10px] font-medium text-white">田</div>
+            <span class="text-xs text-slate-700">田中 太郎</span>
+          </div>
+          <div class="flex items-center gap-1 px-2 py-1 bg-slate-100 rounded-full">
+            <div class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center text-[10px] font-medium text-white">鈴</div>
+            <span class="text-xs text-slate-700">鈴木 花子</span>
+          </div>
+          <div class="flex items-center gap-1 px-2 py-1 bg-slate-100 rounded-full">
+            <div class="w-5 h-5 rounded-full bg-purple-500 flex items-center justify-center text-[10px] font-medium text-white">山</div>
+            <span class="text-xs text-slate-700">山田 健一</span>
+          </div>
+          <div class="flex items-center gap-1 px-2 py-1 bg-slate-100 rounded-full">
+            <div class="w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center text-[10px] font-medium text-white">佐</div>
+            <span class="text-xs text-slate-700">佐藤 美咲</span>
+          </div>
+          <div class="flex items-center gap-1 px-2 py-1 bg-slate-100 rounded-full">
+            <div class="w-5 h-5 rounded-full bg-pink-500 flex items-center justify-center text-[10px] font-medium text-white">高</div>
+            <span class="text-xs text-slate-700">高橋 次郎</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid lg:grid-cols-3 gap-6">
+
+      <!-- Left: Transcript -->
+      <div class="lg:col-span-2 space-y-4">
+
+        <!-- Confidence Legend -->
+        <div class="bg-white rounded-xl border border-slate-200 p-4">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-medium text-slate-700">信頼度スコアについて</h3>
+            <div class="flex items-center gap-4 text-xs">
+              <div class="flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                <span class="text-slate-600">High (90%+)</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                <span class="text-slate-600">Medium (70-89%)</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                <span class="text-slate-600">Low (&lt;70%)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Transcript Items -->
+        <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+          <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+            <h3 class="font-semibold text-slate-900">議事録</h3>
+            <div class="flex items-center gap-2">
+              <button class="text-xs text-slate-500 hover:text-slate-700 px-2 py-1 rounded hover:bg-slate-100 transition">
+                すべて展開
+              </button>
+              <button class="text-xs text-primary-600 hover:text-primary-700 px-2 py-1 rounded hover:bg-primary-50 transition font-medium">
+                決定事項のみ
+              </button>
+            </div>
+          </div>
+
+          <div class="divide-y divide-slate-100">
+
+            <!-- Section: Opening -->
+            <div class="px-6 py-3 bg-slate-50">
+              <h4 class="text-xs font-semibold text-slate-500 uppercase tracking-wide">1. オープニング・前回の振り返り</h4>
+            </div>
+
+            <!-- Transcript Item 1 -->
+            <div class="transcript-item px-6 py-4 hover:bg-slate-50 transition">
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-xs font-medium text-white flex-shrink-0 mt-0.5">田</div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center gap-2 mb-1">
+                    <span class="text-sm font-medium text-slate-900">田中 太郎</span>
+                    <span class="text-xs text-slate-400">14:02</span>
+                    <span class="confidence-badge confidence-high text-[10px] font-medium px-1.5 py-0.5 rounded">High 96%</span>
+                  </div>
+                  <p class="text-sm text-slate-700 leading-relaxed">
+                    前回の会議で決まったUI改修について、予定通り3月第1週にリリースできる見込みです。開発チームからの報告では、主要機能の実装が完了し、現在QAフェーズに入っています。
+                  </p>
+                  <button class="source-link mt-2 text-xs text-primary-600 hover:text-primary-700 flex items-center gap-1">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+                    </svg>
+                    元の発言を聴く (14:02:15)
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Section: Main Discussion -->
+            <div class="px-6 py-3 bg-slate-50">
+              <h4 class="text-xs font-semibold text-slate-500 uppercase tracking-wide">2. Q1優先施策の議論</h4>
+            </div>
+
+            <!-- Transcript Item 2 - Medium Confidence -->
+            <div class="transcript-item px-6 py-4 hover:bg-slate-50 transition border-l-2 border-amber-400">
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-xs font-medium text-white flex-shrink-0 mt-0.5">鈴</div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center gap-2 mb-1">
+                    <span class="text-sm font-medium text-slate-900">鈴木 花子</span>
+                    <span class="text-xs text-slate-400">14:15</span>
+                    <span class="confidence-badge confidence-medium text-[10px] font-medium px-1.5 py-0.5 rounded">Medium 78%</span>
+                    <span class="text-[10px] text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-100">要確認</span>
+                  </div>
+                  <p class="text-sm text-slate-700 leading-relaxed">
+                    マーケティング予算について、前年比<span class="bg-amber-100 text-amber-800 px-1 rounded">20%増</span>での申請を検討しています。ただし、ROIの見込みについては<span class="bg-amber-100 text-amber-800 px-1 rounded">追加の分析が必要</span>との認識です。
+                  </p>
+                  <div class="mt-3 p-3 bg-amber-50 rounded-lg border border-amber-100">
+                    <div class="flex items-start gap-2">
+                      <svg class="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                      </svg>
+                      <div>
+                        <p class="text-xs font-medium text-amber-800">AI注釈: 音声が不明瞭な箇所があります</p>
+                        <p class="text-xs text-amber-700 mt-0.5">「20%増」の数値について、発言者への確認を推奨します。</p>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="source-link mt-2 text-xs text-primary-600 hover:text-primary-700 flex items-center gap-1">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+                    </svg>
+                    元の発言を聴く (14:15:42)
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Transcript Item 3 - Decision Item (Verified) -->
+            <div class="transcript-item px-6 py-4 hover:bg-slate-50 transition bg-green-50/30 border-l-2 border-green-500">
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center text-xs font-medium text-white flex-shrink-0 mt-0.5">山</div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center gap-2 mb-1">
+                    <span class="text-sm font-medium text-slate-900">山田 健一</span>
+                    <span class="text-xs text-slate-400">14:28</span>
+                    <span class="confidence-badge confidence-high text-[10px] font-medium px-1.5 py-0.5 rounded">High 94%</span>
+                    <span class="text-[10px] text-green-700 bg-green-100 px-1.5 py-0.5 rounded border border-green-200 flex items-center gap-1">
+                      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                      </svg>
+                      確認済み
+                    </span>
+                  </div>
+                  <div class="inline-flex items-center gap-1.5 mb-2 px-2 py-1 bg-primary-50 text-primary-700 rounded text-xs font-medium">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                    </svg>
+                    決定事項
+                  </div>
+                  <p class="text-sm text-slate-700 leading-relaxed">
+                    <strong>新機能「ダッシュボード分析」のリリース日を3月15日に決定します。</strong>開発、QA、マーケティングの各チームはこの日程に合わせてスケジュールを調整してください。
+                  </p>
+                  <div class="mt-3 p-3 bg-green-50 rounded-lg border border-green-100 verified-glow">
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <span class="text-xs font-medium text-green-800">山田 健一が確認しました</span>
+                      </div>
+                      <span class="text-xs text-green-600">2026/02/23 16:45</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Transcript Item 4 - Low Confidence -->
+            <div class="transcript-item px-6 py-4 hover:bg-slate-50 transition border-l-2 border-red-400">
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center text-xs font-medium text-white flex-shrink-0 mt-0.5">佐</div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center gap-2 mb-1">
+                    <span class="text-sm font-medium text-slate-900">佐藤 美咲</span>
+                    <span class="text-xs text-slate-400">14:35</span>
+                    <span class="confidence-badge confidence-low text-[10px] font-medium px-1.5 py-0.5 rounded">Low 62%</span>
+                    <span class="text-[10px] text-red-600 bg-red-50 px-1.5 py-0.5 rounded border border-red-100 pending-pulse">確認待ち</span>
+                  </div>
+                  <p class="text-sm text-slate-700 leading-relaxed">
+                    サーバーコストについて、<span class="bg-red-100 text-red-800 px-1 rounded">[聞き取り不明]</span>の削減が可能とのことです。インフラチームと連携して<span class="bg-red-100 text-red-800 px-1 rounded">[詳細不明]</span>を進める予定です。
+                  </p>
+                  <div class="mt-3 p-3 bg-red-50 rounded-lg border border-red-100">
+                    <div class="flex items-start gap-2">
+                      <svg class="w-4 h-4 text-red-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                      </svg>
+                      <div>
+                        <p class="text-xs font-medium text-red-800">AI注釈: 信頼度が低いため確認が必要です</p>
+                        <p class="text-xs text-red-700 mt-0.5">背景ノイズにより複数箇所が聞き取れませんでした。</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mt-3 flex items-center gap-2">
+                    <button class="text-xs text-white bg-red-600 hover:bg-red-700 px-3 py-1.5 rounded-lg transition flex items-center gap-1.5" onclick="sendSlackNotification()">
+                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                      </svg>
+                      Slackで確認依頼
+                    </button>
+                    <span class="text-xs text-slate-500">または</span>
+                    <button class="text-xs text-slate-600 hover:text-slate-800 px-2 py-1 rounded hover:bg-slate-100 transition">手動で編集</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Section: Action Items -->
+            <div class="px-6 py-3 bg-slate-50">
+              <h4 class="text-xs font-semibold text-slate-500 uppercase tracking-wide">3. アクションアイテム</h4>
+            </div>
+
+            <!-- Transcript Item 5 - TODO Item -->
+            <div class="transcript-item px-6 py-4 hover:bg-slate-50 transition bg-blue-50/30 border-l-2 border-blue-500">
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 rounded-full bg-pink-500 flex items-center justify-center text-xs font-medium text-white flex-shrink-0 mt-0.5">高</div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center gap-2 mb-1">
+                    <span class="text-sm font-medium text-slate-900">高橋 次郎</span>
+                    <span class="text-xs text-slate-400">14:52</span>
+                    <span class="confidence-badge confidence-high text-[10px] font-medium px-1.5 py-0.5 rounded">High 91%</span>
+                    <span class="text-[10px] text-green-700 bg-green-100 px-1.5 py-0.5 rounded border border-green-200 flex items-center gap-1">
+                      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                      </svg>
+                      確認済み
+                    </span>
+                  </div>
+                  <div class="inline-flex items-center gap-1.5 mb-2 px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs font-medium">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                    </svg>
+                    TODO
+                  </div>
+                  <p class="text-sm text-slate-700 leading-relaxed">
+                    <strong>【担当: 高橋】</strong>競合分析レポートを来週金曜日（3月1日）までに作成し、経営会議に提出する。
+                  </p>
+                  <div class="mt-3 p-3 bg-green-50 rounded-lg border border-green-100">
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <span class="text-xs font-medium text-green-800">高橋 次郎が確認しました</span>
+                      </div>
+                      <span class="text-xs text-green-600">2026/02/23 17:02</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Sidebar -->
+      <div class="space-y-4">
+
+        <!-- Summary Stats -->
+        <div class="bg-white rounded-xl border border-slate-200 p-5">
+          <h3 class="font-semibold text-slate-900 mb-4">サマリー</h3>
+
+          <div class="space-y-4">
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-xs text-slate-500">全体信頼度</span>
+                <span class="text-sm font-semibold text-slate-900">84%</span>
+              </div>
+              <div class="h-2 bg-slate-100 rounded-full overflow-hidden">
+                <div class="h-full bg-gradient-to-r from-amber-400 to-emerald-500 rounded-full" style="width: 84%"></div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div class="p-3 bg-slate-50 rounded-lg">
+                <p class="text-2xl font-bold text-slate-900">5</p>
+                <p class="text-xs text-slate-500">抽出項目</p>
+              </div>
+              <div class="p-3 bg-green-50 rounded-lg">
+                <p class="text-2xl font-bold text-green-600">4</p>
+                <p class="text-xs text-slate-500">確認済み</p>
+              </div>
+              <div class="p-3 bg-amber-50 rounded-lg">
+                <p class="text-2xl font-bold text-amber-600">1</p>
+                <p class="text-xs text-slate-500">確認待ち</p>
+              </div>
+              <div class="p-3 bg-blue-50 rounded-lg">
+                <p class="text-2xl font-bold text-blue-600">2</p>
+                <p class="text-xs text-slate-500">決定事項</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Decisions List -->
+        <div class="bg-white rounded-xl border border-slate-200 p-5">
+          <h3 class="font-semibold text-slate-900 mb-4 flex items-center gap-2">
+            <svg class="w-4 h-4 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+            </svg>
+            決定事項
+          </h3>
+
+          <div class="space-y-3">
+            <div class="p-3 bg-slate-50 rounded-lg border-l-2 border-green-500">
+              <div class="flex items-center gap-2 mb-1">
+                <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                </svg>
+                <span class="text-xs font-medium text-green-700">確認済み</span>
+              </div>
+              <p class="text-sm text-slate-700">新機能リリース日: <strong>3月15日</strong></p>
+              <p class="text-xs text-slate-500 mt-1">担当: 山田 健一</p>
+            </div>
+
+            <div class="p-3 bg-slate-50 rounded-lg border-l-2 border-green-500">
+              <div class="flex items-center gap-2 mb-1">
+                <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                </svg>
+                <span class="text-xs font-medium text-green-700">確認済み</span>
+              </div>
+              <p class="text-sm text-slate-700">競合分析レポート期限: <strong>3月1日</strong></p>
+              <p class="text-xs text-slate-500 mt-1">担当: 高橋 次郎</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pending Verifications -->
+        <div class="bg-white rounded-xl border border-slate-200 p-5">
+          <h3 class="font-semibold text-slate-900 mb-4 flex items-center gap-2">
+            <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            確認待ち
+          </h3>
+
+          <div class="space-y-3">
+            <div class="p-3 bg-amber-50 rounded-lg border border-amber-100">
+              <div class="flex items-start gap-3">
+                <div class="w-6 h-6 rounded-full bg-orange-500 flex items-center justify-center text-[10px] font-medium text-white flex-shrink-0">佐</div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm text-slate-700">サーバーコスト削減について</p>
+                  <p class="text-xs text-amber-600 mt-1">信頼度: 62%</p>
+                  <button class="mt-2 text-xs text-amber-700 hover:text-amber-800 font-medium flex items-center gap-1" onclick="sendSlackNotification()">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                    </svg>
+                    リマインド送信
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slack Integration Status -->
+        <div class="bg-gradient-to-br from-[#4A154B] to-[#611f69] rounded-xl p-5 text-white">
+          <div class="flex items-center gap-3 mb-4">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/>
+            </svg>
+            <div>
+              <h4 class="font-semibold text-sm">Slack連携</h4>
+              <p class="text-xs text-white/70">接続済み</p>
+            </div>
+          </div>
+          <div class="space-y-2 text-xs">
+            <div class="flex items-center justify-between p-2 bg-white/10 rounded-lg">
+              <span>確認依頼送信</span>
+              <span class="text-green-300">3件送信済み</span>
+            </div>
+            <div class="flex items-center justify-between p-2 bg-white/10 rounded-lg">
+              <span>確認済み回答</span>
+              <span class="text-green-300">2件受信</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Slack Notification Modal -->
+  <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden" id="slackModal">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md mx-4 overflow-hidden">
+      <div class="bg-[#4A154B] px-6 py-4 flex items-center gap-3">
+        <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313z"/>
+        </svg>
+        <h3 class="text-white font-semibold">Slack通知プレビュー</h3>
+      </div>
+      <div class="p-6">
+        <div class="bg-slate-50 rounded-lg p-4 mb-4">
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-lg bg-navy-800 flex items-center justify-center">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+              </svg>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="font-semibold text-sm text-slate-900">Meeting Clarity</span>
+                <span class="text-xs text-slate-500">APP</span>
+              </div>
+              <p class="text-sm text-slate-700 mb-2">
+                <strong>確認依頼</strong>: Q1プロダクト戦略会議の議事録について、以下の内容の確認をお願いします。
+              </p>
+              <div class="bg-white border-l-4 border-amber-400 p-3 rounded">
+                <p class="text-sm text-slate-700 mb-2">
+                  「サーバーコストについて、[聞き取り不明]の削減が可能...」
+                </p>
+                <p class="text-xs text-slate-500">
+                  信頼度: 62% | 発言時刻: 14:35
+                </p>
+              </div>
+              <div class="mt-3 flex items-center gap-2">
+                <button class="px-3 py-1.5 bg-green-600 text-white text-xs font-medium rounded">正しい</button>
+                <button class="px-3 py-1.5 bg-slate-200 text-slate-700 text-xs font-medium rounded">修正が必要</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center justify-between">
+          <p class="text-xs text-slate-500">送信先: #general, @佐藤美咲</p>
+          <div class="flex items-center gap-2">
+            <button class="px-4 py-2 text-sm text-slate-600 hover:bg-slate-100 rounded-lg transition" onclick="closeSlackModal()">キャンセル</button>
+            <button class="px-4 py-2 text-sm font-medium text-white bg-[#4A154B] hover:bg-[#611f69] rounded-lg transition" onclick="confirmSlackSend()">送信</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="fixed bottom-6 right-6 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-lg hidden flex items-center gap-3" id="toast">
+    <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+    </svg>
+    <span class="text-sm" id="toastMessage">Slack通知を送信しました</span>
+  </div>
+
+  <script>
+    function sendSlackNotification() {
+      document.getElementById('slackModal').classList.remove('hidden');
+    }
+
+    function closeSlackModal() {
+      document.getElementById('slackModal').classList.add('hidden');
+    }
+
+    function confirmSlackSend() {
+      closeSlackModal();
+      showToast('Slack通知を送信しました');
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastMessage').textContent = message;
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3000);
+    }
+  </script>
+
+</body>
+</html>
