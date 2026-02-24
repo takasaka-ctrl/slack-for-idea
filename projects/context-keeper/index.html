@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Context Keeper - コンテキストスイッチングを90分短縮</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'Noto Sans JP', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#f0f7ff',
+              100: '#e0efff',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { font-feature-settings: "palt" 1; }
+    .gradient-text {
+      background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .card-hover {
+      transition: all 0.2s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px -12px rgba(0,0,0,0.15);
+    }
+  </style>
+</head>
+
+<body class="font-sans bg-white text-slate-900 antialiased">
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-lg border-b border-slate-100">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7c0-2-1-3-3-3H7c-2 0-3 1-3 3z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6M12 9v6"/>
+          </svg>
+        </div>
+        <span class="font-semibold text-lg">Context Keeper</span>
+      </div>
+
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#features" class="text-sm text-slate-600 hover:text-slate-900 transition">Features</a>
+        <a href="#pricing" class="text-sm text-slate-600 hover:text-slate-900 transition">Pricing</a>
+        <a href="./dashboard.html" class="text-sm font-medium text-blue-600 hover:text-blue-700 transition">Dashboard Demo</a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="./dashboard.html" class="px-4 py-2 text-sm font-medium text-white bg-slate-900 rounded-lg hover:bg-slate-800 transition">
+          Try Demo
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="pt-32 pb-20 px-6">
+    <div class="max-w-4xl mx-auto text-center">
+      <!-- Badge -->
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 text-blue-700 text-sm font-medium mb-6">
+        <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+        MVP Preview
+      </div>
+
+      <!-- Headline -->
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 leading-tight">
+        <span class="gradient-text">1日90分</span>を取り戻す
+        <br>
+        <span class="text-slate-900">ワークスペース復元ツール</span>
+      </h1>
+
+      <!-- Subheadline -->
+      <p class="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto mb-10 leading-relaxed">
+        ブラウザタブ、VSCode、ターミナルの状態を<br class="hidden md:block">
+        ワンクリックで保存・復元。AIが「前回何をしていたか」を教えてくれる。
+      </p>
+
+      <!-- CTA Buttons -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+        <a href="./dashboard.html" class="w-full sm:w-auto px-8 py-3.5 text-base font-medium text-white bg-slate-900 rounded-xl hover:bg-slate-800 transition shadow-lg shadow-slate-900/10">
+          ダッシュボードを見る
+        </a>
+        <a href="#features" class="w-full sm:w-auto px-8 py-3.5 text-base font-medium text-slate-700 bg-slate-100 rounded-xl hover:bg-slate-200 transition">
+          機能を詳しく見る
+        </a>
+      </div>
+
+      <!-- Stats -->
+      <div class="grid grid-cols-3 gap-8 max-w-lg mx-auto">
+        <div>
+          <div class="text-3xl font-bold text-slate-900">90分</div>
+          <div class="text-sm text-slate-500 mt-1">毎日の節約時間</div>
+        </div>
+        <div>
+          <div class="text-3xl font-bold text-slate-900">12秒</div>
+          <div class="text-sm text-slate-500 mt-1">復元までの時間</div>
+        </div>
+        <div>
+          <div class="text-3xl font-bold text-slate-900">100%</div>
+          <div class="text-sm text-slate-500 mt-1">プライバシー重視</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem Section -->
+  <section class="py-20 px-6 bg-slate-50">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl font-bold mb-4">コンテキストスイッチングの問題</h2>
+        <p class="text-slate-600 max-w-2xl mx-auto">
+          開発者は毎日8〜12回のコンテキストスイッチを行い、<br class="hidden md:block">
+          各切り替えで15〜30分を失っています。
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- Problem Card 1 -->
+        <div class="bg-white rounded-2xl p-6 border border-slate-200">
+          <div class="w-12 h-12 rounded-xl bg-red-50 flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <h3 class="font-semibold text-lg mb-2">「どこまでやったっけ？」</h3>
+          <p class="text-sm text-slate-600 leading-relaxed">
+            前回の作業内容を思い出すのに10分以上かかることも。メンタルコンテキストの再構築に時間を浪費。
+          </p>
+        </div>
+
+        <!-- Problem Card 2 -->
+        <div class="bg-white rounded-2xl p-6 border border-slate-200">
+          <div class="w-12 h-12 rounded-xl bg-orange-50 flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/>
+            </svg>
+          </div>
+          <h3 class="font-semibold text-lg mb-2">タブ管理の限界</h3>
+          <p class="text-sm text-slate-600 leading-relaxed">
+            ブラウザのタブ管理ツールは便利だけど、VSCodeやターミナルは対象外。断片的な解決策しかない。
+          </p>
+        </div>
+
+        <!-- Problem Card 3 -->
+        <div class="bg-white rounded-2xl p-6 border border-slate-200">
+          <div class="w-12 h-12 rounded-xl bg-yellow-50 flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <h3 class="font-semibold text-lg mb-2">年間360時間以上の損失</h3>
+          <p class="text-sm text-slate-600 leading-relaxed">
+            45営業日分の時間が「思い出す」「探す」「セットアップする」に消えている。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="py-20 px-6">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl font-bold mb-4">完全なワークスペース復元</h2>
+        <p class="text-slate-600 max-w-2xl mx-auto">
+          ブラウザだけでなく、エディタ、ターミナル、メンタルコンテキストまで。<br class="hidden md:block">
+          すべてをワンクリックで復元。
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Feature 1 -->
+        <div class="card-hover bg-gradient-to-br from-blue-50 to-violet-50 rounded-2xl p-8 border border-blue-100">
+          <div class="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center mb-6">
+            <svg class="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+          </div>
+          <h3 class="font-semibold text-xl mb-3">Complete Workspace Capture</h3>
+          <p class="text-slate-600 leading-relaxed mb-4">
+            Chrome拡張でタブ・URL・スクロール位置を、VSCode拡張でワークスペース・ファイル・カーソル位置を自動保存。
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-3 py-1 text-xs font-medium bg-white/80 text-slate-600 rounded-full">Chrome</span>
+            <span class="px-3 py-1 text-xs font-medium bg-white/80 text-slate-600 rounded-full">VSCode</span>
+            <span class="px-3 py-1 text-xs font-medium bg-white/80 text-slate-600 rounded-full">Terminal</span>
+          </div>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="card-hover bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-8 border border-emerald-100">
+          <div class="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center mb-6">
+            <svg class="w-7 h-7 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+          </div>
+          <h3 class="font-semibold text-xl mb-3">One-Click Restore</h3>
+          <p class="text-slate-600 leading-relaxed mb-4">
+            ワンクリックですべてのタブ、ファイル、カーソル位置を正確に復元。平均12秒で作業再開できる状態に。
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-3 py-1 text-xs font-medium bg-white/80 text-slate-600 rounded-full">12秒で復元</span>
+            <span class="px-3 py-1 text-xs font-medium bg-white/80 text-slate-600 rounded-full">正確な位置</span>
+          </div>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="card-hover bg-gradient-to-br from-violet-50 to-purple-50 rounded-2xl p-8 border border-violet-100">
+          <div class="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center mb-6">
+            <svg class="w-7 h-7 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+            </svg>
+          </div>
+          <h3 class="font-semibold text-xl mb-3">AI Context Summary</h3>
+          <p class="text-slate-600 leading-relaxed mb-4">
+            復元時に「前回何をしていたか」のAI生成サマリーを表示。ファイル名、編集内容、開いていたタブから自動生成。
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-3 py-1 text-xs font-medium bg-white/80 text-slate-600 rounded-full">GPT-4</span>
+            <span class="px-3 py-1 text-xs font-medium bg-white/80 text-slate-600 rounded-full">自動サマリー</span>
+          </div>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="card-hover bg-gradient-to-br from-slate-50 to-gray-100 rounded-2xl p-8 border border-slate-200">
+          <div class="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center mb-6">
+            <svg class="w-7 h-7 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+            </svg>
+          </div>
+          <h3 class="font-semibold text-xl mb-3">Privacy-First</h3>
+          <p class="text-slate-600 leading-relaxed mb-4">
+            デフォルトはローカルストレージ。クラウドバックアップはオプション。AES-256暗号化でデータを保護。
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-3 py-1 text-xs font-medium bg-white/80 text-slate-600 rounded-full">ローカル優先</span>
+            <span class="px-3 py-1 text-xs font-medium bg-white/80 text-slate-600 rounded-full">AES-256</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Template Marketplace -->
+      <div class="mt-12 card-hover bg-gradient-to-r from-amber-50 via-orange-50 to-rose-50 rounded-2xl p-8 border border-amber-100">
+        <div class="flex flex-col md:flex-row md:items-center gap-6">
+          <div class="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center shrink-0">
+            <svg class="w-7 h-7 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+            </svg>
+          </div>
+          <div class="flex-1">
+            <h3 class="font-semibold text-xl mb-2">Template Marketplace</h3>
+            <p class="text-slate-600 leading-relaxed">
+              「React Dev Setup」「Writing Flow」など、コミュニティが作成したワークスペーステンプレートを共有・利用。新しいプロジェクトを瞬時にセットアップ。
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-2 shrink-0">
+            <span class="px-3 py-1.5 text-sm font-medium bg-white text-slate-700 rounded-lg border border-slate-200">React Setup</span>
+            <span class="px-3 py-1.5 text-sm font-medium bg-white text-slate-700 rounded-lg border border-slate-200">Writing</span>
+            <span class="px-3 py-1.5 text-sm font-medium bg-white text-slate-700 rounded-lg border border-slate-200">Research</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Section -->
+  <section id="pricing" class="py-20 px-6 bg-slate-50">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl font-bold mb-4">シンプルな料金体系</h2>
+        <p class="text-slate-600">
+          無料で始めて、必要に応じてアップグレード。
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- Free Plan -->
+        <div class="bg-white rounded-2xl p-8 border border-slate-200">
+          <div class="mb-6">
+            <h3 class="font-semibold text-lg mb-1">Free</h3>
+            <p class="text-sm text-slate-500">個人利用に最適</p>
+          </div>
+          <div class="mb-6">
+            <span class="text-4xl font-bold">$0</span>
+            <span class="text-slate-500">/月</span>
+          </div>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-center gap-3 text-sm text-slate-600">
+              <svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              3コンテキストまで
+            </li>
+            <li class="flex items-center gap-3 text-sm text-slate-600">
+              <svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              手動保存のみ
+            </li>
+            <li class="flex items-center gap-3 text-sm text-slate-600">
+              <svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              ローカルストレージ
+            </li>
+            <li class="flex items-center gap-3 text-sm text-slate-400">
+              <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+              AIサマリー
+            </li>
+          </ul>
+          <button class="w-full py-3 text-sm font-medium text-slate-700 bg-slate-100 rounded-xl hover:bg-slate-200 transition">
+            無料で始める
+          </button>
+        </div>
+
+        <!-- Pro Plan -->
+        <div class="bg-slate-900 rounded-2xl p-8 border border-slate-800 relative">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-blue-500 text-white text-xs font-medium rounded-full">
+            Most Popular
+          </div>
+          <div class="mb-6">
+            <h3 class="font-semibold text-lg mb-1 text-white">Pro</h3>
+            <p class="text-sm text-slate-400">パワーユーザー向け</p>
+          </div>
+          <div class="mb-6">
+            <span class="text-4xl font-bold text-white">$9</span>
+            <span class="text-slate-400">/月</span>
+          </div>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-center gap-3 text-sm text-slate-300">
+              <svg class="w-5 h-5 text-blue-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              無制限コンテキスト
+            </li>
+            <li class="flex items-center gap-3 text-sm text-slate-300">
+              <svg class="w-5 h-5 text-blue-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              自動保存
+            </li>
+            <li class="flex items-center gap-3 text-sm text-slate-300">
+              <svg class="w-5 h-5 text-blue-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              クラウドバックアップ
+            </li>
+            <li class="flex items-center gap-3 text-sm text-slate-300">
+              <svg class="w-5 h-5 text-blue-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              AIコンテキストサマリー
+            </li>
+            <li class="flex items-center gap-3 text-sm text-slate-300">
+              <svg class="w-5 h-5 text-blue-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              優先サポート
+            </li>
+          </ul>
+          <button class="w-full py-3 text-sm font-medium text-white bg-blue-500 rounded-xl hover:bg-blue-600 transition">
+            Pro を始める
+          </button>
+        </div>
+
+        <!-- Team Plan -->
+        <div class="bg-white rounded-2xl p-8 border border-slate-200">
+          <div class="mb-6">
+            <h3 class="font-semibold text-lg mb-1">Team</h3>
+            <p class="text-sm text-slate-500">チーム向け</p>
+          </div>
+          <div class="mb-6">
+            <span class="text-4xl font-bold">$29</span>
+            <span class="text-slate-500">/ユーザー/月</span>
+          </div>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-center gap-3 text-sm text-slate-600">
+              <svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              Proのすべての機能
+            </li>
+            <li class="flex items-center gap-3 text-sm text-slate-600">
+              <svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              コンテキスト共有
+            </li>
+            <li class="flex items-center gap-3 text-sm text-slate-600">
+              <svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              ハンドオフノート
+            </li>
+            <li class="flex items-center gap-3 text-sm text-slate-600">
+              <svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              管理ダッシュボード
+            </li>
+            <li class="flex items-center gap-3 text-sm text-slate-600">
+              <svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              SSO対応
+            </li>
+          </ul>
+          <button class="w-full py-3 text-sm font-medium text-slate-700 bg-slate-100 rounded-xl hover:bg-slate-200 transition">
+            お問い合わせ
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-20 px-6">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-3xl font-bold mb-4">今すぐ始めよう</h2>
+      <p class="text-slate-600 mb-8">
+        無料で3つのコンテキストを保存・復元。クレジットカード不要。
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="./dashboard.html" class="w-full sm:w-auto px-8 py-3.5 text-base font-medium text-white bg-slate-900 rounded-xl hover:bg-slate-800 transition shadow-lg shadow-slate-900/10">
+          ダッシュボードを見る
+        </a>
+        <a href="../" class="text-sm text-slate-500 hover:text-slate-700 transition">
+          ギャラリーに戻る
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-200 py-8 px-6">
+    <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <div class="w-6 h-6 rounded-md bg-gradient-to-br from-blue-500 to-violet-500"></div>
+        <span class="text-sm text-slate-500">Context Keeper - MVP Mock</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <a href="../" class="text-sm text-slate-500 hover:text-slate-700 transition">Gallery</a>
+        <span class="text-sm text-slate-400">2026-02-24</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
