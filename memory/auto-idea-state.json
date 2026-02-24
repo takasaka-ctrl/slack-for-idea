@@ -1,0 +1,11 @@
+{
+  "lastRun": null,
+  "nextScheduled": {
+    "morning": "09:00 JST",
+    "afternoon": "13:00 JST",
+    "evening": "21:00 JST"
+  },
+  "totalIdeasGenerated": 0,
+  "totalPrototypesCreated": 0,
+  "averageScore": 0
+}
