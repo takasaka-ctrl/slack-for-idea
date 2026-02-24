@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TeamPulse - Energy Style</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /*
+      OPTION C: "Energy"
+      Style: Neo Brutalism + Bold
+      Palette: Custom vivid
+      Typography: Space Mono (heading) + Space Grotesk (body)
+      Axes: density=4, tone=3, era=4, saturation=5
+
+      心理学的根拠:
+      - Von Restorff Effect: 独特な要素＝記憶に残る
+      - Visual Anchoring: 大胆な色ブロックで注意を固定
+      - Curiosity Gap: 非対称レイアウトで探索を促す
+      - User Delight: 予想外のホバー・アニメーション
+      - Contrast Effect: 意図的な非対称が興味を生む
+      - Labor Illusion: プログレス表現にキャラクター性
+      - Aesthetic-Usability: 個性的＝記憶される＝使いたい
+      - Serial Position: ナビの先頭/末尾に最重要項目
+    */
+    :root {
+      --bg:#fafaf0; --black:#1a1a1a; --white:#fff;
+      --red:#ff4444; --yellow:#ffd700; --blue:#4ecdc4; --purple:#a855f7;
+      --border:3px solid var(--black);
+      --shadow:4px 4px 0 var(--black);
+      --shadow-sm:2px 2px 0 var(--black);
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Space Grotesk','Noto Sans JP',sans-serif;background:var(--bg);color:var(--black);font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased}
+    h1,h2,h3,.mono{font-family:'Space Mono','Noto Sans JP',monospace}
+
+    /* === Nav === */
+    .nav{background:var(--yellow);border-bottom:var(--border);padding:0 24px}
+    .nav-in{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px}
+    .brand{font-family:'Space Mono',monospace;font-size:20px;font-weight:700;letter-spacing:-.03em;display:flex;align-items:center;gap:10px}
+    .brand-dot{width:12px;height:12px;background:var(--red);border:2px solid var(--black);border-radius:50%}
+    .nav-links{display:flex;gap:0}
+    .nav-a{font-family:'Space Mono',monospace;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:0 16px;height:60px;display:flex;align-items:center;text-decoration:none;color:var(--black);border-left:var(--border);transition:background .1s}
+    .nav-a:hover{background:rgba(0,0,0,.08)}.nav-a.on{background:var(--black);color:var(--yellow)}
+    .nav-a:last-child{border-right:var(--border)}
+
+    /* === Header === */
+    .hero{padding:32px 24px;border-bottom:var(--border);display:flex;align-items:flex-end;justify-content:space-between;max-width:1200px;margin:0 auto}
+    .hero h1{font-size:48px;font-weight:700;line-height:1.1;letter-spacing:-.04em}
+    .hero h1 span{color:var(--red)}
+    .hero-sub{font-size:13px;color:#666;margin-top:8px;font-family:'Space Grotesk',sans-serif}
+    .hero-actions{display:flex;gap:8px}
+
+    /* Buttons - Fitt's Law: 大きく、明確に */
+    .btn{font-family:'Space Mono',monospace;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:10px 20px;border:var(--border);background:var(--white);cursor:pointer;box-shadow:var(--shadow-sm);transition:transform .1s,box-shadow .1s;position:relative}
+    .btn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--black)}
+    .btn:active{transform:translate(2px,2px);box-shadow:0 0 0 var(--black)}
+    .btn-red{background:var(--red);color:var(--white)}
+    .btn-blue{background:var(--blue)}
+    .btn-yellow{background:var(--yellow)}
+
+    /* === Main Grid - 非対称レイアウト (Curiosity Gap) === */
+    .wrap{max-width:1200px;margin:0 auto;padding:24px}
+    .grid-main{display:grid;grid-template-columns:1fr 1fr 340px;gap:16px}
+
+    /* === KPI Cards === */
+    /* Von Restorff: 各カードが異なる色で即座に区別 */
+    .kpi{border:var(--border);box-shadow:var(--shadow);padding:20px;position:relative;overflow:hidden}
+    .kpi-tag{font-family:'Space Mono',monospace;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;color:#666}
+    .kpi-val{font-family:'Space Mono',monospace;font-size:36px;font-weight:700;line-height:1}
+    .kpi-chg{font-size:12px;margin-top:6px;font-weight:600}
+    .kpi-chg.up{color:#16a34a}.kpi-chg.dn{color:var(--red)}
+    .kpi-bg{position:absolute;right:-10px;bottom:-10px;font-size:80px;font-weight:700;opacity:.06;line-height:1;font-family:'Space Mono',monospace}
+
+    .kpi-red{background:var(--red);color:var(--white)}
+    .kpi-red .kpi-tag{color:rgba(255,255,255,.7)}
+    .kpi-red .kpi-chg{color:rgba(255,255,255,.8)}
+    .kpi-yellow{background:var(--yellow)}
+    .kpi-blue{background:var(--blue)}
+    .kpi-white{background:var(--white)}
+
+    .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:16px}
+
+    /* === Project Table - Dense but bold === */
+    .panel{border:var(--border);box-shadow:var(--shadow);background:var(--white);overflow:hidden}
+    .panel-h{padding:14px 20px;border-bottom:var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--bg)}
+    .panel-h h2{font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+    .panel-h .cnt{font-family:'Space Mono',monospace;font-size:11px;background:var(--black);color:var(--yellow);padding:2px 8px;border:2px solid var(--black)}
+
+    table{width:100%;border-collapse:collapse}
+    th{font-family:'Space Mono',monospace;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:10px 16px;text-align:left;border-bottom:2px solid var(--black);background:var(--bg)}
+    td{padding:12px 16px;font-size:13px;border-bottom:1px solid #e0e0d0}
+    tr:hover td{background:#f5f5e8}
+    .pname{font-weight:700;font-family:'Space Mono',monospace;font-size:12px}
+
+    /* Status - Von Restorff: 形＋色で即座に識別 */
+    .st{font-family:'Space Mono',monospace;font-size:10px;font-weight:700;text-transform:uppercase;padding:3px 8px;border:2px solid var(--black);display:inline-block}
+    .st-ok{background:#bbf7d0}.st-rev{background:var(--yellow)}.st-blk{background:var(--red);color:#fff}
+
+    /* Progress - chunky bar */
+    .pbar{display:flex;align-items:center;gap:8px}
+    .pbar-track{width:60px;height:10px;border:2px solid var(--black);background:var(--bg)}
+    .pbar-fill{height:100%}
+    .pbar-fill-ok{background:var(--blue)}
+    .pbar-fill-err{background:var(--red)}
+    .pbar-num{font-family:'Space Mono',monospace;font-size:11px;font-weight:700}
+
+    /* === Right sidebar === */
+    .side{display:flex;flex-direction:column;gap:16px}
+
+    /* Activity - stacked cards (Curiosity Gap) */
+    .act{border:var(--border);box-shadow:var(--shadow-sm);padding:14px 16px;background:var(--white);transition:transform .1s}
+    .act:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--black)}
+    .act-time{font-family:'Space Mono',monospace;font-size:10px;color:#999;margin-bottom:4px}
+    .act-text{font-size:13px;line-height:1.5}.act-text strong{font-weight:700}
+    .act-dot{display:inline-block;width:8px;height:8px;border:2px solid var(--black);border-radius:50%;margin-right:6px}
+    .act-dot-blue{background:var(--blue)}.act-dot-red{background:var(--red)}.act-dot-yellow{background:var(--yellow)}.act-dot-purple{background:var(--purple)}
+
+    /* Team - grid of blocks */
+    .team-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .tm{border:var(--border);padding:12px;text-align:center;transition:transform .1s,background .1s}
+    .tm:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--black)}
+    .tm-av{width:36px;height:36px;margin:0 auto 8px;border:2px solid var(--black);display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-weight:700;font-size:12px;color:#fff}
+    .tm-name{font-family:'Space Mono',monospace;font-size:11px;font-weight:700}
+    .tm-stat{font-size:10px;color:#666;margin-top:2px}
+    .tm:nth-child(1){background:#bbf7d0}.tm:nth-child(2){background:var(--yellow)}
+    .tm:nth-child(3){background:#c4b5fd}.tm:nth-child(4){background:var(--blue)}
+
+    /* Burndown - pixel style */
+    .burn{border:var(--border);box-shadow:var(--shadow);background:var(--white);padding:16px}
+    .burn h3{font-size:12px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px}
+    .burn-bars{display:flex;align-items:flex-end;gap:3px;height:100px}
+    .burn-bar{flex:1;border:2px solid var(--black);min-width:0;transition:background .15s}
+    .burn-bar:hover{background:var(--yellow) !important}
+    .burn-labels{display:flex;gap:3px;margin-top:6px}
+    .burn-l{flex:1;text-align:center;font-family:'Space Mono',monospace;font-size:8px;color:#999}
+
+    /* === Design Notes === */
+    .notes{max-width:1200px;margin:24px auto 0;padding:0 24px 60px}
+    .notes-inner{border:var(--border);box-shadow:var(--shadow);background:var(--yellow);padding:24px}
+    .notes-inner h3{font-family:'Space Mono',monospace;font-size:14px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:20px;display:flex;align-items:center;gap:8px}
+    .notes-inner h3::before{content:'';display:inline-block;width:12px;height:12px;background:var(--red);border:2px solid var(--black)}
+    .notes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .nc{border:var(--border);padding:16px;background:var(--white);box-shadow:var(--shadow-sm)}
+    .nc-l{font-family:'Space Mono',monospace;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#999;margin-bottom:6px}
+    .nc-v{font-size:12px;line-height:1.6;color:#444}
+    .nc-v code{font-family:'Space Mono',monospace;font-size:11px;background:var(--yellow);padding:1px 4px;border:1px solid var(--black)}
+
+    @media(max-width:1024px){.grid-main{grid-template-columns:1fr}.kpi-row{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:600px){.kpi-row{grid-template-columns:1fr}.hero h1{font-size:32px}.nav-links{display:none}}
+  </style>
+</head>
+<body>
+  <!-- Nav - Yellow band = instant recognition -->
+  <nav class="nav"><div class="nav-in">
+    <div class="brand"><div class="brand-dot"></div>TeamPulse</div>
+    <div class="nav-links">
+      <a href="#" class="nav-a on">Dashboard</a>
+      <a href="#" class="nav-a">Projects</a>
+      <a href="#" class="nav-a">Team</a>
+      <a href="#" class="nav-a">Analytics</a>
+      <a href="#" class="nav-a">Settings</a>
+    </div>
+  </div></nav>
+
+  <!-- Hero - Bold type -->
+  <div style="border-bottom:3px solid var(--black)">
+    <div class="hero">
+      <div>
+        <h1>Sprint <span>14</span><br>Dashboard</h1>
+        <div class="hero-sub">Week 2 of 2 &mdash; 7 days remaining</div>
+      </div>
+      <div class="hero-actions">
+        <button class="btn">Filter</button>
+        <button class="btn btn-red">+ New Project</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <!-- KPIs - 各カードが異なる色 (Von Restorff) -->
+    <div class="kpi-row">
+      <div class="kpi kpi-red">
+        <div class="kpi-tag">Active Projects</div>
+        <div class="kpi-val">24</div>
+        <div class="kpi-chg" style="color:rgba(255,255,255,.8)">+3 this sprint</div>
+        <div class="kpi-bg">24</div>
+      </div>
+      <div class="kpi kpi-yellow">
+        <div class="kpi-tag">Velocity</div>
+        <div class="kpi-val">87<span style="font-size:14px">pts</span></div>
+        <div class="kpi-chg up">+12% vs last</div>
+        <div class="kpi-bg">87</div>
+      </div>
+      <div class="kpi kpi-blue">
+        <div class="kpi-tag">Completion</div>
+        <div class="kpi-val">94%</div>
+        <div class="kpi-chg up">On track</div>
+        <div class="kpi-bg">94</div>
+      </div>
+      <div class="kpi kpi-white">
+        <div class="kpi-tag">Blockers</div>
+        <div class="kpi-val" style="color:var(--red)">3</div>
+        <div class="kpi-chg dn">+1 since yesterday</div>
+        <div class="kpi-bg">!</div>
+      </div>
+    </div>
+
+    <div class="grid-main">
+      <!-- Projects Table -->
+      <div class="panel" style="grid-column: span 2">
+        <div class="panel-h">
+          <h2>Active Projects</h2>
+          <span class="cnt">6 projects</span>
+        </div>
+        <table>
+          <thead><tr><th>Project</th><th>Status</th><th>Progress</th><th>Due</th><th>Lead</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="pname">API v3 Migration</td>
+              <td><span class="st st-ok">Active</span></td>
+              <td><div class="pbar"><div class="pbar-track"><div class="pbar-fill pbar-fill-ok" style="width:78%"></div></div><span class="pbar-num">78%</span></div></td>
+              <td style="font-family:'Space Mono',monospace;font-size:12px">Mar 15</td>
+              <td>YS</td>
+            </tr>
+            <tr>
+              <td class="pname">Dashboard Redesign</td>
+              <td><span class="st st-rev">Review</span></td>
+              <td><div class="pbar"><div class="pbar-track"><div class="pbar-fill pbar-fill-ok" style="width:92%"></div></div><span class="pbar-num">92%</span></div></td>
+              <td style="font-family:'Space Mono',monospace;font-size:12px">Feb 28</td>
+              <td>MK</td>
+            </tr>
+            <tr>
+              <td class="pname">Auth Service Refactor</td>
+              <td><span class="st st-ok">Active</span></td>
+              <td><div class="pbar"><div class="pbar-track"><div class="pbar-fill pbar-fill-ok" style="width:45%"></div></div><span class="pbar-num">45%</span></div></td>
+              <td style="font-family:'Space Mono',monospace;font-size:12px">Apr 01</td>
+              <td>TK</td>
+            </tr>
+            <tr>
+              <td class="pname">Mobile Push Notif</td>
+              <td><span class="st st-blk">Blocked</span></td>
+              <td><div class="pbar"><div class="pbar-track"><div class="pbar-fill pbar-fill-err" style="width:30%"></div></div><span class="pbar-num">30%</span></div></td>
+              <td style="font-family:'Space Mono',monospace;font-size:12px">Mar 20</td>
+              <td>HN</td>
+            </tr>
+            <tr>
+              <td class="pname">Search Optimization</td>
+              <td><span class="st st-ok">Active</span></td>
+              <td><div class="pbar"><div class="pbar-track"><div class="pbar-fill pbar-fill-ok" style="width:61%"></div></div><span class="pbar-num">61%</span></div></td>
+              <td style="font-family:'Space Mono',monospace;font-size:12px">Mar 10</td>
+              <td>AS</td>
+            </tr>
+            <tr>
+              <td class="pname">CI/CD Pipeline v2</td>
+              <td><span class="st st-rev">Review</span></td>
+              <td><div class="pbar"><div class="pbar-track"><div class="pbar-fill pbar-fill-ok" style="width:88%"></div></div><span class="pbar-num">88%</span></div></td>
+              <td style="font-family:'Space Mono',monospace;font-size:12px">Feb 26</td>
+              <td>RW</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Right Side -->
+      <div class="side">
+        <!-- Team Grid -->
+        <div>
+          <div style="font-family:'Space Mono',monospace;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Team</div>
+          <div class="team-grid">
+            <div class="tm"><div class="tm-av" style="background:var(--black)">YS</div><div class="tm-name">Yuki S.</div><div class="tm-stat">3/8 done</div></div>
+            <div class="tm"><div class="tm-av" style="background:var(--red)">MK</div><div class="tm-name">Mika K.</div><div class="tm-stat">5/6 done</div></div>
+            <div class="tm"><div class="tm-av" style="background:#7c3aed">TK</div><div class="tm-name">Takashi K.</div><div class="tm-stat">2/7 done</div></div>
+            <div class="tm"><div class="tm-av" style="background:var(--black)">HN</div><div class="tm-name">Haruto N.</div><div class="tm-stat">1/5 done</div></div>
+          </div>
+        </div>
+
+        <!-- Activity -->
+        <div>
+          <div style="font-family:'Space Mono',monospace;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Activity</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div class="act">
+              <div class="act-time">2m ago</div>
+              <div class="act-text"><span class="act-dot act-dot-blue"></span><strong>Yuki</strong> completed API endpoint review</div>
+            </div>
+            <div class="act">
+              <div class="act-time">18m ago</div>
+              <div class="act-text"><span class="act-dot act-dot-red"></span><strong>Haruto</strong> flagged blocker on Push Notif</div>
+            </div>
+            <div class="act">
+              <div class="act-time">1h ago</div>
+              <div class="act-text"><span class="act-dot act-dot-purple"></span><strong>Mika</strong> pushed 3 commits</div>
+            </div>
+            <div class="act">
+              <div class="act-time">2h ago</div>
+              <div class="act-text"><span class="act-dot act-dot-yellow"></span><strong>Aoi</strong> merged PR #847</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Burndown -->
+        <div class="burn">
+          <h3>Sprint Burndown</h3>
+          <div class="burn-bars">
+            <div class="burn-bar" style="height:100%;background:var(--blue)"></div>
+            <div class="burn-bar" style="height:92%;background:var(--blue)"></div>
+            <div class="burn-bar" style="height:85%;background:var(--blue)"></div>
+            <div class="burn-bar" style="height:78%;background:var(--blue)"></div>
+            <div class="burn-bar" style="height:68%;background:var(--blue)"></div>
+            <div class="burn-bar" style="height:55%;background:var(--blue)"></div>
+            <div class="burn-bar" style="height:42%;background:var(--red)"></div>
+            <div class="burn-bar" style="height:35%;background:var(--bg)"></div>
+            <div class="burn-bar" style="height:28%;background:var(--bg)"></div>
+            <div class="burn-bar" style="height:20%;background:var(--bg)"></div>
+            <div class="burn-bar" style="height:14%;background:var(--bg)"></div>
+            <div class="burn-bar" style="height:8%;background:var(--bg)"></div>
+            <div class="burn-bar" style="height:3%;background:var(--bg)"></div>
+            <div class="burn-bar" style="height:1px;background:var(--bg)"></div>
+          </div>
+          <div class="burn-labels">
+            <div class="burn-l">1</div><div class="burn-l">2</div><div class="burn-l">3</div><div class="burn-l">4</div>
+            <div class="burn-l">5</div><div class="burn-l">6</div><div class="burn-l" style="color:var(--red);font-weight:700">7</div><div class="burn-l">8</div>
+            <div class="burn-l">9</div><div class="burn-l">10</div><div class="burn-l">11</div><div class="burn-l">12</div>
+            <div class="burn-l">13</div><div class="burn-l">14</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Design Notes -->
+  <div class="notes"><div class="notes-inner">
+    <h3>Design Decision Notes &mdash; Option C: Energy</h3>
+    <div class="notes-grid">
+      <div class="nc"><div class="nc-l">Style</div><div class="nc-v"><code>Neo Brutalism</code> + <code>Bold</code><br>density=4, tone=3, era=4, saturation=5<br>太ボーダー・ハードシャドウ・ビビッド</div></div>
+      <div class="nc"><div class="nc-l">Typography</div><div class="nc-v">Heading: <code>Space Mono</code><br>Body: <code>Space Grotesk</code><br>モノスペース見出しで個性を表現</div></div>
+      <div class="nc"><div class="nc-l">Color</div><div class="nc-v">BG: #fafaf0 (温白)<br><code>#ff4444</code> / <code>#ffd700</code> / <code>#4ecdc4</code><br>各KPIが異なる色で即座に区別</div></div>
+      <div class="nc"><div class="nc-l">Shape</div><div class="nc-v"><code>border: 3px solid black</code><br><code>box-shadow: 4px 4px 0 black</code><br>角丸なし・ハードシャドウで力強さ</div></div>
+      <div class="nc"><div class="nc-l">Psychology</div><div class="nc-v">Von Restorff: 色で即識別<br>Visual Anchor: 大胆な色ブロック<br>User Delight: ホバーで物理的反応</div></div>
+      <div class="nc"><div class="nc-l">Personality</div><div class="nc-v">スタートアップ・クリエイティブ向け<br>記憶に残る・他と差別化<br>個性 &gt; 汎用性</div></div>
+    </div>
+  </div></div>
+</body>
+</html>

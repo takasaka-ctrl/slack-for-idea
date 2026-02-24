@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TeamPulse - Precision Style</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================
+       OPTION A: "Precision"
+       Style: Dark Mode OLED + Swiss Minimalism
+       Palette: Linear Inspired
+       Typography: JetBrains Mono + IBM Plex Sans
+       Density: 4, Tone: 2, Era: 4, Saturation: 2
+       ============================================
+
+       === 心理学的根拠 ===
+       - Fitt's Law: プライマリアクションは48px以上のターゲット
+       - Hick's Law: ナビゲーションは7項目以下
+       - F-pattern: 左上から右へスキャンする配置
+       - Serial Position Effect: 最重要項目をナビの先頭・末尾に
+       - Visual Hierarchy: モノスペース数字で数値データ強調
+       - 認知負荷軽減: ダーク背景で長時間使用の眼精疲労低減
+       - Von Restorff Effect: アクセントカラーは要注目箇所のみ
+    */
+
+    :root {
+      --bg-primary: #0d0d12;
+      --bg-secondary: #16161e;
+      --bg-tertiary: #1e1e2a;
+      --bg-hover: #252535;
+      --border: #2a2a3a;
+      --border-subtle: #1f1f2f;
+      --text-primary: #e8e8ef;
+      --text-secondary: #8b8fa8;
+      --text-tertiary: #5a5e78;
+      --accent: #5e6ad2;
+      --accent-muted: rgba(94, 106, 210, 0.15);
+      --success: #4ade80;
+      --warning: #fbbf24;
+      --danger: #f87171;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'IBM Plex Sans', 'Noto Sans JP', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-size: 13px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Mono for data/numbers */
+    .mono { font-family: 'JetBrains Mono', monospace; }
+
+    /* === Layout: Left sidebar + main === */
+    .app { display: flex; height: 100vh; overflow: hidden; }
+
+    /* --- Sidebar --- */
+    /* Serial Position Effect: 最重要項目を先頭(Dashboard)と末尾(Settings)に配置 */
+    .sidebar {
+      width: 220px;
+      min-width: 220px;
+      background: var(--bg-secondary);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+    }
+
+    .sidebar-brand {
+      padding: 20px 16px 16px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sidebar-brand-icon {
+      width: 28px;
+      height: 28px;
+      background: var(--accent);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sidebar-brand-icon svg { width: 16px; height: 16px; color: #fff; }
+
+    .sidebar-brand-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: -0.02em;
+    }
+
+    .sidebar-section {
+      padding: 12px 8px;
+    }
+
+    .sidebar-section-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-tertiary);
+      padding: 0 8px 8px;
+    }
+
+    /* Hick's Law: ナビは7項目以下に制限 */
+    .sidebar-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 8px;
+      border-radius: 4px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      transition: background 0.1s, color 0.1s;
+      cursor: pointer;
+    }
+
+    .sidebar-item:hover { background: var(--bg-hover); color: var(--text-primary); }
+
+    .sidebar-item.active {
+      background: var(--accent-muted);
+      color: var(--accent);
+    }
+
+    .sidebar-item svg { width: 16px; height: 16px; opacity: 0.7; flex-shrink: 0; }
+    .sidebar-item.active svg { opacity: 1; }
+
+    /* キーボードショートカット表示 - パワーユーザー向け */
+    .sidebar-item .kbd {
+      margin-left: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--text-tertiary);
+      background: var(--bg-primary);
+      padding: 1px 5px;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+    }
+
+    .sidebar-spacer { flex: 1; }
+
+    .sidebar-user {
+      padding: 12px 16px;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sidebar-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--bg-hover);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .sidebar-user-info { flex: 1; min-width: 0; }
+    .sidebar-user-name { font-size: 12px; font-weight: 600; }
+    .sidebar-user-role { font-size: 10px; color: var(--text-tertiary); }
+
+    /* --- Main Content --- */
+    .main { flex: 1; overflow-y: auto; }
+
+    /* F-pattern: ヘッダーは横に並ぶ重要情報 */
+    .main-header {
+      padding: 20px 32px 16px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .main-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    .main-header-actions { display: flex; gap: 8px; align-items: center; }
+
+    /* Fitt's Law: ボタンは最低44pxの高さ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      background: var(--bg-tertiary);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.1s;
+      height: 32px;
+    }
+
+    .btn:hover { background: var(--bg-hover); color: var(--text-primary); border-color: var(--text-tertiary); }
+
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover { background: #6b77e0; }
+
+    .btn svg { width: 14px; height: 14px; }
+
+    /* --- KPI Grid --- */
+    /* F-pattern: 最重要KPIを左上に配置 */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border-subtle);
+      margin: 0;
+    }
+
+    .kpi-card {
+      background: var(--bg-primary);
+      padding: 20px 24px;
+    }
+
+    .kpi-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+
+    /* Visual Hierarchy: 数値はモノスペースで大きく */
+    .kpi-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 6px;
+    }
+
+    .kpi-change {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .kpi-change.up { color: var(--success); }
+    .kpi-change.down { color: var(--danger); }
+
+    /* --- Content Area --- */
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 1px;
+      background: var(--border-subtle);
+      min-height: calc(100vh - 220px);
+    }
+
+    .content-section {
+      background: var(--bg-primary);
+      padding: 0;
+    }
+
+    /* --- Table --- */
+    .section-header {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .section-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+    }
+
+    /* Dense data table - 情報密度を高くしつつ読みやすく */
+    .data-table { width: 100%; border-collapse: collapse; }
+
+    .data-table th {
+      padding: 8px 16px;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-tertiary);
+      text-align: left;
+      border-bottom: 1px solid var(--border-subtle);
+      background: var(--bg-secondary);
+      position: sticky;
+      top: 0;
+    }
+
+    .data-table td {
+      padding: 10px 16px;
+      font-size: 12px;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+    }
+
+    .data-table tr:hover td { background: var(--bg-secondary); }
+
+    .data-table .project-name {
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    /* Status badges - Von Restorff: ステータスは色で即座に識別 */
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 6px;
+    }
+
+    .status-dot.active { background: var(--success); }
+    .status-dot.review { background: var(--warning); }
+    .status-dot.blocked { background: var(--danger); }
+
+    /* Progress bar - 視覚的に進捗を即座に把握 */
+    .progress-bar {
+      width: 80px;
+      height: 3px;
+      background: var(--border);
+      border-radius: 1px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 1px;
+    }
+
+    /* --- Right Panel --- */
+    .right-panel { background: var(--bg-primary); }
+
+    .activity-item {
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      gap: 10px;
+      transition: background 0.1s;
+    }
+
+    .activity-item:hover { background: var(--bg-secondary); }
+
+    .activity-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+
+    .activity-text {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .activity-text strong { color: var(--text-primary); font-weight: 600; }
+
+    .activity-time {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--text-tertiary);
+      margin-top: 3px;
+    }
+
+    /* --- Team list --- */
+    .team-member {
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .team-avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .team-info { flex: 1; }
+    .team-name { font-size: 12px; font-weight: 500; }
+    .team-tasks { font-size: 10px; color: var(--text-tertiary); font-family: 'JetBrains Mono', monospace; }
+
+    /* --- Sprint chart (simplified) --- */
+    .chart-container { padding: 20px; }
+
+    .chart-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+      height: 120px;
+      padding-top: 8px;
+    }
+
+    .chart-bar {
+      flex: 1;
+      background: var(--accent-muted);
+      border-radius: 2px 2px 0 0;
+      min-width: 0;
+      transition: background 0.15s;
+      position: relative;
+    }
+
+    .chart-bar:hover { background: var(--accent); }
+
+    .chart-bar.current { background: var(--accent); }
+
+    .chart-labels {
+      display: flex;
+      gap: 4px;
+      margin-top: 8px;
+    }
+
+    .chart-label {
+      flex: 1;
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      color: var(--text-tertiary);
+    }
+
+    /* --- Design Notes Section --- */
+    .design-notes {
+      padding: 24px 32px;
+      border-top: 1px solid var(--border-subtle);
+      background: var(--bg-secondary);
+    }
+
+    .design-notes h3 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 16px;
+    }
+
+    .design-notes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .design-note {
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+
+    .design-note-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-tertiary);
+      margin-bottom: 6px;
+    }
+
+    .design-note-value {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .design-note-value code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      background: var(--bg-primary);
+      padding: 1px 4px;
+      border-radius: 2px;
+      color: var(--accent);
+    }
+
+    /* Command palette hint */
+    .cmd-hint {
+      position: fixed;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-tertiary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 100;
+    }
+
+    .cmd-hint kbd {
+      background: var(--bg-primary);
+      padding: 1px 6px;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+      font-size: 10px;
+    }
+
+    @media (max-width: 1024px) {
+      .sidebar { display: none; }
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+      .content-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <nav class="sidebar">
+      <div class="sidebar-brand">
+        <div class="sidebar-brand-icon">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        </div>
+        <span class="sidebar-brand-name">TeamPulse</span>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">Navigation</div>
+        <a class="sidebar-item active" href="#">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+          Dashboard
+          <span class="kbd">D</span>
+        </a>
+        <a class="sidebar-item" href="#">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+          Projects
+          <span class="kbd">P</span>
+        </a>
+        <a class="sidebar-item" href="#">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+          Team
+          <span class="kbd">T</span>
+        </a>
+        <a class="sidebar-item" href="#">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+          Analytics
+          <span class="kbd">A</span>
+        </a>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">Workspace</div>
+        <a class="sidebar-item" href="#">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          Sprints
+        </a>
+        <a class="sidebar-item" href="#">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          Settings
+          <span class="kbd">S</span>
+        </a>
+      </div>
+
+      <div class="sidebar-spacer"></div>
+
+      <div class="sidebar-user">
+        <div class="sidebar-avatar">TK</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name">Takashi K.</div>
+          <div class="sidebar-user-role">Admin</div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main -->
+    <div class="main">
+      <div class="main-header">
+        <h1 class="main-title">Dashboard</h1>
+        <div class="main-header-actions">
+          <button class="btn">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
+            Filter
+          </button>
+          <button class="btn btn-primary">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v16m8-8H4"/></svg>
+            New Project
+          </button>
+        </div>
+      </div>
+
+      <!-- KPIs - F-pattern: 左上に最重要指標 -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">Active Projects</div>
+          <div class="kpi-value mono">24</div>
+          <div class="kpi-change up mono">+3 this sprint</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Velocity</div>
+          <div class="kpi-value mono">87<span style="font-size: 14px; color: var(--text-tertiary)">pts</span></div>
+          <div class="kpi-change up mono">+12% vs last</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Completion Rate</div>
+          <div class="kpi-value mono">94<span style="font-size: 14px; color: var(--text-tertiary)">%</span></div>
+          <div class="kpi-change up mono">+2.1%</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Blockers</div>
+          <div class="kpi-value mono" style="color: var(--warning)">3</div>
+          <div class="kpi-change down mono">+1 since yesterday</div>
+        </div>
+      </div>
+
+      <!-- Content: Table + Right Panel -->
+      <div class="content-grid">
+        <!-- Project Table -->
+        <div class="content-section">
+          <div class="section-header">
+            <span class="section-title">Active Projects</span>
+            <button class="btn" style="height: 26px; font-size: 11px; padding: 0 10px;">View All</button>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Project</th>
+                <th>Status</th>
+                <th>Progress</th>
+                <th>Due</th>
+                <th>Lead</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="project-name">API v3 Migration</td>
+                <td><span class="status-dot active"></span>Active</td>
+                <td>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <div class="progress-bar"><div class="progress-bar-fill" style="width: 78%"></div></div>
+                    <span class="mono" style="font-size: 11px; color: var(--text-tertiary)">78%</span>
+                  </div>
+                </td>
+                <td class="mono" style="font-size: 11px;">Mar 15</td>
+                <td>YS</td>
+              </tr>
+              <tr>
+                <td class="project-name">Dashboard Redesign</td>
+                <td><span class="status-dot review"></span>Review</td>
+                <td>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <div class="progress-bar"><div class="progress-bar-fill" style="width: 92%"></div></div>
+                    <span class="mono" style="font-size: 11px; color: var(--text-tertiary)">92%</span>
+                  </div>
+                </td>
+                <td class="mono" style="font-size: 11px;">Feb 28</td>
+                <td>MK</td>
+              </tr>
+              <tr>
+                <td class="project-name">Auth Service Refactor</td>
+                <td><span class="status-dot active"></span>Active</td>
+                <td>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <div class="progress-bar"><div class="progress-bar-fill" style="width: 45%"></div></div>
+                    <span class="mono" style="font-size: 11px; color: var(--text-tertiary)">45%</span>
+                  </div>
+                </td>
+                <td class="mono" style="font-size: 11px;">Apr 01</td>
+                <td>TK</td>
+              </tr>
+              <tr>
+                <td class="project-name">Mobile App Push Notif</td>
+                <td><span class="status-dot blocked"></span>Blocked</td>
+                <td>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <div class="progress-bar"><div class="progress-bar-fill" style="width: 30%; background: var(--danger)"></div></div>
+                    <span class="mono" style="font-size: 11px; color: var(--text-tertiary)">30%</span>
+                  </div>
+                </td>
+                <td class="mono" style="font-size: 11px;">Mar 20</td>
+                <td>HN</td>
+              </tr>
+              <tr>
+                <td class="project-name">Search Optimization</td>
+                <td><span class="status-dot active"></span>Active</td>
+                <td>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <div class="progress-bar"><div class="progress-bar-fill" style="width: 61%"></div></div>
+                    <span class="mono" style="font-size: 11px; color: var(--text-tertiary)">61%</span>
+                  </div>
+                </td>
+                <td class="mono" style="font-size: 11px;">Mar 10</td>
+                <td>AS</td>
+              </tr>
+              <tr>
+                <td class="project-name">CI/CD Pipeline v2</td>
+                <td><span class="status-dot review"></span>Review</td>
+                <td>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <div class="progress-bar"><div class="progress-bar-fill" style="width: 88%"></div></div>
+                    <span class="mono" style="font-size: 11px; color: var(--text-tertiary)">88%</span>
+                  </div>
+                </td>
+                <td class="mono" style="font-size: 11px;">Feb 26</td>
+                <td>RW</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Right Panel -->
+        <div class="right-panel">
+          <!-- Sprint Burndown -->
+          <div class="section-header">
+            <span class="section-title">Sprint 14 Burndown</span>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-tertiary);">Day 7/14</span>
+          </div>
+          <div class="chart-container">
+            <div class="chart-bars">
+              <div class="chart-bar" style="height: 100%"></div>
+              <div class="chart-bar" style="height: 92%"></div>
+              <div class="chart-bar" style="height: 85%"></div>
+              <div class="chart-bar" style="height: 78%"></div>
+              <div class="chart-bar" style="height: 68%"></div>
+              <div class="chart-bar" style="height: 55%"></div>
+              <div class="chart-bar current" style="height: 42%"></div>
+              <div class="chart-bar" style="height: 35%; opacity: 0.3;"></div>
+              <div class="chart-bar" style="height: 28%; opacity: 0.3;"></div>
+              <div class="chart-bar" style="height: 20%; opacity: 0.3;"></div>
+              <div class="chart-bar" style="height: 14%; opacity: 0.3;"></div>
+              <div class="chart-bar" style="height: 8%; opacity: 0.3;"></div>
+              <div class="chart-bar" style="height: 3%; opacity: 0.3;"></div>
+              <div class="chart-bar" style="height: 0%; opacity: 0.3;"></div>
+            </div>
+            <div class="chart-labels">
+              <div class="chart-label">1</div>
+              <div class="chart-label">2</div>
+              <div class="chart-label">3</div>
+              <div class="chart-label">4</div>
+              <div class="chart-label">5</div>
+              <div class="chart-label">6</div>
+              <div class="chart-label" style="color: var(--accent)">7</div>
+              <div class="chart-label">8</div>
+              <div class="chart-label">9</div>
+              <div class="chart-label">10</div>
+              <div class="chart-label">11</div>
+              <div class="chart-label">12</div>
+              <div class="chart-label">13</div>
+              <div class="chart-label">14</div>
+            </div>
+          </div>
+
+          <!-- Activity Feed -->
+          <div class="section-header">
+            <span class="section-title">Recent Activity</span>
+          </div>
+          <div>
+            <div class="activity-item">
+              <div class="activity-dot"></div>
+              <div>
+                <div class="activity-text"><strong>Yuki S.</strong> completed <strong>API endpoint review</strong></div>
+                <div class="activity-time">2m ago</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot" style="background: var(--warning)"></div>
+              <div>
+                <div class="activity-text"><strong>Haruto N.</strong> flagged blocker on <strong>Push Notif</strong></div>
+                <div class="activity-time">18m ago</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot"></div>
+              <div>
+                <div class="activity-text"><strong>Mika K.</strong> pushed <strong>3 commits</strong> to dashboard-v2</div>
+                <div class="activity-time">1h ago</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot" style="background: var(--success)"></div>
+              <div>
+                <div class="activity-text"><strong>Aoi S.</strong> merged PR #847 into main</div>
+                <div class="activity-time">2h ago</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Team -->
+          <div class="section-header">
+            <span class="section-title">Team</span>
+          </div>
+          <div>
+            <div class="team-member">
+              <div class="team-avatar" style="background: #5e6ad2">YS</div>
+              <div class="team-info">
+                <div class="team-name">Yuki Suzuki</div>
+                <div class="team-tasks">8 tasks / 3 done</div>
+              </div>
+            </div>
+            <div class="team-member">
+              <div class="team-avatar" style="background: #e85d75">MK</div>
+              <div class="team-info">
+                <div class="team-name">Mika Kimura</div>
+                <div class="team-tasks">6 tasks / 5 done</div>
+              </div>
+            </div>
+            <div class="team-member">
+              <div class="team-avatar" style="background: #4ade80">TK</div>
+              <div class="team-info">
+                <div class="team-name">Takashi Kobayashi</div>
+                <div class="team-tasks">7 tasks / 2 done</div>
+              </div>
+            </div>
+            <div class="team-member">
+              <div class="team-avatar" style="background: #fbbf24">HN</div>
+              <div class="team-info">
+                <div class="team-name">Haruto Nakamura</div>
+                <div class="team-tasks">5 tasks / 1 done</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Design Notes -->
+      <div class="design-notes">
+        <h3>Design Decision Notes - Option A: Precision</h3>
+        <div class="design-notes-grid">
+          <div class="design-note">
+            <div class="design-note-label">Style</div>
+            <div class="design-note-value">
+              <code>Dark Mode OLED</code> + <code>Swiss Minimalism</code><br>
+              density=4, tone=2, era=4, saturation=2
+            </div>
+          </div>
+          <div class="design-note">
+            <div class="design-note-label">Typography</div>
+            <div class="design-note-value">
+              Heading: <code>JetBrains Mono</code><br>
+              Body: <code>IBM Plex Sans</code><br>
+              数値データにモノスペースで視認性向上
+            </div>
+          </div>
+          <div class="design-note">
+            <div class="design-note-label">Color</div>
+            <div class="design-note-value">
+              <code>Linear Inspired</code> palette<br>
+              BG: #0d0d12 / Accent: #5e6ad2<br>
+              Von Restorff: アクセントは注目箇所のみ
+            </div>
+          </div>
+          <div class="design-note">
+            <div class="design-note-label">Shape</div>
+            <div class="design-note-value">
+              <code>border-radius: 4px</code> max<br>
+              シャープなエッジで精密さを表現<br>
+              1px border + 1px gap レイアウト
+            </div>
+          </div>
+          <div class="design-note">
+            <div class="design-note-label">Psychology</div>
+            <div class="design-note-value">
+              F-pattern: 左上に最重要KPI<br>
+              Fitt's Law: ボタン最低32px高<br>
+              Hick's Law: ナビ7項目以下
+            </div>
+          </div>
+          <div class="design-note">
+            <div class="design-note-label">Personality</div>
+            <div class="design-note-value">
+              エンジニア向け、効率重視<br>
+              キーボードショートカット表示<br>
+              情報密度 > 装飾
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd-hint">
+    <kbd>Cmd</kbd> + <kbd>K</kbd> to open command palette
+  </div>
+</body>
+</html>

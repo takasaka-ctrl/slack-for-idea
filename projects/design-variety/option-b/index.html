@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TeamPulse - Trust Style</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /*
+      OPTION B: "Trust"
+      Style: Editorial / Magazine + Notion Warm
+      Palette: Warm Neutral
+      Typography: Fraunces (heading) + Libre Baskerville (body)
+      Axes: density=2, tone=2, era=2, saturation=2
+
+      心理学的根拠:
+      - Aesthetic-Usability Effect: 美しさ＝知覚品質向上
+      - Cognitive Load: 余白で処理コスト低減
+      - Progressive Disclosure: 概要→詳細の段階開示
+      - Priming: 暖色で安心感・信頼感
+      - Gestalt Proximity: 間隔で情報グループ明示
+      - Peak-End Rule: 引用セクションで印象的な結び
+      - Familiarity Bias: 雑誌レイアウトの既知パターン
+      - Halo Effect: セリフ体の権威性が全体評価を向上
+    */
+    :root {
+      --bg:#fafaf9; --bg-card:#fff; --bg-warm:#f5f0eb; --bg-dark:#292524;
+      --border:#e7e1da; --border-light:#f0ece7;
+      --text:#292524; --text-2:#78716c; --text-3:#a8a29e;
+      --accent:#c2410c; --accent-light:#fed7aa;
+      --ok:#15803d; --ok-bg:#dcfce7; --warn:#a16207; --warn-bg:#fef9c3;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Libre Baskerville','Noto Sans JP',serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.8;-webkit-font-smoothing:antialiased}
+    h1,h2,h3,.hd{font-family:'Fraunces','Noto Sans JP',serif;font-weight:700;letter-spacing:-.02em;line-height:1.3}
+
+    /* Nav - 雑誌ヘッダー風 */
+    .nav{background:var(--bg-card);border-bottom:1px solid var(--border)}
+    .nav-in{max-width:1080px;margin:0 auto;padding:0 40px}
+    .nav-top{display:flex;align-items:center;justify-content:space-between;padding:24px 0 16px}
+    .brand{font-family:'Fraunces',serif;font-size:24px;font-weight:900;letter-spacing:-.04em}
+    .brand-tag{font-size:11px;color:var(--text-3);letter-spacing:.15em;text-transform:uppercase;margin-left:12px}
+    .nav-r{display:flex;align-items:center;gap:12px;font-size:12px;color:var(--text-3)}
+    .avatar{width:36px;height:36px;border-radius:50%;background:var(--bg-warm);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:700;font-size:13px;color:var(--text-2)}
+    .nav-links{display:flex;border-top:1px solid var(--border-light)}
+    .nav-a{padding:12px 20px;font-size:13px;color:var(--text-2);text-decoration:none;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+    .nav-a:hover{color:var(--text)}.nav-a.on{color:var(--accent);border-bottom-color:var(--accent)}
+
+    /* Main */
+    .main{max-width:1080px;margin:0 auto;padding:40px 40px 80px}
+    .ph{margin-bottom:48px}
+    .ph-date{font-size:12px;color:var(--text-3);text-transform:uppercase;letter-spacing:.12em;margin-bottom:8px}
+    .ph h1{font-size:36px;font-weight:900;margin-bottom:8px}
+    .ph p{font-size:16px;color:var(--text-2);font-style:italic}
+
+    /* KPI */
+    .kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:56px}
+    .kc{background:var(--bg-card);border:1px solid var(--border);padding:28px 24px;border-radius:2px;position:relative}
+    .kc-bar{position:absolute;top:0;left:0;width:3px;height:100%;background:var(--accent)}
+    .kc-l{font-size:12px;color:var(--text-3);text-transform:uppercase;letter-spacing:.12em;margin-bottom:12px}
+    .kc-v{font-family:'Fraunces',serif;font-size:42px;font-weight:900;line-height:1;margin-bottom:8px}
+    .kc-c{font-size:13px}.kc-c.up{color:var(--ok)}.kc-c.dn{color:var(--accent)}
+
+    /* Layout 60/40 */
+    .grid2{display:grid;grid-template-columns:1fr 380px;gap:40px;align-items:start}
+    .sh{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--text)}
+    .sh h2{font-size:18px}
+    .sh a{font-size:12px;color:var(--accent);text-decoration:none;letter-spacing:.08em;text-transform:uppercase}
+    .sh a:hover{text-decoration:underline}
+
+    /* Project cards - Progressive Disclosure */
+    .plist{display:flex;flex-direction:column;gap:16px}
+    .pc{background:var(--bg-card);border:1px solid var(--border);border-radius:2px;padding:24px;cursor:pointer;transition:box-shadow .2s}
+    .pc:hover{box-shadow:0 4px 20px rgba(41,37,36,.08)}
+    .pc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+    .pc-name{font-family:'Fraunces',serif;font-size:17px;font-weight:700}
+    .badge{font-size:11px;font-weight:700;padding:4px 10px;border-radius:2px;letter-spacing:.05em;text-transform:uppercase}
+    .b-ok{background:var(--ok-bg);color:var(--ok)}.b-warn{background:var(--warn-bg);color:var(--warn)}.b-err{background:var(--accent-light);color:var(--accent)}
+    .pc-desc{font-size:14px;color:var(--text-2);line-height:1.7;margin-bottom:16px}
+    .pc-meta{display:flex;gap:24px;font-size:12px;color:var(--text-3)}.pc-meta strong{color:var(--text-2);font-weight:700}
+    .prog{margin-top:16px;height:4px;background:var(--border-light);overflow:hidden}.prog-f{height:100%;background:var(--text)}
+
+    /* Team */
+    .tl{display:flex;flex-direction:column;gap:16px}
+    .tc{display:flex;gap:16px;align-items:center;padding:16px;background:var(--bg-card);border:1px solid var(--border);border-radius:2px}
+    .ta{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:900;font-size:15px;color:#fff;flex-shrink:0}
+    .tn{font-family:'Fraunces',serif;font-weight:700;font-size:14px}.tr{font-size:12px;color:var(--text-3);font-style:italic}
+    .ts{margin-left:auto;text-align:right}.ts-v{font-family:'Fraunces',serif;font-size:20px;font-weight:900;line-height:1}.ts-l{font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:.1em}
+
+    /* Insight quote - Peak-End Rule */
+    .iq{background:var(--bg-dark);color:#fafaf9;padding:28px 24px;border-radius:2px;position:relative;margin-bottom:40px}
+    .iq::before{content:'\201C';font-family:'Fraunces',serif;font-size:80px;position:absolute;top:-8px;left:16px;color:rgba(255,255,255,.15);line-height:1}
+    .iq p{font-family:'Fraunces',serif;font-size:16px;font-style:italic;line-height:1.6;margin-bottom:12px;position:relative}
+    .iq cite{font-size:12px;color:#a8a29e;letter-spacing:.08em;font-style:normal}
+
+    /* Timeline */
+    .tli{display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--border-light)}
+    .tli-t{font-size:11px;color:var(--text-3);width:60px;flex-shrink:0;text-align:right;padding-top:2px}
+    .tli-b{font-size:13px;color:var(--text-2);line-height:1.6}.tli-b strong{color:var(--text);font-weight:700}
+
+    /* Design notes */
+    .dn{margin-top:80px;padding-top:40px;border-top:2px solid var(--text)}
+    .dn h3{font-family:'Fraunces',serif;font-size:18px;margin-bottom:24px;color:var(--accent)}
+    .dng{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+    .dnc{padding:20px;border:1px solid var(--border);border-radius:2px;background:var(--bg-card)}
+    .dnc-l{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--text-3);margin-bottom:8px;font-weight:700}
+    .dnc-v{font-size:13px;color:var(--text-2);line-height:1.7}
+    .dnc-v code{font-size:12px;background:var(--bg-warm);padding:2px 6px;border-radius:2px;color:var(--accent)}
+
+    @media(max-width:900px){.grid2{grid-template-columns:1fr}.kpi{grid-template-columns:1fr}.nav-in,.main{padding-left:20px;padding-right:20px}}
+  </style>
+</head>
+<body>
+  <nav class="nav"><div class="nav-in">
+    <div class="nav-top">
+      <div><span class="brand">TeamPulse</span><span class="brand-tag">Analytics</span></div>
+      <div class="nav-r"><span>February 24, 2026</span><div class="avatar">TK</div></div>
+    </div>
+    <div class="nav-links">
+      <a href="#" class="nav-a on">Overview</a>
+      <a href="#" class="nav-a">Projects</a>
+      <a href="#" class="nav-a">Team</a>
+      <a href="#" class="nav-a">Analytics</a>
+      <a href="#" class="nav-a">Settings</a>
+    </div>
+  </div></nav>
+
+  <main class="main">
+    <div class="ph">
+      <div class="ph-date">Sprint 14 &mdash; Week 2 of 2</div>
+      <h1>Good morning, Takashi.</h1>
+      <p>Here is what your team has been working on this sprint.</p>
+    </div>
+
+    <div class="kpi">
+      <div class="kc"><div class="kc-bar"></div><div class="kc-l">Velocity</div><div class="kc-v">87</div><div class="kc-c up">+12% from last sprint</div></div>
+      <div class="kc"><div class="kc-l">Completion</div><div class="kc-v">94%</div><div class="kc-c up">On track to finish by Friday</div></div>
+      <div class="kc"><div class="kc-l">Open Items</div><div class="kc-v">7</div><div class="kc-c dn">3 require attention</div></div>
+    </div>
+
+    <div class="grid2">
+      <div>
+        <div class="sh"><h2>Active Projects</h2><a href="#">View All Projects</a></div>
+        <div class="plist">
+          <div class="pc">
+            <div class="pc-top"><h3 class="pc-name">API v3 Migration</h3><span class="badge b-ok">Active</span></div>
+            <p class="pc-desc">Legacy REST endpoints to GraphQL. Performance benchmarks show 40% reduction in payload size so far.</p>
+            <div class="pc-meta"><span>Lead: <strong>Yuki S.</strong></span><span>Due: <strong>Mar 15</strong></span><span>Progress: <strong>78%</strong></span></div>
+            <div class="prog"><div class="prog-f" style="width:78%"></div></div>
+          </div>
+          <div class="pc">
+            <div class="pc-top"><h3 class="pc-name">Dashboard Redesign</h3><span class="badge b-warn">Review</span></div>
+            <p class="pc-desc">Complete visual overhaul based on user research insights. Accessibility audit passed with AA compliance.</p>
+            <div class="pc-meta"><span>Lead: <strong>Mika K.</strong></span><span>Due: <strong>Feb 28</strong></span><span>Progress: <strong>92%</strong></span></div>
+            <div class="prog"><div class="prog-f" style="width:92%"></div></div>
+          </div>
+          <div class="pc">
+            <div class="pc-top"><h3 class="pc-name">Mobile Push Notifications</h3><span class="badge b-err">Blocked</span></div>
+            <p class="pc-desc">Awaiting iOS certificate renewal. Android implementation complete and tested. ETA for unblock: 2 days.</p>
+            <div class="pc-meta"><span>Lead: <strong>Haruto N.</strong></span><span>Due: <strong>Mar 20</strong></span><span>Progress: <strong>30%</strong></span></div>
+            <div class="prog"><div class="prog-f" style="width:30%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div style="margin-bottom:40px">
+          <div class="sh"><h2>Your Team</h2></div>
+          <div class="tl">
+            <div class="tc"><div class="ta" style="background:#292524">YS</div><div><div class="tn">Yuki Suzuki</div><div class="tr">Backend Engineer</div></div><div class="ts"><div class="ts-v">3/8</div><div class="ts-l">Tasks Done</div></div></div>
+            <div class="tc"><div class="ta" style="background:#c2410c">MK</div><div><div class="tn">Mika Kimura</div><div class="tr">Design Lead</div></div><div class="ts"><div class="ts-v">5/6</div><div class="ts-l">Tasks Done</div></div></div>
+            <div class="tc"><div class="ta" style="background:#15803d">TK</div><div><div class="tn">Takashi K.</div><div class="tr">Engineering Manager</div></div><div class="ts"><div class="ts-v">2/7</div><div class="ts-l">Tasks Done</div></div></div>
+            <div class="tc"><div class="ta" style="background:#a16207">HN</div><div><div class="tn">Haruto N.</div><div class="tr">Mobile Developer</div></div><div class="ts"><div class="ts-v">1/5</div><div class="ts-l">Tasks Done</div></div></div>
+          </div>
+        </div>
+
+        <div class="iq">
+          <p>This sprint's velocity is the highest in Q1. The team is finding its rhythm after the refactoring cycle.</p>
+          <cite>&mdash; AI Sprint Analysis</cite>
+        </div>
+
+        <div style="margin-bottom:40px">
+          <div class="sh"><h2>Today's Activity</h2></div>
+          <div>
+            <div class="tli"><div class="tli-t">2m ago</div><div class="tli-b"><strong>Yuki</strong> completed API endpoint review for v3 migration</div></div>
+            <div class="tli"><div class="tli-t">18m ago</div><div class="tli-b"><strong>Haruto</strong> reported iOS certificate blocker</div></div>
+            <div class="tli"><div class="tli-t">1h ago</div><div class="tli-b"><strong>Mika</strong> pushed final design review for Dashboard Redesign</div></div>
+            <div class="tli"><div class="tli-t">2h ago</div><div class="tli-b"><strong>Aoi</strong> merged search optimization PR into main</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dn">
+      <h3>Design Decision Notes &mdash; Option B: Trust</h3>
+      <div class="dng">
+        <div class="dnc"><div class="dnc-l">Style</div><div class="dnc-v"><code>Editorial/Magazine</code> + <code>Notion Warm</code><br>density=2, tone=2, era=2, saturation=2<br>雑誌レイアウトと余白で上品さ</div></div>
+        <div class="dnc"><div class="dnc-l">Typography</div><div class="dnc-v">Heading: <code>Fraunces</code> (serif)<br>Body: <code>Libre Baskerville</code> (serif)<br>セリフ体で権威性と温かみを両立</div></div>
+        <div class="dnc"><div class="dnc-l">Color</div><div class="dnc-v"><code>Warm Neutral</code> palette<br>BG: #fafaf9 / Accent: #c2410c<br>Priming: 暖色で安心感を引き出す</div></div>
+        <div class="dnc"><div class="dnc-l">Shape</div><div class="dnc-v"><code>border-radius: 2px</code><br>ほぼ直角だがシャープすぎない<br>左縁のアクセントラインで視線誘導</div></div>
+        <div class="dnc"><div class="dnc-l">Psychology</div><div class="dnc-v">Aesthetic-Usability: 美→信頼<br>Gestalt Proximity: 余白で分離<br>Peak-End: 引用で印象的な結び</div></div>
+        <div class="dnc"><div class="dnc-l">Personality</div><div class="dnc-v">経営層・マネージャー向け<br>落ち着いた判断を促す雰囲気<br>情報密度 &lt; 読みやすさ・信頼感</div></div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

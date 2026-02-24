@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design Variety - 同じアプリ、3つの個性</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#0a0a0a;--card:#141414;--border:#2a2a2a;--text:#e8e8e8;--text2:#888;--a:#5e6ad2;--b:#c2410c;--c:#ff4444}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Space Grotesk','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
+
+    .hero{max-width:960px;margin:0 auto;padding:80px 32px 40px;text-align:center}
+    .hero h1{font-size:clamp(28px,5vw,48px);font-weight:700;letter-spacing:-.03em;line-height:1.2;margin-bottom:16px}
+    .hero h1 span{background:linear-gradient(135deg,var(--a),var(--b),var(--c));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero p{font-size:16px;color:var(--text2);max-width:640px;margin:0 auto;line-height:1.8}
+
+    .question{max-width:720px;margin:32px auto 56px;padding:24px 32px;border:1px solid var(--border);border-radius:8px;background:var(--card)}
+    .question p{font-size:14px;color:var(--text2);line-height:1.8}
+    .question p strong{color:var(--text)}
+
+    .grid{max-width:1100px;margin:0 auto;padding:0 32px 80px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+
+    .card{border:1px solid var(--border);border-radius:8px;overflow:hidden;background:var(--card);transition:transform .2s,border-color .3s;text-decoration:none;color:inherit;display:flex;flex-direction:column}
+    .card:hover{transform:translateY(-4px);border-color:#444}
+
+    .card-preview{height:200px;position:relative;overflow:hidden}
+    .card-preview img,.card-preview .preview-placeholder{width:100%;height:100%;object-fit:cover}
+
+    /* Option A preview */
+    .preview-a{background:#0d0d12;display:flex;flex-direction:column;padding:16px}
+    .preview-a .p-sidebar{width:40px;background:#16161e;border-right:1px solid #2a2a3a;position:absolute;left:0;top:0;bottom:0}
+    .preview-a .p-header{height:20px;border-bottom:1px solid #2a2a3a;margin-left:48px;margin-bottom:8px}
+    .preview-a .p-kpis{display:flex;gap:2px;margin-left:48px;margin-bottom:8px}
+    .preview-a .p-kpi{flex:1;height:40px;background:#16161e;border:1px solid #2a2a3a;border-radius:2px}
+    .preview-a .p-table{flex:1;margin-left:48px;background:#16161e;border:1px solid #2a2a3a;border-radius:2px;position:relative}
+    .preview-a .p-row{height:4px;margin:4px 6px;background:#1e1e2a;border-radius:1px}
+    .preview-a .p-accent{width:20px;height:4px;background:#5e6ad2;border-radius:1px;position:absolute;top:6px;left:6px}
+
+    /* Option B preview */
+    .preview-b{background:#fafaf9;display:flex;flex-direction:column;padding:20px 24px}
+    .preview-b .p-nav{height:12px;border-bottom:1px solid #e7e1da;margin-bottom:16px;display:flex;align-items:flex-end;gap:12px}
+    .preview-b .p-nav-item{width:32px;height:3px;background:#e7e1da;border-radius:0}
+    .preview-b .p-nav-item.active{background:#c2410c}
+    .preview-b .p-title{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:#292524;margin-bottom:12px}
+    .preview-b .p-cards{display:flex;flex-direction:column;gap:6px;flex:1}
+    .preview-b .p-card{border:1px solid #e7e1da;padding:8px 10px;background:#fff;border-radius:2px;flex:1}
+    .preview-b .p-line{height:3px;background:#e7e1da;border-radius:0;margin-bottom:4px;width:60%}
+    .preview-b .p-line2{height:3px;background:#f0ece7;border-radius:0;width:80%}
+
+    /* Option C preview */
+    .preview-c{background:#fafaf0;display:flex;flex-direction:column;padding:12px}
+    .preview-c .p-nav{height:24px;background:#ffd700;border:2px solid #1a1a1a;margin-bottom:8px;display:flex;align-items:center;padding:0 6px}
+    .preview-c .p-dot{width:6px;height:6px;background:#ff4444;border:1px solid #1a1a1a;border-radius:50%}
+    .preview-c .p-kpis{display:flex;gap:4px;margin-bottom:8px}
+    .preview-c .p-kpi{flex:1;height:32px;border:2px solid #1a1a1a;box-shadow:2px 2px 0 #1a1a1a}
+    .preview-c .p-kpi:nth-child(1){background:#ff4444}.preview-c .p-kpi:nth-child(2){background:#ffd700}.preview-c .p-kpi:nth-child(3){background:#4ecdc4}.preview-c .p-kpi:nth-child(4){background:#fff}
+    .preview-c .p-table{flex:1;border:2px solid #1a1a1a;box-shadow:2px 2px 0 #1a1a1a;background:#fff;padding:4px}
+    .preview-c .p-row{height:6px;margin-bottom:3px;display:flex;gap:3px}
+    .preview-c .p-cell{height:100%;background:#f0f0e0;border:1px solid #1a1a1a;flex:1}
+
+    .card-body{padding:20px;flex:1;display:flex;flex-direction:column}
+    .card-label{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--text2);margin-bottom:8px;font-weight:600}
+    .card-title{font-size:20px;font-weight:700;letter-spacing:-.02em;margin-bottom:8px}
+    .card-desc{font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:16px;flex:1}
+    .card-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+    .tag{font-size:10px;padding:3px 8px;border:1px solid var(--border);border-radius:3px;color:var(--text2)}
+
+    .card-footer{padding:12px 20px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+    .card-axes{font-size:10px;color:var(--text2);font-family:'Space Grotesk',monospace}
+    .card-link{font-size:12px;font-weight:600;transition:color .2s}
+
+    .card:nth-child(1) .card-link{color:var(--a)}
+    .card:nth-child(2) .card-link{color:var(--b)}
+    .card:nth-child(3) .card-link{color:var(--c)}
+
+    .comparison{max-width:960px;margin:0 auto;padding:0 32px 80px}
+    .comparison h2{font-size:20px;font-weight:700;margin-bottom:24px;letter-spacing:-.02em}
+    .comp-table{width:100%;border-collapse:collapse}
+    .comp-table th,.comp-table td{padding:12px 16px;text-align:left;border-bottom:1px solid var(--border);font-size:13px}
+    .comp-table th{color:var(--text2);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+    .comp-table td:first-child{color:var(--text2);font-size:12px}
+
+    .back{display:inline-flex;align-items:center;gap:6px;color:var(--text2);text-decoration:none;font-size:13px;margin-bottom:24px;transition:color .2s}
+    .back:hover{color:var(--text)}
+
+    @media(max-width:768px){.grid{grid-template-columns:1fr}.hero{padding:48px 20px 24px}}
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <a href="../" class="back"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg> Gallery</a>
+    <h1>同じアプリ、<span>3つの個性</span></h1>
+    <p>「洗練されたB2Bダッシュボード」を3つの全く異なるデザイン方向性で実装。<br>同じデータ・同じ機能でも、デザインの性格軸を変えるだけでここまで違う。</p>
+  </div>
+
+  <div class="question">
+    <p>
+      <strong>Q: 「AI感を無くして洗練された」と指示すると一辺倒になるのはなぜ？</strong><br>
+      A: AIは「洗練」を2023-24年SaaS UIの<strong>平均値</strong>として学習している。平均値だから似る。
+      違いを生むのは<strong>「デザインの性格軸」</strong>を意図的に選ぶこと。
+      温度（クール↔ウォーム）、密度（スカスカ↔ギッチリ）、形状（シャープ↔ラウンド）、
+      色の個性（モノクロ↔マルチカラー）、タイポグラフィの選択を明示すれば、
+      同じ「洗練された」でも全く異なるデザインになる。
+    </p>
+  </div>
+
+  <div class="grid">
+    <!-- Option A -->
+    <a href="./option-a/" class="card">
+      <div class="card-preview">
+        <div class="preview-placeholder preview-a">
+          <div class="p-sidebar"></div>
+          <div class="p-header"></div>
+          <div class="p-kpis"><div class="p-kpi"></div><div class="p-kpi"></div><div class="p-kpi"></div><div class="p-kpi"></div></div>
+          <div class="p-table">
+            <div class="p-accent"></div>
+            <div class="p-row" style="margin-top:16px"></div><div class="p-row"></div><div class="p-row"></div><div class="p-row"></div><div class="p-row"></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-label">Option A</div>
+        <div class="card-title">Precision</div>
+        <div class="card-desc">ダークモード・高密度・シャープエッジ。エンジニア向け、効率最優先。Linearに近いデザイン言語。</div>
+        <div class="card-tags">
+          <span class="tag">Dark Mode OLED</span>
+          <span class="tag">JetBrains Mono</span>
+          <span class="tag">Linear Inspired</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="card-axes">D:4 T:2 E:4 S:2</span>
+        <span class="card-link">View Mock &rarr;</span>
+      </div>
+    </a>
+
+    <!-- Option B -->
+    <a href="./option-b/" class="card">
+      <div class="card-preview">
+        <div class="preview-placeholder preview-b">
+          <div class="p-nav"><div class="p-nav-item active"></div><div class="p-nav-item"></div><div class="p-nav-item"></div><div class="p-nav-item"></div></div>
+          <div class="p-title">Good morning.</div>
+          <div class="p-cards"><div class="p-card"><div class="p-line"></div><div class="p-line2"></div></div><div class="p-card"><div class="p-line"></div><div class="p-line2"></div></div><div class="p-card"><div class="p-line"></div><div class="p-line2"></div></div></div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-label">Option B</div>
+        <div class="card-title">Trust</div>
+        <div class="card-desc">セリフ体・たっぷり余白・温かみ。経営層向け、信頼感と落ち着き。Notion/Editorial的な方向性。</div>
+        <div class="card-tags">
+          <span class="tag">Editorial</span>
+          <span class="tag">Fraunces (Serif)</span>
+          <span class="tag">Warm Neutral</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="card-axes">D:2 T:2 E:2 S:2</span>
+        <span class="card-link">View Mock &rarr;</span>
+      </div>
+    </a>
+
+    <!-- Option C -->
+    <a href="./option-c/" class="card">
+      <div class="card-preview">
+        <div class="preview-placeholder preview-c">
+          <div class="p-nav"><div class="p-dot"></div></div>
+          <div class="p-kpis"><div class="p-kpi"></div><div class="p-kpi"></div><div class="p-kpi"></div><div class="p-kpi"></div></div>
+          <div class="p-table"><div class="p-row"><div class="p-cell"></div><div class="p-cell"></div><div class="p-cell"></div></div><div class="p-row"><div class="p-cell"></div><div class="p-cell"></div><div class="p-cell"></div></div><div class="p-row"><div class="p-cell"></div><div class="p-cell"></div><div class="p-cell"></div></div><div class="p-row"><div class="p-cell"></div><div class="p-cell"></div><div class="p-cell"></div></div></div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-label">Option C</div>
+        <div class="card-title">Energy</div>
+        <div class="card-desc">太ボーダー・ハードシャドウ・ビビッドカラー。スタートアップ向け、記憶に残る個性。Neo Brutalism。</div>
+        <div class="card-tags">
+          <span class="tag">Neo Brutalism</span>
+          <span class="tag">Space Mono</span>
+          <span class="tag">Vivid Multi-color</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="card-axes">D:4 T:3 E:4 S:5</span>
+        <span class="card-link">View Mock &rarr;</span>
+      </div>
+    </a>
+  </div>
+
+  <!-- Comparison Table -->
+  <div class="comparison">
+    <h2>3案比較表</h2>
+    <table class="comp-table">
+      <thead><tr><th>要素</th><th>A: Precision</th><th>B: Trust</th><th>C: Energy</th></tr></thead>
+      <tbody>
+        <tr><td>Background</td><td>#0d0d12 (純黒)</td><td>#fafaf9 (温白)</td><td>#fafaf0 (クリーム)</td></tr>
+        <tr><td>Border-radius</td><td>4px (シャープ)</td><td>2px (ほぼ直角)</td><td>0px (完全シャープ)</td></tr>
+        <tr><td>Heading Font</td><td>JetBrains Mono</td><td>Fraunces (Serif)</td><td>Space Mono</td></tr>
+        <tr><td>Body Font</td><td>IBM Plex Sans</td><td>Libre Baskerville</td><td>Space Grotesk</td></tr>
+        <tr><td>Accent</td><td>#5e6ad2 (紫1色)</td><td>#c2410c (橙1色)</td><td>赤/黄/青/紫 (多色)</td></tr>
+        <tr><td>Shadow</td><td>なし</td><td>ソフト (blur)</td><td>ハード (offset, no blur)</td></tr>
+        <tr><td>Layout</td><td>左サイドバー + 密テーブル</td><td>上ナビ + カード + 余白</td><td>フルワイド + 非対称グリッド</td></tr>
+        <tr><td>情報密度</td><td>高い (エンジニア向け)</td><td>低い (読みやすさ重視)</td><td>高い (視覚的分離で整理)</td></tr>
+        <tr><td>ターゲット</td><td>開発者 / パワーユーザー</td><td>経営層 / マネージャー</td><td>スタートアップ / クリエイティブ</td></tr>
+        <tr><td>心理学の軸</td><td>F-pattern + Fitt's Law</td><td>Aesthetic-Usability + Priming</td><td>Von Restorff + Visual Anchor</td></tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
