@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Secretary — 月1.5万円のAI秘書導入サービス</title>
+  <meta name="description" content="LINE・メール・カレンダーを統合管理するAI秘書を、あなたのビジネスに導入しませんか？月額15,000円から。">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪽</text></svg>">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            heading: ['Sora', 'Noto Sans JP', 'sans-serif'],
+            body: ['Noto Sans JP', 'sans-serif'],
+            serif: ['Noto Serif JP', 'serif'],
+          },
+          colors: {
+            ink: { 50:'#f7f6f3', 100:'#ebe9e2', 200:'#d5d1c5', 300:'#b8b1a0', 400:'#9a9181', 500:'#7d7566', 600:'#655e50', 700:'#504a3f', 800:'#3a3630', 900:'#1c1a17', 950:'#0d0c0a' },
+            amber: { 400:'#e8a838', 500:'#d49520', 600:'#b07a18' },
+            rust: { 400:'#c46d3b', 500:'#a85a2d' },
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { font-feature-settings: "palt" 1; }
+    
+    /* Noise texture overlay */
+    .noise::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    /* Vertical writing for accent */
+    .vertical-text {
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #1c1a17; }
+    ::-webkit-scrollbar-thumb { background: #504a3f; border-radius: 3px; }
+
+    /* Fade in on scroll */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* Chat animation */
+    .msg { opacity: 0; animation: msgIn 0.4s ease forwards; }
+    .msg:nth-child(1) { animation-delay: 0.3s; }
+    .msg:nth-child(2) { animation-delay: 1.0s; }
+    .msg:nth-child(3) { animation-delay: 1.7s; }
+    .msg:nth-child(4) { animation-delay: 2.4s; }
+    .msg:nth-child(5) { animation-delay: 3.1s; }
+    .msg:nth-child(6) { animation-delay: 3.8s; }
+    @keyframes msgIn { to { opacity: 1; } }
+
+    /* Bento hover */
+    .bento-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .bento-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.4); }
+
+    /* Stamp effect */
+    .stamp {
+      display: inline-block;
+      border: 3px solid #c46d3b;
+      color: #c46d3b;
+      padding: 4px 16px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transform: rotate(-3deg);
+      opacity: 0.85;
+    }
+
+    /* Accordion */
+    details summary::-webkit-details-marker { display: none; }
+    details[open] .chevron { transform: rotate(180deg); }
+    .chevron { transition: transform 0.2s ease; }
+
+    /* Number counter */
+    .vtab.active { border-color: #e8a838 !important; color: #e8a838 !important; }
+
+    .big-num {
+      font-size: clamp(3rem, 8vw, 7rem);
+      line-height: 1;
+      font-weight: 800;
+      color: transparent;
+      -webkit-text-stroke: 1.5px #504a3f;
+    }
+
+    /* Horizontal rule */
+    .hr-amber { height: 2px; background: linear-gradient(90deg, #e8a838 0%, transparent 100%); border: none; }
+    
+    /* Phone mockup */
+    .phone-frame {
+      background: #1c1a17;
+      border-radius: 36px;
+      border: 3px solid #3a3630;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.05);
+    }
+    .phone-notch {
+      width: 120px; height: 28px;
+      background: #1c1a17;
+      border-radius: 0 0 16px 16px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+
+<body class="font-body bg-ink-950 text-ink-200">
+
+  <!-- ===== HERO ===== -->
+  <section class="relative noise min-h-screen flex items-center overflow-hidden">
+    <!-- Subtle grid -->
+    <div class="absolute inset-0 opacity-[0.04]" style="background-image: linear-gradient(#504a3f 1px, transparent 1px), linear-gradient(90deg, #504a3f 1px, transparent 1px); background-size: 80px 80px;"></div>
+
+    <div class="relative w-full max-w-6xl mx-auto px-6 py-20 md:py-0">
+      <div class="grid md:grid-cols-12 gap-8 items-center">
+        <!-- Left: Copy -->
+        <div class="md:col-span-7">
+          <div class="flex items-center gap-3 mb-8">
+            <span class="stamp text-xs">24h / 365</span>
+            <span class="text-ink-400 text-sm tracking-widest">AI SECRETARY SERVICE</span>
+          </div>
+
+          <h1 class="font-heading font-extrabold text-4xl md:text-[3.5rem] leading-[1.15] text-ink-50 mb-6">
+            一人で全部やるの、<br>
+            <span class="text-amber-400">もう終わりにしよう。</span>
+          </h1>
+
+          <p class="text-lg md:text-xl text-ink-300 max-w-lg leading-relaxed mb-8">
+            月<strong class="text-ink-50 font-bold">1.5万円</strong>で、LINE・メール・カレンダーを統合管理するAI秘書を導入。<br class="hidden md:block">
+            セットアップから保守まで、全部やります。
+          </p>
+
+          <div class="flex flex-wrap gap-4">
+            <a href="#contact" class="inline-flex items-center gap-2 px-7 py-3.5 bg-amber-400 hover:bg-amber-500 text-ink-950 font-heading font-bold text-sm tracking-wide rounded-lg transition">
+              無料で相談する
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+            <a href="#demo" class="inline-flex items-center gap-2 px-7 py-3.5 border border-ink-700 hover:border-ink-500 text-ink-300 hover:text-ink-100 font-heading font-semibold text-sm tracking-wide rounded-lg transition">
+              使い方を見る
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: Vertical text decoration -->
+        <div class="hidden md:flex md:col-span-5 justify-end items-center">
+          <div class="relative">
+            <div class="vertical-text font-serif text-[5rem] text-ink-800 leading-none tracking-[0.2em] select-none" aria-hidden="true">秘書</div>
+            <div class="absolute -left-8 top-1/2 -translate-y-1/2 w-px h-32 bg-gradient-to-b from-transparent via-amber-400/50 to-transparent"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom edge -->
+    <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-ink-700 to-transparent"></div>
+  </section>
+
+  <!-- ===== PAIN POINTS ===== -->
+  <section class="relative noise py-24 md:py-32">
+    <div class="max-w-5xl mx-auto px-6 reveal">
+      <div class="flex items-end gap-6 mb-16">
+        <div class="big-num" aria-hidden="true">01</div>
+        <div>
+          <h2 class="font-heading font-bold text-2xl md:text-3xl text-ink-50">こんな毎日を<br>過ごしていませんか？</h2>
+          <hr class="hr-amber w-24 mt-3">
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-3">
+        <div class="flex gap-4 p-5 rounded-xl bg-ink-900/60 border border-ink-800/50 hover:border-rust-400/30 transition">
+          <span class="text-rust-400 text-lg font-bold shrink-0 mt-0.5">×</span>
+          <p class="text-ink-200">クライアントのLINE返信で<strong class="text-ink-50">1日が終わる</strong></p>
+        </div>
+        <div class="flex gap-4 p-5 rounded-xl bg-ink-900/60 border border-ink-800/50 hover:border-rust-400/30 transition">
+          <span class="text-rust-400 text-lg font-bold shrink-0 mt-0.5">×</span>
+          <p class="text-ink-200">請求書の作成を<strong class="text-ink-50">毎回後回し</strong>にしている</p>
+        </div>
+        <div class="flex gap-4 p-5 rounded-xl bg-ink-900/60 border border-ink-800/50 hover:border-rust-400/30 transition">
+          <span class="text-rust-400 text-lg font-bold shrink-0 mt-0.5">×</span>
+          <p class="text-ink-200">SNSの更新が<strong class="text-ink-50">3ヶ月止まっている</strong></p>
+        </div>
+        <div class="flex gap-4 p-5 rounded-xl bg-ink-900/60 border border-ink-800/50 hover:border-rust-400/30 transition">
+          <span class="text-rust-400 text-lg font-bold shrink-0 mt-0.5">×</span>
+          <p class="text-ink-200">大事なメールを見落として<strong class="text-ink-50">ヒヤッとした</strong></p>
+        </div>
+        <div class="md:col-span-2 flex gap-4 p-5 rounded-xl bg-ink-900/60 border border-ink-800/50 hover:border-rust-400/30 transition">
+          <span class="text-rust-400 text-lg font-bold shrink-0 mt-0.5">×</span>
+          <p class="text-ink-200">スケジュール管理に時間を取られる…でも、<strong class="text-ink-50">秘書を雇う余裕はない。</strong></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SOLUTION (Bento Grid) ===== -->
+  <section class="relative noise py-24 md:py-32 border-t border-ink-800/50">
+    <div class="max-w-5xl mx-auto px-6 reveal">
+      <div class="flex items-end gap-6 mb-16">
+        <div class="big-num" aria-hidden="true">02</div>
+        <div>
+          <h2 class="font-heading font-bold text-2xl md:text-3xl text-ink-50">AIがあなたの右腕になる</h2>
+          <p class="text-ink-400 mt-2">普段使いのLINEから話しかけるだけ。</p>
+          <hr class="hr-amber w-24 mt-3">
+        </div>
+      </div>
+
+      <!-- Bento Layout -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+        <!-- Large card: LINE -->
+        <div class="bento-card col-span-2 row-span-2 bg-ink-900 border border-ink-800/60 rounded-2xl p-8 flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-emerald-900/40 border border-emerald-700/30 flex items-center justify-center text-xl mb-6">💬</div>
+            <h3 class="font-heading font-bold text-xl text-ink-50 mb-3">LINE対応</h3>
+            <p class="text-ink-300 leading-relaxed">LINEで話しかけるだけ。予定確認、メール要約、タスク管理がチャット感覚で完了。<br><br>専用アプリは不要。いつものLINEがそのまま秘書窓口に。</p>
+          </div>
+          <div class="mt-6 flex items-center gap-2 text-amber-400 text-sm font-heading font-semibold">
+            <span>最も利用される機能</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </div>
+        </div>
+
+        <!-- Small: Email -->
+        <div class="bento-card bg-ink-900 border border-ink-800/60 rounded-2xl p-6">
+          <div class="w-10 h-10 rounded-lg bg-blue-900/40 border border-blue-700/30 flex items-center justify-center text-lg mb-4">📧</div>
+          <h3 class="font-heading font-bold text-ink-50 mb-1">メール管理</h3>
+          <p class="text-sm text-ink-400">要約・アラート・下書き作成を自動で</p>
+        </div>
+
+        <!-- Small: Calendar -->
+        <div class="bento-card bg-ink-900 border border-ink-800/60 rounded-2xl p-6">
+          <div class="w-10 h-10 rounded-lg bg-violet-900/40 border border-violet-700/30 flex items-center justify-center text-lg mb-4">📅</div>
+          <h3 class="font-heading font-bold text-ink-50 mb-1">カレンダー連携</h3>
+          <p class="text-sm text-ink-400">予定確認・リマインド・空き時間提案</p>
+        </div>
+
+        <!-- Small: Reports -->
+        <div class="bento-card bg-ink-900 border border-ink-800/60 rounded-2xl p-6">
+          <div class="w-10 h-10 rounded-lg bg-amber-900/40 border border-amber-700/30 flex items-center justify-center text-lg mb-4">📊</div>
+          <h3 class="font-heading font-bold text-ink-50 mb-1">レポート作成</h3>
+          <p class="text-sm text-ink-400">日次・週次の自動要約</p>
+        </div>
+
+        <!-- Small: Docs -->
+        <div class="bento-card bg-ink-900 border border-ink-800/60 rounded-2xl p-6">
+          <div class="w-10 h-10 rounded-lg bg-teal-900/40 border border-teal-700/30 flex items-center justify-center text-lg mb-4">📝</div>
+          <h3 class="font-heading font-bold text-ink-50 mb-1">ドキュメント作成</h3>
+          <p class="text-sm text-ink-400">議事録・提案書の下書き</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== DEMO (Phone Mockup) ===== -->
+  <section id="demo" class="relative noise py-24 md:py-32 border-t border-ink-800/50">
+    <div class="max-w-5xl mx-auto px-6 reveal">
+      <div class="flex items-end gap-6 mb-16">
+        <div class="big-num" aria-hidden="true">03</div>
+        <div>
+          <h2 class="font-heading font-bold text-2xl md:text-3xl text-ink-50">実際の使い方</h2>
+          <p class="text-ink-400 mt-2">LINEで話しかけるだけで、こんなことができます。</p>
+          <hr class="hr-amber w-24 mt-3">
+        </div>
+      </div>
+
+      <div class="flex justify-center">
+        <div class="phone-frame w-full max-w-[360px] p-1">
+          <div class="phone-notch"></div>
+          <div class="bg-ink-900 rounded-b-[33px] p-5 space-y-3 min-h-[480px]">
+            <p class="text-center text-xs text-ink-500 mb-4">LINE — AI Secretary</p>
+
+            <!-- User -->
+            <div class="msg flex justify-end">
+              <div class="bg-emerald-700 text-white rounded-2xl rounded-tr-sm px-4 py-2.5 max-w-[75%]">
+                <p class="text-sm">明日の予定を教えて</p>
+              </div>
+            </div>
+            <!-- AI -->
+            <div class="msg flex justify-start">
+              <div class="bg-ink-800 text-ink-100 rounded-2xl rounded-tl-sm px-4 py-2.5 max-w-[75%]">
+                <p class="text-sm leading-relaxed">📅 明日の予定です：<br><br>
+                <strong>10:00</strong> ○○様 Zoom打ち合わせ<br>
+                <strong>14:00</strong> 企画書の締め切り<br>
+                <strong>18:00</strong> ジム<br><br>
+                <span class="text-ink-400">※ 30分前にリマインドします</span></p>
+              </div>
+            </div>
+            <!-- User -->
+            <div class="msg flex justify-end">
+              <div class="bg-emerald-700 text-white rounded-2xl rounded-tr-sm px-4 py-2.5 max-w-[75%]">
+                <p class="text-sm">○○さんに来週水曜で大丈夫と返信して</p>
+              </div>
+            </div>
+            <!-- AI -->
+            <div class="msg flex justify-start">
+              <div class="bg-ink-800 text-ink-100 rounded-2xl rounded-tl-sm px-4 py-2.5 max-w-[75%]">
+                <p class="text-sm leading-relaxed">✉️ 返信を作成しました：<br><br>
+                <em class="text-ink-300">「○○様、ご連絡ありがとうございます。来週水曜日で問題ございません。」</em><br><br>
+                📤 送信しますか？</p>
+              </div>
+            </div>
+            <!-- User -->
+            <div class="msg flex justify-end">
+              <div class="bg-emerald-700 text-white rounded-2xl rounded-tr-sm px-4 py-2.5 max-w-[75%]">
+                <p class="text-sm">送って</p>
+              </div>
+            </div>
+            <!-- AI -->
+            <div class="msg flex justify-start">
+              <div class="bg-ink-800 text-ink-100 rounded-2xl rounded-tl-sm px-4 py-2.5 max-w-[75%]">
+                <p class="text-sm">✅ 送信完了しました。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== COMPARISON ===== -->
+  <section class="relative noise py-24 md:py-32 border-t border-ink-800/50">
+    <div class="max-w-4xl mx-auto px-6 reveal">
+      <div class="flex items-end gap-6 mb-16">
+        <div class="big-num" aria-hidden="true">04</div>
+        <div>
+          <h2 class="font-heading font-bold text-2xl md:text-3xl text-ink-50">人間の秘書 vs AI秘書</h2>
+          <hr class="hr-amber w-24 mt-3">
+        </div>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="border-b border-ink-700">
+              <th class="px-4 py-4 text-sm font-medium text-ink-500 w-1/4"></th>
+              <th class="px-4 py-4 text-sm font-medium text-ink-400 w-[37.5%]">オンライン秘書</th>
+              <th class="px-4 py-4 text-sm font-heading font-bold text-amber-400 w-[37.5%]">AI秘書<span class="text-ink-500 font-normal ml-1">本サービス</span></th>
+            </tr>
+          </thead>
+          <tbody class="text-sm">
+            <tr class="border-b border-ink-800/50">
+              <td class="px-4 py-4 font-medium text-ink-300">月額費用</td>
+              <td class="px-4 py-4 text-ink-400">80,000〜150,000円</td>
+              <td class="px-4 py-4 font-bold text-ink-50">¥15,000</td>
+            </tr>
+            <tr class="border-b border-ink-800/50">
+              <td class="px-4 py-4 font-medium text-ink-300">対応時間</td>
+              <td class="px-4 py-4 text-ink-400">平日 9:00-18:00</td>
+              <td class="px-4 py-4 font-semibold text-ink-50">24時間365日</td>
+            </tr>
+            <tr class="border-b border-ink-800/50">
+              <td class="px-4 py-4 font-medium text-ink-300">初期費用</td>
+              <td class="px-4 py-4 text-ink-400">面接・研修コスト</td>
+              <td class="px-4 py-4 text-ink-100">¥30,000（セットアップ）</td>
+            </tr>
+            <tr class="border-b border-ink-800/50">
+              <td class="px-4 py-4 font-medium text-ink-300">レスポンス</td>
+              <td class="px-4 py-4 text-ink-400">数分〜数時間</td>
+              <td class="px-4 py-4 font-semibold text-ink-50">即座（数秒）</td>
+            </tr>
+            <tr class="border-b border-ink-800/50">
+              <td class="px-4 py-4 font-medium text-ink-300">データ管理</td>
+              <td class="px-4 py-4 text-ink-400">外部人材に依存</td>
+              <td class="px-4 py-4 text-ink-100">専用サーバーで自社管理</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-4 font-medium text-ink-300">スケール</td>
+              <td class="px-4 py-4 text-ink-400">人を増やす必要あり</td>
+              <td class="px-4 py-4 text-ink-100">設定追加のみ</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== VERTICALS ===== -->
+  <section class="relative noise py-24 md:py-32 border-t border-ink-800/50">
+    <div class="max-w-5xl mx-auto px-6 reveal">
+      <div class="flex items-end gap-6 mb-16">
+        <div class="big-num" aria-hidden="true">05</div>
+        <div>
+          <h2 class="font-heading font-bold text-2xl md:text-3xl text-ink-50">あなたの業種に最適化</h2>
+          <p class="text-ink-400 mt-2">業種ごとのお悩みに合わせて、AI秘書をカスタマイズします。</p>
+          <hr class="hr-amber w-24 mt-3">
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="flex flex-wrap gap-2 mb-8">
+        <button onclick="switchTab('solo')" data-tab="solo" class="vtab active px-5 py-2 rounded-lg text-sm font-heading font-semibold border border-ink-700 text-ink-300 transition hover:border-amber-400/50 hover:text-amber-400">一人社長・コンサル</button>
+        <button onclick="switchTab('salon')" data-tab="salon" class="vtab px-5 py-2 rounded-lg text-sm font-heading font-semibold border border-ink-700 text-ink-300 transition hover:border-amber-400/50 hover:text-amber-400">美容室・サロン</button>
+        <button onclick="switchTab('realestate')" data-tab="realestate" class="vtab px-5 py-2 rounded-lg text-sm font-heading font-semibold border border-ink-700 text-ink-300 transition hover:border-amber-400/50 hover:text-amber-400">不動産・仲介</button>
+        <button onclick="switchTab('ec')" data-tab="ec" class="vtab px-5 py-2 rounded-lg text-sm font-heading font-semibold border border-ink-700 text-ink-300 transition hover:border-amber-400/50 hover:text-amber-400">ECショップ</button>
+      </div>
+
+      <!-- Tab Contents -->
+      <div id="vtab-solo" class="vtab-content">
+        <div class="bg-ink-900 border border-ink-800/60 rounded-2xl p-8 md:p-10">
+          <h3 class="font-heading font-bold text-xl text-ink-50 mb-2">一人社長・個人事業主・コンサルタント</h3>
+          <p class="text-ink-400 text-sm mb-6">全部一人でやっているあなたに、最もインパクトがあります。</p>
+          <div class="grid md:grid-cols-2 gap-3">
+            <div class="flex items-start gap-3"><span class="text-amber-400 font-bold">→</span><p class="text-ink-200 text-sm">クライアント対応（LINE・メール）の自動化</p></div>
+            <div class="flex items-start gap-3"><span class="text-amber-400 font-bold">→</span><p class="text-ink-200 text-sm">提案書・請求書の下書き自動作成</p></div>
+            <div class="flex items-start gap-3"><span class="text-amber-400 font-bold">→</span><p class="text-ink-200 text-sm">SNS投稿の下書き・スケジューリング</p></div>
+            <div class="flex items-start gap-3"><span class="text-amber-400 font-bold">→</span><p class="text-ink-200 text-sm">スケジュール管理・リマインド通知</p></div>
+            <div class="flex items-start gap-3"><span class="text-amber-400 font-bold">→</span><p class="text-ink-200 text-sm">日次・週次レポートの自動生成</p></div>
+            <div class="flex items-start gap-3"><span class="text-amber-400 font-bold">→</span><p class="text-ink-200 text-sm">競合・市場のリサーチ依頼</p></div>
+          </div>
+          <div class="mt-8 p-5 bg-ink-800/50 border-l-2 border-amber-400 rounded-r-lg">
+            <p class="text-sm text-ink-300"><strong class="text-ink-100">実例:</strong> あるコンサルタントの方は、クライアント対応に1日3時間かかっていました。AI秘書導入後、対応時間は30分に短縮。空いた時間で新規案件を2件獲得しました。</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="vtab-salon" class="vtab-content hidden">
+        <div class="bg-ink-900 border border-ink-800/60 rounded-2xl p-8 md:p-10">
+          <h3 class="font-heading font-bold text-xl text-ink-50 mb-2">美容室・サロン・クリニック</h3>
+          <p class="text-ink-400 text-sm mb-6">施術中の電話対応、予約管理の手間を劇的に減らします。</p>
+          <div class="grid md:grid-cols-2 gap-3">
+            <div class="flex items-start gap-3"><span class="text-amber-400 font-bold">→</span><p class="text-ink-200 text-sm">LINE公式での予約受付・確認・リマインド</p></div>
+            <div class="flex items-start gap-3"><span class="text-amber-400 font-bold">→</span><p class="text-ink-200 text-sm">キャンセル待ちの自動管理・通知</p></div>
+            <div class="flex items-start gap-3"><span class="text-amber-400 font-bold">→</span><p class="text-ink-200 text-sm">施術後のフォローメッセージ自動送信</p></div>
+            <div class="flex items-start gap-3"><span class="text-amber-400 font-bold">→</span><p class="text-ink-200 text-sm">Google口コミへのレビュー依頼</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="vtab-realestate" class="vtab-content hidden">
+        <div class="bg-ink-900 border border-ink-800/60 rounded-2xl p-8 md:p-10">
+          <h3 class="font-heading font-bold text-xl text-ink-50 mb-2">不動産仲介・管理</h3>
+          <p class="text-ink-400 text-sm mb-6">物件情報の収集から顧客フォローまで自動化。</p>
+          <div class="grid md:grid-cols-2 gap-3">
+            <div class="flex items-start gap-3"><span class="text-amber-400 font-bold">→</span><p class="text-ink-200 text-sm">物件情報の自動収集・マッチング</p></div>
+            <div class="flex items-start gap-3"><span class="text-amber-400 font-bold">→</span><p class="text-ink-200 text-sm">内見スケジュール管理・リマインド</p></div>
+            <div class="flex items-start gap-3"><span class="text-amber-400 font-bold">→</span><p class="text-ink-200 text-sm">顧客への定期フォローアップ</p></div>
+            <div class="flex items-start gap-3"><span class="text-amber-400 font-bold">→</span><p class="text-ink-200 text-sm">契約書類の準備・リマインド</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="vtab-ec" class="vtab-content hidden">
+        <div class="bg-ink-900 border border-ink-800/60 rounded-2xl p-8 md:p-10">
+          <h3 class="font-heading font-bold text-xl text-ink-50 mb-2">ECショップ運営</h3>
+          <p class="text-ink-400 text-sm mb-6">在庫管理から顧客対応まで、運営業務を効率化。</p>
+          <div class="grid md:grid-cols-2 gap-3">
+            <div class="flex items-start gap-3"><span class="text-amber-400 font-bold">→</span><p class="text-ink-200 text-sm">在庫・価格の自動監視アラート</p></div>
+            <div class="flex items-start gap-3"><span class="text-amber-400 font-bold">→</span><p class="text-ink-200 text-sm">注文ステータス問い合わせ対応</p></div>
+            <div class="flex items-start gap-3"><span class="text-amber-400 font-bold">→</span><p class="text-ink-200 text-sm">売上レポートの自動生成</p></div>
+            <div class="flex items-start gap-3"><span class="text-amber-400 font-bold">→</span><p class="text-ink-200 text-sm">競合価格の定期モニタリング</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PRICING ===== -->
+  <section class="relative noise py-24 md:py-32 border-t border-ink-800/50">
+    <div class="max-w-4xl mx-auto px-6 reveal">
+      <div class="flex items-end gap-6 mb-16">
+        <div class="big-num" aria-hidden="true">06</div>
+        <div>
+          <h2 class="font-heading font-bold text-2xl md:text-3xl text-ink-50">料金プラン</h2>
+          <p class="text-ink-400 mt-2">必要なものだけ。隠れた費用はありません。</p>
+          <hr class="hr-amber w-24 mt-3">
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-5">
+        <!-- Start -->
+        <div class="bg-ink-900 border border-ink-800/60 rounded-2xl p-8 flex flex-col">
+          <h3 class="font-heading font-semibold text-lg text-ink-100 mb-1">スタートプラン</h3>
+          <p class="text-sm text-ink-500 mb-6">まずは基本機能から。</p>
+          <div class="mb-6">
+            <span class="font-heading font-extrabold text-4xl text-ink-50">¥15,000</span>
+            <span class="text-ink-400 text-sm">/月</span>
+            <p class="text-xs text-ink-500 mt-1">初期セットアップ: ¥30,000</p>
+          </div>
+          <ul class="space-y-3 mb-8 flex-1 text-sm">
+            <li class="flex items-center gap-2 text-ink-200"><span class="text-amber-400">✓</span> LINE + メール + カレンダー連携</li>
+            <li class="flex items-center gap-2 text-ink-200"><span class="text-amber-400">✓</span> 24時間対応</li>
+            <li class="flex items-center gap-2 text-ink-200"><span class="text-amber-400">✓</span> 月1回の設定相談</li>
+            <li class="flex items-center gap-2 text-ink-200"><span class="text-amber-400">✓</span> アップデート対応</li>
+          </ul>
+          <a href="#contact" class="block text-center px-6 py-3 rounded-lg border border-ink-600 text-ink-200 font-heading font-semibold text-sm hover:border-amber-400 hover:text-amber-400 transition">相談する</a>
+        </div>
+
+        <!-- Premium -->
+        <div class="relative bg-ink-900 border-2 border-amber-400/40 rounded-2xl p-8 flex flex-col overflow-hidden">
+          <div class="absolute top-0 right-0 w-40 h-40 bg-amber-400/5 rounded-full blur-[60px]"></div>
+          <div class="relative">
+            <div class="inline-block px-3 py-0.5 bg-amber-400 text-ink-950 text-xs font-heading font-bold rounded mb-4">人気</div>
+            <h3 class="font-heading font-semibold text-lg text-ink-100 mb-1">プレミアムプラン</h3>
+            <p class="text-sm text-ink-500 mb-6">フル機能 + カスタマイズ。</p>
+            <div class="mb-6">
+              <span class="font-heading font-extrabold text-4xl text-ink-50">¥30,000</span>
+              <span class="text-ink-400 text-sm">/月</span>
+              <p class="text-xs text-ink-500 mt-1">初期セットアップ: ¥50,000</p>
+            </div>
+            <ul class="space-y-3 mb-8 text-sm">
+              <li class="flex items-center gap-2 text-ink-200"><span class="text-amber-400">✓</span> スタートプランの全機能</li>
+              <li class="flex items-center gap-2 text-ink-200"><span class="text-amber-400">✓</span> カスタムSkill開発（業務特化）</li>
+              <li class="flex items-center gap-2 text-ink-200"><span class="text-amber-400">✓</span> 週1回の定期ミーティング</li>
+              <li class="flex items-center gap-2 text-ink-200"><span class="text-amber-400">✓</span> 優先サポート（即日対応）</li>
+              <li class="flex items-center gap-2 text-ink-200"><span class="text-amber-400">✓</span> SNS投稿自動化</li>
+            </ul>
+            <a href="#contact" class="block text-center px-6 py-3 rounded-lg bg-amber-400 hover:bg-amber-500 text-ink-950 font-heading font-bold text-sm transition">相談する</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== STEPS ===== -->
+  <section class="relative noise py-24 md:py-32 border-t border-ink-800/50">
+    <div class="max-w-4xl mx-auto px-6 reveal">
+      <div class="flex items-end gap-6 mb-16">
+        <div class="big-num" aria-hidden="true">07</div>
+        <div>
+          <h2 class="font-heading font-bold text-2xl md:text-3xl text-ink-50">導入はかんたん3ステップ</h2>
+          <hr class="hr-amber w-24 mt-3">
+        </div>
+      </div>
+
+      <div class="space-y-0">
+        <!-- Step 1 -->
+        <div class="flex gap-6 md:gap-10">
+          <div class="flex flex-col items-center">
+            <div class="w-12 h-12 rounded-full border-2 border-amber-400 text-amber-400 font-heading font-bold text-lg flex items-center justify-center shrink-0">1</div>
+            <div class="w-px flex-1 bg-ink-800 my-2"></div>
+          </div>
+          <div class="pb-12">
+            <h4 class="font-heading font-bold text-lg text-ink-50 mb-2">無料相談</h4>
+            <p class="text-sm text-ink-300 leading-relaxed">お仕事の内容とお悩みを30分のヒアリングでお聞きします。最適なプランをご提案。</p>
+          </div>
+        </div>
+        <!-- Step 2 -->
+        <div class="flex gap-6 md:gap-10">
+          <div class="flex flex-col items-center">
+            <div class="w-12 h-12 rounded-full border-2 border-amber-400 text-amber-400 font-heading font-bold text-lg flex items-center justify-center shrink-0">2</div>
+            <div class="w-px flex-1 bg-ink-800 my-2"></div>
+          </div>
+          <div class="pb-12">
+            <h4 class="font-heading font-bold text-lg text-ink-50 mb-2">セットアップ</h4>
+            <p class="text-sm text-ink-300 leading-relaxed">最短1日でAI秘書が稼働開始。LINE・メール・カレンダーの接続設定を代行します。</p>
+          </div>
+        </div>
+        <!-- Step 3 -->
+        <div class="flex gap-6 md:gap-10">
+          <div class="flex flex-col items-center">
+            <div class="w-12 h-12 rounded-full border-2 border-amber-400 text-amber-400 font-heading font-bold text-lg flex items-center justify-center shrink-0">3</div>
+          </div>
+          <div>
+            <h4 class="font-heading font-bold text-lg text-ink-50 mb-2">運用開始</h4>
+            <p class="text-sm text-ink-300 leading-relaxed">LINEで話しかけるだけ。保守・アップデートは全てお任せください。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section class="relative noise py-24 md:py-32 border-t border-ink-800/50">
+    <div class="max-w-3xl mx-auto px-6 reveal">
+      <div class="flex items-end gap-6 mb-16">
+        <div class="big-num" aria-hidden="true">08</div>
+        <div>
+          <h2 class="font-heading font-bold text-2xl md:text-3xl text-ink-50">よくある質問</h2>
+          <hr class="hr-amber w-24 mt-3">
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        <details class="bg-ink-900 border border-ink-800/60 rounded-xl overflow-hidden" open>
+          <summary class="px-6 py-5 cursor-pointer font-heading font-semibold text-sm text-ink-100 flex items-center justify-between hover:text-amber-400 transition">
+            本当にLINEだけで使えるの？
+            <svg class="chevron w-4 h-4 text-ink-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-6 pb-5 text-sm text-ink-300 leading-relaxed">はい。普段お使いのLINEアプリから話しかけるだけ。専用アプリのインストールや複雑な操作は不要です。Telegram、Slack等にも対応可能。</div>
+        </details>
+
+        <details class="bg-ink-900 border border-ink-800/60 rounded-xl overflow-hidden">
+          <summary class="px-6 py-5 cursor-pointer font-heading font-semibold text-sm text-ink-100 flex items-center justify-between hover:text-amber-400 transition">
+            セキュリティは大丈夫？
+            <svg class="chevron w-4 h-4 text-ink-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-6 pb-5 text-sm text-ink-300 leading-relaxed">データはお客様専用のサーバーで管理。第三者クラウドへの保存はなく、暗号化通信で保護。メール送信等の重要操作は必ず承認フローを経由します。</div>
+        </details>
+
+        <details class="bg-ink-900 border border-ink-800/60 rounded-xl overflow-hidden">
+          <summary class="px-6 py-5 cursor-pointer font-heading font-semibold text-sm text-ink-100 flex items-center justify-between hover:text-amber-400 transition">
+            解約はいつでもできる？
+            <svg class="chevron w-4 h-4 text-ink-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-6 pb-5 text-sm text-ink-300 leading-relaxed">月額契約なので、いつでも解約可能。最低利用期間の縛りはありません。</div>
+        </details>
+
+        <details class="bg-ink-900 border border-ink-800/60 rounded-xl overflow-hidden">
+          <summary class="px-6 py-5 cursor-pointer font-heading font-semibold text-sm text-ink-100 flex items-center justify-between hover:text-amber-400 transition">
+            ChatGPTとは何が違うの？
+            <svg class="chevron w-4 h-4 text-ink-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-6 pb-5 text-sm text-ink-300 leading-relaxed">ChatGPTは「質問に答える」ツール。AI秘書は「実際に動く」アシスタント。メールを読んで要約する、カレンダーを確認してリマインドする、LINEで返信する。質問への回答だけでなく、実際のタスクを実行します。</div>
+        </details>
+
+        <details class="bg-ink-900 border border-ink-800/60 rounded-xl overflow-hidden">
+          <summary class="px-6 py-5 cursor-pointer font-heading font-semibold text-sm text-ink-100 flex items-center justify-between hover:text-amber-400 transition">
+            パソコンに詳しくなくても使える？
+            <svg class="chevron w-4 h-4 text-ink-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-6 pb-5 text-sm text-ink-300 leading-relaxed">セットアップは全てこちらで代行。お客様はLINEで話しかけるだけ。技術的な知識は一切不要です。</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section id="contact" class="relative noise py-24 md:py-32 border-t border-ink-800/50">
+    <div class="max-w-3xl mx-auto px-6 text-center reveal">
+      <p class="font-serif text-ink-500 text-lg mb-4 tracking-widest">— お問い合わせ —</p>
+      <h2 class="font-heading font-bold text-3xl md:text-4xl text-ink-50 mb-6">まずは話してみませんか？</h2>
+      <p class="text-ink-300 text-lg mb-10 leading-relaxed">
+        30分のヒアリングで、あなたの業務にAI秘書がどう役立つかをご提案します。<br>
+        強引な勧誘は一切ありません。
+      </p>
+      <a href="mailto:daichi.100ai@gmail.com?subject=AI秘書サービスについての相談&body=お名前:%0Aご職業・業種:%0Aお悩み・ご相談内容:%0A" class="inline-flex items-center gap-2 px-10 py-4 bg-amber-400 hover:bg-amber-500 text-ink-950 font-heading font-bold text-lg rounded-lg transition">
+        無料相談を予約する
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+      </a>
+      <p class="text-xs text-ink-500 mt-4">※ メールにてご連絡いたします</p>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="border-t border-ink-800/50 py-8">
+    <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="text-lg">🪽</span>
+        <span class="font-heading font-semibold text-ink-200 text-sm">AI Secretary</span>
+      </div>
+      <div class="flex items-center gap-6 text-xs text-ink-500">
+        <a href="mailto:daichi.100ai@gmail.com" class="hover:text-ink-300 transition">お問い合わせ</a>
+        <span>© 2026 AI Secretary</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script>
+    // Scroll reveal
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    // Vertical tabs
+    function switchTab(tab) {
+      document.querySelectorAll('.vtab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.vtab').forEach(el => {
+        el.classList.remove('active');
+        el.style.borderColor = '';
+        el.style.color = '';
+      });
+      document.getElementById('vtab-' + tab).classList.remove('hidden');
+      const btn = document.querySelector(`[data-tab="${tab}"]`);
+      btn.classList.add('active');
+      btn.style.borderColor = '#e8a838';
+      btn.style.color = '#e8a838';
+    }
+    // Init
+    switchTab('solo');
+  </script>
+
+</body>
+</html>
