@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Secretary — 月1.5万円のAI秘書導入サービス</title>
+  <meta name="description" content="LINE・メール・カレンダーを統合管理するAI秘書を、あなたのビジネスに導入しませんか？月額15,000円から。">
+  <meta property="og:title" content="AI Secretary — 月1.5万円のAI秘書導入サービス">
+  <meta property="og:description" content="一人で全部やるの、もう終わりにしませんか？24時間対応のAI秘書が、あなたの右腕になります。">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪽</text></svg>">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=DM+Sans:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            heading: ['Space Grotesk', 'Noto Sans JP', 'sans-serif'],
+            body: ['DM Sans', 'Noto Sans JP', 'sans-serif'],
+          },
+          colors: {
+            brand: { 50:'#eef2ff',100:'#e0e7ff',200:'#c7d2fe',300:'#a5b4fc',400:'#818cf8',500:'#6366f1',600:'#4f46e5',700:'#4338ca',800:'#3730a3',900:'#312e81' },
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { font-feature-settings: "palt" 1; }
+    .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .chat-bubble { animation: fadeIn 0.5s ease forwards; opacity: 0; }
+    .chat-bubble:nth-child(1) { animation-delay: 0.2s; }
+    .chat-bubble:nth-child(2) { animation-delay: 0.8s; }
+    .chat-bubble:nth-child(3) { animation-delay: 1.4s; }
+    .chat-bubble:nth-child(4) { animation-delay: 2.0s; }
+    .chat-bubble:nth-child(5) { animation-delay: 2.6s; }
+    .chat-bubble:nth-child(6) { animation-delay: 3.2s; }
+    @keyframes fadeIn { to { opacity: 1; } }
+    .hero-grid {
+      background-image: radial-gradient(circle, rgba(99,102,241,0.15) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #818cf8 0%, #06b6d4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .tab-btn.active { background: #6366f1; color: white; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+  </style>
+</head>
+
+<body class="font-body text-slate-700 bg-white">
+
+  <!-- ============ HERO ============ -->
+  <section class="relative bg-slate-900 overflow-hidden">
+    <div class="absolute inset-0 hero-grid opacity-40"></div>
+    <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-500/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3"></div>
+    <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-cyan-500/10 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/3"></div>
+
+    <div class="relative max-w-5xl mx-auto px-6 py-24 md:py-36 text-center">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm text-slate-300 mb-8">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        24時間365日稼働
+      </div>
+
+      <h1 class="font-heading font-bold text-4xl md:text-6xl text-white leading-tight mb-6">
+        一人で全部やるの、<br>
+        <span class="gradient-text">もう終わりにしませんか？</span>
+      </h1>
+
+      <p class="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+        月<strong class="text-white">1.5万円</strong>のAI秘書が、あなたの右腕になります。<br>
+        LINE・メール・カレンダーを統合管理。セットアップから保守まで全部お任せ。
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#contact" class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-brand-500 hover:bg-brand-600 text-white font-semibold text-lg transition shadow-lg shadow-brand-500/25">
+          無料で相談する
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
+        <a href="#demo" class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-medium text-lg transition">
+          使い方を見る
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PAIN POINTS ============ -->
+  <section class="py-20 md:py-28 bg-slate-50">
+    <div class="max-w-4xl mx-auto px-6 fade-up">
+      <h2 class="font-heading font-bold text-3xl md:text-4xl text-slate-900 text-center mb-4">こんな毎日を過ごしていませんか？</h2>
+      <p class="text-center text-slate-500 mb-12">一人で何役もこなすあなたへ。</p>
+
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="flex items-start gap-3 bg-white rounded-xl p-5 border border-slate-200">
+          <span class="text-red-400 text-xl mt-0.5">✗</span>
+          <p class="text-slate-700">クライアントのLINE返信で<strong>1日が終わる</strong></p>
+        </div>
+        <div class="flex items-start gap-3 bg-white rounded-xl p-5 border border-slate-200">
+          <span class="text-red-400 text-xl mt-0.5">✗</span>
+          <p class="text-slate-700">請求書の作成を<strong>毎回後回し</strong>にしている</p>
+        </div>
+        <div class="flex items-start gap-3 bg-white rounded-xl p-5 border border-slate-200">
+          <span class="text-red-400 text-xl mt-0.5">✗</span>
+          <p class="text-slate-700">SNSの更新が<strong>3ヶ月止まっている</strong></p>
+        </div>
+        <div class="flex items-start gap-3 bg-white rounded-xl p-5 border border-slate-200">
+          <span class="text-red-400 text-xl mt-0.5">✗</span>
+          <p class="text-slate-700">大事なメールを見落として<strong>ヒヤッとした</strong></p>
+        </div>
+        <div class="flex items-start gap-3 bg-white rounded-xl p-5 border border-slate-200 md:col-span-2">
+          <span class="text-red-400 text-xl mt-0.5">✗</span>
+          <p class="text-slate-700">スケジュール管理に使う時間が<strong>もったいない</strong>…でも、秘書を雇う余裕はない。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SOLUTION ============ -->
+  <section class="py-20 md:py-28">
+    <div class="max-w-5xl mx-auto px-6 fade-up">
+      <h2 class="font-heading font-bold text-3xl md:text-4xl text-slate-900 text-center mb-4">AIがあなたの右腕になります</h2>
+      <p class="text-center text-slate-500 mb-14">普段使いのLINEから話しかけるだけ。</p>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- Card 1 -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-8 hover:shadow-lg hover:border-brand-200 transition-all duration-300">
+          <div class="w-14 h-14 rounded-2xl bg-brand-50 flex items-center justify-center text-2xl mb-5">💬</div>
+          <h3 class="font-heading font-bold text-xl text-slate-900 mb-3">LINE対応</h3>
+          <p class="text-slate-600 leading-relaxed">LINEで話しかけるだけ。予定確認、メール要約、タスク管理がチャット感覚で完了します。</p>
+        </div>
+        <!-- Card 2 -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-8 hover:shadow-lg hover:border-brand-200 transition-all duration-300">
+          <div class="w-14 h-14 rounded-2xl bg-violet-50 flex items-center justify-center text-2xl mb-5">📧</div>
+          <h3 class="font-heading font-bold text-xl text-slate-900 mb-3">メール管理</h3>
+          <p class="text-slate-600 leading-relaxed">未読メールの要約、重要メールのアラート、返信の下書き作成を自動で行います。</p>
+        </div>
+        <!-- Card 3 -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-8 hover:shadow-lg hover:border-brand-200 transition-all duration-300">
+          <div class="w-14 h-14 rounded-2xl bg-cyan-50 flex items-center justify-center text-2xl mb-5">📅</div>
+          <h3 class="font-heading font-bold text-xl text-slate-900 mb-3">カレンダー連携</h3>
+          <p class="text-slate-600 leading-relaxed">スケジュール確認・リマインド・空き時間の提案まで。AIが24時間あなたの予定を管理します。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DEMO ============ -->
+  <section id="demo" class="py-20 md:py-28 bg-slate-900">
+    <div class="max-w-3xl mx-auto px-6 fade-up">
+      <h2 class="font-heading font-bold text-3xl md:text-4xl text-white text-center mb-4">実際の使い方</h2>
+      <p class="text-center text-slate-400 mb-12">LINEで話しかけるだけで、こんなことができます。</p>
+
+      <div class="bg-slate-800/50 rounded-3xl border border-slate-700 p-6 md:p-8 space-y-4">
+        <!-- User -->
+        <div class="chat-bubble flex justify-end">
+          <div class="bg-brand-500 text-white rounded-2xl rounded-tr-md px-5 py-3 max-w-[80%]">
+            <p class="text-sm">明日の予定を教えて</p>
+          </div>
+        </div>
+        <!-- AI -->
+        <div class="chat-bubble flex justify-start">
+          <div class="bg-slate-700 text-slate-100 rounded-2xl rounded-tl-md px-5 py-3 max-w-[80%]">
+            <p class="text-sm leading-relaxed">📅 明日の予定です：<br><br>
+            <strong>10:00</strong> ○○様とのZoom打ち合わせ<br>
+            <strong>14:00</strong> 企画書の締め切り<br>
+            <strong>18:00</strong> ジム<br><br>
+            ※ Zoomリンクは打ち合わせ30分前にリマインドします。</p>
+          </div>
+        </div>
+        <!-- User -->
+        <div class="chat-bubble flex justify-end">
+          <div class="bg-brand-500 text-white rounded-2xl rounded-tr-md px-5 py-3 max-w-[80%]">
+            <p class="text-sm">○○さんに返信して。来週の水曜で大丈夫と伝えて</p>
+          </div>
+        </div>
+        <!-- AI -->
+        <div class="chat-bubble flex justify-start">
+          <div class="bg-slate-700 text-slate-100 rounded-2xl rounded-tl-md px-5 py-3 max-w-[80%]">
+            <p class="text-sm leading-relaxed">✉️ 以下の返信を作成しました：<br><br>
+            <em class="text-slate-300">「○○様、ご連絡ありがとうございます。<br>来週の水曜日で問題ございません。<br>よろしくお願いいたします。」</em><br><br>
+            📤 送信しますか？</p>
+          </div>
+        </div>
+        <!-- User -->
+        <div class="chat-bubble flex justify-end">
+          <div class="bg-brand-500 text-white rounded-2xl rounded-tr-md px-5 py-3 max-w-[80%]">
+            <p class="text-sm">送って</p>
+          </div>
+        </div>
+        <!-- AI -->
+        <div class="chat-bubble flex justify-start">
+          <div class="bg-slate-700 text-slate-100 rounded-2xl rounded-tl-md px-5 py-3 max-w-[80%]">
+            <p class="text-sm">✅ 送信完了しました。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FEATURES ============ -->
+  <section class="py-20 md:py-28">
+    <div class="max-w-5xl mx-auto px-6 fade-up">
+      <h2 class="font-heading font-bold text-3xl md:text-4xl text-slate-900 text-center mb-14">できること</h2>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-5">
+        <div class="text-center p-6 rounded-2xl bg-slate-50 border border-slate-100">
+          <div class="text-3xl mb-3">💬</div>
+          <h4 class="font-heading font-semibold text-slate-900 mb-1">LINE対応</h4>
+          <p class="text-sm text-slate-500">チャットで何でも指示</p>
+        </div>
+        <div class="text-center p-6 rounded-2xl bg-slate-50 border border-slate-100">
+          <div class="text-3xl mb-3">📧</div>
+          <h4 class="font-heading font-semibold text-slate-900 mb-1">メール管理</h4>
+          <p class="text-sm text-slate-500">要約・アラート・下書き</p>
+        </div>
+        <div class="text-center p-6 rounded-2xl bg-slate-50 border border-slate-100">
+          <div class="text-3xl mb-3">📅</div>
+          <h4 class="font-heading font-semibold text-slate-900 mb-1">カレンダー管理</h4>
+          <p class="text-sm text-slate-500">予定確認・リマインド</p>
+        </div>
+        <div class="text-center p-6 rounded-2xl bg-slate-50 border border-slate-100">
+          <div class="text-3xl mb-3">📊</div>
+          <h4 class="font-heading font-semibold text-slate-900 mb-1">レポート作成</h4>
+          <p class="text-sm text-slate-500">日次・週次の自動要約</p>
+        </div>
+        <div class="text-center p-6 rounded-2xl bg-slate-50 border border-slate-100">
+          <div class="text-3xl mb-3">🔔</div>
+          <h4 class="font-heading font-semibold text-slate-900 mb-1">リマインド通知</h4>
+          <p class="text-sm text-slate-500">大事な予定を逃さない</p>
+        </div>
+        <div class="text-center p-6 rounded-2xl bg-slate-50 border border-slate-100">
+          <div class="text-3xl mb-3">📝</div>
+          <h4 class="font-heading font-semibold text-slate-900 mb-1">ドキュメント作成</h4>
+          <p class="text-sm text-slate-500">議事録・提案書の下書き</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COMPARISON ============ -->
+  <section class="py-20 md:py-28 bg-slate-50">
+    <div class="max-w-4xl mx-auto px-6 fade-up">
+      <h2 class="font-heading font-bold text-3xl md:text-4xl text-slate-900 text-center mb-14">人間の秘書 vs AI秘書</h2>
+
+      <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left">
+            <thead>
+              <tr class="border-b border-slate-200">
+                <th class="px-6 py-4 text-sm font-medium text-slate-500"></th>
+                <th class="px-6 py-4 text-sm font-medium text-slate-500">オンライン秘書</th>
+                <th class="px-6 py-4 text-sm font-medium text-brand-600 bg-brand-50/50">AI秘書（本サービス）</th>
+              </tr>
+            </thead>
+            <tbody class="text-sm">
+              <tr class="border-b border-slate-100">
+                <td class="px-6 py-4 font-medium text-slate-700">月額費用</td>
+                <td class="px-6 py-4 text-slate-600">80,000〜150,000円</td>
+                <td class="px-6 py-4 font-bold text-brand-600 bg-brand-50/30">15,000円</td>
+              </tr>
+              <tr class="border-b border-slate-100">
+                <td class="px-6 py-4 font-medium text-slate-700">対応時間</td>
+                <td class="px-6 py-4 text-slate-600">平日 9:00-18:00</td>
+                <td class="px-6 py-4 font-semibold text-slate-900 bg-brand-50/30">24時間365日</td>
+              </tr>
+              <tr class="border-b border-slate-100">
+                <td class="px-6 py-4 font-medium text-slate-700">初期費用</td>
+                <td class="px-6 py-4 text-slate-600">面接・研修コスト</td>
+                <td class="px-6 py-4 text-slate-900 bg-brand-50/30">30,000円（セットアップ）</td>
+              </tr>
+              <tr class="border-b border-slate-100">
+                <td class="px-6 py-4 font-medium text-slate-700">レスポンス</td>
+                <td class="px-6 py-4 text-slate-600">数分〜数時間</td>
+                <td class="px-6 py-4 font-semibold text-slate-900 bg-brand-50/30">即座（数秒）</td>
+              </tr>
+              <tr class="border-b border-slate-100">
+                <td class="px-6 py-4 font-medium text-slate-700">データ管理</td>
+                <td class="px-6 py-4 text-slate-600">外部人材に依存</td>
+                <td class="px-6 py-4 text-slate-900 bg-brand-50/30">専用サーバーで自社管理</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 font-medium text-slate-700">スケール</td>
+                <td class="px-6 py-4 text-slate-600">人を増やす必要あり</td>
+                <td class="px-6 py-4 text-slate-900 bg-brand-50/30">設定追加のみ</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ VERTICALS ============ -->
+  <section class="py-20 md:py-28">
+    <div class="max-w-5xl mx-auto px-6 fade-up">
+      <h2 class="font-heading font-bold text-3xl md:text-4xl text-slate-900 text-center mb-4">あなたの業種に最適化</h2>
+      <p class="text-center text-slate-500 mb-10">業種ごとのお悩みに合わせて、AI秘書をカスタマイズします。</p>
+
+      <!-- Tabs -->
+      <div class="flex flex-wrap justify-center gap-2 mb-10">
+        <button onclick="switchTab('solo')" class="tab-btn active px-5 py-2.5 rounded-full text-sm font-medium border border-slate-200 transition hover:bg-brand-500 hover:text-white hover:border-brand-500" data-tab="solo">一人社長・コンサル</button>
+        <button onclick="switchTab('salon')" class="tab-btn px-5 py-2.5 rounded-full text-sm font-medium border border-slate-200 text-slate-600 transition hover:bg-brand-500 hover:text-white hover:border-brand-500" data-tab="salon">美容室・サロン</button>
+        <button onclick="switchTab('realestate')" class="tab-btn px-5 py-2.5 rounded-full text-sm font-medium border border-slate-200 text-slate-600 transition hover:bg-brand-500 hover:text-white hover:border-brand-500" data-tab="realestate">不動産・仲介</button>
+        <button onclick="switchTab('ec')" class="tab-btn px-5 py-2.5 rounded-full text-sm font-medium border border-slate-200 text-slate-600 transition hover:bg-brand-500 hover:text-white hover:border-brand-500" data-tab="ec">ECショップ</button>
+      </div>
+
+      <!-- Tab Contents -->
+      <div id="tab-solo" class="tab-content active">
+        <div class="bg-white rounded-2xl border border-slate-200 p-8 md:p-10">
+          <h3 class="font-heading font-bold text-2xl text-slate-900 mb-2">一人社長・個人事業主・コンサルタント</h3>
+          <p class="text-slate-500 mb-6">全部一人でやっているあなたに、最もインパクトがあります。</p>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="flex items-start gap-3"><span class="text-brand-500 text-lg">✓</span><p class="text-slate-700">クライアント対応（LINE・メール）の自動化</p></div>
+            <div class="flex items-start gap-3"><span class="text-brand-500 text-lg">✓</span><p class="text-slate-700">提案書・請求書の下書き自動作成</p></div>
+            <div class="flex items-start gap-3"><span class="text-brand-500 text-lg">✓</span><p class="text-slate-700">SNS投稿の下書き・スケジューリング</p></div>
+            <div class="flex items-start gap-3"><span class="text-brand-500 text-lg">✓</span><p class="text-slate-700">スケジュール管理・リマインド通知</p></div>
+            <div class="flex items-start gap-3"><span class="text-brand-500 text-lg">✓</span><p class="text-slate-700">日次・週次レポートの自動生成</p></div>
+            <div class="flex items-start gap-3"><span class="text-brand-500 text-lg">✓</span><p class="text-slate-700">競合・市場のリサーチ依頼</p></div>
+          </div>
+          <div class="mt-8 p-5 bg-brand-50 rounded-xl border border-brand-100">
+            <p class="text-sm text-brand-800">💡 <strong>実例:</strong> あるコンサルタントの方は、クライアント対応に1日3時間かかっていました。AI秘書導入後、対応時間は30分に短縮。空いた時間で新規案件を2件獲得しました。</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-salon" class="tab-content">
+        <div class="bg-white rounded-2xl border border-slate-200 p-8 md:p-10">
+          <h3 class="font-heading font-bold text-2xl text-slate-900 mb-2">美容室・サロン・クリニック</h3>
+          <p class="text-slate-500 mb-6">施術中の電話対応、予約管理の手間を劇的に減らします。</p>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="flex items-start gap-3"><span class="text-brand-500 text-lg">✓</span><p class="text-slate-700">LINE公式での予約受付・確認・リマインド</p></div>
+            <div class="flex items-start gap-3"><span class="text-brand-500 text-lg">✓</span><p class="text-slate-700">キャンセル待ちの自動管理・通知</p></div>
+            <div class="flex items-start gap-3"><span class="text-brand-500 text-lg">✓</span><p class="text-slate-700">施術後のフォローメッセージ自動送信</p></div>
+            <div class="flex items-start gap-3"><span class="text-brand-500 text-lg">✓</span><p class="text-slate-700">Google口コミへのレビュー依頼</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-realestate" class="tab-content">
+        <div class="bg-white rounded-2xl border border-slate-200 p-8 md:p-10">
+          <h3 class="font-heading font-bold text-2xl text-slate-900 mb-2">不動産仲介・管理</h3>
+          <p class="text-slate-500 mb-6">物件情報の収集から顧客フォローまで自動化。</p>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="flex items-start gap-3"><span class="text-brand-500 text-lg">✓</span><p class="text-slate-700">物件情報の自動収集・マッチング</p></div>
+            <div class="flex items-start gap-3"><span class="text-brand-500 text-lg">✓</span><p class="text-slate-700">内見スケジュール管理・リマインド</p></div>
+            <div class="flex items-start gap-3"><span class="text-brand-500 text-lg">✓</span><p class="text-slate-700">顧客への定期フォローアップ</p></div>
+            <div class="flex items-start gap-3"><span class="text-brand-500 text-lg">✓</span><p class="text-slate-700">契約書類の準備・リマインド</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-ec" class="tab-content">
+        <div class="bg-white rounded-2xl border border-slate-200 p-8 md:p-10">
+          <h3 class="font-heading font-bold text-2xl text-slate-900 mb-2">ECショップ運営</h3>
+          <p class="text-slate-500 mb-6">在庫管理から顧客対応まで、運営業務を効率化。</p>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="flex items-start gap-3"><span class="text-brand-500 text-lg">✓</span><p class="text-slate-700">在庫・価格の自動監視アラート</p></div>
+            <div class="flex items-start gap-3"><span class="text-brand-500 text-lg">✓</span><p class="text-slate-700">注文ステータス問い合わせ対応</p></div>
+            <div class="flex items-start gap-3"><span class="text-brand-500 text-lg">✓</span><p class="text-slate-700">売上レポートの自動生成</p></div>
+            <div class="flex items-start gap-3"><span class="text-brand-500 text-lg">✓</span><p class="text-slate-700">競合価格の定期モニタリング</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRICING ============ -->
+  <section class="py-20 md:py-28 bg-slate-50">
+    <div class="max-w-4xl mx-auto px-6 fade-up">
+      <h2 class="font-heading font-bold text-3xl md:text-4xl text-slate-900 text-center mb-4">シンプルな料金プラン</h2>
+      <p class="text-center text-slate-500 mb-14">必要なものだけ。隠れた費用はありません。</p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Start Plan -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-8">
+          <h3 class="font-heading font-semibold text-lg text-slate-900 mb-1">スタートプラン</h3>
+          <p class="text-sm text-slate-500 mb-6">まずは基本機能から。</p>
+          <div class="mb-6">
+            <div class="flex items-baseline gap-1 mb-1">
+              <span class="text-4xl font-heading font-bold text-slate-900">¥15,000</span>
+              <span class="text-slate-500 text-sm">/月</span>
+            </div>
+            <p class="text-sm text-slate-500">初期セットアップ: ¥30,000</p>
+          </div>
+          <ul class="space-y-3 mb-8 text-sm">
+            <li class="flex items-center gap-2"><svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span class="text-slate-700">LINE + メール + カレンダー連携</span></li>
+            <li class="flex items-center gap-2"><svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span class="text-slate-700">24時間対応</span></li>
+            <li class="flex items-center gap-2"><svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span class="text-slate-700">月1回の設定相談</span></li>
+            <li class="flex items-center gap-2"><svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span class="text-slate-700">アップデート対応</span></li>
+          </ul>
+          <a href="#contact" class="block text-center px-6 py-3 rounded-xl border-2 border-brand-500 text-brand-600 font-semibold hover:bg-brand-500 hover:text-white transition">相談する</a>
+        </div>
+
+        <!-- Premium Plan -->
+        <div class="bg-slate-900 rounded-2xl p-8 text-white relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-brand-500/20 rounded-full blur-[60px]"></div>
+          <div class="relative">
+            <div class="inline-flex px-3 py-1 rounded-full bg-brand-500 text-xs font-semibold mb-4">人気</div>
+            <h3 class="font-heading font-semibold text-lg mb-1">プレミアムプラン</h3>
+            <p class="text-sm text-slate-400 mb-6">フル機能 + カスタマイズ。</p>
+            <div class="mb-6">
+              <div class="flex items-baseline gap-1 mb-1">
+                <span class="text-4xl font-heading font-bold">¥30,000</span>
+                <span class="text-slate-400 text-sm">/月</span>
+              </div>
+              <p class="text-sm text-slate-400">初期セットアップ: ¥50,000</p>
+            </div>
+            <ul class="space-y-3 mb-8 text-sm">
+              <li class="flex items-center gap-2"><svg class="w-5 h-5 text-brand-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span>スタートプランの全機能</span></li>
+              <li class="flex items-center gap-2"><svg class="w-5 h-5 text-brand-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span>カスタムSkill開発（業務特化）</span></li>
+              <li class="flex items-center gap-2"><svg class="w-5 h-5 text-brand-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span>週1回の定期ミーティング</span></li>
+              <li class="flex items-center gap-2"><svg class="w-5 h-5 text-brand-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span>優先サポート（即日対応）</span></li>
+              <li class="flex items-center gap-2"><svg class="w-5 h-5 text-brand-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span>SNS投稿自動化</span></li>
+            </ul>
+            <a href="#contact" class="block text-center px-6 py-3 rounded-xl bg-brand-500 hover:bg-brand-600 text-white font-semibold transition shadow-lg shadow-brand-500/25">相談する</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STEPS ============ -->
+  <section class="py-20 md:py-28">
+    <div class="max-w-4xl mx-auto px-6 fade-up">
+      <h2 class="font-heading font-bold text-3xl md:text-4xl text-slate-900 text-center mb-14">導入はかんたん3ステップ</h2>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="text-center">
+          <div class="w-16 h-16 rounded-full bg-brand-100 text-brand-600 font-heading font-bold text-2xl flex items-center justify-center mx-auto mb-5">1</div>
+          <h4 class="font-heading font-semibold text-lg text-slate-900 mb-2">無料相談</h4>
+          <p class="text-sm text-slate-600 leading-relaxed">お仕事の内容とお悩みを30分のヒアリングでお聞きします。最適なプランをご提案。</p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 rounded-full bg-violet-100 text-violet-600 font-heading font-bold text-2xl flex items-center justify-center mx-auto mb-5">2</div>
+          <h4 class="font-heading font-semibold text-lg text-slate-900 mb-2">セットアップ</h4>
+          <p class="text-sm text-slate-600 leading-relaxed">最短1日でAI秘書が稼働開始。LINE・メール・カレンダーの接続設定を代行します。</p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 rounded-full bg-cyan-100 text-cyan-600 font-heading font-bold text-2xl flex items-center justify-center mx-auto mb-5">3</div>
+          <h4 class="font-heading font-semibold text-lg text-slate-900 mb-2">運用開始</h4>
+          <p class="text-sm text-slate-600 leading-relaxed">LINEで話しかけるだけ。保守・アップデートは全てお任せください。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="py-20 md:py-28 bg-slate-50">
+    <div class="max-w-3xl mx-auto px-6 fade-up">
+      <h2 class="font-heading font-bold text-3xl md:text-4xl text-slate-900 text-center mb-14">よくある質問</h2>
+
+      <div class="space-y-4">
+        <details class="bg-white rounded-xl border border-slate-200 overflow-hidden group" open>
+          <summary class="px-6 py-5 cursor-pointer font-medium text-slate-900 flex items-center justify-between hover:bg-slate-50 transition">
+            本当にLINEだけで使えるの？
+            <svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-6 pb-5 text-sm text-slate-600 leading-relaxed">はい。普段お使いのLINEアプリから話しかけるだけで使えます。専用アプリのインストールや複雑な操作は一切不要です。Telegram、Slack等にも対応可能です。</div>
+        </details>
+
+        <details class="bg-white rounded-xl border border-slate-200 overflow-hidden group">
+          <summary class="px-6 py-5 cursor-pointer font-medium text-slate-900 flex items-center justify-between hover:bg-slate-50 transition">
+            セキュリティは大丈夫？
+            <svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-6 pb-5 text-sm text-slate-600 leading-relaxed">データはお客様専用のサーバーで管理されます。第三者のクラウドにデータが保存されることはなく、暗号化通信で保護されています。メール送信等の重要な操作は必ず承認フローを経由します。</div>
+        </details>
+
+        <details class="bg-white rounded-xl border border-slate-200 overflow-hidden group">
+          <summary class="px-6 py-5 cursor-pointer font-medium text-slate-900 flex items-center justify-between hover:bg-slate-50 transition">
+            解約はいつでもできる？
+            <svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-6 pb-5 text-sm text-slate-600 leading-relaxed">はい。月額契約ですので、いつでも解約可能です。最低利用期間の縛りはありません。</div>
+        </details>
+
+        <details class="bg-white rounded-xl border border-slate-200 overflow-hidden group">
+          <summary class="px-6 py-5 cursor-pointer font-medium text-slate-900 flex items-center justify-between hover:bg-slate-50 transition">
+            ChatGPTとは何が違うの？
+            <svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-6 pb-5 text-sm text-slate-600 leading-relaxed">ChatGPTは「質問に答える」ツールです。AI秘書は「実際に動く」アシスタントです。メールを読んで要約する、カレンダーを確認してリマインドする、LINEで返信する ── 質問への回答だけでなく、実際のタスクを実行します。</div>
+        </details>
+
+        <details class="bg-white rounded-xl border border-slate-200 overflow-hidden group">
+          <summary class="px-6 py-5 cursor-pointer font-medium text-slate-900 flex items-center justify-between hover:bg-slate-50 transition">
+            パソコンに詳しくなくても使える？
+            <svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-6 pb-5 text-sm text-slate-600 leading-relaxed">はい。セットアップは全てこちらで代行します。お客様はLINEで話しかけるだけです。技術的な知識は一切不要です。</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section id="contact" class="relative py-20 md:py-28 bg-slate-900 overflow-hidden">
+    <div class="absolute inset-0 hero-grid opacity-30"></div>
+    <div class="absolute top-1/2 left-1/2 w-[500px] h-[500px] bg-brand-500/10 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2"></div>
+
+    <div class="relative max-w-3xl mx-auto px-6 text-center fade-up">
+      <h2 class="font-heading font-bold text-3xl md:text-4xl text-white mb-4">まずは無料で相談してみませんか？</h2>
+      <p class="text-slate-300 text-lg mb-10 leading-relaxed">
+        30分のヒアリングで、あなたの業務にAI秘書がどう役立つかをご提案します。<br>
+        強引な勧誘は一切ありません。
+      </p>
+      <a href="mailto:daichi.100ai@gmail.com?subject=AI秘書サービスについての相談&body=お名前:%0Aご職業・業種:%0Aお悩み・ご相談内容:%0A" class="inline-flex items-center justify-center gap-2 px-10 py-4 rounded-xl bg-brand-500 hover:bg-brand-600 text-white font-semibold text-lg transition shadow-lg shadow-brand-500/25">
+        無料相談を予約する
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+      </a>
+      <p class="text-sm text-slate-500 mt-4">※ メールにてご連絡いたします</p>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="bg-slate-950 py-8">
+    <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="text-xl">🪽</span>
+        <span class="font-heading font-semibold text-white">AI Secretary</span>
+      </div>
+      <div class="flex items-center gap-6 text-sm text-slate-500">
+        <a href="mailto:daichi.100ai@gmail.com" class="hover:text-slate-300 transition">お問い合わせ</a>
+        <span>© 2026 AI Secretary</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ SCRIPTS ============ -->
+  <script>
+    // Scroll fade-in
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // Tabs
+    function switchTab(tab) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => {
+        el.classList.remove('active');
+        el.style.background = '';
+        el.style.color = '';
+      });
+      document.getElementById('tab-' + tab).classList.add('active');
+      document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
