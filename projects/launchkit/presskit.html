@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Press Kit Generator — LaunchKit</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #f59e0b;
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --text-light: #e2e8f0;
+            --text-gray: #94a3b8;
+            --border: #334155;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #1a1f3a 100%);
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        header {
+            background: rgba(30, 41, 59, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            padding: 1.5rem 2rem;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 3rem auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            color: var(--text-gray);
+            font-size: 1.1rem;
+        }
+
+        .form-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-step {
+            margin-bottom: 3rem;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .step-header h2 {
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-gray);
+            font-weight: 500;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--bg-dark);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            color: var(--text-light);
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .upload-area {
+            border: 2px dashed var(--border);
+            border-radius: 0.5rem;
+            padding: 3rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            border: none;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background: #4f46e5;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+        }
+
+        .preview-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 3rem;
+        }
+
+        .preview-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .preview-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .download-btn {
+            background: var(--bg-dark);
+            border: 1px solid var(--border);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--text-light);
+            text-decoration: none;
+            display: block;
+        }
+
+        .download-btn:hover {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .ai-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .preview-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">🚀 LaunchKit</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>✨ Press Kit Generator</h1>
+            <p>Create a professional press kit in minutes with AI assistance</p>
+        </div>
+
+        <div class="form-card">
+            <div class="form-step">
+                <div class="step-header">
+                    <div class="step-number">1</div>
+                    <h2>Basic Information</h2>
+                </div>
+
+                <div class="form-group">
+                    <label>Game Title *</label>
+                    <input type="text" placeholder="DungeonQuest: Eternal Night" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Genre *</label>
+                    <select>
+                        <option>Select genre...</option>
+                        <option>Roguelike</option>
+                        <option>Metroidvania</option>
+                        <option>Puzzle</option>
+                        <option>Platformer</option>
+                        <option>RPG</option>
+                        <option>Strategy</option>
+                        <option>Simulation</option>
+                        <option>Adventure</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>One-Line Pitch *</label>
+                    <input type="text" placeholder="A challenging roguelike dungeon crawler with permadeath and 200+ items">
+                </div>
+
+                <div class="form-group">
+                    <label>Detailed Description</label>
+                    <textarea placeholder="Describe your game, its unique features, gameplay mechanics, and what makes it special..."></textarea>
+                </div>
+            </div>
+
+            <div class="form-step">
+                <div class="step-header">
+                    <div class="step-number">2</div>
+                    <h2>Visual Assets</h2>
+                </div>
+
+                <div class="form-group">
+                    <label>Screenshots (3-5 recommended)</label>
+                    <div class="upload-area">
+                        <div class="upload-icon">📸</div>
+                        <p style="color: var(--text-gray);">Click to upload or drag and drop</p>
+                        <small style="color: var(--text-gray);">PNG, JPG up to 10MB each</small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Trailer URL (YouTube, Vimeo, etc.)</label>
+                    <input type="url" placeholder="https://youtube.com/watch?v=...">
+                </div>
+
+                <div class="form-group">
+                    <label>Game Logo</label>
+                    <div class="upload-area">
+                        <div class="upload-icon">🎨</div>
+                        <p style="color: var(--text-gray);">Upload your game logo</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-step">
+                <div class="step-header">
+                    <div class="step-number">3</div>
+                    <h2>Release Details</h2>
+                </div>
+
+                <div class="form-group">
+                    <label>Release Date</label>
+                    <input type="date">
+                </div>
+
+                <div class="form-group">
+                    <label>Platforms</label>
+                    <select multiple style="height: 120px;">
+                        <option>Steam</option>
+                        <option>itch.io</option>
+                        <option>Epic Games Store</option>
+                        <option>Nintendo Switch</option>
+                        <option>PlayStation</option>
+                        <option>Xbox</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Price (USD)</label>
+                    <input type="number" placeholder="19.99">
+                </div>
+            </div>
+
+            <div class="form-step">
+                <div class="step-header">
+                    <div class="step-number">4</div>
+                    <h2>Developer Info</h2>
+                </div>
+
+                <div class="form-group">
+                    <label>Developer / Studio Name *</label>
+                    <input type="text" placeholder="DarkForge Studios">
+                </div>
+
+                <div class="form-group">
+                    <label>Website</label>
+                    <input type="url" placeholder="https://yourwebsite.com">
+                </div>
+
+                <div class="form-group">
+                    <label>Contact Email *</label>
+                    <input type="email" placeholder="press@yourstudio.com">
+                </div>
+
+                <div class="form-group">
+                    <label>Social Media (Twitter, Discord, etc.)</label>
+                    <input type="text" placeholder="@yourstudio">
+                </div>
+            </div>
+
+            <div class="form-step">
+                <div class="step-header">
+                    <span class="ai-badge">✨ AI-Powered</span>
+                </div>
+                <button class="btn-primary">Generate Professional Press Kit</button>
+                <p style="text-align: center; color: var(--text-gray); margin-top: 1rem; font-size: 0.9rem;">
+                    Our AI will optimize your copy, select the best screenshots, and generate a media-ready press kit
+                </p>
+            </div>
+        </div>
+
+        <div class="preview-section" style="display: none;" id="preview">
+            <div class="preview-header">
+                <h2>🎉 Your Press Kit is Ready!</h2>
+                <p style="color: var(--text-gray); margin-top: 0.5rem;">Download in your preferred format</p>
+            </div>
+
+            <div class="preview-buttons">
+                <a href="#" class="download-btn">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">📄</div>
+                    <strong>HTML</strong><br>
+                    <small style="color: var(--text-gray);">Web-ready page</small>
+                </a>
+                <a href="#" class="download-btn">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">📋</div>
+                    <strong>Markdown</strong><br>
+                    <small style="color: var(--text-gray);">For README</small>
+                </a>
+                <a href="#" class="download-btn">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">📎</div>
+                    <strong>PDF</strong><br>
+                    <small style="color: var(--text-gray);">Email attachment</small>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

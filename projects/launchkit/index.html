@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LaunchKit — Indie Game Launch Calendar & Marketing Platform</title>
+    <meta name="description" content="Community-driven marketing platform for indie game developers. Launch Calendar, Press Kit Generator, and Steam Optimizer.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #f59e0b;
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --text-light: #e2e8f0;
+            --text-gray: #94a3b8;
+            --border: #334155;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #1a1f3a 100%);
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: rgba(30, 41, 59, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            padding: 1.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            transition: color 0.2s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: #4f46e5;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--primary);
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Hero */
+        .hero {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-gray);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        /* Stats */
+        .stats {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 1rem;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Calendar */
+        .calendar-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        select {
+            background: var(--bg-card);
+            color: var(--text-light);
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .timeline {
+            position: relative;
+        }
+
+        .timeline-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .timeline-item:hover {
+            border-color: var(--primary);
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
+        }
+
+        .timeline-date {
+            font-size: 0.875rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .game-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .game-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .game-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .game-meta {
+            display: flex;
+            gap: 1rem;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        .tag {
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.25rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .game-description {
+            color: var(--text-gray);
+            margin-top: 1rem;
+            line-height: 1.8;
+        }
+
+        .game-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid var(--primary);
+            border-radius: 0.5rem;
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .action-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .empty-slot {
+            background: rgba(245, 158, 11, 0.1);
+            border: 2px dashed var(--accent);
+            border-radius: 1rem;
+            padding: 3rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .empty-slot h4 {
+            color: var(--accent);
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Features */
+        .features {
+            max-width: 1200px;
+            margin: 6rem auto;
+            padding: 2rem;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: var(--text-gray);
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-card);
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem;
+            margin-top: 6rem;
+            text-align: center;
+        }
+
+        footer p {
+            color: var(--text-gray);
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .filters {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#" class="logo">
+                🚀 LaunchKit
+            </a>
+            <ul class="nav-links">
+                <li><a href="#calendar">Calendar</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#community">Community</a></li>
+            </ul>
+            <a href="#" class="btn-primary">Add Your Game</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Launch Your Indie Game<br>With Confidence</h1>
+        <p>Community-driven marketing platform for indie developers. Plan launches, generate press kits, and grow together — all in one place.</p>
+        <div class="hero-buttons">
+            <a href="#calendar" class="btn-primary">Browse Launch Calendar</a>
+            <a href="#" class="btn-secondary">Join Community</a>
+        </div>
+    </section>
+
+    <div class="stats">
+        <div class="stat-card">
+            <div class="stat-number">247</div>
+            <div class="stat-label">Games Launching Soon</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">1,842</div>
+            <div class="stat-label">Active Developers</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">3,201</div>
+            <div class="stat-label">Press Kits Generated</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">98%</div>
+            <div class="stat-label">Community Satisfaction</div>
+        </div>
+    </div>
+
+    <section class="calendar-section" id="calendar">
+        <div class="section-header">
+            <h2>📅 Launch Calendar</h2>
+            <span class="badge">✨ Updated Real-time</span>
+        </div>
+
+        <div class="filters">
+            <select>
+                <option>All Genres</option>
+                <option>Roguelike</option>
+                <option>Metroidvania</option>
+                <option>Puzzle</option>
+                <option>Platformer</option>
+                <option>RPG</option>
+            </select>
+            <select>
+                <option>All Platforms</option>
+                <option>Steam</option>
+                <option>itch.io</option>
+                <option>Epic Games</option>
+            </select>
+            <select>
+                <option>Sort: Upcoming</option>
+                <option>Sort: Most Hearts</option>
+                <option>Sort: Recently Added</option>
+            </select>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">📅 February 28, 2026 (Tomorrow)</div>
+                <div class="game-header">
+                    <div class="game-icon">⚔️</div>
+                    <div class="game-info">
+                        <h3>DungeonQuest: Eternal Night</h3>
+                        <div class="game-meta">
+                            <span class="tag">Roguelike</span>
+                            <span class="tag">Pixel Art</span>
+                            <span>by @DarkForge Studios</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="game-description">
+                    A challenging roguelike dungeon crawler with procedurally generated levels and permadeath. Master 12 unique character classes, discover 200+ items, and face the eternal darkness.
+                </p>
+                <div class="game-actions">
+                    <button class="action-btn">❤️ 47 Hearts</button>
+                    <button class="action-btn">💬 12 Comments</button>
+                    <button class="action-btn">🎮 Wishlist on Steam</button>
+                </div>
+            </div>
+
+            <div class="empty-slot">
+                <h4>🎯 Perfect Launch Window — March 3-5</h4>
+                <p style="color: var(--text-gray); margin-top: 0.5rem;">No games scheduled. Great time to launch!</p>
+                <button class="btn-primary" style="margin-top: 1rem;">Claim This Slot</button>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">📅 March 07, 2026</div>
+                <div class="game-header">
+                    <div class="game-icon">🌳</div>
+                    <div class="game-info">
+                        <h3>Forest Keeper</h3>
+                        <div class="game-meta">
+                            <span class="tag">Cozy Sim</span>
+                            <span class="tag">Relaxing</span>
+                            <span>by @TinyTreeGames</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="game-description">
+                    Tend to a magical forest, befriend woodland creatures, and restore balance to nature. No combat, no timers — just peaceful forest management and storytelling.
+                </p>
+                <div class="game-actions">
+                    <button class="action-btn">❤️ 89 Hearts</button>
+                    <button class="action-btn">💬 24 Comments</button>
+                    <button class="action-btn">🎮 Wishlist on Steam</button>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">📅 March 12, 2026</div>
+                <div class="game-header">
+                    <div class="game-icon">🧩</div>
+                    <div class="game-info">
+                        <h3>Tessellate</h3>
+                        <div class="game-meta">
+                            <span class="tag">Puzzle</span>
+                            <span class="tag">Minimalist</span>
+                            <span>by @LogicLab</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="game-description">
+                    A minimalist puzzle game about pattern recognition and spatial reasoning. 100 handcrafted levels, zen soundtrack, and no timers. Perfect for puzzle enthusiasts.
+                </p>
+                <div class="game-actions">
+                    <button class="action-btn">❤️ 34 Hearts</button>
+                    <button class="action-btn">💬 8 Comments</button>
+                    <button class="action-btn">🎮 Wishlist on Steam</button>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">📅 March 15, 2026</div>
+                <div class="game-header">
+                    <div class="game-icon">🏃</div>
+                    <div class="game-info">
+                        <h3>Velocity Runner</h3>
+                        <div class="game-meta">
+                            <span class="tag">Platformer</span>
+                            <span class="tag">Speedrun</span>
+                            <span>by @SpeedDemon</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="game-description">
+                    Precision platformer built for speedrunners. Master wall-running, time manipulation, and momentum physics across 50 brutal levels. Compete for world records!
+                </p>
+                <div class="game-actions">
+                    <button class="action-btn">❤️ 62 Hearts</button>
+                    <button class="action-btn">💬 19 Comments</button>
+                    <button class="action-btn">🎮 Wishlist on Steam</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <h2>Everything You Need to Launch</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📅</div>
+                <h3>Launch Calendar</h3>
+                <p>Visualize all upcoming indie releases. Find the perfect launch window, avoid competition, and coordinate with other developers.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">✨</div>
+                <h3>Press Kit Generator</h3>
+                <p>AI-assisted professional press kits in minutes. Generate HTML, PDF, and Markdown versions optimized for media outreach.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">👥</div>
+                <h3>Peer Review</h3>
+                <p>Get feedback from fellow developers. Submit your press kit, receive constructive criticism, and improve before launch.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Steam Optimizer</h3>
+                <p>Data-driven Steam page optimization. Analyze tags, optimize descriptions, and learn from successful launches.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🏆</div>
+                <h3>Launch Partner Badge</h3>
+                <p>Join our community of serious indie developers. Get exclusive access, priority support, and networking opportunities.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📈</div>
+                <h3>Success Analytics</h3>
+                <p>Track your launch performance. Monitor wishlists, press coverage, and community engagement — all in one dashboard.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 LaunchKit. Built by indie devs, for indie devs.</p>
+        <p style="margin-top: 1rem; color: var(--text-gray);">
+            <a href="#" style="color: var(--primary); text-decoration: none;">Twitter</a> • 
+            <a href="#" style="color: var(--primary); text-decoration: none;">Discord</a> • 
+            <a href="#" style="color: var(--primary); text-decoration: none;">GitHub</a>
+        </p>
+    </footer>
+</body>
+</html>

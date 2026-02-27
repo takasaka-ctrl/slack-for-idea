@@ -1,11 +1,65 @@
 {
-  "lastRun": null,
-  "nextScheduled": {
-    "morning": "09:00 JST",
-    "afternoon": "13:00 JST",
-    "evening": "21:00 JST"
+  "version": "v2",
+  "lastRun": "2026-02-27T12:15:21.744846+00:00",
+  "lastSlot": "evening",
+  "schedule": {
+    "morning": "09:00 JST (00:00 UTC)",
+    "evening": "21:00 JST (12:00 UTC)"
   },
-  "totalIdeasGenerated": 0,
-  "totalPrototypesCreated": 0,
-  "averageScore": 0
+  "minIntervalHours": 6,
+  "totalIdeasGenerated": 4,
+  "totalPrototypesCreated": 2,
+  "averageScore": 7.79,
+  "history": [
+    {
+      "timestamp": "2026-02-26T19:05:00Z",
+      "slot": "evening",
+      "idea": "MemoryScope Chrome Extension",
+      "category": "Developer Tool",
+      "method": "Integration/Bridge + Trend Riding",
+      "score": 8.6,
+      "prototypeCreated": true,
+      "passed": true
+    },
+    {
+      "timestamp": "2026-02-27T00:05:00Z",
+      "slot": "morning",
+      "idea": "ZeiQ — AI仕訳アシスタント Chrome拡張",
+      "category": "業務効率化ツール",
+      "method": "F: 高いサービスの安い代替",
+      "score": 6.8,
+      "prototypeCreated": false,
+      "passed": false,
+      "reason": "Advantage低い(6.3)。大手プラットフォーム寄生型は模倣容易+プラットフォームリスク"
+    },
+    {
+      "timestamp": "2026-02-27T03:00:00Z",
+      "slot": "evening",
+      "idea": "VoiceSnap — Voice Notes for Figma Plugin",
+      "category": "Productivity Tool",
+      "method": "Combination/Remix (Voice + Visual + Async + Ecosystem)",
+      "score": 7.83,
+      "prototypeCreated": true,
+      "passed": true,
+      "iteration": 2,
+      "firstScore": 7.33,
+      "improvement": "Chrome拡張 → Figma Plugin に pivot して +0.5pt 改善"
+    },
+    {
+      "timestamp": "2026-02-27T12:15:21.744846+00:00",
+      "slot": "evening",
+      "idea": "CreatorVault — TikTok/Shorts Archive + Auto-Portfolio Site",
+      "category": "Chrome拡張",
+      "method": "C: 2つの分野の掛け算（動画アーカイブ × SEOポートフォリオ × クリエイターブランディング）",
+      "score": 7.84,
+      "prototypeCreated": false,
+      "passed": true,
+      "iteration": 2,
+      "firstScore": 7.25,
+      "improvement": "ポートフォリオホスティング追加 + コンテンツ保険訴求で +0.59pt 改善"
+    }
+  ],
+  "vaultIdeasProcessed": 0,
+  "autonomousIdeasGenerated": 4,
+  "supplyMode": "alternate"
 }
