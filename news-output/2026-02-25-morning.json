@@ -1,0 +1,316 @@
+{
+  "date": "2026年2月26日（水曜日）",
+  "edition": "朝刊",
+  "volume": "1",
+  "tickerText": "AnthropicがClaude Coworkを企業向けに展開、プラグイン市場とディープ統合で生産性革命 ── GoogleがGemini Deep Thinkで科学研究を加速、数学オリンピック金メダル水準を達成 ── GeminiがAndroidで複数ステップのタスク自動化を実現、Uber注文や配達を一括管理 ── OpenAIがGPT-4o終了を発表、ChatGPT大幅アップデートで最大20ファイルアップロード対応 ── Inception社がMercury 2発表、推論LLMで5倍高速化を実現 ── Karpathyが「Agentic Engineering」を提唱、Vibe Codingの次の波 ── AnthropicがClaude Coworkを企業向けに展開、プラグイン市場とディープ統合で生産性革命",
+
+  "dataPanel": [
+    {
+      "label": "AI企業評価額",
+      "value": "$2.8T",
+      "sparkline": "▁▂▃▅▇█",
+      "change": "▲ 週次12%増",
+      "changeClass": "up"
+    },
+    {
+      "label": "新規LLMリリース",
+      "value": "47",
+      "sparkline": "▂▃▅▇██",
+      "change": "▲ 月間最高",
+      "changeClass": "up"
+    },
+    {
+      "label": "エンタープライズAI導入",
+      "value": "68%",
+      "sparkline": "▁▂▃▄▅▆",
+      "change": "▲ 前月比+8%",
+      "changeClass": "up"
+    },
+    {
+      "label": "推論速度改善",
+      "value": "3-5x",
+      "sparkline": "▂▄▆▇██",
+      "change": "▲ 最新技術",
+      "changeClass": "up"
+    }
+  ],
+
+  "hero": {
+    "id": "claude-cowork-launch",
+    "category": "企業向けAI",
+    "categoryClass": "ai",
+    "headline": "Anthropic、Claude Coworkで企業生産性革命へ — プライベートプラグイン市場とディープ統合を発表",
+    "deck": "AnthropicがClaude Coworkの大規模アップデートを発表。Google Drive、Gmail、DocuSignなどの既存ツールとの統合に加え、企業向けプライベートプラグイン市場を展開。Claude CodeがプログラミングISを変えたように、今度はオフィスワーク全体を再定義する。さらにモバイル版のRemote Controlも発表され、iPhoneからClaude Codeを操作可能に。",
+    "author": "VentureBeat / CNBC",
+    "readTime": "7",
+    "readPercent": 50,
+    "readLabel": "中程度",
+    "updateTime": "本日 05:00",
+    "fullContent": {
+      "introduction": "Anthropicは2月25日、企業向けAIツール「Claude Cowork」の大規模アップデートを発表した。Google Drive、Gmail、DocuSign、FactSetなどの既存ビジネスツールとのディープ統合に加え、金融分析、エンジニアリング、人事などの分野で企業固有の知識やワークフローをエンコードできるカスタマイズ可能なプラグインを展開する。Kate Jensen米州担当責任者は「誰でも使えるように、よりアクセシブルで実用的なものにすることを目指している」とCNBCのインタビューで語った。",
+      "sections": [
+        {
+          "heading": "Claude Coworkの主要機能",
+          "content": "Claude Coworkは、既存の企業ツールエコシステムに直接統合され、ファイル編集やコンテキストの受け渡しを自動化する。Excel、PowerPointとの連携も強化され、ドキュメント間でClaudeが作業内容を記憶し続ける。さらに、プライベートプラグイン市場により、企業は独自のドメイン知識を組み込んだAIエージェントを構築できる。"
+        },
+        {
+          "heading": "Claude Code Remote Control — モバイルからの操作",
+          "content": "同時に発表されたRemote Controlは、Claude Max（月額100〜200ドル）のサブスクライバー向けに提供される新機能。iPhoneやAndroidスマートフォンからClaude Codeにコマンドを発行できるようになり、外出先からのコーディングや開発タスクの管理が可能になる。"
+        },
+        {
+          "heading": "市場への影響",
+          "content": "VentureBeatによると、Claude Coworkの展開は企業ソフトウェア市場を揺るがしており、既存のSaaSベンダーに対する競争圧力が高まっている。Anthropicは「Claude Codeがプログラミングを変革したように、Coworkはオフィスワーク全体を再定義する」との野心的な目標を掲げている。"
+        }
+      ],
+      "keyTakeaways": [
+        "Claude CoworkがGoogle Drive、Gmail、DocuSignなどの既存ツールと統合",
+        "プライベートプラグイン市場で企業固有の知識をエンコード可能",
+        "Claude Code Remote ControlがiPhone/Androidから利用可能に"
+      ],
+      "sourceUrl": "https://venturebeat.com/orchestration/anthropic-says-claude-code-transformed-programming-now-claude-cowork-is",
+      "relatedLinks": [
+        {"title": "Claude Cowork updates (CNBC)", "url": "https://www.cnbc.com/2026/02/24/anthropic-claude-cowork-office-worker.html"},
+        {"title": "Claude Remote Control (VentureBeat)", "url": "https://venturebeat.com/orchestration/anthropic-just-released-a-mobile-version-of-claude-code-called-remote"}
+      ]
+    }
+  },
+
+  "sidebar": [
+    {
+      "id": "gemini-task-automation",
+      "category": "モバイルAI",
+      "categoryClass": "gemini",
+      "headline": "GeminiがAndroidで複数ステップのタスク自動化に対応 — Uber注文や配達を一括管理",
+      "summary": "GoogleはGemini AIアシスタントに複数ステップのタスク自動化機能を追加。AndroidユーザーはGeminiを使ってUber配車、食事配達、食料品注文などを一度に処理できるようになった。AIが実際のタスクを代行する時代が到来。",
+      "readTime": "4",
+      "timeAgo": "4時間前",
+      "fullContent": {
+        "introduction": "Googleは2月25日、Gemini AIアシスタントのAndroid向けアップデートを発表した。最も注目すべき新機能は、AIによる複数ステップのタスク自動化。ユーザーはGeminiに指示を出すだけで、Uber配車、食事配達、食料品注文などを自動的に処理できる。",
+        "sections": [
+          {
+            "heading": "どのように動作するか",
+            "content": "Geminiは既存のアプリと連携し、ユーザーに代わって複数のステップを実行する。例えば「夕食を注文して」と頼むと、Geminiがレストランを提案し、注文を確定し、配達を手配する一連のプロセスを自動化する。"
+          },
+          {
+            "heading": "スマートフォンAIの新時代",
+            "content": "この更新は「スマートフォンAIをタスクに適用する」という長年の課題を解決する大きな一歩。PC Magは「Googleがタスクリストから『スマートフォンAIをタスクに適用』をチェックオフした」と評価している。"
+          }
+        ],
+        "keyTakeaways": [
+          "Gemini AIが複数ステップのタスクを自動化",
+          "Uber、食事配達、食料品注文などに対応",
+          "Android向けに段階的に展開中"
+        ],
+        "sourceUrl": "https://techcrunch.com/2026/02/25/gemini-can-now-automate-some-multi-step-tasks-on-android/"
+      }
+    },
+    {
+      "id": "openai-gpt4o-retirement",
+      "category": "OpenAI",
+      "categoryClass": "openai",
+      "headline": "OpenAIがGPT-4o終了を発表、ChatGPT大幅アップデートで最大20ファイルアップロード対応",
+      "summary": "OpenAIはGPT-4oおよびレガシーモデルの終了を発表すると同時に、ChatGPTの大規模アップデートを展開。最大20ファイルのアップロード、広範なファイルタイプサポート、クリーナーなコピー機能、Androidのクイックツール、シンプル化されたコンポーザー、iOS高速化を実施。",
+      "readTime": "3",
+      "timeAgo": "本日 02:00",
+      "fullContent": {
+        "introduction": "OpenAIは2月にGPT-4oおよびレガシーモデルの終了を発表し、同時にChatGPTの大幅なアップデートを実施した。ユーザーは最大20ファイルをアップロード可能になり、ファイルタイプのサポートも拡大。Cmd+Aでのクリーンなコピー、Androidのクイックツール、シンプル化されたコンポーザー、iOS高速化、長い会話の安定性向上が含まれる。",
+        "sections": [
+          {
+            "heading": "主要なアップデート内容",
+            "content": "20ファイルまでのアップロード対応、広範なファイル形式サポート、クリーナーなコピー機能（Cmd+A）、Androidクイックツール、シンプル化されたコンポーザー、高速化されたiOSパフォーマンス、長時間の会話での安定性向上が実装された。"
+          }
+        ],
+        "keyTakeaways": [
+          "GPT-4oおよびレガシーモデルが終了",
+          "最大20ファイルのアップロードに対応",
+          "iOS/Androidで大幅なパフォーマンス改善"
+        ],
+        "sourceUrl": "https://releasebot.io/updates/openai"
+      }
+    },
+    {
+      "id": "gemini-deep-think",
+      "category": "研究",
+      "categoryClass": "research",
+      "headline": "Gemini Deep Thinkが科学研究を加速 — 数学オリンピック金メダル水準を達成",
+      "summary": "Google DeepMindはGemini Deep Thinkの最新版を発表。2025年夏に国際数学オリンピック（IMO）で金メダル水準を達成し、その後国際大学対抗プログラミングコンテスト（ICPC）でも同等の成果を記録。最も挑戦的な数学・プログラミング問題を解く推論能力を実証した。",
+      "readTime": "5",
+      "timeAgo": "6時間前",
+      "fullContent": {
+        "introduction": "Google DeepMindは、Gemini Deep Thinkの先進バージョンが2025年夏に国際数学オリンピック（IMO）で金メダル水準のパフォーマンスを達成したと発表した。その後のアップデート版では、国際大学対抗プログラミングコンテスト（ICPC）でも同等の結果を得た。これらの結果は、モデルが学生向けに設計された最も困難な数学・プログラミング問題を推論できることを示している。",
+        "sections": [
+          {
+            "heading": "科学研究への応用",
+            "content": "Gemini Deep Thinkは、複雑な数学的推論と科学的発見を加速するために設計されている。IMOとICPCでの成果は、AIが人間レベルの問題解決能力に到達しつつあることを示す重要なマイルストーン。"
+          }
+        ],
+        "keyTakeaways": [
+          "IMOで金メダル水準のパフォーマンスを達成",
+          "ICPCでも同等の成果を記録",
+          "科学研究・数学的発見の加速に貢献"
+        ],
+        "sourceUrl": "https://deepmind.google/blog/accelerating-mathematical-and-scientific-discovery-with-gemini-deep-think/"
+      }
+    }
+  ],
+
+  "middle": [
+    {
+      "id": "mercury2-launch",
+      "category": "技術",
+      "categoryClass": "tech",
+      "gradient": "linear-gradient(135deg, #1e3a5f 0%, #3498db 100%)",
+      "headline": "Inception社がMercury 2発表 — 推論LLMで5倍高速化、推論拡散モデルの新時代",
+      "summary": "Inception社は商用拡散型LLM（dLLM）のパイオニアとして、最速の推論LLM「Mercury 2」を発表。速度最適化LLMと比較して5倍高速で、推論コストも大幅に削減。推論タスクにおける初の拡散型LLMとして注目を集める。",
+      "author": "Business Wire / Hacker News",
+      "readTime": "5",
+      "fullContent": {
+        "introduction": "Inception社は2月24日、商用拡散型大規模言語モデル（dLLM）の第一人者として、「Mercury 2」を発表した。これは最速の推論LLMであり、初の推論拡散型LLM（reasoning dLLM）でもある。速度最適化された主要LLMと比較して5倍高速であり、推論コストも劇的に低減されている。",
+        "sections": [
+          {
+            "heading": "拡散型LLMとは",
+            "content": "拡散型LLM（dLLM）は、従来の自己回帰型モデルとは異なるアプローチを採用する。Mercury 2は、推論タスクにおいて高速化を埋め込んだ重みを持つようモデルをファインチューニングすることで、補助的なドラフトモデルを必要とせずに推論速度を3倍にする技術を活用している。"
+          },
+          {
+            "heading": "パフォーマンスと応用",
+            "content": "Hacker Newsでも話題となったMercury 2は、推論ベンチマークで従来モデルを大きく上回り、エージェントAIシステムの展開における主要なボトルネックであった高い推論レイテンシとGPUコストの問題を解決する。"
+          }
+        ],
+        "keyTakeaways": [
+          "最速の推論LLM、従来モデルの5倍高速",
+          "初の推論拡散型LLM（reasoning dLLM）",
+          "推論コストを大幅に削減"
+        ],
+        "sourceUrl": "https://www.businesswire.com/news/home/20260224034496/en/Inception-Launches-Mercury-2-the-Fastest-Reasoning-LLM-5x-Faster-Than-Leading-Speed-Optimized-LLMs-with-Dramatically-Lower-Inference-Cost"
+      }
+    },
+    {
+      "id": "multi-token-prediction",
+      "category": "技術",
+      "categoryClass": "tech",
+      "gradient": "linear-gradient(135deg, #1e3a5f 0%, #3498db 100%)",
+      "headline": "マルチトークン予測技術でLLM推論速度が3倍に — 補助モデル不要の革新的手法",
+      "summary": "メリーランド大学、ローレンス・リバモア国立研究所、コロンビア大学、TogetherAIの研究者らが、LLM推論速度を3倍にする新技術を発表。事前学習済みモデルをファインチューニングして加速を重みに組み込むことで、推測的デコーディングや補助ドラフトモデルが不要に。",
+      "author": "InfoWorld",
+      "readTime": "6",
+      "fullContent": {
+        "introduction": "メリーランド大学、ローレンス・リバモア国立研究所、コロンビア大学、TogetherAIの研究者らは、推論ベンチマークで推論速度を3倍にする新技術を発表した。事前学習済みモデルをファインチューニングして加速を重みに組み込むことで、推測的デコーディングや補助ドラフトモデルを必要としない。",
+        "sections": [
+          {
+            "heading": "高推論レイテンシとGPUコストの解決",
+            "content": "高い推論レイテンシとスパイラル的なGPUコストは、エージェントAIシステムを展開するIT管理者にとって主要なボトルネックとなっている。これらのワークフローはクエリごとに何千ものトークンを生成することが多く、現行のハードウェアでは対処が難しいパフォーマンスギャップが生じている。"
+          },
+          {
+            "heading": "重みに加速を組み込む",
+            "content": "新技術では、ファインチューニングにより加速がモデルの重みに直接埋め込まれるため、推測的デコーディングや補助的なドラフトモデルが不要になる。これにより推論速度が3倍向上し、コスト効率も大幅に改善される。"
+          }
+        ],
+        "keyTakeaways": [
+          "推論速度を3倍に向上",
+          "補助ドラフトモデル不要",
+          "GPUコストとレイテンシの問題を解決"
+        ],
+        "sourceUrl": "https://www.infoworld.com/article/4136453/multi-token-prediction-technique-triples-llm-inference-speed-without-auxiliary-draft-models.html"
+      }
+    },
+    {
+      "id": "gemini-video-templates",
+      "category": "クリエイティブ",
+      "categoryClass": "gemini",
+      "gradient": "linear-gradient(135deg, #1a73e8 0%, #4285f4 100%)",
+      "headline": "Geminiがビデオテンプレート機能を追加、Veo 3.1で生成スピード向上",
+      "summary": "GoogleはGeminiに新しいビデオ生成テンプレート機能を追加し、ユーザーがゼロから始めることなくスタイル化されたAIクリップを素早く作成できるようにした。AI音楽生成への展開に続き、ビデオ分野でも野心的な目標を掲げる。",
+      "author": "Moneycontrol",
+      "readTime": "4",
+      "fullContent": {
+        "introduction": "AI音楽への展開からわずか数日後、Geminiはビデオ分野での野心を鮮明にしている。Googleは新しいビデオ生成テンプレートの展開を開始し、ユーザーがゼロから始めることなくスタイル化されたAIクリップを素早く作成できるようにした。",
+        "sections": [
+          {
+            "heading": "Veo 3.1による高速生成",
+            "content": "Veo 3.1は、Googleの最新ビデオ生成モデルで、テンプレートと組み合わせることで、ユーザーが迅速にプロフェッショナルな品質のビデオクリップを作成できるようになる。"
+          }
+        ],
+        "keyTakeaways": [
+          "ビデオテンプレート機能を新たに追加",
+          "Veo 3.1で高速生成を実現",
+          "スタイル化されたAIクリップを素早く作成可能"
+        ],
+        "sourceUrl": "https://www.moneycontrol.com/technology/gemini-adds-video-templates-as-google-expands-veo-3-1-generation-article-13841776.html"
+      }
+    }
+  ],
+
+  "briefs": [
+    {
+      "headline": "OpenAIスマートスピーカーがリーク — Jony Iveデザイン、顔認識ショッピング機能搭載",
+      "text": "OpenAIのスマートスピーカーに関するリーク情報が明らかに。Jony Iveがデザインを手掛け、顔認識ショッピング機能を搭載する予定。価格と発売日も間もなく発表される見込み。"
+    },
+    {
+      "headline": "DeepSeekが次期大型リリースを準備中 — Google、OpenAI、Anthropicが警戒",
+      "text": "DeepSeekが次の大型モデルリリースを準備しているとの情報。内モンゴルのデータセンターでBlackwellチップを使用していると報じられ、Google、OpenAI、Anthropicが蒸留攻撃に警戒している。"
+    },
+    {
+      "headline": "LLMベンチマーク競争が激化 — 6ヶ月前のトップモデルは現在は中位に",
+      "text": "AI統計によれば、モデルの進化ペースは過小評価できない。6ヶ月前にベンチマークでトップだったモデルが、現在は中位のパフォーマンスに留まっている。"
+    },
+    {
+      "headline": "オープンソースLLMが台頭 — Llama 3、Mistral、Qwen、DeepSeekがプロプライエタリモデルに匹敵",
+      "text": "オープンソースLLMニュースが重要性を増している。Llama 3、Mistral、Qwen、DeepSeekなどのオープンウェイトモデルが多くのベンチマークでプロプライエタリモデルに匹敵し、ファインチューニングやセルフホストの柔軟性を提供。"
+    }
+  ],
+
+  "opinions": [
+    {
+      "id": "karpathy-agentic-engineering",
+      "authorLabel": "X投稿：",
+      "author": "@karpathy (Andrej Karpathy)",
+      "headline": "「Vibe Coding」の提唱者Karpathyが次の波を予言 — 「Agentic Engineering」の時代へ",
+      "excerpt": "元Tesla・OpenAIのAI研究者Andrej Karpathyが「Vibe Coding」に続く新しいコンセプト「Agentic Engineering」を提唱。AIエージェントがより独立してコーディングタスクを実行する時代にフォーカスが移行していると語る。Clawsと呼ばれるローカルAIエージェントの実行環境がMac Miniで人気を集めており、Raspberry Piでも動作可能。",
+      "fullContent": {
+        "introduction": "Andrej Karpathyは2025年初頭にX（旧Twitter）で「Vibe Coding」というコンセプトを紹介し、AIシステムに大きく依存してソフトウェアを構築するスタイルを定義した。そして今、彼は「Agentic Engineering」という新しい波を予言している。これは、AIエージェントがより独立してコーディングタスクを実行する時代を指す。",
+        "sections": [
+          {
+            "heading": "Clawsの台頭",
+            "content": "Karpathyの投稿では、ローカルでAIエージェント（通称「Claws」）を実行することが人気を集めていることに触れられている。ClawsはClawdbot（オープンソースAI）への直接的な言及であり、Mac Miniなどの強力な小型デスクトップコンピューターで動作する。Raspberry Piデバイスでも実行可能だ。"
+          },
+          {
+            "heading": "Agentic Engineeringとは",
+            "content": "Agentic Engineeringは、AIエージェントがコーディングタスクをより自律的に実行する新しいパラダイム。Vibe Codingが「AIと一緒にコードを書く」ことを重視したのに対し、Agentic Engineeringは「AIにコードを任せる」ことにフォーカスする。"
+          }
+        ],
+        "keyTakeaways": [
+          "Karpathyが「Agentic Engineering」を提唱",
+          "AIエージェントがより独立してタスクを実行",
+          "ClawsがMac MiniやRaspberry Piで人気"
+        ],
+        "sourceUrl": "https://www.benzinga.com/news/topics/26/02/50862150/the-man-who-coined-vibe-coding-says-the-next-big-thing-is-agentic-engineering"
+      }
+    },
+    {
+      "id": "claude-cowork-reaction",
+      "authorLabel": "業界の反応：",
+      "author": "Kate Jensen (Anthropic 米州責任者)",
+      "headline": "Claude Coworkが企業ソフトウェア市場を揺さぶる — 「誰でも使えるAIを目指す」",
+      "excerpt": "AnthropicのKate Jensen氏はCNBCのインタビューで、Claude Coworkの目標について「よりアクセシブルで、誰でもすぐに使える状態にすること」と語った。Claude Codeがプログラミングを変革したように、CoworkはオフィスワークAI全体を再定義する野心的なプロジェクト。既存SaaSベンダーへの競争圧力が高まる中、企業向けAIの新時代が幕を開ける。",
+      "fullContent": {
+        "introduction": "Anthropicの米州責任者Kate Jensenは、Claude Coworkのリリースに際し、「我々はそれをよりアクセシブルで、誰もがすぐに使える状態にしようとしている」とCNBCのインタビューで述べた。Claude Coworkは、企業のオフィスワーカーに生産性向上をもたらすことを目的としており、Google Drive、Gmail、DocuSign、FactSetなどの既存ツールと統合される。",
+        "sections": [
+          {
+            "heading": "企業向けAIの民主化",
+            "content": "Claude Coworkは、プライベートプラグイン市場とカスタマイズ可能なプラグインにより、企業が独自のドメイン知識をエンコードできる。金融分析、エンジニアリング、人事などの分野で、企業固有のワークフローをAIに組み込むことが可能になる。"
+          },
+          {
+            "heading": "市場への影響",
+            "content": "VentureBeatは、Claude Coworkの展開が企業ソフトウェア市場を揺さぶっており、既存のSaaSベンダーに対する競争圧力が増していると報じている。Anthropicは、「Claude Codeがプログラミングを変革したように、Coworkはオフィスワーク全体を再定義する」との野心的な目標を掲げる。"
+          }
+        ],
+        "keyTakeaways": [
+          "「誰でも使えるAI」を目指す",
+          "企業固有のワークフローをAIに組み込み可能",
+          "既存SaaSベンダーへの競争圧力が増大"
+        ],
+        "sourceUrl": "https://www.cnbc.com/2026/02/24/anthropic-claude-cowork-office-worker.html"
+      }
+    }
+  ]
+}

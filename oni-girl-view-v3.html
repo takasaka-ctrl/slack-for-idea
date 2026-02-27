@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>鬼娘スプライト v3（透過背景・改良版）</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 { margin-bottom: 10px; font-size: 24px; }
+        .info {
+            background: #333;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            max-width: 600px;
+            font-size: 14px;
+        }
+        .preview {
+            background: 
+                repeating-conic-gradient(#808080 0% 25%, transparent 0% 50%) 
+                50% / 20px 20px;
+            padding: 40px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        img {
+            display: block;
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+        }
+        code { 
+            background: #222;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎨 鬼娘スプライト v3（透過背景・改良版）</h1>
+    
+    <div class="info">
+        <p><strong>生成エンドポイント:</strong> <code>/create-image-pixflux</code></p>
+        <p><strong>透過背景パラメータ:</strong></p>
+        <ul style="margin: 5px 0;">
+            <li><code>no_background: true</code></li>
+            <li><code>background_removal_task: "remove_complex_background"</code></li>
+        </ul>
+        <p><strong>改良点:</strong></p>
+        <ul style="margin: 5px 0;">
+            <li>❌ "light orange background" を削除（透過背景と矛盾）</li>
+            <li>✅ "pink floral yukata with light orange wide obi sash" に修正</li>
+            <li>✅ スタイル指定をパラメータ分離（<code>outline</code>, <code>shading</code>, <code>detail</code>）</li>
+        </ul>
+        <p><strong>市松模様が見えれば透過成功！</strong></p>
+    </div>
+
+    <div class="preview">
+        <img src="data:image/png;base64,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
+...
+" alt="鬼娘スプライト v3" width="200" height="200">
+    </div>
+</body>
+</html>

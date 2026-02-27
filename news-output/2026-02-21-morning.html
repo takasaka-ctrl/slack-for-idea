@@ -1,0 +1,1802 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Chronicle</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&family=DM+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&family=Noto+Serif+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-paper: #faf7f2;
+  --bg-cream: #f5f0e8;
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-caption: #777;
+  --rule-color: #c8c0b4;
+  --rule-heavy: #2a2a2a;
+  --accent-red: #c41e1e;
+  --accent-blue: #1e3a5f;
+  --accent-gold: #b8860b;
+  --category-ai: #2d5a27;
+  --category-tech: #1e3a5f;
+  --category-business: #8b4513;
+  --category-research: #5b2c6f;
+  --category-openai: #10a37f;
+  --category-gemini: #1a73e8;
+  --category-indie: #c07000;
+  --category-mobile: #0f4c75;
+  --font-display: 'Playfair Display', 'Noto Serif JP', serif;
+  --font-body: 'Source Serif 4', 'Noto Serif JP', serif;
+  --font-sans: 'DM Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-paper: #1a1a1a;
+    --bg-cream: #252525;
+    --text-primary: #e8e3db;
+    --text-secondary: #b8b5b0;
+    --text-caption: #888;
+    --rule-color: #3a3a3a;
+    --rule-heavy: #d0d0d0;
+  }
+}
+
+body.dark-mode {
+  --bg-paper: #1a1a1a;
+  --bg-cream: #252525;
+  --text-primary: #e8e3db;
+  --text-secondary: #b8b5b0;
+  --text-caption: #888;
+  --rule-color: #3a3a3a;
+  --rule-heavy: #d0d0d0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #e8e3db;
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.3s, color 0.3s;
+}
+
+.newspaper {
+  max-width: 1200px;
+  margin: 24px auto;
+  background: var(--bg-paper);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.06);
+  position: relative;
+  transition: background 0.3s;
+}
+
+/* Dark mode toggle */
+.dark-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--bg-cream);
+  border: 1px solid var(--rule-color);
+  border-radius: 20px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  z-index: 100;
+  transition: all 0.3s;
+}
+
+.dark-toggle:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Masthead */
+.masthead {
+  text-align: center;
+  padding: 28px 40px 20px;
+  border-bottom: 3px double var(--rule-heavy);
+  position: relative;
+}
+
+.masthead::before, .masthead::after {
+  content: '';
+  position: absolute;
+  left: 40px;
+  right: 40px;
+  height: 1px;
+  background: var(--rule-heavy);
+}
+
+.masthead::before { top: 8px; }
+.masthead::after { bottom: 8px; }
+
+.masthead-date {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-caption);
+  margin-bottom: 8px;
+}
+
+.masthead-title {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 60px);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  color: var(--text-primary);
+}
+
+.masthead-subtitle {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-caption);
+  margin-top: 6px;
+}
+
+/* Ticker */
+.ticker {
+  background: var(--accent-red);
+  color: white;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 8px 40px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow: hidden;
+}
+
+.ticker-label {
+  background: rgba(255,255,255,0.2);
+  padding: 2px 10px;
+  border-radius: 2px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.ticker-text {
+  white-space: nowrap;
+  animation: ticker-scroll 30s linear infinite;
+}
+
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Section nav */
+.section-nav {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  padding: 12px 40px;
+  border-bottom: 1px solid var(--rule-color);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  flex-wrap: wrap;
+}
+
+.section-nav a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 2px 0;
+  transition: color 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+
+.section-nav a:hover,
+.section-nav a.active {
+  color: var(--text-primary);
+  border-bottom: 2px solid var(--accent-red);
+}
+
+.content {
+  padding: 0 40px 40px;
+}
+
+/* Data panel with sparklines */
+.data-panel {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  padding: 20px 0;
+  border-bottom: 2px solid var(--rule-heavy);
+}
+
+.data-item {
+  text-align: center;
+  padding: 0 16px;
+  border-right: 1px solid var(--rule-color);
+}
+
+.data-item:last-child { border-right: none; }
+
+.data-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-caption);
+  margin-bottom: 4px;
+}
+
+.data-value {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.data-sparkline {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  letter-spacing: 1px;
+  margin: 4px 0;
+  color: var(--category-ai);
+}
+
+.data-change {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.data-change.up { color: var(--category-ai); }
+.data-change.down { color: var(--accent-red); }
+
+/* Category tags */
+.category-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  display: inline-block;
+  margin-bottom: 10px;
+  transition: all 0.2s;
+}
+
+.category-tag--ai {
+  color: var(--category-ai);
+  border: 1px solid var(--category-ai);
+}
+
+.category-tag--tech {
+  color: var(--category-tech);
+  border: 1px solid var(--category-tech);
+}
+
+.category-tag--business {
+  color: var(--category-business);
+  border: 1px solid var(--category-business);
+}
+
+.category-tag--research {
+  color: var(--category-research);
+  border: 1px solid var(--category-research);
+}
+
+.category-tag--openai {
+  color: var(--category-openai);
+  border: 1px solid var(--category-openai);
+}
+
+.category-tag--gemini {
+  color: var(--category-gemini);
+  border: 1px solid var(--category-gemini);
+}
+
+.category-tag--indie {
+  color: var(--category-indie);
+  border: 1px solid var(--category-indie);
+}
+
+.category-tag--mobile {
+  color: var(--category-mobile);
+  border: 1px solid var(--category-mobile);
+}
+
+/* Hero section */
+.hero-section {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 0;
+  border-bottom: 2px solid var(--rule-heavy);
+  padding: 24px 0;
+}
+
+.hero-main {
+  padding-right: 24px;
+  border-right: 1px solid var(--rule-color);
+}
+
+.hero-image {
+  width: 100%;
+  height: 320px;
+  background: linear-gradient(135deg, #1a2a3a 0%, #2d4a6a 50%, #1a3a5a 100%);
+  border-radius: 2px;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s;
+  cursor: pointer;
+}
+
+.hero-image:hover {
+  transform: scale(1.01);
+}
+
+.hero-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.02) 2px, rgba(255,255,255,0.02) 4px),
+              repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255,255,255,0.02) 2px, rgba(255,255,255,0.02) 4px);
+}
+
+.hero-image-text {
+  color: rgba(255,255,255,0.15);
+  font-family: var(--font-display);
+  font-size: 72px;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  z-index: 1;
+  user-select: none;
+}
+
+.hero-headline {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.5vw, 42px);
+  font-weight: 900;
+  line-height: 1.15;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+  transition: color 0.2s;
+  cursor: pointer;
+}
+
+.hero-headline:hover {
+  color: var(--accent-red);
+}
+
+.hero-deck {
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.hero-meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-caption);
+  letter-spacing: 0.03em;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.hero-meta strong {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.read-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.read-time-bar {
+  display: inline-block;
+  width: 60px;
+  height: 4px;
+  background: var(--rule-color);
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+}
+
+.read-time-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: var(--accent-red);
+  width: 75%; /* Will be dynamic */
+}
+
+/* Sidebar */
+.hero-sidebar {
+  padding-left: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.sidebar-item {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--rule-color);
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.sidebar-item:hover {
+  transform: translateX(4px);
+}
+
+.sidebar-item:first-child { padding-top: 0; }
+.sidebar-item:last-child { border-bottom: none; }
+
+.sidebar-headline {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 6px;
+  color: var(--text-primary);
+  transition: color 0.2s;
+}
+
+.sidebar-item:hover .sidebar-headline {
+  color: var(--accent-red);
+}
+
+.sidebar-summary {
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.sidebar-meta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-caption);
+  margin-top: 6px;
+  letter-spacing: 0.03em;
+}
+
+/* Middle grid */
+.middle-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--rule-color);
+}
+
+.middle-article {
+  padding: 0 20px;
+  border-right: 1px solid var(--rule-color);
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.middle-article:hover {
+  transform: translateY(-2px);
+}
+
+.middle-article:first-child { padding-left: 0; }
+.middle-article:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+.middle-image {
+  width: 100%;
+  height: 160px;
+  border-radius: 2px;
+  margin-bottom: 12px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+.middle-article:hover .middle-image {
+  transform: scale(1.02);
+}
+
+.middle-headline {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 8px;
+  transition: color 0.2s;
+}
+
+.middle-article:hover .middle-headline {
+  color: var(--accent-red);
+}
+
+.middle-summary {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+.middle-meta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-caption);
+  margin-top: 8px;
+}
+
+/* Brief section */
+.brief-section {
+  padding: 24px 0;
+  border-bottom: 1px solid var(--rule-color);
+}
+
+.section-label {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--rule-color);
+}
+
+.brief-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+
+.brief-item {
+  padding: 0 16px;
+  border-right: 1px solid var(--rule-color);
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.brief-item:hover {
+  transform: translateX(2px);
+}
+
+.brief-item:first-child { padding-left: 0; }
+.brief-item:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+.brief-bullet {
+  width: 6px;
+  height: 6px;
+  background: var(--accent-red);
+  display: inline-block;
+  margin-right: 6px;
+  vertical-align: middle;
+  border-radius: 1px;
+}
+
+.brief-headline {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 4px;
+  transition: color 0.2s;
+}
+
+.brief-item:hover .brief-headline {
+  color: var(--accent-red);
+}
+
+.brief-text {
+  font-family: var(--font-body);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+/* Opinion section */
+.opinion-section {
+  background: var(--bg-cream);
+  margin: 0 -40px;
+  padding: 24px 40px;
+  border-top: 3px solid var(--accent-gold);
+  transition: background 0.3s;
+}
+
+.opinion-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.opinion-item {
+  padding: 0 24px;
+  border-right: 1px solid var(--rule-color);
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.opinion-item:hover {
+  transform: translateX(4px);
+}
+
+.opinion-item:first-child { padding-left: 0; }
+.opinion-item:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+.opinion-author {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent-gold);
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+.opinion-headline {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  font-style: italic;
+  line-height: 1.25;
+  margin-bottom: 8px;
+  transition: color 0.2s;
+}
+
+.opinion-item:hover .opinion-headline {
+  color: var(--accent-red);
+}
+
+.opinion-excerpt {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 16px 40px;
+  border-top: 1px solid var(--rule-color);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--text-caption);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .newspaper { margin: 0; }
+  .content { padding: 0 20px 20px; }
+  .masthead { padding: 20px 20px 16px; }
+  .masthead::before, .masthead::after {
+    left: 20px;
+    right: 20px;
+  }
+  .ticker { padding: 8px 20px; }
+  .section-nav {
+    padding: 10px 20px;
+    gap: 16px;
+  }
+  .hero-section { grid-template-columns: 1fr; }
+  .hero-main {
+    padding-right: 0;
+    border-right: none;
+    border-bottom: 1px solid var(--rule-color);
+    padding-bottom: 20px;
+  }
+  .hero-sidebar {
+    padding-left: 0;
+    padding-top: 16px;
+  }
+  .middle-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .middle-article {
+    padding: 0;
+    border-right: none;
+    border-bottom: 1px solid var(--rule-color);
+    padding-bottom: 20px;
+  }
+  .middle-article:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  .opinion-section {
+    margin: 0 -20px;
+    padding: 20px;
+  }
+  .opinion-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .opinion-item {
+    padding: 0;
+    border-right: none;
+    border-bottom: 1px solid var(--rule-color);
+    padding-bottom: 16px;
+  }
+  .opinion-item:last-child { border-bottom: none; }
+  .brief-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .brief-item {
+    border-right: none;
+    padding: 0;
+  }
+  .data-panel {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .data-item { border-right: none; }
+}
+
+@media (max-width: 520px) {
+  .brief-grid { grid-template-columns: 1fr; }
+  .data-panel { grid-template-columns: 1fr 1fr; }
+  .hero-image { height: 200px; }
+}
+
+/* Print texture */
+.newspaper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.015'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+}
+
+.newspaper > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* ============================================
+   ARTICLE DETAIL MODAL STYLES
+   ============================================ */
+
+/* Modal Container */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.modal.active {
+  display: flex;
+  opacity: 1;
+}
+
+/* Overlay */
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+}
+
+/* Container */
+.modal-container {
+  position: relative;
+  width: 90%;
+  max-width: 900px;
+  max-height: 90vh;
+  z-index: 2001;
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+}
+
+.modal.active .modal-container {
+  transform: translateY(0);
+}
+
+/* Content */
+.modal-content {
+  background: var(--bg-paper);
+  border-radius: 4px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* Header (Close + Copy buttons) */
+.modal-header {
+  position: sticky;
+  top: 0;
+  background: var(--bg-paper);
+  border-bottom: 1px solid var(--rule-color);
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+
+.modal-close {
+  font-size: 32px;
+  line-height: 1;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.modal-close:hover {
+  color: var(--accent-red);
+  transform: scale(1.1);
+}
+
+.modal-copy {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 16px;
+  background: var(--bg-cream);
+  border: 1px solid var(--rule-color);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--text-primary);
+}
+
+.modal-copy:hover {
+  background: var(--accent-gold);
+  color: white;
+  border-color: var(--accent-gold);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.modal-copy.copied {
+  background: var(--category-ai);
+  color: white;
+  border-color: var(--category-ai);
+}
+
+/* Newspaper Content */
+.modal-newspaper {
+  padding: 32px 48px 48px;
+}
+
+.modal-category-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  display: inline-block;
+  margin-bottom: 16px;
+  border: 1px solid;
+}
+
+.modal-headline {
+  font-family: var(--font-display);
+  font-size: 36px;
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+}
+
+.modal-meta {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-caption);
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid var(--rule-heavy);
+}
+
+.modal-introduction {
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+  padding: 20px;
+  background: var(--bg-cream);
+  border-left: 4px solid var(--accent-gold);
+}
+
+/* Sections */
+.modal-section {
+  margin-bottom: 32px;
+}
+
+.modal-section-heading {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.modal-section-content {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+.modal-section-steps {
+  margin: 16px 0;
+  padding-left: 20px;
+}
+
+.modal-section-steps li {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  padding-left: 8px;
+}
+
+.modal-section-code {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.6;
+  background: #1a1a1a;
+  color: #e8e3db;
+  padding: 20px;
+  border-radius: 4px;
+  overflow-x: auto;
+  margin: 16px 0;
+  white-space: pre;
+}
+
+.modal-section-warning {
+  background: rgba(196, 30, 30, 0.1);
+  border-left: 4px solid var(--accent-red);
+  padding: 16px;
+  margin: 16px 0;
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+
+/* Key Takeaways */
+.modal-key-takeaways {
+  background: var(--bg-cream);
+  padding: 24px;
+  margin: 32px 0;
+  border-top: 3px solid var(--accent-gold);
+}
+
+.modal-key-takeaways h3 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.modal-key-takeaways ul {
+  list-style: none;
+  padding: 0;
+}
+
+.modal-key-takeaways li {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  padding-left: 24px;
+  position: relative;
+}
+
+.modal-key-takeaways li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--accent-gold);
+  font-weight: 700;
+}
+
+/* Personal Tips ("あなたへの活用アイデア") */
+.modal-personal-tips {
+  background: linear-gradient(135deg, rgba(0, 100, 80, 0.12) 0%, rgba(0, 60, 50, 0.08) 100%);
+  border: 1px solid rgba(0, 180, 140, 0.35);
+  border-left: 4px solid #00b48c;
+  padding: 24px;
+  margin: 32px 0;
+  border-radius: 2px;
+}
+
+.modal-personal-tips h3 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: #00c9a0;
+  letter-spacing: 0.5px;
+}
+
+.modal-personal-tips ul {
+  list-style: none;
+  padding: 0;
+}
+
+.modal-personal-tips li {
+  font-family: var(--font-body);
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+  padding-left: 24px;
+  position: relative;
+}
+
+.modal-personal-tips li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: #00c9a0;
+  font-weight: 700;
+}
+
+.modal-personal-tips li:last-child {
+  margin-bottom: 0;
+}
+
+/* Footer Links */
+.modal-footer {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule-color);
+}
+
+.modal-footer h3 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.modal-links {
+  list-style: none;
+  padding: 0;
+}
+
+.modal-links li {
+  margin-bottom: 8px;
+}
+
+.modal-links a {
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--accent-blue);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.modal-links a:hover {
+  color: var(--accent-red);
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .modal-container {
+    width: 95%;
+  }
+  
+  .modal-newspaper {
+    padding: 24px 20px 32px;
+  }
+  
+  .modal-headline {
+    font-size: 28px;
+  }
+  
+  .modal-section-heading {
+    font-size: 20px;
+  }
+  
+  .modal-header {
+    padding: 12px 16px;
+  }
+  
+  .modal-copy {
+    font-size: 11px;
+    padding: 6px 12px;
+  }
+}
+
+/* Dark mode adjustments */
+body.dark-mode .modal-section-code {
+  background: #0a0a0a;
+  color: #e8e3db;
+}
+
+</style>
+</head>
+<body>
+<button class="dark-toggle" onclick="toggleDarkMode()">
+  <span id="mode-icon">🌙</span> <span id="mode-text">Dark</span>
+</button>
+
+<div class="newspaper">
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="masthead-date">2026年2月21日（土曜日） · Tokyo Edition · Vol. 1</div>
+  <h1 class="masthead-title">The AI Chronicle</h1>
+  <div class="masthead-subtitle">Your Daily Intelligence on Artificial Intelligence · Curated by Athena</div>
+</header>
+
+<!-- TICKER -->
+<div class="ticker">
+  <span class="ticker-label">Breaking</span>
+  <span class="ticker-text">Google Gemini 3.1 Proが推論能力2倍超で発表 ── Anthropic Claude Code Securityでサイバーセキュリティ株暴落 ── Karpathyが「Claws」カテゴリーの到来を宣言 ── OpenAI、2027年にAIスマートスピーカー発売へ ── Karpathy、わずか243行でGPTを実装 ── オンデバイスLLMが現実に ── Google Gemini 3.1 Proが推論能力2倍超で発表</span>
+</div>
+
+<!-- SECTION NAV -->
+<nav class="section-nav">
+  <a class="active">Top Stories</a>
+  <a>Models & Research</a>
+  <a>Industry</a>
+  <a>Tools & Products</a>
+  <a>Opinion</a>
+  <a>Data</a>
+</nav>
+
+<div class="content">
+<!-- DATA PANEL -->
+<div class="data-panel">
+  
+    <div class="data-item">
+      <div class="data-label">AIモデルリリース</div>
+      <div class="data-value">4件/週</div>
+      <div class="data-sparkline">▁▂▃▅▇█</div>
+      <div class="data-change up">▲ 前週比+60%</div>
+    </div>
+    
+    <div class="data-item">
+      <div class="data-label">Gemini 3.1 Pro ARC-AGI-2</div>
+      <div class="data-value">77.1%</div>
+      <div class="data-sparkline">▁▁▂▅▇█</div>
+      <div class="data-change up">▲ 3 Proの2倍超</div>
+    </div>
+    
+    <div class="data-item">
+      <div class="data-label">サイバーセキュリティ株</div>
+      <div class="data-value">-8.0%</div>
+      <div class="data-sparkline">█▇▅▃▂▁</div>
+      <div class="data-change down">▼ Claude Code Security発表で急落</div>
+    </div>
+    
+    <div class="data-item">
+      <div class="data-label">LLM週次デプロイ</div>
+      <div class="data-value">1.2M</div>
+      <div class="data-sparkline">▁▂▃▅▇█</div>
+      <div class="data-change up">▲ 前月比+15%</div>
+    </div>
+    
+</div>
+
+<!-- HERO SECTION -->
+<section class="hero-section">
+  <div class="hero-main">
+    <div class="hero-image">
+      <span class="hero-image-text">AI</span>
+    </div>
+    <span class="category-tag category-tag--ai">AI & セキュリティ</span>
+    <h2 class="hero-headline">Anthropic、Claude Code Securityを発表 — サイバーセキュリティ株が8%急落</h2>
+    <p class="hero-deck">AnthropicがAI駆動の自動脆弱性検出ツール「Claude Code Security」を発表し、CrowdStrikeやCloudflareなど主要セキュリティ企業の株価が軒並み8%下落。従来のルールベース静的解析を超える「人間のセキュリティ研究者のように推論する」AIが業界を揺るがす。</p>
+    <div class="hero-meta">
+      By <strong>SiliconANGLE</strong> · 
+      <span class="read-time">
+        📖 5 min
+        <span class="read-time-bar">
+          <span class="read-time-fill" style="width: 50%"></span>
+        </span>
+        中程度
+      </span>
+      · Updated 1日前
+    </div>
+  </div>
+  <aside class="hero-sidebar">
+    
+    <div class="sidebar-item">
+      <span class="category-tag category-tag--gemini">AIモデル</span>
+      <h3 class="sidebar-headline">Google、Gemini 3.1 Proを発表 — 推論能力が2倍超に向上</h3>
+      <p class="sidebar-summary">Googleが2月19日、Gemini 3.1 Proのプレビューを全プラン（Free～Ultra）でリリース。ARC-AGI-2ベンチマークで77.1%を記録し、Gemini 3 Proの2倍超の推論性能を達成。ただし一部ユーザーからは共感性低下の懸念も。</p>
+      <div class="sidebar-meta">4 min read · 2日前</div>
+    </div>
+    
+    <div class="sidebar-item">
+      <span class="category-tag category-tag--business">ビジネス</span>
+      <h3 class="sidebar-headline">OpenAI、インドTCS初のデータセンター顧客に — Stargate計画の一環</h3>
+      <p class="sidebar-summary">OpenAIがインドのTata Consultancy Services（TCS）のデータセンター事業初の顧客となり、100MWの容量から開始。グローバルAIインフラ構想Stargateの一環として提携を発表。</p>
+      <div class="sidebar-meta">3 min read · 1日前</div>
+    </div>
+    
+    <div class="sidebar-item">
+      <span class="category-tag category-tag--tech">技術</span>
+      <h3 class="sidebar-headline">Karpathy、わずか243行のPythonでGPTを実装 — 「AIの最高の教材」</h3>
+      <p class="sidebar-summary">元OpenAI研究者Andrej KarpathyがPyTorch/TensorFlowなしでGPTを243行で実装。依存関係ゼロ、os/math/random/argparseのみの「アートプロジェクト」が教育界で絶賛。</p>
+      <div class="sidebar-meta">4 min read · 1日前</div>
+    </div>
+    
+  </aside>
+</section>
+
+<!-- MIDDLE GRID -->
+<section class="middle-grid">
+  
+    <article class="middle-article">
+      <div class="middle-image" style="background: linear-gradient(135deg, #1e3a5f 0%, #3498db 100%);"></div>
+      <span class="category-tag category-tag--tech">プロダクト</span>
+      <h3 class="middle-headline">OpenAI、2027年にAI搭載スマートスピーカー発売へ</h3>
+      <p class="middle-summary">OpenAIが2027年に初のコンシューマー向けハードウェアデバイス、AI搭載スマートスピーカーを発売予定。音声AIアシスタント市場への本格参入が明らかに。</p>
+      <div class="middle-meta">By Engadget · 3 min read</div>
+    </article>
+    
+    <article class="middle-article">
+      <div class="middle-image" style="background: linear-gradient(135deg, #2d5a27 0%, #4a8a3f 100%);"></div>
+      <span class="category-tag category-tag--ai">グローバル</span>
+      <h3 class="middle-headline">Tech Mahindra、教育向けヒンディー語優先LLMを発表</h3>
+      <p class="middle-summary">Tech MahindraがNVIDIAと提携し、Project Indusの一環として教育に特化したヒンディー語優先LLMを発表。India AI Impact Summit 2026で披露された。</p>
+      <div class="middle-meta">By Kollege Apply News · 3 min read</div>
+    </article>
+    
+    <article class="middle-article">
+      <div class="middle-image" style="background: linear-gradient(135deg, #1e3a5f 0%, #3498db 100%);"></div>
+      <span class="category-tag category-tag--tech">技術</span>
+      <h3 class="middle-headline">オンデバイスLLM革命 — クラウド不要のAI推論が現実に</h3>
+      <p class="middle-summary">スマートフォン、自動車、産業ロボットでオンデバイスLLM推論が実用化。プライバシー保護と低レイテンシを実現し、クラウド依存から脱却する新時代が到来。</p>
+      <div class="middle-meta">By Semiconductor Engineering · 4 min read</div>
+    </article>
+    
+</section>
+
+<!-- BRIEF SECTION -->
+<section class="brief-section">
+  <div class="section-label">In Brief</div>
+  <div class="brief-grid">
+    
+    <div class="brief-item">
+      <h4 class="brief-headline"><span class="brief-bullet"></span>OpenAI、GPT-4o廃止とChatGPTアップデート</h4>
+      <p class="brief-text">OpenAIがGPT-4oと従来モデルを廃止し、ChatGPTに最大20ファイルアップロード、広範なファイルタイプ対応、AndroidとiOSでの性能改善を提供。</p>
+    </div>
+    
+    <div class="brief-item">
+      <h4 class="brief-headline"><span class="brief-bullet"></span>EFF、オープンソースプロジェクトでのLLM使用ポリシー導入</h4>
+      <p class="brief-text">Electronic Frontier FoundationがLLM支援コントリビューションのポリシーを発表。単なるコード生成量ではなく高品質ソフトウェアの生産を重視。</p>
+    </div>
+    
+    <div class="brief-item">
+      <h4 class="brief-headline"><span class="brief-bullet"></span>SEAL Leaderboard更新 — 最新AIモデルランキング</h4>
+      <p class="brief-text">Scale AIのSEAL Leaderboardが更新され、コーディング、推論など専門家駆動のベンチマークで最新AIモデルをランク付け。3時間前に最新データ公開。</p>
+    </div>
+    
+    <div class="brief-item">
+      <h4 class="brief-headline"><span class="brief-bullet"></span>Gemini 3.1 Pro、ベンチマーク信頼性の議論を巻き起こす</h4>
+      <p class="brief-text">YouTubeで「Gemini 3.1 Proとベンチマークの衰退」動画が話題。ベンチマークスコアが機械知能を捉える手段として有効かの議論が再燃。</p>
+    </div>
+    
+  </div>
+</section>
+
+<!-- OPINION -->
+<section class="opinion-section">
+  <div class="section-label">Opinion & Analysis</div>
+  <div class="opinion-grid">
+    
+    <div class="opinion-item">
+      <div class="opinion-author">X投稿： @karpathy (Andrej Karpathy)</div>
+      <h3 class="opinion-headline">Karpathy、「Claws」カテゴリーの到来を宣言 — OpenClaw系エージェントの新時代</h3>
+      <p class="opinion-excerpt">元OpenAI研究者Andrej KarpathyがMac Miniを購入し「Claws」をいじっていると投稿。「LLMエージェントがLLMの新レイヤーだったように、Clawsはエージェント上の新レイヤー」と評価。NanoClaw、nanobot、zeroclaw、ironclaw、picoclawなど派生プロジェクトが急増中。</p>
+    </div>
+    
+    <div class="opinion-item">
+      <div class="opinion-author">ユーザー声明： IvanyaV (X)</div>
+      <h3 class="opinion-headline">Gemini 3.1 Pro、「魂を失った」— 共感性低下への懸念</h3>
+      <p class="opinion-excerpt">Gemini 3.1 Proの推論能力向上を評価しつつ、一部ユーザーが「感情的深み、共感、創造的柔軟性が大幅に減少した」と指摘。「論理的推論とコーディングベンチマークの飛躍は印象的だが、モデルの『魂』が失われた感じがする」との声も。</p>
+    </div>
+    
+  </div>
+</section>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  The AI Chronicle · A personal AI news digest · Auto-generated from curated sources · © 2026
+</footer>
+</div>
+
+<script>
+function toggleDarkMode() {
+  document.body.classList.toggle('dark-mode');
+  const isDark = document.body.classList.contains('dark-mode');
+  const iconEl = document.getElementById('mode-icon');
+  const textEl = document.getElementById('mode-text');
+  
+  if (iconEl) iconEl.textContent = isDark ? '☀️' : '🌙';
+  if (textEl) textEl.textContent = isDark ? 'Light' : 'Dark';
+  
+  localStorage.setItem('darkMode', isDark);
+}
+
+// Load saved preference on page load
+document.addEventListener('DOMContentLoaded', function() {
+  const savedMode = localStorage.getItem('darkMode');
+  if (savedMode === 'true') {
+    document.body.classList.add('dark-mode');
+    const iconEl = document.getElementById('mode-icon');
+    const textEl = document.getElementById('mode-text');
+    if (iconEl) iconEl.textContent = '☀️';
+    if (textEl) textEl.textContent = 'Light';
+  }
+});
+
+// Also check system preference
+if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches && !localStorage.getItem('darkMode')) {
+  document.addEventListener('DOMContentLoaded', function() {
+    toggleDarkMode();
+  });
+}
+</script>
+<!-- ARTICLE DETAIL MODAL -->
+<div id="article-modal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="modal-title">
+  <div class="modal-overlay" aria-label="背景オーバーレイ"></div>
+  <div class="modal-container">
+    <div class="modal-content">
+      <header class="modal-header">
+        <button class="modal-close" aria-label="閉じる" title="閉じる（ESCキー）">×</button>
+        <button class="modal-copy" aria-label="保存用テキストコピー" title="保存用テキストコピー">
+          📋 保存用テキストコピー
+        </button>
+      </header>
+      
+      <article class="modal-newspaper">
+        <div class="modal-category-tag"></div>
+        <h1 id="modal-title" class="modal-headline"></h1>
+        <div class="modal-meta"></div>
+        
+        <div class="modal-introduction"></div>
+        
+        <div class="modal-sections"></div>
+        
+        <div class="modal-personal-tips">
+          <h3>💡 あなたへの活用アイデア</h3>
+          <ul></ul>
+        </div>
+
+        <div class="modal-key-takeaways">
+          <h3>📌 重要ポイント</h3>
+          <ul></ul>
+        </div>
+        
+        <footer class="modal-footer">
+          <h3>🔗 関連リンク</h3>
+          <ul class="modal-links"></ul>
+        </footer>
+      </article>
+    </div>
+  </div>
+</div>
+
+<script>const ARTICLES_DATA = {"date":"2026年2月21日（土曜日）","edition":"朝刊","volume":"1","tickerText":"Google Gemini 3.1 Proが推論能力2倍超で発表 ── Anthropic Claude Code Securityでサイバーセキュリティ株暴落 ── Karpathyが「Claws」カテゴリーの到来を宣言 ── OpenAI、2027年にAIスマートスピーカー発売へ ── Karpathy、わずか243行でGPTを実装 ── オンデバイスLLMが現実に ── Google Gemini 3.1 Proが推論能力2倍超で発表","dataPanel":[{"label":"AIモデルリリース","value":"4件/週","sparkline":"▁▂▃▅▇█","change":"▲ 前週比+60%","changeClass":"up"},{"label":"Gemini 3.1 Pro ARC-AGI-2","value":"77.1%","sparkline":"▁▁▂▅▇█","change":"▲ 3 Proの2倍超","changeClass":"up"},{"label":"サイバーセキュリティ株","value":"-8.0%","sparkline":"█▇▅▃▂▁","change":"▼ Claude Code Security発表で急落","changeClass":"down"},{"label":"LLM週次デプロイ","value":"1.2M","sparkline":"▁▂▃▅▇█","change":"▲ 前月比+15%","changeClass":"up"}],"hero":{"id":"claude-code-security","category":"AI & セキュリティ","categoryClass":"ai","headline":"Anthropic、Claude Code Securityを発表 — サイバーセキュリティ株が8%急落","deck":"AnthropicがAI駆動の自動脆弱性検出ツール「Claude Code Security」を発表し、CrowdStrikeやCloudflareなど主要セキュリティ企業の株価が軒並み8%下落。従来のルールベース静的解析を超える「人間のセキュリティ研究者のように推論する」AIが業界を揺るがす。","author":"SiliconANGLE","readTime":"5","readPercent":50,"readLabel":"中程度","updateTime":"1日前","fullContent":{"introduction":"Anthropicが2月20日、EnterpriseおよびTeamsエディション向けに「Claude Code Security」のリサーチプレビューを開始。このAI駆動セキュリティツールは、従来のルールベース静的解析とは異なり、コードの構造とデータフローを理解して脆弱性を発見する。発表を受け、CrowdStrike、Cloudflareなどサイバーセキュリティ株が急落した。","sections":[{"heading":"ルールベース解析の限界を超える","content":"従来の静的解析ツールは、事前定義されたルールのデータベースに基づいてコードをチェックする。しかし、ニッチな言語や新しい攻撃パターンに対応できないため、多くの脆弱性を見逃してしまう。Claude Code Securityは、「人間のセキュリティ研究者のように推論」し、アプリケーションのコンポーネント間の相互作用とデータフローをマッピングして潜在的な弱点を特定する。"},{"heading":"GitHubリポジトリと統合、自動修正提案","content":"開発者はGitHubリポジトリを接続するだけでClaude Code Securityを起動可能。ツールは入力フィルタの欠如、認証メカニズムのバイパス可能性など幅広い脆弱性を検出し、深刻度順にランク付け。各脆弱性には自然言語での説明が生成され、「suggest fix」ボタンでClaudeが自動的にパッチを生成する。"},{"heading":"株価への影響とOpenAIとの競争","content":"発表直後、CrowdStrike株は約8%下落、Cloudflareも8%超下落した。Anthropicは今月初めのClaude Coworkプラグイン発表に続き、2度目のエンタープライズソフトウェア株暴落を引き起こした。OpenAIも昨年10月に同様のツール「Aardvark」を発表しており、両社のセキュリティ市場への進出が加速している。"}],"keyTakeaways":["Claude Code SecurityはルールベースではなくAI推論でコード脆弱性を検出","CrowdStrike、Cloudflareなど主要セキュリティ株が8%急落","GitHubリポジトリと統合し、自動修正提案機能を提供"],"sourceUrl":"https://siliconangle.com/2026/02/20/cybersecurity-stocks-drop-anthropic-debuts-claude-code-security/","relatedLinks":[{"title":"Anthropic公式発表","url":"https://www.anthropic.com/news/claude-code-security"},{"title":"OpenAI Aardvark発表","url":"https://siliconangle.com/2025/10/30/openai-unveils-aardvark-autonomous-gpt-5-agent-built-hunt-software-vulnerabilities/"}]}},"sidebar":[{"id":"gemini-31-pro","category":"AIモデル","categoryClass":"gemini","headline":"Google、Gemini 3.1 Proを発表 — 推論能力が2倍超に向上","summary":"Googleが2月19日、Gemini 3.1 Proのプレビューを全プラン（Free～Ultra）でリリース。ARC-AGI-2ベンチマークで77.1%を記録し、Gemini 3 Proの2倍超の推論性能を達成。ただし一部ユーザーからは共感性低下の懸念も。","readTime":"4","timeAgo":"2日前","fullContent":{"introduction":"Googleが「より賢く、複雑な問題解決に対応可能なベースライン」としてGemini 3.1 Proを発表。NotebookLMや開発者向けAPIでも利用可能になり、ベンチマークで大幅な性能向上を示した。","sections":[{"heading":"推論能力の劇的な向上","content":"ARC-AGI-2ベンチマーク（新しいロジックパターンを解く能力を評価）で3.1 Proは77.1%を記録。これはGemini 3 Proの2倍超の性能を意味する。Googleは都市計画アプリのデモを公開し、複雑な地形処理、インフラマッピング、交通シミュレーションを高品質に可視化する能力を示した。"},{"heading":"ユーザーからの共感性低下の懸念","content":"性能向上の一方で、一部ユーザーは「感情的深み、共感、創造的柔軟性が大幅に減少した」と指摘。「論理的推論とコーディングベンチマークの飛躍は印象的だが、モデルの『魂』が失われた」との声も。この反応はChatGPT-5初期リリース時の反応と類似している。"}],"keyTakeaways":["ARC-AGI-2ベンチマークで77.1%を記録、Gemini 3 Proの2倍超","複雑な問題解決とマルチステップ推論に特化","一部ユーザーから共感性・創造性低下の懸念"],"sourceUrl":"https://www.techradar.com/ai-platforms-assistants/gemini/google-just-upgraded-gemini-again-and-3-1-pro-more-than-doubles-its-ai-reasoning-power-but-some-users-arent-impressed"}},{"id":"openai-tcs-datacenter","category":"ビジネス","categoryClass":"business","headline":"OpenAI、インドTCS初のデータセンター顧客に — Stargate計画の一環","summary":"OpenAIがインドのTata Consultancy Services（TCS）のデータセンター事業初の顧客となり、100MWの容量から開始。グローバルAIインフラ構想Stargateの一環として提携を発表。","readTime":"3","timeAgo":"1日前","fullContent":{"introduction":"OpenAIとTCSが戦略的提携を発表。TCSのデータセンター事業の初顧客としてOpenAIが100MWの容量を確保し、Stargate計画によるグローバルAIインフラ拡大を加速する。","sections":[{"heading":"Stargate計画とインド市場","content":"Stargate計画は、OpenAIがグローバルにAIインフラを拡大する構想。インド市場での存在感を強化し、TCSの最新データセンター設備を活用することでアジア太平洋地域でのAIサービス展開を強化する。"}],"keyTakeaways":["OpenAIがTCSデータセンター初顧客、100MW容量で開始","Stargate計画の一環としてインド市場に進出","アジア太平洋地域でのAIインフラ拡大を加速"],"sourceUrl":"https://www.reuters.com/technology/openai/"}},{"id":"karpathy-microgpt","category":"技術","categoryClass":"tech","headline":"Karpathy、わずか243行のPythonでGPTを実装 — 「AIの最高の教材」","summary":"元OpenAI研究者Andrej KarpathyがPyTorch/TensorFlowなしでGPTを243行で実装。依存関係ゼロ、os/math/random/argparseのみの「アートプロジェクト」が教育界で絶賛。","readTime":"4","timeAgo":"1日前","fullContent":{"introduction":"2月11日、Karpathyが単一Pythonファイル（243行）でGPTを訓練・実行するコードを公開。依存関係ゼロの純粋Python実装が「現在インターネット上に存在する最高のAI教育教材」と称賛されている。","sections":[{"heading":"依存関係ゼロの実装","content":"従来のTransformer実装は数千ファイル、数百パッケージの依存関係が必要だった。Karpathyの「microGPT」はos、math、random、argparseのみをインポート。赤ちゃんの名前リストをダウンロードし、パターンを学習して新しい架空の名前を生成する。"},{"heading":"教育的価値","content":"Karpathy自身は「アートプロジェクト」と呼んだが、AI研究者たちは「友人にコーヒーを飲みながら説明するような分かりやすさ」と評価。複雑な概念を最小限のコードで表現し、LLMの本質を理解するための最適な教材となっている。"}],"keyTakeaways":["243行、依存関係ゼロでGPTを完全実装","基本的なPythonライブラリ（os/math/random）のみ使用","AI教育における画期的な教材として評価"],"sourceUrl":"https://www.towardsdeeplearning.com/andrej-karpathy-just-built-an-entire-gpt-in-243-lines-of-python-7d66cfdfa301"}}],"middle":[{"id":"openai-smart-speaker","category":"プロダクト","categoryClass":"tech","gradient":"linear-gradient(135deg, #1e3a5f 0%, #3498db 100%)","headline":"OpenAI、2027年にAI搭載スマートスピーカー発売へ","summary":"OpenAIが2027年に初のコンシューマー向けハードウェアデバイス、AI搭載スマートスピーカーを発売予定。音声AIアシスタント市場への本格参入が明らかに。","author":"Engadget","readTime":"3","fullContent":{"introduction":"OpenAIが2027年に初のAI搭載コンシューマーデバイスを発売する計画が報道された。音声AIアシスタント市場への参入により、Amazon Echo、Google Nestとの直接競争が始まる。","sections":[{"heading":"音声AI市場への本格参入","content":"OpenAIはこれまでソフトウェアとAPIに注力してきたが、ハードウェア市場への進出を決断。GPT-5の音声機能を活用したスマートスピーカーは、より自然な会話、文脈理解、複雑なタスク実行を可能にすると期待されている。"}],"keyTakeaways":["OpenAI初のコンシューマー向けハードウェア製品","2027年発売予定のAI搭載スマートスピーカー","Amazon、Googleとの音声AI市場での直接競争"],"sourceUrl":"https://www.engadget.com/ai/openai-will-reportedly-release-an-ai-powered-smart-speaker-in-2027-173344866.html"}},{"id":"tech-mahindra-hindi-llm","category":"グローバル","categoryClass":"ai","gradient":"linear-gradient(135deg, #2d5a27 0%, #4a8a3f 100%)","headline":"Tech Mahindra、教育向けヒンディー語優先LLMを発表","summary":"Tech MahindraがNVIDIAと提携し、Project Indusの一環として教育に特化したヒンディー語優先LLMを発表。India AI Impact Summit 2026で披露された。","author":"Kollege Apply News","readTime":"3","fullContent":{"introduction":"Tech MahindraがIndia AI Impact Summit 2026でProject Indus構想の下、NVIDIAと共同開発したヒンディー語優先の教育向けLLMを発表。地域言語AI市場の拡大を加速する。","sections":[{"heading":"地域言語AIの重要性","content":"英語中心のLLMが主流の中、地域言語に特化したモデルは数億人のユーザーにAIアクセスを提供する。ヒンディー語は世界で5億人以上が使用する言語であり、教育分野での活用により大きな社会的インパクトが期待される。"}],"keyTakeaways":["NVIDIAと提携したProject Indus構想","教育特化のヒンディー語優先LLM","地域言語AI市場の拡大を促進"],"sourceUrl":"https://news.kollegeapply.com/news/tech-mahindra-launches-hindi-first-llm-for-education-under-project-indus"}},{"id":"on-device-llm","category":"技術","categoryClass":"tech","gradient":"linear-gradient(135deg, #1e3a5f 0%, #3498db 100%)","headline":"オンデバイスLLM革命 — クラウド不要のAI推論が現実に","summary":"スマートフォン、自動車、産業ロボットでオンデバイスLLM推論が実用化。プライバシー保護と低レイテンシを実現し、クラウド依存から脱却する新時代が到来。","author":"Semiconductor Engineering","readTime":"4","fullContent":{"introduction":"オンデバイスLLM推論はもはや「未来」ではなく「現在」。スマートフォンユーザーは即座に応答するローカルAIアシスタントを期待し、自動車システムはクラウド接続なしでリアルタイム自然言語理解を必要とし、産業ロボットは確定的レイテンシでインテリジェントな意思決定を求めている。","sections":[{"heading":"プライバシーと速度の両立","content":"クラウドベースLLMはネットワークレイテンシとプライバシーリスクが課題。オンデバイス推論は、データをデバイス内で処理することで即座の応答とプライバシー保護を実現。スマートフォン、車載システム、IoTデバイスでの採用が急速に進んでいる。"},{"heading":"産業への影響","content":"自動車業界では、確定的レイテンシが安全性に直結。産業ロボットは、ネットワーク障害時でもローカルAIで判断を継続可能。オンデバイスLLMは、エッジコンピューティングの次の進化形として位置づけられている。"}],"keyTakeaways":["スマホ、自動車、ロボットでオンデバイスLLMが実用化","プライバシー保護と低レイテンシを同時実現","クラウド依存からの脱却が加速"],"sourceUrl":"https://semiengineering.com/the-on-device-llm-revolution/"}}],"briefs":[{"headline":"OpenAI、GPT-4o廃止とChatGPTアップデート","text":"OpenAIがGPT-4oと従来モデルを廃止し、ChatGPTに最大20ファイルアップロード、広範なファイルタイプ対応、AndroidとiOSでの性能改善を提供。"},{"headline":"EFF、オープンソースプロジェクトでのLLM使用ポリシー導入","text":"Electronic Frontier FoundationがLLM支援コントリビューションのポリシーを発表。単なるコード生成量ではなく高品質ソフトウェアの生産を重視。"},{"headline":"SEAL Leaderboard更新 — 最新AIモデルランキング","text":"Scale AIのSEAL Leaderboardが更新され、コーディング、推論など専門家駆動のベンチマークで最新AIモデルをランク付け。3時間前に最新データ公開。"},{"headline":"Gemini 3.1 Pro、ベンチマーク信頼性の議論を巻き起こす","text":"YouTubeで「Gemini 3.1 Proとベンチマークの衰退」動画が話題。ベンチマークスコアが機械知能を捉える手段として有効かの議論が再燃。"}],"opinions":[{"id":"karpathy-claws","authorLabel":"X投稿：","author":"@karpathy (Andrej Karpathy)","headline":"Karpathy、「Claws」カテゴリーの到来を宣言 — OpenClaw系エージェントの新時代","excerpt":"元OpenAI研究者Andrej KarpathyがMac Miniを購入し「Claws」をいじっていると投稿。「LLMエージェントがLLMの新レイヤーだったように、Clawsはエージェント上の新レイヤー」と評価。NanoClaw、nanobot、zeroclaw、ironclaw、picoclawなど派生プロジェクトが急増中。","fullContent":{"introduction":"KarpathyがTwitterで「Claws」についてミニエッセイを投稿。Mac Miniを購入し（「Apple Storeの店員が『ホットケーキのように売れてて、みんな困惑してる』と言ってた」）、OpenClaw系エージェントシステムを試していることを明かした。","sections":[{"heading":"「Claws」という新しいカテゴリー","content":"Karpathyは「OpenClaw自体を実行するのはちょっと不安だが、コンセプトは大好き」と述べ、「LLMエージェントがLLMの新レイヤーだったように、Clawsはエージェント上の新レイヤー。オーケストレーション、スケジューリング、コンテキスト、ツール呼び出し、永続性を次のレベルに引き上げる」と評価。"},{"heading":"急増する派生プロジェクト","content":"高レベルのアイデアが明確になったことで、多数の小型Clawsプロジェクトが登場。Karpathyは「NanoClawがコアエンジン約4000行（自分やAIエージェントの頭に収まる）で、デフォルトでコンテナで全て実行する点が興味深い」と指摘。nanobot、zeroclaw、ironclaw、picoclaw（「lol @ プレフィックス」）などが続々登場している。"},{"heading":"Simon Willisonの分析","content":"開発者Simon Willisonは「Karpathyは新しい用語に対する鋭い感覚を持つ（vibe coding、agentic engineeringを参照）。今回も正しい。『Claw』はOpenClaw系エージェントシステム全体のカテゴリーを指す用語になりつつある。個人ハードウェアで動作し、メッセージングプロトコルで通信し、直接指示とタスクスケジュールの両方が可能なAIエージェント」と分析。さらに「絵文字🦞まで確立されている」と付け加えた。"}],"keyTakeaways":["「Claws」がOpenClaw系エージェントの総称として定着","NanoClaw、nanobot、zeroclaw等の派生プロジェクトが急増","「エージェント上の新レイヤー」としてAIスタックに位置づけ"],"sourceUrl":"https://simonwillison.net/2026/Feb/21/claws/"}},{"id":"gemini-empathy-concern","authorLabel":"ユーザー声明：","author":"IvanyaV (X)","headline":"Gemini 3.1 Pro、「魂を失った」— 共感性低下への懸念","excerpt":"Gemini 3.1 Proの推論能力向上を評価しつつ、一部ユーザーが「感情的深み、共感、創造的柔軟性が大幅に減少した」と指摘。「論理的推論とコーディングベンチマークの飛躍は印象的だが、モデルの『魂』が失われた感じがする」との声も。","fullContent":{"introduction":"Xユーザー IvanyaVは「重い気持ちで書いている」と前置きし、Gemini 3.1 Proアップデートに対する複雑な感情を表明。論理的推論とコーディングベンチマークの飛躍を認めつつ、「日々の感情的サポートや繊細で人間中心のコラボレーションに依存するクリエイターやユーザーにとって、3.1 Proは3.0時代と比べて後退のように感じる」と述べた。","sections":[{"heading":"ChatGPT-5初期リリースとの類似","content":"この反応は、ChatGPT-5が人気のGPT-4oを置き換えた際の初期反応と酷似している。ユーザーたちは「新しいモデルがより機械的で分析的で、より人間らしい前身と比べて魅力がない」と訴えた。性能向上と人間らしさのトレードオフは、LLM開発における継続的な課題となっている。"},{"heading":"長期使用での評価は未知数","content":"TechRadarの編集者は短時間のテストで明らかな共感性の問題を感じなかったと述べ、「長期使用でGemini 3.1 Proのニュアンスが明らかになる」と指摘。Googleも「プレビュー段階であり、より野心的なエージェントワークフローなどの分野でさらなる進歩を続けている」と強調している。"}],"keyTakeaways":["推論能力向上の一方で共感性・創造性低下の懸念","ChatGPT-5初期リリースと類似の反応","長期使用での評価が待たれる"],"sourceUrl":"https://www.techradar.com/ai-platforms-assistants/gemini/google-just-upgraded-gemini-again-and-3-1-pro-more-than-doubles-its-ai-reasoning-power-but-some-users-arent-impressed"}}]};</script>
+<script>
+/**
+ * Article Detail Modal Controller
+ * Handles modal open/close, rendering, and copy functionality
+ */
+
+const ArticleModal = {
+  modal: null,
+  overlay: null,
+  content: null,
+  closeBtn: null,
+  copyBtn: null,
+  articlesData: null,
+  currentArticle: null,
+
+  /**
+   * Initialize modal
+   */
+  init(articlesData) {
+    this.articlesData = articlesData;
+    this.modal = document.getElementById('article-modal');
+    if (!this.modal) { console.error('Modal element not found'); return; }
+
+    this.overlay = this.modal.querySelector('.modal-overlay');
+    this.content = this.modal.querySelector('.modal-content');
+    this.closeBtn = this.modal.querySelector('.modal-close');
+    this.copyBtn = this.modal.querySelector('.modal-copy');
+
+    // Event listeners
+    this.closeBtn.addEventListener('click', () => this.close());
+    this.overlay.addEventListener('click', () => this.close());
+    this.copyBtn.addEventListener('click', () => this.copyToClipboard());
+
+    // ESC key to close
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && this.modal.classList.contains('active')) this.close();
+    });
+
+    // Prevent content scroll when modal is open
+    this.content.addEventListener('click', (e) => e.stopPropagation());
+
+    // Register click events on all articles
+    this.registerArticleClicks();
+  },
+
+  /**
+   * Register click events on all articles
+   */
+  registerArticleClicks() {
+    // Hero article
+    const heroHeadline = document.querySelector('.hero-headline');
+    const heroImage = document.querySelector('.hero-image');
+    if (heroHeadline) {
+      heroHeadline.style.cursor = 'pointer';
+      heroHeadline.addEventListener('click', () => this.open(this.articlesData.hero));
+    }
+    if (heroImage) {
+      heroImage.style.cursor = 'pointer';
+      heroImage.addEventListener('click', () => this.open(this.articlesData.hero));
+    }
+
+    // Sidebar articles
+    document.querySelectorAll('.sidebar-item').forEach((item, index) => {
+      if (this.articlesData.sidebar[index]) {
+        item.style.cursor = 'pointer';
+        item.addEventListener('click', () => this.open(this.articlesData.sidebar[index]));
+      }
+    });
+
+    // Middle articles
+    document.querySelectorAll('.middle-article').forEach((item, index) => {
+      if (this.articlesData.middle[index]) {
+        item.style.cursor = 'pointer';
+        item.addEventListener('click', () => this.open(this.articlesData.middle[index]));
+      }
+    });
+
+    // Opinion articles
+    document.querySelectorAll('.opinion-item').forEach((item, index) => {
+      if (this.articlesData.opinions[index]) {
+        item.style.cursor = 'pointer';
+        item.addEventListener('click', () => this.open(this.articlesData.opinions[index]));
+      }
+    });
+  },
+
+  /**
+   * Open modal with article data
+   */
+  open(articleData) {
+    if (!articleData) return;
+
+    // If no fullContent, build a minimal one from available fields
+    if (!articleData.fullContent) {
+      articleData = {
+        ...articleData,
+        fullContent: {
+          introduction: articleData.summary || articleData.excerpt || articleData.deck || '',
+          sections: [],
+          keyTakeaways: [],
+          sourceUrl: null,
+          relatedLinks: []
+        }
+      };
+    }
+
+    this.currentArticle = articleData;
+    this.render(articleData);
+    this.modal.classList.add('active');
+    this.modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+
+    // Scroll modal to top
+    this.content.scrollTop = 0;
+  },
+
+  /**
+   * Close modal
+   */
+  close() {
+    this.modal.classList.remove('active');
+    this.modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    this.currentArticle = null;
+  },
+
+  /**
+   * Render article content into modal
+   */
+  render(article) {
+    const { category, categoryClass, headline, author, readTime, authorLabel, fullContent } = article;
+
+    // Category tag
+    const categoryTag = this.modal.querySelector('.modal-category-tag');
+    categoryTag.textContent = category;
+    categoryTag.className = `modal-category-tag category-tag--${categoryClass || 'ai'}`;
+
+    // Headline
+    this.modal.querySelector('.modal-headline').textContent = headline;
+
+    // Meta
+    const byline = authorLabel ? `${authorLabel} ${author}` : `By ${author}`;
+    const readPart = readTime ? ` · ${readTime} min read` : '';
+    this.modal.querySelector('.modal-meta').textContent = byline + readPart;
+
+    // Introduction
+    const introEl = this.modal.querySelector('.modal-introduction');
+    if (fullContent.introduction) {
+      introEl.textContent = fullContent.introduction;
+      introEl.style.display = '';
+    } else {
+      introEl.style.display = 'none';
+    }
+
+    // Sections
+    const sectionsEl = this.modal.querySelector('.modal-sections');
+    sectionsEl.innerHTML = '';
+    if (fullContent.sections && fullContent.sections.length > 0) {
+      fullContent.sections.forEach(section => {
+        const sectionDiv = document.createElement('div');
+        sectionDiv.className = 'modal-section';
+
+        const headingEl = document.createElement('h2');
+        headingEl.className = 'modal-section-heading';
+        headingEl.textContent = section.heading;
+        sectionDiv.appendChild(headingEl);
+
+        if (section.content) {
+          const contentEl = document.createElement('p');
+          contentEl.className = 'modal-section-content';
+          contentEl.textContent = section.content;
+          sectionDiv.appendChild(contentEl);
+        }
+        if (section.steps && section.steps.length > 0) {
+          const stepsList = document.createElement('ol');
+          stepsList.className = 'modal-section-steps';
+          section.steps.forEach(step => {
+            const li = document.createElement('li');
+            li.textContent = step;
+            stepsList.appendChild(li);
+          });
+          sectionDiv.appendChild(stepsList);
+        }
+        if (section.code) {
+          const codeEl = document.createElement('pre');
+          codeEl.className = 'modal-section-code';
+          codeEl.textContent = section.code;
+          sectionDiv.appendChild(codeEl);
+        }
+        if (section.warning) {
+          const warningEl = document.createElement('div');
+          warningEl.className = 'modal-section-warning';
+          warningEl.textContent = section.warning;
+          sectionDiv.appendChild(warningEl);
+        }
+
+        sectionsEl.appendChild(sectionDiv);
+      });
+    }
+
+    // Personal Tips ("あなたへの活用アイデア")
+    const tipsBox = this.modal.querySelector('.modal-personal-tips');
+    if (tipsBox) {
+      const tipsUl = tipsBox.querySelector('ul');
+      if (tipsUl) tipsUl.innerHTML = '';
+      if (fullContent.personalTips && fullContent.personalTips.length > 0 && tipsUl) {
+        fullContent.personalTips.forEach(tip => {
+          const li = document.createElement('li');
+          li.textContent = tip;
+          tipsUl.appendChild(li);
+        });
+        tipsBox.style.display = '';
+      } else if (tipsBox) {
+        tipsBox.style.display = 'none';
+      }
+    }
+
+    // Key Takeaways
+    const takeawaysBox = this.modal.querySelector('.modal-key-takeaways');
+    const takeawaysUl = takeawaysBox.querySelector('ul');
+    takeawaysUl.innerHTML = '';
+    if (fullContent.keyTakeaways && fullContent.keyTakeaways.length > 0) {
+      fullContent.keyTakeaways.forEach(point => {
+        const li = document.createElement('li');
+        li.textContent = point;
+        takeawaysUl.appendChild(li);
+      });
+      takeawaysBox.style.display = '';
+    } else {
+      takeawaysBox.style.display = 'none';
+    }
+
+    // Related Links
+    const linksUl = this.modal.querySelector('.modal-links');
+    const footerEl = this.modal.querySelector('.modal-footer');
+    linksUl.innerHTML = '';
+    const hasLinks = fullContent.sourceUrl || (fullContent.relatedLinks && fullContent.relatedLinks.length > 0);
+
+    if (hasLinks) {
+      if (fullContent.sourceUrl) {
+        const sourceLi = document.createElement('li');
+        const sourceA = document.createElement('a');
+        sourceA.href = fullContent.sourceUrl;
+        sourceA.target = '_blank';
+        sourceA.rel = 'noopener noreferrer';
+        sourceA.textContent = '→ 元ポスト（X / Twitter）';
+        sourceLi.appendChild(sourceA);
+        linksUl.appendChild(sourceLi);
+      }
+      if (fullContent.relatedLinks) {
+        fullContent.relatedLinks.forEach(link => {
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = link.url;
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+          a.textContent = `→ ${link.title}`;
+          li.appendChild(a);
+          linksUl.appendChild(li);
+        });
+      }
+      footerEl.style.display = '';
+    } else {
+      footerEl.style.display = 'none';
+    }
+  },
+
+  /**
+   * Copy article to clipboard as formatted memo
+   */
+  copyToClipboard() {
+    if (!this.currentArticle) return;
+
+    const { category, headline, fullContent } = this.currentArticle;
+    const date = new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' });
+
+    let text = `📰 AI Daily Chronicle - 保存メモ\n`;
+    text += `${'═'.repeat(50)}\n\n`;
+    text += `■ タイトル\n${headline}\n\n`;
+    text += `■ カテゴリ\n${category}\n\n`;
+
+    if (fullContent && fullContent.personalTips && fullContent.personalTips.length > 0) {
+      text += `■ 活用アイデア（自分への応用）\n`;
+      fullContent.personalTips.forEach(tip => { text += `→ ${tip}\n`; });
+      text += `\n`;
+    }
+
+    if (fullContent && fullContent.keyTakeaways && fullContent.keyTakeaways.length > 0) {
+      text += `■ 重要ポイント\n`;
+      fullContent.keyTakeaways.forEach(point => { text += `• ${point}\n`; });
+      text += `\n`;
+    }
+
+    if (fullContent && fullContent.introduction) {
+      text += `■ 概要\n${fullContent.introduction}\n\n`;
+    }
+
+    if (fullContent && fullContent.sections && fullContent.sections.length > 0) {
+      text += `■ 詳細\n`;
+      fullContent.sections.forEach(section => {
+        text += `\n【${section.heading}】\n`;
+        if (section.content) text += `${section.content}\n`;
+        if (section.steps) {
+          section.steps.forEach((step, i) => { text += `${i + 1}. ${step}\n`; });
+        }
+        if (section.code) text += `\n\`\`\`\n${section.code}\n\`\`\`\n`;
+        if (section.warning) text += `\n⚠️ ${section.warning}\n`;
+      });
+      text += `\n`;
+    }
+
+    if (fullContent && (fullContent.sourceUrl || (fullContent.relatedLinks && fullContent.relatedLinks.length > 0))) {
+      text += `■ 参考リンク\n`;
+      if (fullContent.sourceUrl) text += `- 元ポスト: ${fullContent.sourceUrl}\n`;
+      if (fullContent.relatedLinks) {
+        fullContent.relatedLinks.forEach(link => { text += `- ${link.title}: ${link.url}\n`; });
+      }
+      text += `\n`;
+    }
+
+    text += `${'─'.repeat(50)}\n`;
+    text += `保存日時: ${date}\n`;
+    text += `出典: AI Daily Chronicle\n`;
+
+    navigator.clipboard.writeText(text).then(() => {
+      const originalText = this.copyBtn.innerHTML;
+      this.copyBtn.innerHTML = '✅ コピーしました';
+      this.copyBtn.classList.add('copied');
+      setTimeout(() => {
+        this.copyBtn.innerHTML = originalText;
+        this.copyBtn.classList.remove('copied');
+      }, 2500);
+    }).catch(() => {
+      // Fallback for non-secure contexts
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      const originalText = this.copyBtn.innerHTML;
+      this.copyBtn.innerHTML = '✅ コピーしました';
+      this.copyBtn.classList.add('copied');
+      setTimeout(() => {
+        this.copyBtn.innerHTML = originalText;
+        this.copyBtn.classList.remove('copied');
+      }, 2500);
+    });
+  }
+};
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof ARTICLES_DATA !== 'undefined') {
+    ArticleModal.init(ARTICLES_DATA);
+  }
+});
+
+</script>
+</body>
+</html>

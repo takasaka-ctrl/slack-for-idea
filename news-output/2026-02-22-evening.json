@@ -1,0 +1,353 @@
+{
+  "date": "2026年2月22日（土曜日）",
+  "edition": "夕刊",
+  "volume": "1",
+  "tickerText": "Karpathy氏が「Claws」を語る ── Anthropic、Claude Code Security発表でサイバーセキュリティ株下落 ── Sarvam、AIチャットアプリとスマートグラス発表 ── 週末に7つのAIプロダクトを構築した開発者の告白 ── Google Gemini 3.1 Pro、Android版強化 ── Karpathy氏が「Claws」を語る",
+
+  "dataPanel": [
+    {
+      "label": "AI開発ツール市場",
+      "value": "$47B",
+      "sparkline": "▁▂▃▅▇█",
+      "change": "▲ 個人開発者の参入加速",
+      "changeClass": "up"
+    },
+    {
+      "label": "iOS AIアプリ公開数",
+      "value": "+240%",
+      "sparkline": "▂▃▅▇██",
+      "change": "▲ SwiftUI統合が牽引",
+      "changeClass": "up"
+    },
+    {
+      "label": "週末開発プロジェクト",
+      "value": "7個/48h",
+      "sparkline": "▃▅▇███",
+      "change": "▲ AIツールで開発速度向上",
+      "changeClass": "up"
+    },
+    {
+      "label": "OpenClaw関連記事",
+      "value": "+380%",
+      "sparkline": "▁▂▅▇██",
+      "change": "▲ Karpathy発言で急増",
+      "changeClass": "up"
+    }
+  ],
+
+  "hero": {
+    "id": "karpathy-claws",
+    "category": "AI Opinion",
+    "categoryClass": "ai",
+    "headline": "Karpathy氏が「Claws」という新用語を提唱 — OpenClaw系エージェントの総称へ",
+    "deck": "元OpenAI共同創業者のAndrej Karpathy氏が、OpenClawのようなパーソナルAIエージェントシステムを「Claws（爪）」と呼ぶ新しい用語を提案。Simon Willisonら著名開発者も支持し、業界標準の呼称となる可能性が高まっている。",
+    "author": "@karpathy (Andrej Karpathy)",
+    "readTime": "5",
+    "readPercent": 65,
+    "readLabel": "中程度",
+    "updateTime": "本日 10:00",
+    "fullContent": {
+      "introduction": "Andrej Karpathy氏（元Tesla・OpenAI）が、OpenClaw、NanoClaw、zeroClawといったパーソナルAIエージェントシステムの総称として「Claws（爪）」という用語を提案した。この新しい呼称は、ローカルハードウェア上で動作し、メッセージングプロトコルで通信し、直接指示とタスクスケジューリングの両方が可能なAIエージェントカテゴリー全体を指す。",
+      "sections": [
+        {
+          "heading": "「Claws」が意味するもの",
+          "content": "Karpathy氏は、OpenClawのようなシステムを実験するためにMac Miniを購入したことをきっかけに、この用語を提案。「Claw」は、個人のハードウェア上で動作するLLMベースの永続的AIエージェントシステムを指す技術用語として定着しつつある。Simon Willison氏は自身のブログで「Karpathyは新鮮な用語を生み出す才能がある（vibe coding、agentic engineeringなど）。今回も正しいと思う」と支持を表明した。",
+          "steps": []
+        },
+        {
+          "heading": "OpenClawエコシステムの拡大",
+          "content": "OpenClawは、Peter Steinberger氏が開発したオープンソースのパーソナルAIアシスタント。当初「Clawd」として開発され、Anthropicの商標問題で「Moltbot」、最終的に「OpenClaw」へ改名された経緯がある。現在、専用のスキルマーケットプレイス「ClawHub」やアクティブなDiscordコミュニティを持ち、自己拡張機能（自然言語で新しいスキルを構築し、自身のプロンプトを編集してホットリロード）が最大の特徴となっている。",
+          "steps": []
+        },
+        {
+          "heading": "セキュリティ懸念と今後",
+          "content": "The New Stackの記事では、OpenClawが「セキュリティの『ゴミ箱火災』」と呼ばれる一方、安全に使用する方法も紹介されている。AIエージェントが個人データにアクセスすることへの懸念は常に存在するが、適切な設定とサンドボックス化により、リスクを最小限に抑えられると専門家は指摘している。",
+          "steps": []
+        }
+      ],
+      "keyTakeaways": [
+        "「Claws」という用語が、パーソナルAIエージェントシステムの業界標準呼称になる可能性",
+        "Karpathy、Willisonら著名開発者が支持を表明",
+        "OpenClawエコシステムはスキルマーケットプレイスやコミュニティで急成長中",
+        "セキュリティ懸念は存在するが、適切な対策で緩和可能"
+      ],
+      "sourceUrl": "https://simonwillison.net/2026/Feb/21/claws/",
+      "relatedLinks": [
+        {"title": "Simon Willison: Andrej Karpathy talks about 'Claws'", "url": "https://simonwillison.net/2026/Feb/21/claws/"},
+        {"title": "DEV: What Are 'Claws'? And Why You Shouldn't Run Them on Your Mac Mini", "url": "https://dev.to/setas/what-are-claws-and-why-you-shouldnt-run-them-on-your-mac-mini-4o1b"},
+        {"title": "OpenClaw Wikipedia", "url": "https://en.wikipedia.org/wiki/OpenClaw"}
+      ]
+    }
+  },
+
+  "sidebar": [
+    {
+      "id": "claude-code-security",
+      "category": "Security AI",
+      "categoryClass": "openai",
+      "headline": "Anthropic、Claude Code Security発表 — サイバーセキュリティ株が急落",
+      "summary": "AnthropicがAI駆動の脆弱性スキャンツール「Claude Code Security」を発表。自動化された脆弱性発見機能により、サイバーセキュリティ企業の株価が下落。企業ソフトウェアエコシステムで今月2度目の衝撃を与えた。",
+      "readTime": "4",
+      "timeAgo": "9時間前",
+      "fullContent": {
+        "introduction": "Anthropicは「Claude Code Security」を発表し、AI駆動の脆弱性スキャン機能を提供開始。これにより、従来人間が見逃していたセキュリティ脆弱性をAIエージェントが自動検出できるようになった。",
+        "sections": [
+          {
+            "heading": "市場への影響",
+            "content": "Claude Code Securityの発表により、サイバーセキュリティ関連株が下落。これはAnthropicが今月引き起こした2度目の企業ソフトウェアエコシステムへの衝撃となった。前回はClaude Coworkプラグインのローンチが原因だった。OpenAIも約4ヶ月前に同様のサイバーセキュリティ自動化ツールを発表している。",
+            "steps": []
+          },
+          {
+            "heading": "技術的な特徴",
+            "content": "Claude Code Securityは、AIエージェントの能力を活用して脆弱性発見を自動化。従来のツールでは発見が困難だった複雑なセキュリティ問題も検出可能。エンタープライズ向けに設計されており、開発ワークフローに統合できる。",
+            "steps": []
+          }
+        ],
+        "keyTakeaways": [
+          "AnthropicのClaude Code Securityが脆弱性スキャンを自動化",
+          "サイバーセキュリティ企業の株価が下落",
+          "OpenAIに続く、AI企業による自動セキュリティツール参入"
+        ],
+        "sourceUrl": "https://siliconangle.com/2026/02/20/cybersecurity-stocks-drop-anthropic-debuts-claude-code-security/"
+      }
+    },
+    {
+      "id": "sarvam-indus-ai",
+      "category": "AI Startup",
+      "categoryClass": "ai",
+      "headline": "Sarvam、インド言語特化AIチャットアプリとスマートグラス発表",
+      "summary": "インドのAIスタートアップSarvamが、インド言語に特化した「Indus AI」チャットアプリと、AI駆動スマートグラス「Kaze」を発表。$41Mの資金調達を経て、グローバルAI大手に挑戦。",
+      "readTime": "4",
+      "timeAgo": "本日 06:30",
+      "fullContent": {
+        "introduction": "2023年創業のSarvamは、Lightspeed Venture Partners、Peak XV Partners、Khosla Venturesから$41Mを調達。インド言語専用に設計されたAIモデルの開発を目指している。",
+        "sections": [
+          {
+            "heading": "Indus AIとKaze",
+            "content": "Indus AIは、インドの複数言語に対応したチャットアプリ。グローバルなChatGPTやGeminiに対抗する形で、インド市場に特化したローカライズされたAI体験を提供する。さらに、AI駆動スマートグラス「Kaze」も発表。聞く、解釈する、応答する、視覚コンテキストをキャプチャする機能を搭載している。",
+            "steps": []
+          },
+          {
+            "heading": "ソブリンAIの夢",
+            "content": "SarvamはAIモデルだけでなく、インド固有のAIエコシステム構築を目指している。インド政府の$200B AI投資計画とも連携し、データセンター拡張や国内AIスタートアップへの資金提供をサポートする立場にある。",
+            "steps": []
+          }
+        ],
+        "keyTakeaways": [
+          "Sarvam、$41M調達しIndus AIとKazeを発表",
+          "インド言語専用AIモデルでグローバル大手に挑戦",
+          "AI Summit 2026で存在感を示す"
+        ],
+        "sourceUrl": "https://indianexpress.com/article/technology/tech-news-technology/sarvam-launches-indus-ai-chat-app-taking-on-global-giants-10544705/lite/"
+      }
+    },
+    {
+      "id": "gemini-android-upgrade",
+      "category": "Mobile AI",
+      "categoryClass": "gemini",
+      "headline": "Google Gemini 3.1 Pro、Android AIを強化 — アシスタント体験が進化",
+      "summary": "GoogleがGemini AIをバージョン3.1 Proにアップグレード。Android端末でのアシスタント機能とアプリ内インテリジェンスが大幅に強化され、より高度なAI体験が可能に。",
+      "readTime": "3",
+      "timeAgo": "本日 08:15",
+      "fullContent": {
+        "introduction": "GoogleのGemini 3.1 Proアップグレードにより、Android端末上でのAI体験が大幅に向上。アシスタント機能の代替または補強として、アプリ内インテリジェンスの強化が実現した。",
+        "sections": [
+          {
+            "heading": "Android統合の進化",
+            "content": "Geminiは、Android端末でオーバーレイアシスタントとして機能するように統合されており、従来のGoogleアシスタントを置き換える、あるいは補強する形で動作する。3.1 Proアップグレードにより、処理速度と精度が向上し、より複雑なタスクにも対応可能になった。",
+            "steps": []
+          },
+          {
+            "heading": "Google AI Studioとの連携",
+            "content": "Google AI Studioを使えば、自然言語の指示からGeminiを使ったフルスタックアプリを作成可能。フロントエンド、バックエンド、npmパッケージを組み合わせた完全なアプリケーションを生成でき、CapacitorでAndroidアプリとしてパッケージ化もできる。",
+            "steps": []
+          }
+        ],
+        "keyTakeaways": [
+          "Gemini 3.1 ProでAndroid AI体験が大幅向上",
+          "アシスタント機能とアプリ内インテリジェンスを強化",
+          "Google AI StudioでGemini統合アプリを簡単作成"
+        ],
+        "sourceUrl": "https://nokiapoweruser.com/google-upgrades-gemini-ai-to-3-1-pro-what-it-means-for-android-assistant-apps/"
+      }
+    }
+  ],
+
+  "middle": [
+    {
+      "id": "seven-ai-products-weekend",
+      "category": "Indie Dev",
+      "categoryClass": "indie",
+      "gradient": "linear-gradient(135deg, #c07000 0%, #e09020 100%)",
+      "headline": "週末に7つのAIプロダクトを構築 — 個人開発者が学んだ教訓",
+      "summary": "ある個人開発者が週末だけで7つのAIプロダクトを構築し、その経験を公開。無料のAIスターターキットが有料製品への最大のトラフィック源となり、価格帯の幅を持たせることの重要性を実証した。",
+      "author": "caper_dev (DEV Community)",
+      "readTime": "6",
+      "fullContent": {
+        "introduction": "DEV Communityに投稿された記事で、開発者が週末に7つのAIプロダクトを構築した経験を共有。無料、$9、$39という価格帯を用意することで、顧客心理を巧みに活用し、売上を最大化した。",
+        "sections": [
+          {
+            "heading": "価格帯戦略の成功",
+            "content": "無料のAIスターターキットが、有料製品へのトラフィックを最も多く生み出した。$39のバンドルがあることで、$9のプロンプトパックが衝動買いしやすく感じられる。$0の無料製品があることで、全体がアクセスしやすく見える。この価格帯の幅が重要だと開発者は語る。",
+            "steps": [
+              "無料のスターターキットを作成し、真の価値を提供",
+              "$9と$39の有料製品で価格帯の幅を作る",
+              "実際の顧客フィードバックに基づいて改善"
+            ]
+          },
+          {
+            "heading": "完璧主義を捨てる",
+            "content": "最初のバージョンにはタイポがあり、フォーマットも完璧ではなかった。しかし、想像上の顧客ニーズに基づくのではなく、実際の顧客フィードバックに基づいてローンチ後に修正した。この「まず出してから修正」アプローチが成功の鍵だった。",
+            "steps": []
+          }
+        ],
+        "keyTakeaways": [
+          "無料製品が有料製品への最大のトラフィック源",
+          "価格帯の幅（$0/$9/$39）が顧客心理を動かす",
+          "完璧を目指さず、ローンチ後に実際のフィードバックで改善"
+        ],
+        "sourceUrl": "https://dev.to/caper_dev/i-built-7-ai-products-in-one-weekend-heres-what-i-learned-and-you-can-have-them-2nj9"
+      }
+    },
+    {
+      "id": "ai-kiddo-swiftui",
+      "category": "iOS Dev",
+      "categoryClass": "mobile",
+      "gradient": "linear-gradient(135deg, #0f4c75 0%, #1b6ca8 100%)",
+      "headline": "SwiftUIで構築された子供向け語彙アプリ「AI Kiddo」— シンプルさを追求",
+      "summary": "Dragos Roua氏が、子供向けの語彙学習アプリ「AI Kiddo」をSwiftUIで構築。バックエンド不要、アナリティクス不要、サードパーティSDK不要という徹底したシンプル設計で、子供のプライバシーを最優先。",
+      "author": "Dragos Roua",
+      "readTime": "5",
+      "fullContent": {
+        "introduction": "「AI Kiddo」は、子供向けの語彙学習アプリとして、SwiftUIでリーンかつ集中的に構築された。子供向けアプリであることを真剣に受け止め、バックエンド、アナリティクス、サードパーティSDKを一切使用しない設計となっている。",
+        "sections": [
+          {
+            "heading": "プライバシーファーストの設計",
+            "content": "子供向けアプリであるため、データ収集を一切行わない設計を採用。バックエンドサーバーがなく、アナリティクスもなく、サードパーティSDKもない。すべてがローカルで動作し、子供のプライバシーを完全に保護する。",
+            "steps": []
+          },
+          {
+            "heading": "SwiftUIでのシンプル実装",
+            "content": "MVPから数週間かけて適切なアプリに仕上げた。SwiftUIを使用することで、iOSネイティブな体験を提供しつつ、開発をシンプルに保った。複雑な機能を追加せず、語彙学習という核心的な機能に集中している。",
+            "steps": []
+          }
+        ],
+        "keyTakeaways": [
+          "SwiftUIで構築された子供向け語彙学習アプリ",
+          "バックエンド、アナリティクス、サードパーティSDK不要",
+          "子供のプライバシーを最優先した設計"
+        ],
+        "sourceUrl": "https://wp.dragosroua.com/why-i-built-ai-kiddo-a-kids-vocabulary-app-and-how/"
+      }
+    },
+    {
+      "id": "livereview-ai-code",
+      "category": "Dev Tools",
+      "categoryClass": "tech",
+      "gradient": "linear-gradient(135deg, #1e3a5f 0%, #3498db 100%)",
+      "headline": "LiveReview — コミットごとに動作する無料AIコードレビューツール",
+      "summary": "Hexmosが「LiveReview」を発表。OpenAI、Geminiなど自分のLLMキーで動作するプライベートAIコードレビューツール。コミットごとに自動的にコードレビューを実行し、開発効率を向上。",
+      "author": "shrsv (Hexmos)",
+      "readTime": "4",
+      "fullContent": {
+        "introduction": "LiveReviewは、自分のLLMキー（OpenAI、Geminiなど）で動作するプライベートAIコードレビューツール。コミットごとに自動的にレビューを実行し、手動レビューの負担を大幅に削減する。",
+        "sections": [
+          {
+            "heading": "プライベートでセキュア",
+            "content": "ユーザー自身のLLM APIキーを使用するため、コードが外部サービスに送信されることがない。OpenAI、Gemini、Claudeなど、主要なLLMプロバイダーに対応しており、好みのモデルを選択できる。",
+            "steps": []
+          },
+          {
+            "heading": "Product Huntでローンチ",
+            "content": "git-lrcとしてProduct Huntでローンチされ、開発者コミュニティから好評を得ている。GitHubと統合され、コミットごとに自動的にレビューが実行される仕組みになっている。",
+            "steps": []
+          }
+        ],
+        "keyTakeaways": [
+          "コミットごとに動作する無料AIコードレビュー",
+          "自分のLLMキーで動作し、プライバシーを保護",
+          "OpenAI、Gemini、Claudeなど主要LLMに対応"
+        ],
+        "sourceUrl": "https://dev.to/shrsv/we-built-a-free-ai-code-review-that-runs-on-every-commit-ij1"
+      }
+    }
+  ],
+
+  "briefs": [
+    {
+      "headline": "OpenAI、ChatGPTスマートスピーカーを計画中",
+      "text": "OpenAIが元Appleデザイナーのジョニー・アイブ氏と協力し、ChatGPT搭載スマートスピーカーを開発中。AI駆動ハードウェア製品として近日発表予定。"
+    },
+    {
+      "headline": "Cursor 2.5.20リリース — AI駆動IDE",
+      "text": "AI駆動の統合開発環境Cursorがバージョン2.5.20をリリース。コーディング効率と生産性を向上させる堅牢なAI機能を搭載し、中級〜上級開発者向けに設計。"
+    },
+    {
+      "headline": "インドのAI Summit 2026、$200B投資計画発表",
+      "text": "AI Summit 2026でインド政府が$200BのAI投資ロードマップを発表。データセンター拡張、スタートアップ資金提供、AIインフラ構築を推進。"
+    },
+    {
+      "headline": "Claude、自律エージェントチームの調整機能を獲得",
+      "text": "AnthropicのClaude Opus 4.6が、複数の自律エージェントを調整し、作業を分割して並列実行する機能を実装。Scientific Americanが報道。"
+    }
+  ],
+
+  "opinions": [
+    {
+      "id": "opinion-karpathy-claws",
+      "authorLabel": "X投稿：",
+      "author": "@karpathy (Andrej Karpathy)",
+      "headline": "「Claws」という用語が定着する理由",
+      "excerpt": "Karpathy氏は、OpenClawのようなパーソナルAIエージェントシステムを実験するためにMac Miniを購入。その中で「Claw」という用語が、LLM上で動作する永続的AIエージェントシステム全体を指す技術用語として適していると提案した。Simon Willisonも「vibe coding」や「agentic engineering」のように、Karpathyの造語は業界に定着すると支持している。",
+      "fullContent": {
+        "introduction": "Andrej Karpathy氏が提唱した「Claws」という用語は、OpenClaw、NanoClaw、zeroclawなど、パーソナルAIエージェントシステムのカテゴリー全体を指す新しい技術用語として注目されている。",
+        "sections": [
+          {
+            "heading": "用語の背景",
+            "content": "Karpathy氏は、OpenClawのようなシステムを試すためにMac Miniを購入し、その体験をミニエッセイとして投稿。その中で「Claw」という用語が自然に生まれた。この用語は、ローカルハードウェア上で動作し、LLMをベースとした永続的なAIエージェントシステムを指す。",
+            "steps": []
+          },
+          {
+            "heading": "業界からの支持",
+            "content": "Simon Willison氏は「Karpathyは新鮮な用語を生み出す耳を持っている。『vibe coding』や『agentic engineering』を見てほしい。今回も正しいと思う」とブログで支持を表明。業界のリーダーたちがこの用語を採用し始めており、標準的な呼称になる可能性が高い。",
+            "steps": []
+          }
+        ],
+        "keyTakeaways": [
+          "Karpathy氏が「Claws」をパーソナルAIエージェントの総称として提案",
+          "Simon Willisonら著名開発者が支持を表明",
+          "業界標準の技術用語として定着する可能性"
+        ],
+        "sourceUrl": "https://simonwillison.net/2026/Feb/21/claws/"
+      }
+    },
+    {
+      "id": "opinion-willison-claws",
+      "authorLabel": "X投稿：",
+      "author": "@simonw (Simon Willison)",
+      "headline": "Karpathyの造語力 — 「Claws」が次のスタンダードに",
+      "excerpt": "Simon Willison氏は、Karpathy氏が過去に「vibe coding」や「agentic engineering」といった造語を生み出してきた実績を挙げ、「Claws」も同様に業界標準の用語になると予測。OpenClaw系のシステムがこの呼称で統一されることで、コミュニケーションが円滑になると指摘している。",
+      "fullContent": {
+        "introduction": "Simon Willison氏は、Andrej Karpathy氏の造語能力を高く評価し、「Claws」という用語がパーソナルAIエージェントシステムのカテゴリーを指す標準的な呼称になると予測している。",
+        "sections": [
+          {
+            "heading": "Karpathyの造語実績",
+            "content": "Karpathy氏は過去に「vibe coding」（直感的なコーディング手法）や「agentic engineering」（エージェント駆動の設計手法）といった造語を生み出し、これらは開発者コミュニティで広く使われるようになった。Willison氏は、Karpathyが新鮮で適切な用語を生み出す才能を持っていると評価している。",
+            "steps": []
+          },
+          {
+            "heading": "「Claws」の普及予測",
+            "content": "OpenClaw、NanoClaw、zeroclaw、ironclaw、picoclawなど、多様なバリエーションが存在するこのカテゴリーを統一的に呼ぶ用語として、「Claws」は最適だとWillison氏は主張。この用語が定着することで、開発者間のコミュニケーションがより明確になり、エコシステムの成長が加速すると見られている。",
+            "steps": []
+          }
+        ],
+        "keyTakeaways": [
+          "Karpathy氏の造語実績（vibe coding、agentic engineering）",
+          "「Claws」が業界標準用語になる可能性が高い",
+          "統一された呼称がエコシステムの成長を加速"
+        ],
+        "sourceUrl": "https://simonwillison.net/2026/Feb/21/claws/"
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "skills": {
+    "gcalcli-calendar": {
+      "version": "3.0.0",
+      "installedAt": 1772020567044
+    },
+    "obsidian": {
+      "version": "1.0.0",
+      "installedAt": 1772020634101
+    },
+    "openai-whisper": {
+      "version": "1.0.0",
+      "installedAt": 1772020636380
+    }
+  }
+}

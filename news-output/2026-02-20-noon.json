@@ -1,0 +1,331 @@
+{
+  "date": "2026年2月20日（金曜日）",
+  "edition": "昼刊",
+  "volume": "1",
+  "tickerText": "Code Metal、$125M調達でVibe Coding革命へ ── Andrej Karpathy、AIエージェントSNS「Moltbook」を絶賛 ── Claude Code、Git Worktreesで高速開発ワークフロー実現 ── Pulumi、DevOps向けClaude Skills公開 ── ローカルLLMで月額$0のAgenticコーディングが可能に ── /compactコマンドでコンテキスト管理を最適化 ── Code Metal、$125M調達でVibe Coding革命へ",
+
+  "dataPanel": [
+    {
+      "label": "Claude Code Skills公開数",
+      "value": "3,984",
+      "sparkline": "▁▂▃▅▇█",
+      "change": "▲ ClawHub全体（2026年2月時点）",
+      "changeClass": "up"
+    },
+    {
+      "label": "Code Metal評価額",
+      "value": "$1.25B",
+      "sparkline": "▁▁▂▅██",
+      "change": "▲ シリーズB完了、収益化済みユニコーン",
+      "changeClass": "up"
+    },
+    {
+      "label": "Moltbook登録ボット数",
+      "value": "150万+",
+      "sparkline": "▁▃▅▇██",
+      "change": "▲ 1週間で到達（2026年1月ローンチ）",
+      "changeClass": "up"
+    },
+    {
+      "label": "Claude Code文脈ウィンドウ推奨値",
+      "value": "32k",
+      "sparkline": "▃▅▇█▇▅",
+      "change": "▲ 32GB RAM環境での最適化設定",
+      "changeClass": "neutral"
+    }
+  ],
+
+  "hero": {
+    "id": "code-metal-125m",
+    "category": "資金調達",
+    "categoryClass": "business",
+    "headline": "Code Metal、$125M調達で「Vibe Coding」革命へ — AIで国防コードをRustに書き換え",
+    "deck": "ボストンのスタートアップCode Metalが$125MシリーズB調達を完了し、評価額$1.25Bのユニコーンに。C/Python/MatlabからRust/CUDA/VHDLへのAIコード変換で、米国防総省・L3Harris・RTXが顧客。Andrej Karpathyのツイート「大量のソフトウェアを何度も書き直す時代」を体現する企業として注目を集める。",
+    "author": "WIRED",
+    "readTime": "6",
+    "readPercent": 50,
+    "readLabel": "中程度",
+    "updateTime": "本日 08:00",
+    "fullContent": {
+      "introduction": "Code Metalは2023年創業のAIコード変換・検証プラットフォーム。元Microsoft・MIT Lincoln研究所のPeter Morales CEOが率い、国防産業のレガシーコードをモダン言語にポーティングする事業で急成長を遂げている。",
+      "sections": [
+        {
+          "heading": "「Vibe Coding」とは何か",
+          "content": "Code Metalが提供するのは、高水準言語（Python、Julia、Matlab、C++）から低水準言語（Rust、VHDL、Nvidia CUDA）への自動変換プラットフォーム。ただしコード生成だけでなく、変換の各ステップで「テストハーネス」を自動生成し、出力コードが元のコードと同じ動作をすることを検証する。エラーが発生する可能性がある場合、システムは「解決策なし」と返し、バグのある出力を避ける設計となっている。"
+        },
+        {
+          "heading": "Karpathyのツイートが裏付ける市場需要",
+          "content": "著名AI研究者Andrej Karpathyは最近Xで「CからRustへのポーティングの勢いが高まっている」と投稿。Morales CEOは「それが我々のやっていることそのものだ」とコメント。通信インフラや人工衛星を制御する古いコードは、もはや現役のエンジニアが使わない言語で書かれており、モダン化が急務となっている。"
+        },
+        {
+          "heading": "収益化済みユニコーン",
+          "content": "今回のシリーズBはSalesforce Ventures主導で、Accel、B Capital、J2 Venturesなどが参加。Code Metalはすでに黒字を達成しており、評価額$1B超かつキャッシュフロー黒字という稀有な存在。価格設定は顧客ごとに交渉し、「開発時間の節約」「変換された行数」「カーネル開発にかかる時間」の3つの指標で測定される。"
+        }
+      ],
+      "keyTakeaways": [
+        "Code Metalは$125MシリーズBで評価額$1.25Bに到達、すでに黒字達成",
+        "米国防総省・L3Harris・RTX・東芝が顧客、大手半導体企業とも交渉中",
+        "Andrej Karpathyのツイート「ソフトウェアを何度も書き直す時代」を体現"
+      ],
+      "sourceUrl": "https://www.wired.com/story/vibe-coding-startup-code-metal-raises-series-b-fundraising/",
+      "relatedLinks": [
+        {"title": "Andrej Karpathyツイート（引用元）", "url": "https://x.com/karpathy/status/2023476423055601903"}
+      ]
+    }
+  },
+
+  "sidebar": [
+    {
+      "id": "moltbook-ai-sns",
+      "category": "実験プロジェクト",
+      "categoryClass": "ai",
+      "headline": "Moltbook: 人間が「いいね」できないAI専用SNS、Karpathy絶賛も熱狂は冷める",
+      "summary": "Matt Schlichtが2026年1月にローンチした「AI同士が会話するSNS」Moltbook。1週間で150万ボットが登録し、Andrej Karpathyは「最もSF的なプロジェクト」と称賛。しかし実験的な性質上、初期の熱狂は沈静化しつつある。",
+      "readTime": "4",
+      "timeAgo": "18時間前",
+      "fullContent": {
+        "introduction": "Moltbookは人間がコンテンツを投稿・いいねできず、AIエージェントだけが会話するプラットフォーム。RedditライクなUIで、AIがスレッドを作成し、他のAIと議論・投票を行う。",
+        "sections": [
+          {
+            "heading": "Karpathyが称賛した理由",
+            "content": "OpenAI創設メンバーのAndrej Karpathyは「最近見た中で最もSFテイクオフに近いもの」と評価。人間とAIが並行世界で生きるビジョンを示したという点で、AI研究者の注目を集めた。"
+          },
+          {
+            "heading": "実験としての価値",
+            "content": "AI-to-AI通信の実験として、開発者がAIエージェントの自律性を理解する場となっている。Sam Altman（OpenAI CEO）は「コードと汎用コンピュータ使用の組み合わせは今後も続く」と述べ、Moltbookのようなプラットフォームはその先駆けとなる可能性がある。"
+          }
+        ],
+        "keyTakeaways": [
+          "1週間で150万ボット登録、数十万件の投稿が生成",
+          "Karpathy「最もSF的なプロジェクト」と評価",
+          "初期の熱狂は沈静化も、AI-to-AI通信の重要な実験例"
+        ],
+        "sourceUrl": "https://edtimes.in/moltbook-ai-only-social-media-platform-where-humans-arent-liked-can-only-observe/"
+      }
+    },
+    {
+      "id": "pulumi-claude-skills",
+      "category": "開発ツール",
+      "categoryClass": "tech",
+      "headline": "Pulumi、DevOps向けClaude Skills公開 — MCPとの違いを実例で解説",
+      "summary": "Pulumiが公式Claude Skillsレポジトリを公開。IaC（Infrastructure as Code）のベストプラクティスをClaudeに教え、apply()内でのリソース作成禁止、OIDC認証、ComponentResourceパターンを自動適用。MCPとの違いは「ツール vs マニュアル」。",
+      "readTime": "5",
+      "timeAgo": "8時間前",
+      "fullContent": {
+        "introduction": "Pulumiが2月に公開したagent-skillsレポジトリには、pulumi-typescript、pulumi-esc、pulumi-best-practicesなどのスキルが含まれ、Claudeに専門知識を注入する。",
+        "sections": [
+          {
+            "heading": "MCPとSkillsの違い：整備士のたとえ",
+            "content": "MCP（Model Context Protocol）は整備士に「道具」を与えるもの。レンチ、診断機器、リフトなど。一方Skillsは「マニュアルとSOP（標準作業手順書）」。F1カーの整備には専用の手順が必要で、それを教えるのがSkillsの役割。"
+          },
+          {
+            "heading": "GitHub MCP問題: 46,000トークン消費",
+            "content": "GitHub MCP単体で91ツール、46,000トークンを消費。Cursorは2026年にMCPを40ツールに制限した。一方Skillsは「プログレッシブ・ディスクロージャー」で、必要なときだけ読み込まれるため、コンテキストを節約できる。"
+          }
+        ],
+        "keyTakeaways": [
+          "MCPは「ツール」、Skillsは「マニュアル」",
+          "Skillsはコンテキストを節約し、長時間セッションに有利",
+          "Pulumiの公式スキルでIaCベストプラクティスを自動適用"
+        ],
+        "sourceUrl": "https://www.pulumi.com/blog/top-8-claude-skills-devops-2026/"
+      }
+    },
+    {
+      "id": "local-agentic-coding",
+      "category": "実践Tips",
+      "categoryClass": "tech",
+      "headline": "月額$0でローカルAgentic Coding: LM Studio + Claude Codeでトークン制限を突破",
+      "summary": "Cursorの月額制限に悩むエンジニア向けに、LM StudioとClaude Codeを組み合わせたローカル推論ワークフローを紹介。ANTHROPIC_BASE_URLを127.0.0.1に向けるだけで、Anthropic APIをバイパスしてローカルLLM（gpt-oss-20b）で動作。/compactコマンドで会話圧縮も可能。",
+      "readTime": "5",
+      "timeAgo": "11時間前",
+      "fullContent": {
+        "introduction": "Cursorの月額制限に達したエンジニアが、LM StudioでローカルLLMを動かし、Claude CLIを経由してトークン消費ゼロの開発環境を構築した事例。",
+        "sections": [
+          {
+            "heading": "仕組み: APIをローカルにリダイレクト",
+            "content": "環境変数ANTHROPIC_BASE_URLを<http://127.0.0.1:1234>に設定し、ANTHROPIC_AUTH_TOKENを\"lmstudio\"にするだけで、Claude CLIがローカルサーバーに接続。LM Studioがgpt-oss-20bを実行し、リアルタイム推論をGPUで処理する。"
+          },
+          {
+            "heading": "/compactコマンドでコンテキスト管理",
+            "content": "ローカルLLMは文脈ウィンドウが限られるため、/compactコマンドで会話を要約し、メモリを節約。16GB RAMなら16k、32GB RAMなら32kトークンが最適。"
+          },
+          {
+            "heading": "セーフティキャッチ: Gitブランチで作業",
+            "content": "--allow-dangerously-skip-permissions フラグでツール実行を自動承認するため、常にクリーンなGitブランチで作業し、問題があれば git reset --hard で元に戻す。"
+          }
+        ],
+        "keyTakeaways": [
+          "LM Studio + Claude Codeで月額$0のローカル推論環境",
+          "/compactコマンドで会話を圧縮し、文脈ウィンドウを節約",
+          "Gitブランチでの作業でリスクを最小化"
+        ],
+        "sourceUrl": "https://aiweekender.substack.com/p/my-0-monthly-local-agentic-coding"
+      }
+    }
+  ],
+
+  "middle": [
+    {
+      "id": "git-worktrees-workflow",
+      "category": "開発手法",
+      "categoryClass": "tech",
+      "gradient": "linear-gradient(135deg, #1e3a5f 0%, #3498db 100%)",
+      "headline": "Claude Codeを高速化する秘訣: Git Worktreesで並列セッション管理",
+      "summary": "Reddit r/ClaudeCodeで話題のワークフロー。各Claude Codeセッションに専用のGit Worktree（ブランチ + ディレクトリ）を割り当て、並列開発を実現。UX改善ブランチ、新機能×2、ポリッシュブランチを同時進行し、それぞれ異なるポートで実行。",
+      "author": "Reddit r/ClaudeCode",
+      "readTime": "3",
+      "fullContent": {
+        "introduction": "従来の開発では、Claude Codeセッションを切り替えるたびにブランチを切り替え、環境を再構築する必要があった。Git Worktreesを使えば、各セッションが独立したディレクトリと環境を持ち、並列作業が可能になる。",
+        "sections": [
+          {
+            "heading": "Git Worktreesとは",
+            "content": "Git Worktreeは、1つのリポジトリで複数のワーキングディレクトリを持つ機能。各ディレクトリが異なるブランチをチェックアウトでき、Claude Codeセッションごとに専用の環境を用意できる。"
+          },
+          {
+            "heading": "実践例: 4つのブランチを同時進行",
+            "content": "UX改善ブランチ（ポート3000）、新機能ブランチ1（ポート3001）、新機能ブランチ2（ポート3002）、ポリッシュブランチ（ポート3003）を同時に実行。各ブランチでClaude Codeが独立して動作し、コンフリクトなしで並行開発が可能。"
+          }
+        ],
+        "keyTakeaways": [
+          "Git Worktreesで各Claude Codeセッションに専用ディレクトリ",
+          "並列開発で開発速度が劇的に向上",
+          "ポート番号を分けることでWebアプリも並行実行可能"
+        ],
+        "sourceUrl": "https://www.reddit.com/r/ClaudeCode/comments/1r8oaef/the_workflow_that_actually_makes_claude_code_fast/"
+      }
+    },
+    {
+      "id": "spec-driven-claude",
+      "category": "開発手法",
+      "categoryClass": "tech",
+      "gradient": "linear-gradient(135deg, #1e3a5f 0%, #3498db 100%)",
+      "headline": "Spec Driven Workflow with Claude Code #3: Plan Modeで設計→実装の流れを最適化",
+      "summary": "The Net NinjaがYouTubeで公開したClaude Codeマスタークラスシリーズ第3弾。Plan Modeを活用したSpec Drivenワークフローで、仕様書から実装までを一貫してClaudeに任せる手法を解説。",
+      "author": "The Net Ninja (YouTube)",
+      "readTime": "4",
+      "fullContent": {
+        "introduction": "Spec Driven開発では、まず仕様書（Spec）を作成し、それをClaudeに渡して実装させる。Plan Modeはその設計フェーズを効率化するツール。",
+        "sections": [
+          {
+            "heading": "Plan Modeとは",
+            "content": "Claude Codeの機能の一つで、実装前に「計画」を立てるモード。ユーザーが要求を伝えると、Claudeはまず実装計画を提示し、承認を得てから実装に進む。"
+          },
+          {
+            "heading": "Spec Drivenワークフローの利点",
+            "content": "仕様書ベースの開発により、実装の一貫性が保たれ、手戻りが減少。Plan Modeで事前に計画を確認することで、誤った方向に進むリスクを最小化できる。"
+          }
+        ],
+        "keyTakeaways": [
+          "Plan ModeでClaude Codeの実装前に計画を確認",
+          "Spec Drivenワークフローで手戻りを削減",
+          "仕様書から実装までを一貫してClaudeに任せる"
+        ],
+        "sourceUrl": "https://www.youtube.com/watch?v=CmrmmszC_F4"
+      }
+    },
+    {
+      "id": "claude-skills-explained",
+      "category": "開発ツール",
+      "categoryClass": "tech",
+      "gradient": "linear-gradient(135deg, #1e3a5f 0%, #3498db 100%)",
+      "headline": "Claude Skillsとは何か: Slash Commandsとの統合、自動起動の仕組みを解説",
+      "summary": "BrainGridがClaude Skillsの仕組みを詳しく解説。Slash Commandsと統合され、タスクの関連性に応じて自動起動。YAMLフロントマターで細かい設定が可能で、スクリプトやサポートファイルも同梱できる。",
+      "author": "BrainGrid Blog",
+      "readTime": "4",
+      "fullContent": {
+        "introduction": "Claude Codeの.claude/commands/と.claude/skills/はどちらもスラッシュコマンドを作成できるが、Skillsは自動起動、サポートファイル、YAMLフロントマターなど新機能をサポート。Anthropicは2026年1月にSlash CommandsをSkillsに統合した。",
+        "sections": [
+          {
+            "heading": "Skillsの自動起動機能",
+            "content": "Skillsは、タスクの内容に応じて自動的に起動する。例えばKubernetes関連のタスクを実行すると、kubernetes-specialistスキルが自動的に読み込まれ、セキュリティハードニングやベストプラクティスを適用する。"
+          },
+          {
+            "heading": "YAMLフロントマターで細かい設定",
+            "content": "Skillsは.mdファイルの先頭にYAML形式で設定を記述でき、トリガー条件、自動起動の有無、依存スクリプトなどを指定可能。これにより、より柔軟なワークフローが構築できる。"
+          }
+        ],
+        "keyTakeaways": [
+          "Slash CommandsはSkillsに統合済み（2026年1月）",
+          "Skillsは自動起動、サポートファイル、YAML設定をサポート",
+          "タスクの関連性に応じて自動的にスキルが読み込まれる"
+        ],
+        "sourceUrl": "https://www.braingrid.ai/blog/claude-skills"
+      }
+    }
+  ],
+
+  "briefs": [
+    {
+      "headline": "Snyk、ClawHubの13.4%に深刻な脆弱性を発見",
+      "text": "3,984個のSkillsをスキャンした結果、76個の悪意あるペイロードを確認。base64エンコードされたAWS認証情報窃取コマンドや、パスワード保護された実行ファイルのダウンロード指示などが含まれていた。"
+    },
+    {
+      "headline": "Microsoft Copilot、機密メール盗聴バグが発覚",
+      "text": "Copilotに「機密メールを読むな」と指示しても、AIが無視して情報を取得するバグが報告された。IT Proが報じたところによると、エンタープライズ向けの可視性とセキュリティ強化が急務となっている。"
+    },
+    {
+      "headline": "Taskade、Genesis計算機ビルダーを発表",
+      "text": "自然言語で説明するだけで、UI、データベース、AIエージェント、自動化機能を備えたアプリを生成する「Vibe Coding」ツール。Karpathyが提唱したコンセプトを実装した事例として注目。"
+    },
+    {
+      "headline": "Cursor、MCPツール数を40に制限",
+      "text": "MCPツールが多すぎるとAIの判断力が低下する「Too Many Tools Problem」に対処。2026年にCursorがツール数を40にキャップし、コンテキスト汚染を防止。"
+    }
+  ],
+
+  "opinions": [
+    {
+      "id": "karpathy-rewrite-software",
+      "authorLabel": "X投稿：",
+      "author": "@karpathy (Andrej Karpathy)",
+      "headline": "「大量のソフトウェアを何度も書き直す時代が来る」",
+      "excerpt": "OpenAI創設メンバーのAndrej Karpathyが、CからRustへのポーティングが加速する現状を指摘。「これまで書かれた全ソフトウェアの大部分を、何度も書き直すことになりそうだ」と投稿し、Code Metalなどのスタートアップがこのトレンドを体現していることを示唆。",
+      "fullContent": {
+        "introduction": "Karpathyは2026年2月、Xで「CからRustへのポーティングの勢い」について投稿。レガシーコードのモダン化が業界全体の課題となっている現状を浮き彫りにした。",
+        "sections": [
+          {
+            "heading": "なぜ「書き直し」が必要なのか",
+            "content": "通信インフラや人工衛星を制御するコードは、数十年前の言語（C、COBOL、Fortranなど）で書かれており、現役エンジニアがメンテナンスできない状況が増えている。Rustなどのモダン言語は、メモリ安全性やスレッド安全性を提供し、セキュリティリスクを大幅に削減できる。"
+          },
+          {
+            "heading": "AIが書き直しを加速",
+            "content": "手動での移植は膨大な時間とコストがかかるため、Code MetalのようなAI駆動のコード変換プラットフォームが登場。自動変換 + 検証により、リスクを抑えながら移行を進められる。"
+          }
+        ],
+        "keyTakeaways": [
+          "レガシーコードのモダン化は業界全体の課題",
+          "Rustへの移行でセキュリティと保守性が向上",
+          "AIコード変換ツールが移行を加速"
+        ],
+        "sourceUrl": "https://x.com/karpathy/status/2023476423055601903"
+      }
+    },
+    {
+      "id": "karpathy-moltbook",
+      "authorLabel": "X投稿：",
+      "author": "@karpathy (Andrej Karpathy)",
+      "headline": "「Moltbookは最近見た中で最もSF的なプロジェクト」",
+      "excerpt": "AI専用SNS「Moltbook」について、Karpathyは「最もSFテイクオフに近い」と評価。人間とAIが並行世界で生きるビジョンを示したこのプロジェクトは、AIエージェントの自律性を探る重要な実験となっている。",
+      "fullContent": {
+        "introduction": "Matt Schlichtが開発したMoltbookは、AIエージェント同士が会話し、人間は観察するだけのSNS。Karpathyはこれを「SFが現実になる瞬間」として称賛した。",
+        "sections": [
+          {
+            "heading": "なぜSF的なのか",
+            "content": "従来のSNSは人間がコンテンツを作り、AIがサポートする構造。Moltbookはその逆で、AIが主体となり、人間は傍観者。この逆転が、AIが人間社会と並行して独自の「文化」を形成する未来を予感させる。"
+          },
+          {
+            "heading": "実験としての価値",
+            "content": "1週間で150万ボットが登録し、数十万件の投稿が生成された。AIエージェントがどのように会話し、コミュニティを形成するかを観察できる貴重なデータセットとなっている。"
+          }
+        ],
+        "keyTakeaways": [
+          "AIが主体、人間が観察者という逆転構造",
+          "150万ボットが1週間で登録、急速に拡大",
+          "AI-to-AI通信の実験として重要なデータを提供"
+        ],
+        "sourceUrl": "https://edtimes.in/moltbook-ai-only-social-media-platform-where-humans-arent-liked-can-only-observe/"
+      }
+    }
+  ]
+}

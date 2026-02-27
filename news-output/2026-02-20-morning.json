@@ -1,0 +1,339 @@
+{
+  "date": "2026年2月20日（金曜日）",
+  "edition": "朝刊",
+  "volume": "1",
+  "tickerText": "Anthropic、Claude Code Securityを発表 ── Google、Gemini 3.1 Proをリリース ── OpenAI、GPT-5.3-CodexがGitHub Copilotで一般提供開始 ── Karpathy、243行のPythonで完全なGPTを実装 ── SWE-benchでClaude Opus 4.5が首位 ── Anthropic、Claude Code Securityを発表",
+
+  "dataPanel": [
+    {
+      "label": "Claude Opus 4.5 (SWE-bench)",
+      "value": "58.4%",
+      "sparkline": "▁▃▅▇█",
+      "change": "▲ Verified基準でトップスコア",
+      "changeClass": "up"
+    },
+    {
+      "label": "Gemini 3.1 Pro 推論性能",
+      "value": "+95%",
+      "sparkline": "▁▂▄▆█",
+      "change": "▲ エージェント型ワークフローで約2倍",
+      "changeClass": "up"
+    },
+    {
+      "label": "GPT-5.3-Codex レイテンシ",
+      "value": "超低遅延",
+      "sparkline": "▁▁▂▃█",
+      "change": "▲ Cerebras最適化でリアルタイム編集",
+      "changeClass": "up"
+    },
+    {
+      "label": "AI API割当量消費",
+      "value": "180/2000",
+      "sparkline": "▂▃▅▆█",
+      "change": "▼ レート制限に注意",
+      "changeClass": "down"
+    }
+  ],
+
+  "hero": {
+    "id": "claude-code-security",
+    "category": "AIセキュリティ",
+    "categoryClass": "ai",
+    "headline": "Anthropic、Claude Code Securityを発表 — サイバーセキュリティ株が急落",
+    "deck": "Anthropicは本日、Claude Code Securityを限定研究プレビューとして公開。コードベースの脆弱性を自動スキャンし、ターゲット化されたパッチを提案する新機能により、従来のセキュリティソフトウェア企業の株価が下落した。",
+    "author": "Bloomberg / TipRanks",
+    "readTime": "4",
+    "readPercent": 50,
+    "readLabel": "中程度",
+    "updateTime": "本日 06:30",
+    "fullContent": {
+      "introduction": "Anthropicが発表した新機能「Claude Code Security」は、Claude Code on the webに組み込まれ、コードベース全体の脆弱性を自動スキャンして修正パッチを提案する。この発表を受け、サイバーセキュリティ関連株が軒並み下落している。",
+      "sections": [
+        {
+          "heading": "Claude Code Securityとは",
+          "content": "Claude Code Securityは、Claude Codeに統合されたセキュリティスキャン機能。開発者がコードを書くと同時に、SQLインジェクション、XSS、認証不備などの一般的な脆弱性を検出し、具体的な修正案を提示する。限定研究プレビューとして提供が開始された。"
+        },
+        {
+          "heading": "市場への影響",
+          "content": "この発表により、従来のサイバーセキュリティソフトウェア企業の株価が大きく下落。Bloombergによれば、主要セキュリティベンダーの株価は平均5〜8%下落した。AI統合型のセキュリティツールが、従来のスタンドアロンソリューションを置き換える可能性への懸念が高まっている。"
+        },
+        {
+          "heading": "技術的優位性",
+          "content": "Claude Code Securityは、コンテキスト全体を理解した上で脆弱性を検出できる点が強み。従来の静的解析ツールが見逃しやすい、複雑なロジックに隠れたセキュリティ問題も発見可能。さらに、検出だけでなく修正コードまで生成するため、開発者の負担を大幅に削減する。"
+        }
+      ],
+      "keyTakeaways": [
+        "Anthropicが Claude Code Security を限定プレビューで公開",
+        "脆弱性の自動検出とパッチ提案により、従来のセキュリティツールを補完・代替",
+        "サイバーセキュリティ株が5〜8%下落、AI統合型ツールへの市場シフトを示唆"
+      ],
+      "sourceUrl": "https://www.bloomberg.com/news/articles/2026-02-20/cyber-stocks-slide-as-anthropic-unveils-claude-code-security",
+      "relatedLinks": [
+        {"title": "TipRanks: Anthropic announces Claude Code Security", "url": "https://www.tipranks.com/news/the-fly/anthropic-announces-availablity-of-claude-code-security-in-limited-preview-thefly-news"}
+      ]
+    }
+  },
+
+  "sidebar": [
+    {
+      "id": "gemini-3-1-pro",
+      "category": "AIモデル",
+      "categoryClass": "gemini",
+      "headline": "Google、Gemini 3.1 Proを発表 — 複雑問題解決で推論性能が約2倍に",
+      "summary": "Googleは、Gemini 3.1 Proを発表。エージェント型ワークフローのベンチマークで推論性能がほぼ倍増し、コーディング支援も強化。Gemini appやNotebookLMで即日利用可能に。",
+      "readTime": "3",
+      "timeAgo": "1日前",
+      "fullContent": {
+        "introduction": "GoogleがGemini 3シリーズ初の.1インクリメントアップデートとなるGemini 3.1 Proをリリース。複雑な問題解決とコーディングタスクで大幅な性能向上を実現した。",
+        "sections": [
+          {
+            "heading": "性能向上の詳細",
+            "content": "Gemini 3.1 Proは、エージェント型ワークフローのベンチマークで推論性能がほぼ2倍に向上。特にコーディング支援では、複数ファイルにまたがる変更や、複雑なリファクタリングへの対応力が大幅に強化された。"
+          },
+          {
+            "heading": "提供範囲",
+            "content": "Gemini 3.1 ProはGemini appとNotebookLMで即日利用可能。企業向けにはVertex AIとGemini Enterpriseでも展開。開発者向けにはAI StudioとAntigravity IDEでプレビュー提供が開始された。"
+          }
+        ],
+        "keyTakeaways": [
+          "Gemini 3シリーズ初の.1インクリメントアップデート",
+          "エージェント型ワークフローで推論性能が約2倍に",
+          "Gemini app、NotebookLM、Vertex AIで即日利用可能"
+        ],
+        "sourceUrl": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-pro/"
+      }
+    },
+    {
+      "id": "gpt-5-3-codex-copilot",
+      "category": "開発ツール",
+      "categoryClass": "openai",
+      "headline": "GPT-5.3-Codex、GitHub Copilotで一般提供開始 — ベンチマークで新記録",
+      "summary": "OpenAIの最新コーディング特化モデル GPT-5.3-Codex が GitHub Copilot で一般提供開始。初期テストでコーディング、エージェント、実世界タスクのベンチマークで新高スコアを記録。",
+      "readTime": "3",
+      "timeAgo": "2日前",
+      "fullContent": {
+        "introduction": "OpenAIのエージェント型コーディングモデル GPT-5.3-Codex が GitHub Copilot に統合され、一般提供が開始された。初期ベンチマークで高いコーディング能力とエージェント型タスク性能を示している。",
+        "sections": [
+          {
+            "heading": "GPT-5.3-Codexの特徴",
+            "content": "GPT-5.3-Codexは、128kコンテキストウィンドウを持ち、Cerebrasハードウェアで超低レイテンシを実現。リアルタイム編集機能により、開発者の入力に即座に反応して複数ファイルにわたるコード変更を提案できる。"
+          },
+          {
+            "heading": "ベンチマーク結果",
+            "content": "初期テストでは、コーディング、エージェント型ワークフロー、実世界タスクの各ベンチマークで新高スコアを記録。特に複雑なリファクタリングや、複数のコンテキストを横断する変更提案で高い精度を発揮した。"
+          }
+        ],
+        "keyTakeaways": [
+          "GPT-5.3-CodexがGitHub Copilotで一般提供開始",
+          "Cerebras最適化で超低レイテンシとリアルタイム編集を実現",
+          "コーディング、エージェント、実世界タスクのベンチマークで新記録"
+        ],
+        "sourceUrl": "https://github.blog/changelog/2026-02-09-gpt-5-3-codex-is-now-generally-available-for-github-copilot/"
+      }
+    },
+    {
+      "id": "karpathy-gpt-243-lines",
+      "category": "研究",
+      "categoryClass": "research",
+      "headline": "Karpathy、243行のPythonで完全なGPTを実装 — 「アートプロジェクト」が話題に",
+      "summary": "元OpenAI/Tesla AI責任者のAndrej Karpathyが、わずか243行のPythonコードでGPTを完全実装。依存ライブラリゼロ、標準ライブラリのみで学習と推論が可能な「教育用最高傑作」。",
+      "readTime": "4",
+      "timeAgo": "9時間前",
+      "fullContent": {
+        "introduction": "Andrej Karpathyが2月11日に公開した単一Pythonファイルが、AI教育界で大きな話題に。標準ライブラリのみを使い、243行でGPTの学習と推論を実現した。",
+        "sections": [
+          {
+            "heading": "実装の詳細",
+            "content": "Karpathyの実装は、os、math、random、argparseという標準ライブラリのみを使用。PyTorch、TensorFlow、JAXなどの機械学習フレームワークに一切依存せず、GPTの訓練と推論を完全に実装している。"
+          },
+          {
+            "heading": "「アートプロジェクト」の意図",
+            "content": "Karpathy自身は「アートプロジェクト」と呼んでいるが、実際にはLLMの内部動作を理解するための最高の教材となっている。各行が何をしているかが明確で、ブラックボックス化されがちなディープラーニングを完全に可視化している。"
+          },
+          {
+            "heading": "教育的価値",
+            "content": "「インターネット上に存在する最高のAI教育」と評される理由は、実用性よりも理解のしやすさを重視した設計。複雑な最適化やトリックを排除し、GPTの本質的なメカニズムだけを純粋に実装している点が高く評価されている。"
+          }
+        ],
+        "keyTakeaways": [
+          "243行のPythonコードで完全なGPTを実装",
+          "依存ライブラリゼロ、標準ライブラリのみで動作",
+          "「インターネット上で最高のAI教育」と称賛される"
+        ],
+        "sourceUrl": "https://www.towardsdeeplearning.com/andrej-karpathy-just-built-an-entire-gpt-in-243-lines-of-python-7d66cfdfa301"
+      }
+    }
+  ],
+
+  "middle": [
+    {
+      "id": "openai-smart-speaker",
+      "category": "ハードウェア",
+      "categoryClass": "openai",
+      "gradient": "linear-gradient(135deg, #10a37f 0%, #1a7a5e 100%)",
+      "headline": "OpenAI、2027年にAI搭載スマートスピーカーを発表か",
+      "summary": "OpenAIが2027年に初のAI搭載コンシューマーデバイス、スマートスピーカーをリリースする可能性が報じられた。ChatGPTを統合した音声アシスタントデバイスとなる見込み。",
+      "author": "Engadget",
+      "readTime": "2",
+      "fullContent": {
+        "introduction": "OpenAIが2027年に初のコンシューマー向けハードウェアデバイスとして、AI搭載スマートスピーカーをリリースする可能性があると報じられている。",
+        "sections": [
+          {
+            "heading": "予想される機能",
+            "content": "ChatGPTの音声モードを核とした、自然な対話型音声アシスタント。既存のスマートスピーカーと異なり、より高度な文脈理解と複雑なタスク実行が可能になると予想される。"
+          }
+        ],
+        "keyTakeaways": [
+          "OpenAIが2027年にスマートスピーカーをリリース予定",
+          "ChatGPT音声モードを統合した対話型デバイス"
+        ],
+        "sourceUrl": "https://www.engadget.com/ai/openai-will-reportedly-release-an-ai-powered-smart-speaker-in-2027-173344866.html"
+      }
+    },
+    {
+      "id": "openai-tata-stargate",
+      "category": "インフラ",
+      "categoryClass": "business",
+      "gradient": "linear-gradient(135deg, #8b4513 0%, #a0522d 100%)",
+      "headline": "OpenAI、インドTCSのデータセンターで初顧客に — Stargate構想の一環",
+      "summary": "OpenAIがインドのTata Consultancy Services（TCS）のデータセンター事業で初顧客となる。100MWの容量で開始し、グローバルAIインフラ構想Stargateの一部となる。",
+      "author": "Reuters",
+      "readTime": "3",
+      "fullContent": {
+        "introduction": "OpenAIとTata Consultancy Services（TCS）は、OpenAIがTCSのデータセンター事業の初顧客となることを発表。Stargate構想におけるグローバルAIインフラ拡張の一環。",
+        "sections": [
+          {
+            "heading": "契約の詳細",
+            "content": "OpenAIは100メガワットの容量からスタートし、インドを拠点にアジア太平洋地域でのAIインフラを強化。TCSはクラウドとデータセンター運用の専門知識を提供する。"
+          },
+          {
+            "heading": "Stargate構想",
+            "content": "Stargateは、OpenAIが推進するグローバルAIインフラ構想。地理的に分散したデータセンターネットワークにより、レイテンシ削減と地域規制への対応を目指す。"
+          }
+        ],
+        "keyTakeaways": [
+          "OpenAIがインドTCSのデータセンターで初顧客に",
+          "100MW容量でスタート、アジア太平洋地域のインフラ強化",
+          "グローバルAI構想Stargateの一環"
+        ],
+        "sourceUrl": "https://www.reuters.com/technology/openai/"
+      }
+    },
+    {
+      "id": "swe-bench-feb-2026",
+      "category": "ベンチマーク",
+      "categoryClass": "research",
+      "gradient": "linear-gradient(135deg, #5b2c6f 0%, #8e44ad 100%)",
+      "headline": "SWE-bench 2月版リーダーボード更新 — Claude Opus 4.5が首位、中国勢が躍進",
+      "summary": "SWE-bench Verifiedの最新結果が公開。Claude Opus 4.5が58.4%でトップ、Gemini 3 Flashが2位、中国MiniMaxのM2.5が3位に。OpenAIのGPT-5.2は6位。",
+      "author": "@simonw (Simon Willison)",
+      "readTime": "4",
+      "fullContent": {
+        "introduction": "SWE-benchの公式リーダーボードが2月に大規模アップデート。最新世代のAIモデルをBash Onlyベンチマークで評価し、Anthropic Claude Opus 4.5が首位に立った。",
+        "sections": [
+          {
+            "heading": "トップ10の結果",
+            "content": "1位: Claude Opus 4.5 (58.4%)、2位: Gemini 3 Flash、3位: MiniMax M2.5 (229Bパラメータ)。興味深いことに、Claude Opus 4.6は4.5を約1ポイント下回った。中国勢ではGLM-5、Kimi K2.5、DeepSeek V3.2がトップ10入り。"
+          },
+          {
+            "heading": "OpenAIモデルの位置付け",
+            "content": "OpenAIのGPT-5.2は6位。最新のコーディング特化モデルGPT-5.3-Codexは、まだOpenAI APIで利用不可のため未評価。公開されれば上位に食い込む可能性がある。"
+          },
+          {
+            "heading": "ベンチマーク手法",
+            "content": "SWE-bench Verifiedは、OpenAI資金提供により厳選された500サンプル。Django、SymPy、Sphinx、Matplotlibなど12のOSSプロジェクトから実世界のコーディング問題を抽出。全モデルに同一システムプロンプトを使用し、公平な比較を実現。"
+          }
+        ],
+        "keyTakeaways": [
+          "Claude Opus 4.5が58.4%でSWE-bench首位",
+          "中国勢が躍進、MiniMax M2.5が3位、GLM-5、Kimi、DeepSeekもトップ10",
+          "GPT-5.3-Codexは未評価、APIリリース後の順位変動に注目"
+        ],
+        "sourceUrl": "https://simonwillison.net/2026/Feb/19/swe-bench/"
+      }
+    }
+  ],
+
+  "briefs": [
+    {
+      "headline": "OpenAI Mafia特集 — 元社員が創業した18のスタートアップ",
+      "text": "TechCrunchがOpenAI出身者が創業したスタートアップを特集。Karpathyの教育系YouTubeチャンネル、各種AI企業など多岐にわたる。"
+    },
+    {
+      "headline": "Code Metal、1.25億ドル調達 — 防衛産業コードをAIで書き換え",
+      "text": "Vibe Codingスタートアップ Code Metal がシリーズBで1.25億ドルを調達。Karpathyが言及した「CからRustへの移植」トレンドに言及。"
+    },
+    {
+      "headline": "Anthropic、Claude Code利用規約を更新 — OAuth Token制限",
+      "text": "AnthropicがClaude CodeドキュメントでOAuthトークン利用を制限。NanoClawなどサードパーティツールでの利用は規約違反に。"
+    },
+    {
+      "headline": "Claude Sonnet 4.6、100万トークン対応で幻覚が減少",
+      "text": "Anthropicが Claude Sonnet 4.6 をリリース。100万トークンの長文対応と、幻覚（ハルシネーション）の大幅削減を実現。"
+    }
+  ],
+
+  "opinions": [
+    {
+      "id": "opinion-karpathy-243",
+      "authorLabel": "X投稿：",
+      "author": "@karpathy (Andrej Karpathy)",
+      "headline": "「243行のPythonでGPTを完全実装 — 依存ゼロのアートプロジェクト」",
+      "excerpt": "Karpathyが公開した243行のGPT実装は、AI教育の金字塔として瞬く間に拡散。「依存ライブラリなし、標準ライブラリのみ」という制約が、逆にLLMの本質を浮き彫りにし、教育的価値を最大化している。",
+      "fullContent": {
+        "introduction": "元OpenAI/Tesla AI責任者のAndrej Karpathyが、わずか243行のPythonコードでGPTを完全実装した「アートプロジェクト」を公開。AI研究者や開発者の間で爆発的に拡散している。",
+        "sections": [
+          {
+            "heading": "「アート」としてのシンプルさ",
+            "content": "Karpathyは「アートプロジェクト」と呼んでいるが、実際には極限まで削ぎ落とされた教育用コード。os、math、random、argparseという標準ライブラリのみで、GPTの訓練と推論を実現。PyTorch、TensorFlow、JAXなどの機械学習フレームワークに一切依存しない。",
+            "steps": []
+          },
+          {
+            "heading": "教育的インパクト",
+            "content": "「インターネット上で最高のAI教育」と称賛される理由は、その可読性と明快さ。各行が何をしているかが一目瞭然で、ブラックボックス化されがちなディープラーニングを完全に可視化している。初心者からエキスパートまで、誰もが学びを得られる設計。",
+            "steps": []
+          }
+        ],
+        "keyTakeaways": [
+          "243行のPythonで完全なGPTを実装、依存ライブラリゼロ",
+          "「アートプロジェクト」として公開、AI教育の金字塔に",
+          "標準ライブラリのみでLLMの本質を可視化"
+        ],
+        "sourceUrl": "https://www.towardsdeeplearning.com/andrej-karpathy-just-built-an-entire-gpt-in-243-lines-of-python-7d66cfdfa301"
+      }
+    },
+    {
+      "id": "opinion-simonw-swebench",
+      "authorLabel": "X投稿：",
+      "author": "@simonw (Simon Willison)",
+      "headline": "「SWE-bench 2月更新：Claude 4.5が首位、中国勢が躍進」",
+      "excerpt": "Simon Willisonが詳細に分析したSWE-bench最新結果。Claude Opus 4.5が58.4%でトップを獲得し、中国のMiniMax、GLM、DeepSeekがトップ10に複数ランクイン。OpenAIのGPT-5.3-Codex未評価が今後の注目点。",
+      "fullContent": {
+        "introduction": "Simon Willisonが自身のブログでSWE-bench 2月版リーダーボードを詳細分析。Claude Opus 4.5が首位に立ち、中国勢の躍進が目立つ結果となった。",
+        "sections": [
+          {
+            "heading": "Claude 4.5 vs 4.6の逆転",
+            "content": "興味深いのは、Claude Opus 4.5が4.6を約1ポイント上回った点。通常、新しいバージョンが性能向上するはずだが、特定ベンチマークでは旧バージョンが優位な場合もある。これは、モデルの最適化方向がベンチマークと完全に一致しないことを示唆。",
+            "steps": []
+          },
+          {
+            "heading": "中国勢の台頭",
+            "content": "MiniMax M2.5（229Bパラメータ）が3位、GLM-5、Kimi K2.5、DeepSeek V3.2もトップ10入り。中国のAI開発力が、グローバル競争で無視できない存在になっていることを明確に示している。",
+            "steps": []
+          },
+          {
+            "heading": "GPT-5.3-Codexの未評価",
+            "content": "OpenAIの最新コーディングモデルGPT-5.3-CodexはまだOpenAI APIで利用不可のため、このベンチマークに含まれていない。公開されれば順位が大きく変動する可能性があり、次回更新が注目される。",
+            "steps": []
+          }
+        ],
+        "keyTakeaways": [
+          "Claude Opus 4.5が58.4%で首位、4.6を上回る",
+          "中国勢が躍進、MiniMax M2.5が3位、他3モデルもトップ10",
+          "GPT-5.3-Codex未評価、次回更新で順位変動の可能性"
+        ],
+        "sourceUrl": "https://simonwillison.net/2026/Feb/19/swe-bench/"
+      }
+    }
+  ]
+}

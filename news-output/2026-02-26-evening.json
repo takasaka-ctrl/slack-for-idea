@@ -1,0 +1,336 @@
+{
+  "date": "2026年2月26日（水曜日）",
+  "edition": "夕刊",
+  "volume": "1",
+  "tickerText": "Gemini、Android端末でマルチステップタスク自動化を実現 ── Apple M5チップ発表、AIパフォーマンス4倍向上 ── Anthropic、Claude Coworkに企業ツール統合機能追加 ── AI半導体MatX、5億ドル調達 ── インディーハッカー、半日でAIツール構築し月商2万ドル達成 ── OpenAI、支出計画を8000億ドル削減 ── Gemini、Android端末でマルチステップタスク自動化を実現",
+
+  "dataPanel": [
+    {
+      "label": "OpenAI 支出削減",
+      "value": "$800B",
+      "sparkline": "▁▂▃▅▇█",
+      "change": "▼ 2030年までの計画額を6000億ドルに圧縮",
+      "changeClass": "down"
+    },
+    {
+      "label": "MatX 資金調達",
+      "value": "$500M",
+      "sparkline": "▁▂▃▅▇█",
+      "change": "▲ シリーズB、AI半導体で急成長",
+      "changeClass": "up"
+    },
+    {
+      "label": "インディーハッカー MRR",
+      "value": "$20K",
+      "sparkline": "▁▂▃▅▇█",
+      "change": "▲ 半日のハッカソンで構築したAIツール",
+      "changeClass": "up"
+    },
+    {
+      "label": "Apple M5 GPU性能",
+      "value": "4x",
+      "sparkline": "▁▂▃▅▇█",
+      "change": "▲ M4比でAI向けGPU演算性能が4倍向上",
+      "changeClass": "up"
+    }
+  ],
+
+  "hero": {
+    "id": "gemini-android-automation",
+    "category": "モバイルAI",
+    "categoryClass": "mobile",
+    "headline": "Gemini、Android端末でマルチステップタスク自動化を実現 — Pixel 10・Galaxy S26で配車・配達を自動処理",
+    "deck": "Googleは、GeminiアプリにAndroidでのマルチステップタスク自動化機能を追加。Pixel 10、Pixel 10 Pro、Samsung Galaxy S26シリーズのベータ機能として、Uber、DoorDash、Grubhubなどのアプリで配車や食品・食料品の配達を自動処理できる。日常の繰り返しタスクをAIに任せる時代が本格化。",
+    "author": "Google公式ブログ",
+    "readTime": "4",
+    "readPercent": 60,
+    "readLabel": "中程度",
+    "updateTime": "17時間前",
+    "fullContent": {
+      "introduction": "Googleは2月25日、GeminiアプリにAndroid端末でのマルチステップタスク自動化機能を追加すると発表した。この機能は、Pixel 10、Pixel 10 Pro、Samsung Galaxy S26シリーズでベータ版として米国で提供される。ユーザーは、配車依頼や食品・食料品の配達など、複数のステップを要する日常タスクをGeminiに直接依頼できるようになる。",
+      "sections": [
+        {
+          "heading": "マルチステップタスクの自動化",
+          "content": "新機能は、Uber、DoorDash、Grubhubなどの対応アプリで、複数のステップを要するタスクを自動化する。例えば、「Uberで家まで配車を依頼して」とGeminiに話しかけるだけで、アプリを開き、住所を入力し、車種を選択し、配車を確定するまでの一連の操作をGeminiが自動で実行する。これにより、日常の繰り返しタスクにかかる時間と手間を大幅に削減できる。"
+        },
+        {
+          "heading": "初期対応は限定的だが拡大予定",
+          "content": "ベータ版は、Pixel 10、Pixel 10 Pro、Samsung Galaxy S26シリーズの最新端末で米国のユーザー向けに提供される。現時点では配車と配達サービスに対応しているが、Googleは今後、対応アプリとタスクの種類を拡大していく計画だ。TechCrunchによれば、この機能はGeminiの「エージェント化」の一環であり、ユーザーの意図を理解して複雑な操作を代行する能力が大幅に向上している。"
+        },
+        {
+          "heading": "AIアシスタントの新時代",
+          "content": "この機能は、単なる音声アシスタントを超えて、実際にアプリを操作し、ユーザーの代わりにタスクを完了する「AIエージェント」への進化を示している。Googleは、Geminiを単なる質問応答ツールから、ユーザーの日常生活を支援する実用的なパートナーへと変貌させている。Android Authorityは、Geminiの企業版アプリもリリースされ、職場での業務自動化にも対応し始めたと報じている。"
+        }
+      ],
+      "keyTakeaways": [
+        "Geminiが配車・配達アプリでマルチステップタスクを自動化",
+        "Pixel 10・Galaxy S26でベータ版提供開始（米国）",
+        "AIアシスタントからAIエージェントへの進化が加速"
+      ],
+      "sourceUrl": "https://blog.google/innovation-and-ai/products/gemini-app/android-multi-step-tasks/",
+      "relatedLinks": [
+        {"title": "TechCrunch: Gemini can now automate some multi-step tasks on Android", "url": "https://techcrunch.com/2026/02/25/gemini-can-now-automate-some-multi-step-tasks-on-android/"},
+        {"title": "9to5Google: Gemini automation on Pixel 10, S26 can book rides and place orders", "url": "https://9to5google.com/2026/02/25/gemini-automation-android/"}
+      ]
+    }
+  },
+
+  "sidebar": [
+    {
+      "id": "apple-m5-launch",
+      "category": "ハードウェア",
+      "categoryClass": "tech",
+      "headline": "Apple M5発表 — M4比でAI向けGPU性能が4倍向上、各コアにNeural Accelerator搭載",
+      "summary": "Appleは新世代チップM5を発表。M4と比較してAI向けピークGPU演算性能が4倍向上し、各GPUコアにNeural Acceleratorを搭載。より強力なCPU、高速化されたNeural Engine、高帯域幅のユニファイドメモリを備え、エネルギー効率も向上。MacBook Pro、Mac Studio、Vision ProへのM5搭載が発表された。",
+      "readTime": "3",
+      "timeAgo": "16時間前",
+      "fullContent": {
+        "introduction": "Appleは10月にM5チップを発表し、Apple Siliconにおける次なる飛躍を実現した。M5は、M4と比較してAI向けのピークGPU演算性能が4倍以上向上し、各GPUコアに次世代Neural Acceleratorを搭載している。",
+        "sections": [
+          {
+            "heading": "AI性能の大幅向上",
+            "content": "M5は、より強力なCPU、高速化されたNeural Engine、より高い帯域幅のユニファイドメモリを備えており、AI処理において大幅な性能向上を実現。Appleのエネルギー効率基準を満たし、製品ライフサイクル全体でのエネルギー消費を削減する設計となっている。"
+          },
+          {
+            "heading": "対応製品",
+            "content": "M5は、MacBook Pro、Mac Studio、Apple Vision Proに搭載される。これにより、クリエイティブワーク、機械学習、空間コンピューティングにおいて、これまでにない性能を発揮する。"
+          }
+        ],
+        "keyTakeaways": [
+          "M4比でAI向けGPU性能が4倍向上",
+          "各GPUコアにNeural Accelerator搭載",
+          "MacBook Pro、Mac Studio、Vision Proに搭載"
+        ],
+        "sourceUrl": "https://www.apple.com/newsroom/2025/10/apple-unleashes-m5-the-next-big-leap-in-ai-performance-for-apple-silicon/"
+      }
+    },
+    {
+      "id": "claude-cowork-update",
+      "category": "企業AI",
+      "categoryClass": "ai",
+      "headline": "Anthropic、Claude CoworkにGoogle Drive・Gmail統合 — 企業向けAI生産性ツールを強化",
+      "summary": "Anthropicは、Claude Coworkのアップデートを発表。Google Drive、Gmail、DocuSign、FactSetなどの既存ツールと接続可能になり、財務分析、エンジニアリング、人事などの領域でカスタマイズ可能なプラグインを展開。オフィスワーカーの生産性向上を目的とした本格的な企業向けAIツールとして進化。",
+      "readTime": "3",
+      "timeAgo": "18時間前",
+      "fullContent": {
+        "introduction": "Anthropicは2月24日、企業向けAI生産性ツール「Claude Cowork」のアップデートを発表した。組織は、Google Drive、Gmail、DocuSign、FactSetなどの既存ツールにClaude Coworkを接続できるようになり、財務分析、エンジニアリング、人事などの領域でカスタマイズ可能なプラグインを展開できる。",
+        "sections": [
+          {
+            "heading": "企業ツールとの統合",
+            "content": "Claude Coworkは、Claudeデスクトップアプリで利用可能な機能で、コンピュータ上のファイルを作成・操作できる。今回のアップデートにより、企業の既存ワークフローに統合され、メール対応、ドキュメント作成、データ分析などを自動化・支援する。CNBCによれば、この機能は一般的なオフィスワーカーの生産性を大幅に向上させることを目的としている。"
+          },
+          {
+            "heading": "モバイル版Claude Codeも登場",
+            "content": "VentureBeatは、AnthropicがClaude Codeのモバイル版「Remote Control」をリリースしたと報じている。Claude Max（月額100〜200ドル）のサブスクライバーは、iPhoneやAndroidスマートフォンからClaude Codeにコマンドを発行できる。"
+          }
+        ],
+        "keyTakeaways": [
+          "Google Drive、Gmailなど企業ツールと統合",
+          "財務、エンジニアリング、人事向けプラグイン",
+          "モバイル版Claude Code「Remote Control」も登場"
+        ],
+        "sourceUrl": "https://www.cnbc.com/2026/02/24/anthropic-claude-cowork-office-worker.html"
+      }
+    },
+    {
+      "id": "matx-funding",
+      "category": "スタートアップ",
+      "categoryClass": "business",
+      "headline": "AI半導体MatX、5億ドル調達 — 元Google技術者が創業、NVIDIAに挑戦",
+      "summary": "元Google技術者2名が創業したAI半導体スタートアップMatXが、シリーズBで5億ドルを調達。Jane StreetとSituational Awareness（元OpenAI研究者Leopold Aschenbrennerの投資ファンド）が主導。NVIDIA支配のAI半導体市場に挑戦する新興勢力として注目を集める。",
+      "readTime": "2",
+      "timeAgo": "1日前",
+      "fullContent": {
+        "introduction": "元Googleハードウェアエンジニア2名が創業したAI半導体スタートアップMatXが、シリーズBで5億ドルを調達した。投資ラウンドはJane StreetとSituational Awareness（元OpenAI研究者Leopold Aschenbrennerの投資ファンド）が主導。MatXは、NVIDIA支配のAI半導体市場に挑戦する新興勢力として注目されている。",
+        "sections": [
+          {
+            "heading": "AI半導体市場の新星",
+            "content": "MatXは、AI処理に特化した独自チップを開発している。NVIDIAのGPUが市場を支配する中、MatXはより高効率で低コストなAI半導体を提供することで差別化を図る。TechCrunchによれば、MatXのチップは特定のAIワークロードにおいて、既存ソリューションよりも高速かつエネルギー効率が高いとされている。"
+          },
+          {
+            "heading": "強力な投資家陣",
+            "content": "投資を主導したJane Streetは大手クオンツトレーディング企業であり、Situational AwarenessはAI安全性研究で知られるLeopold Aschenbrennerが設立したファンド。この投資は、MatXの技術力と市場ポテンシャルへの高い評価を示している。"
+          }
+        ],
+        "keyTakeaways": [
+          "元Google技術者が創業、5億ドル調達",
+          "NVIDIA挑戦の新興AI半導体企業",
+          "Jane StreetとLeopold Aschenbrennerが投資"
+        ],
+        "sourceUrl": "https://techcrunch.com/2026/02/24/nvidia-challenger-ai-chip-startup-matx-raised-500m/"
+      }
+    }
+  ],
+
+  "middle": [
+    {
+      "id": "indie-ai-20k-mrr",
+      "category": "個人開発",
+      "categoryClass": "indie",
+      "headline": "半日のハッカソンで構築したAIツール、月商2万ドル達成 — 非技術者の成功事例",
+      "summary": "Indie Hackersコミュニティで話題になった、非技術者のインディーハッカーが半日のハッカソンで構築したAIツールが月商2万ドル（約300万円）を達成。小規模で有用な製品を素早く構築し、口コミで成長させた事例として、多くの個人開発者にインスピレーションを与えている。",
+      "author": "Indie Hackers",
+      "readTime": "3",
+      "fullContent": {
+        "introduction": "Indie Hackersコミュニティで注目を集めている成功事例がある。非技術者のインディーハッカーが、半日のハッカソンで構築したAIツールが月商2万ドル（約300万円）に達したというものだ。技術創業者にとって、「非技術者」が半日で何かを構築し、それを辛抱強く2万ドルのMRRまで成長させたという事実は、非常に刺激的だ。",
+        "sections": [
+          {
+            "heading": "小さく始めて育てる",
+            "content": "成功の鍵は、完成品を一度にローンチするのではなく、小さく有用なツールを構築し、ユーザーが既に使っている状態から拡大していったことだ。ユーザーのフィードバックを取り入れながら、シンプルで価値のあるプロダクトを口コミで広げていった。Indie Hackersの投稿では、「小さく構築して、何が定着するかを見る」というアプローチの重要性が強調されている。"
+          },
+          {
+            "heading": "非技術者でもAI時代に成功できる",
+            "content": "この事例は、AI時代において、技術的なバックグラウンドがなくても成功できることを示している。ノーコード・ローコードツールやAIを活用すれば、アイデアを素早く形にし、市場でテストすることが可能だ。重要なのは、技術力よりも、ユーザーのニーズを理解し、価値を提供し続けることだ。"
+          }
+        ],
+        "keyTakeaways": [
+          "半日で構築したAIツールが月商2万ドル達成",
+          "小さく始めて口コミで成長させる戦略",
+          "非技術者でもAI時代に成功できる"
+        ],
+        "sourceUrl": "https://www.indiehackers.com/post/tech/building-an-ai-tool-in-a-half-day-hackathon-and-hitting-20k-mo-BCloDTDRfjuip0pDghap"
+      },
+      "gradient": "linear-gradient(135deg, #c07000 0%, #e09020 100%)"
+    },
+    {
+      "id": "ai-saas-architecture-guide",
+      "category": "開発",
+      "categoryClass": "tech",
+      "headline": "2026年版AI SaaSアーキテクチャガイド — SvelteKitとNode.jsで週末にローンチ",
+      "summary": "DEV Communityに投稿された、SvelteKitとNode.jsを使ってAI SaaSを週末で構築するためのアーキテクチャガイドが話題に。独自モデルのトレーニングに資金を燃やすのではなく、シームレスなアーキテクチャ、高速UI、スケーラブルなデータベース、コスト効率の良いデプロイに焦点を当てることが成功の秘訣だと解説。",
+      "author": "saqibshahdev（DEV Community）",
+      "readTime": "4",
+      "fullContent": {
+        "introduction": "DEV Communityに投稿された記事「Architecting a Profitable AI SaaS in 2026 (SvelteKit + Node.js)」が、AI SaaS構築の実践的なガイドとして注目を集めている。著者は、成功するAI SaaSの秘訣は、独自の数十億パラメータモデルをトレーニングするために資金を燃やすことではなく、シームレスなアーキテクチャ、高速UIレスポンス、スケーラブルなデータベース、コスト効率の良いデプロイにあると主張している。",
+        "sections": [
+          {
+            "heading": "週末でローンチできるアーキテクチャ",
+            "content": "記事では、SvelteKitとNode.jsを使用して、AI SaaSを週末でローンチするための正確なアーキテクチャが詳細に解説されている。フロントエンドはSvelteKitで高速レスポンスを実現し、バックエンドはNode.jsで柔軟なAPI設計を行う。データベースにはPostgreSQLやSupabaseを使用し、デプロイはVercelやRailwayで簡単に行える。"
+          },
+          {
+            "heading": "既存LLM APIを活用する",
+            "content": "独自モデルをトレーニングするのではなく、OpenAI、Anthropic、GoogleなどのLLM APIを活用することで、開発時間とコストを大幅に削減できる。重要なのは、LLMをどう組み込み、ユーザーに価値を提供するかであり、技術的な差別化はアーキテクチャとUXにある。"
+          }
+        ],
+        "keyTakeaways": [
+          "SvelteKit + Node.jsで週末にAI SaaSをローンチ",
+          "独自モデルではなく既存LLM APIを活用",
+          "成功の鍵はアーキテクチャとUX"
+        ],
+        "sourceUrl": "https://dev.to/saqibshahdev/architecting-a-profitable-ai-saas-in-2026-sveltekit-nodejs-3omk"
+      },
+      "gradient": "linear-gradient(135deg, #1e3a5f 0%, #3498db 100%)"
+    },
+    {
+      "id": "tim-desoto-ai-startup",
+      "category": "起業",
+      "categoryClass": "indie",
+      "headline": "技術バックグラウンドなしでAIスタートアップ創業 — AIに任せられないものとは？",
+      "summary": "Tim Desotoは2024年、技術的なバックグラウンドなしでAI駆動のスタートアップを創業した。彼の経験から、AIは多くの作業を自動化できるが、依然として人間の判断、創造性、顧客との関係構築など、AIに任せられない領域があることが明らかになった。",
+      "author": "Tim Desoto",
+      "readTime": "3",
+      "fullContent": {
+        "introduction": "Tim Desotoは2024年、技術的なバックグラウンドなしでAI駆動のスタートアップを創業した。彼の体験は、AIツールがいかに起業のハードルを下げたかを示すと同時に、AIに任せられない重要な領域が依然として存在することを浮き彫りにしている。",
+        "sections": [
+          {
+            "heading": "AIが可能にしたこと",
+            "content": "Tim Desotoは、コーディング、デザイン、コンテンツ生成などの作業をAIツールに任せることで、技術的なスキルなしでもプロダクトを構築できた。ChatGPT、GitHub Copilot、Figma AIなどのツールを組み合わせることで、従来は技術者が必要だった作業を自動化した。"
+          },
+          {
+            "heading": "AIに任せられないもの",
+            "content": "しかし、AIは戦略的判断、顧客との深い関係構築、創造的なビジョンの設定などを代替できない。Tim Desotoは、ビジネスの方向性を決定し、顧客のニーズを理解し、チームを率いるといった人間にしかできない役割が依然として重要であると強調している。"
+          }
+        ],
+        "keyTakeaways": [
+          "技術バックグラウンドなしでAI起業が可能に",
+          "AI活用で開発・デザイン・コンテンツ生成を自動化",
+          "戦略・顧客関係・ビジョンは人間の領域"
+        ],
+        "sourceUrl": "https://dnyuz.com/2026/02/26/i-started-a-business-with-ai-and-no-tech-background-heres-what-it-still-cant-replace/"
+      },
+      "gradient": "linear-gradient(135deg, #c07000 0%, #e09020 100%)"
+    }
+  ],
+
+  "briefs": [
+    {
+      "headline": "OpenAI、支出計画を8000億ドル削減し6000億ドルに",
+      "text": "OpenAIは投資家に対し、2030年までのコンピュートインフラ支出を約6000億ドルに圧縮すると発表。昨年Sam Altman CEOが示した1.4兆ドルから大幅削減。"
+    },
+    {
+      "headline": "インドネシア政府、AIアプリ「Sahabat-AI」をローンチ",
+      "text": "インドネシアが現地言語対応のAIアプリ「Sahabat-AI」を発表。学生、クリエイター、企業、公共機関向けにデジタルコンパニオンとして広く提供される。"
+    },
+    {
+      "headline": "Venice AI、プライバシー重視のAIアプリとして注目",
+      "text": "会話を保存せず完全なプライバシーを実現するAIアプリ「Venice AI」がリリース。ChatGPTなど他のAIツールが提供しない無制限の創作自由とプライバシー保護を約束。"
+    },
+    {
+      "headline": "Red HatとNVIDIA、企業AI向けAI Factoryを発表",
+      "text": "Red HatとNVIDIAが共同開発した企業AI向けプラットフォーム「Red Hat AI Factory with NVIDIA」を発表。AIの実験段階から本格的な生産環境への移行を支援。"
+    }
+  ],
+
+  "opinions": [
+    {
+      "id": "citrini-doomsday-report",
+      "authorLabel": "話題の研究:",
+      "author": "Citrini Research",
+      "headline": "AIが2028年に「グローバル知能危機」を引き起こす — 株式市場を揺るがした警告レポート",
+      "excerpt": "Citrini Researchが発表した「2028年グローバル知能危機」レポートが、AIがホワイトカラー業務を大規模に置き換える未来を描き、米国株式市場に衝撃を与えた。American Express、DoorDash、ソフトウェア業界の多くが危機に直面するというシナリオが、投資家の間で激しい議論を呼んでいる。",
+      "fullContent": {
+        "introduction": "Citrini Researchが日曜日に発表した「2028年グローバル知能危機」レポートが、AIがホワイトカラー業務に与える脅威について警鐘を鳴らし、米国株式市場に波紋を広げている。レポートは、2028年までにAIが多くのホワイトカラー業務を陳腐化させ、American ExpressからDoorDashまで、さらにはソフトウェア業界の大部分が危機に直面するという未来を描いている。",
+        "sections": [
+          {
+            "heading": "破滅的シナリオの詳細",
+            "content": "レポートは、AIの進化により、人間の知能の重要性が「巻き戻される」と警告している。特に、データ入力、カスタマーサポート、基本的なソフトウェア開発、財務分析などの業務がAIに置き換えられることで、数百万の雇用が失われる可能性がある。また、ソフトウェア企業の多くは、AIが同様の機能をネイティブに提供することで、収益源を失うリスクに直面している。"
+          },
+          {
+            "heading": "市場への影響",
+            "content": "このレポートはソーシャルメディアでバイラル拡散し、投資家の間で激しい議論を巻き起こした。The Guardianは、「ブレーキのないフィードバックループ」として、AIの破滅的な警告がさらなる市場の不安を煽る状況を報じている。一方、The Economistは、このレポートが経済学的に誤っていると指摘し、AIが雇用を置き換える速度と規模について過度に悲観的だと批判している。"
+          },
+          {
+            "heading": "現実的な評価は？",
+            "content": "多くの専門家は、AIが雇用に与える影響は段階的であり、完全な置き換えではなく、業務の一部を自動化することで生産性を向上させる可能性が高いと指摘している。しかし、特定の職種（特にルーチンワークやデータ処理が中心の業務）においては、AIによる置き換えが現実のものとなる可能性もある。企業と労働者は、この変化に適応するための準備が必要だ。"
+          }
+        ],
+        "keyTakeaways": [
+          "2028年にAIがホワイトカラー業務を大規模に置き換えるとの警告",
+          "米国株式市場に衝撃、激しい議論を巻き起こす",
+          "専門家は段階的な影響を予測、過度な悲観論に警鐘"
+        ],
+        "sourceUrl": "https://www.theguardian.com/technology/2026/feb/24/feedback-loop-no-brake-how-ai-doomsday-report-rattled-markets"
+      }
+    },
+    {
+      "id": "ai-startup-mortality",
+      "authorLabel": "辛口コラム:",
+      "author": "Srinivas Rao (Medium)",
+      "headline": "99%のAIスタートアップは2026年までに消える — その理由とは？",
+      "excerpt": "Mediumで話題になった記事が、AI業界の厳しい現実を指摘。OpenAIのAPIからMicrosoftのCopilotまで、すべてのレイヤーが1社（NVIDIA）が製造する1種類のハードウェアに依存している脆弱なサプライチェーンの上に成り立っており、大半のAI「ラッパー」スタートアップは差別化できずに消えると警告。",
+      "fullContent": {
+        "introduction": "Mediumに投稿された記事「99% of AI Startups Will Be Dead by 2026 — Here's Why」が、AI業界の厳しい現実を暴露し、話題になっている。著者のSrinivas Raoは、OpenAIのAPIからMicrosoftのCopilotまで、そして個人開発者のフィードを埋め尽くす無数の「インディーラッパー」まで、このエコシステムの全レイヤーが、1社が1種類のハードウェアを1つの制約された地域で製造するサプライチェーンの上に成り立っていると指摘している。",
+        "sections": [
+          {
+            "heading": "AIラッパーの限界",
+            "content": "Raoは、多くのAIスタートアップが単なる「ラッパー」であり、OpenAIやAnthropicのAPIを呼び出すだけで独自の価値を提供していないと批判している。例えば、ニッチリサーチツールは要約や分析機能を提供するが、これらは今やChatGPTにネイティブで組み込まれている。これは競争ではなく、「絶滅リスク」だ。"
+          },
+          {
+            "heading": "NVIDIAへの依存",
+            "content": "AI業界全体がNVIDIAのGPUに依存しており、サプライチェーンの脆弱性が深刻だ。NVIDIAの生産能力や地政学的リスクが、業界全体の成長を制約する可能性がある。MatXのような新興半導体企業の台頭は、この問題を解決する兆しだが、市場支配を覆すにはまだ時間がかかる。"
+          },
+          {
+            "heading": "生き残るための戦略",
+            "content": "Raoは、AIスタートアップが生き残るためには、単なるAPIラッパーではなく、独自のデータ、ドメイン専門知識、またはユニークなユーザー体験を提供する必要があると主張している。また、オープンソースモデルやローカル実行可能なモデルを活用することで、大手プラットフォームへの依存を減らすことも重要だ。"
+          }
+        ],
+        "keyTakeaways": [
+          "99%のAIスタートアップは差別化できずに消える",
+          "AI業界全体がNVIDIA依存の脆弱なサプライチェーン",
+          "生き残りには独自データ・専門知識・UXが必要"
+        ],
+        "sourceUrl": "https://skooloflife.medium.com/99-of-ai-startups-will-be-dead-by-2026-heres-why-bfc974edd968"
+      }
+    }
+  ]
+}

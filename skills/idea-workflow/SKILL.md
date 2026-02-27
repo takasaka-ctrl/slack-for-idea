@@ -1,224 +1,193 @@
 ---
-name: idea-workflow
-description: Vault の 10-Ideas/ からアイデアを取り出して PDCA サイクルで評価・改善し、Slack #lab に投稿する
+name: idea-workflow-v2
+description: 市場リサーチベースの自律アイデア生成 + PDCA評価 + MD仕様書生成。1日2回（朝9:00/夜21:00 JST）自動実行。
 triggers:
-  - cron（毎日 2:00 JST）
-  - "#lab で手動トリガーされた時（例: 〇〇のアイデアをブレストして）"
-  - "Phase 2: #lab のスレッドでマスターが回答した時"
+  - cron（朝9:00 JST, 夜21:00 JST）
+  - heartbeat（該当時間帯にトリガー）
+  - 手動（#labで「アイデア出して」等）
 ---
 
-# Idea Workflow Skill
+# Idea Workflow v2 — 市場リサーチ × 自律アイデア生成
 
 ## 目的
 
-`/mnt/vault/10-Ideas/` に保存されたアイデアを定期的に取り出し、PDCA サイクルで評価・改善して企画書として `20-Projects/` に保存する。
+エビデンスベースで「勝てるアイデア」を自律的に生成し、洗練された実装仕様書（MD）を作成。
+最終的にClaude Code Agent が実装 → `slack-for-idea` リポジトリのギャラリーに追加される。
 
 ---
 
-## パス・ファイル定義
+## パス定義
 
 ```
-Vault:          /mnt/vault/
-Ideas Dir:      /mnt/vault/10-Ideas/
-Projects Dir:   /mnt/vault/20-Projects/
-Processed Dir:  /mnt/vault/10-Ideas/.processed/
-State File:     /home/node/.openclaw/workspace/state/pending-ideas.json
-```
-
----
-
-## フロー概要
-
-```
-Phase 1（自動・毎日2:00 JST）
-  └── 未処理アイデアを1件選択
-      └── 確認質問を生成して #lab に投稿
-          └── スレッドIDを state に保存して待機
-
-Phase 2（マスターが #lab スレッドで回答後）
-  └── 回答を読んでPDCAサイクル実行
-      └── 最終原案を 20-Projects/ に保存
-          └── Claude Code Agent にメンション + 原案全文を投稿
+Vault Ideas:     /mnt/vault/10-Ideas/
+Vault Projects:  /mnt/vault/20-Projects/
+State:           memory/auto-idea-state.json
+Learning:        memory/idea-learning.md
+Keywords:        memory/idea-keywords.json
+Processed:       /mnt/vault/10-Ideas/.processed/
 ```
 
 ---
 
-## Phase 1: アイデア選択と質問生成
+## 実行スケジュール
 
-### Step 1: 未処理アイデアを選択
+| スロット | 時刻(JST) | UTC |
+|---------|-----------|-----|
+| morning | 09:00 | 00:00 |
+| evening | 21:00 | 12:00 |
 
-```bash
-# 処理済みマーカーディレクトリを作成（なければ）
-mkdir -p /mnt/vault/10-Ideas/.processed
-
-# 未処理ファイルを日付順で1件取得
-for f in $(ls /mnt/vault/10-Ideas/*.md 2>/dev/null | sort); do
-  basename_f=$(basename "$f")
-  if [ ! -f "/mnt/vault/10-Ideas/.processed/${basename_f}.done" ]; then
-    IDEA_FILE="$f"
-    break
-  fi
-done
-```
-
-未処理アイデアがない場合: `#lab` に「今日処理できるアイデアはありません」と投稿して終了。
-
-### Step 2: アイデア内容を読んで質問を生成
-
-アイデアファイルを読み、以下の観点で3〜5個の確認質問を生成する:
-
-- **目的・背景**: なぜこれをやりたいのか？
-- **対象ユーザー**: 誰のための解決策か？
-- **成功の定義**: どうなったら成功といえるか？
-- **懸念・リスク**: 実現の障壁は何か？
-- **優先度**: 他のアイデアと比べて今やる理由は？
-
-### Step 3: #lab に投稿
-
-**親メッセージ（チャンネル本体）:**
-```
-💡 アイデア検証: {タイトル}
-
-{アイデアの1〜2行要約}
-
-スレッドで詳細と質問を確認してください 👇
-```
-
-**スレッド（1件目）:**
-```
-📄 原文
-
-{アイデアファイルの本文をそのまま貼り付け}
-```
-
-**スレッド（2件目）:**
-```
-❓ 確認したいこと
-
-1. {質問1}
-2. {質問2}
-3. {質問3}
-（以下省略）
-
-↑ 気になるところだけでOKです。スレッドで返答してください！
-```
-
-### Step 4: State に保存
-
-`/home/node/.openclaw/workspace/state/pending-ideas.json` の `pendingIdeas` 配列に追加:
-
-```json
-{
-  "ideaFile": "YYYY-MM-DD-slug.md",
-  "ideaPath": "/mnt/vault/10-Ideas/YYYY-MM-DD-slug.md",
-  "title": "{アイデアタイトル}",
-  "phase": "awaiting-master-reply",
-  "slackChannel": "lab",
-  "channelId": "{Slack channel ID}",
-  "parentMessageId": "{ts}",
-  "threadMessageId": "{ts}",
-  "postedAt": "{ISO 8601}",
-  "status": "phase1-complete"
-}
-```
+**重複防止:** `auto-idea-state.json` の `lastRun` から6時間未満なら実行しない。
 
 ---
 
-## Phase 2: PDCA 実行（マスター回答後）
+## 実行フロー
 
-### トリガー条件
+### Step 0: 準備（必須）
 
-- マスターが `parentMessageId` のスレッドに返信した場合
-- State の `phase` が `awaiting-master-reply` のエントリが存在する場合
+1. `memory/idea-learning.md` を読む → 過去の学びを把握
+2. `memory/idea-keywords.json` を読む → 今回のキーワードとメソッドを決定
+3. `memory/auto-idea-state.json` を読む → 重複チェック、直近カテゴリ確認
 
-### タイムアウト処理（48時間未回答の場合）
+### Step 1: カテゴリ + 着想メソッド決定
 
-```bash
-# postedAt から48時間経過したエントリをチェック
-# → pending-ideas.json からエントリを削除
-# → .done マーカーは作成しない（次回フローで再度処理される）
+**カテゴリ**（直近3回と被らないものから選ぶ）:
+```
+categories:
+  - Chrome拡張
+  - SaaSダッシュボード
+  - ランディングページ/Webツール
+  - モバイルWebアプリ
+  - GAS/スプレッドシート連携
+  - CLI/開発者ツール
+  - EC/マーケットプレイス連携
+  - 教育/学習ツール
+  - SNS/コミュニティツール
+  - 業務効率化ツール
 ```
 
-### PDCA サイクル
-
-#### Plan（ブレインストーミング）
-
-問題起点でアイデアを3〜5個展開する。
-- 「なぜこれが必要か」→ 根本課題を定義
-- 課題へのアプローチを複数出す
-- 既存サービス・競合との差別化ポイントを明確にする
-
-#### Do（評価）
-
-以下の4軸でスコアリング（各10点満点、0.5刻み）:
-
-| 軸 | 評価基準 |
-|----|---------|
-| **PUGEF** (PolyU GEF) | 潜在ユーザー数 × 利用頻度 × 緊急性 |
-| **ICE** | Impact × Confidence × Ease |
-| **Market** | 市場規模 × 成長性 × 参入障壁の低さ |
-| **Advantage** | 技術的優位性 × 実現可能性 × 差別化度 |
-
-総合スコア = 4軸の平均
-
-#### Check（分析）
-
-- スコアが低い軸を特定
-- 改善が必要な箇所を優先度付けして列挙
-- マスターの回答から得た情報でスコアを補正
-
-#### Act（改善）
-
-- Check の結果に基づいてアイデアを具体化・強化
-- 弱点を補う解決策を提案
-- 1イテレーション後に再スコアリング
-
-#### 終了条件
-
-- 総合スコア **≥ 7.0** に達した場合
-- または最大 **3イテレーション** 完了後
-
----
-
-## 最終出力
-
-### 20-Projects/ への保存
-
+**着想メソッド**（直近2回と被らないものから選ぶ）:
 ```
-/mnt/vault/20-Projects/YYYY-MM-DD-{slug}.md
+methods:
+  A: 海外トレンド → 日本ローカライズ
+  B: 既存ツールの弱点 → 特化版
+  C: 2つの分野の掛け算 → 新カテゴリ
+  D: マスターの実体験/不満 → 解決策
+  E: コミュニティの質問/不満 → プロダクト化
+  F: 料金が高いサービス → 安い代替
 ```
 
-**ファイル構造:**
+### Step 2: 市場リサーチ（web_search × 2 + web_fetch × 1-2）
 
+`idea-keywords.json` の `trend_queries` からランダムに選んだキーワードで検索。
+
+**検索1回目:** トレンド発見
+```
+web_search: "{キーワード} + {カテゴリ関連語}"
+→ 売れているプロダクト、伸びている領域を特定
+```
+
+**検索2回目:** 競合・ニッチ分析
+```
+web_search: "{発見したプロダクト名} alternative OR competitor OR 代替"
+→ 競合の弱点、未対応領域を特定
+```
+
+**web_fetch:** 有望な記事・プロダクトページを深掘り
+```
+web_fetch: 発見した事例の詳細ページ
+→ 売上データ、ユーザー数、レビュー、不満点を収集
+```
+
+**収集すべきエビデンス（最低1つ必須）:**
+- 市場の売上/ユーザー数の実数値
+- ユーザーの具体的な不満（レビュー、Reddit、X等）
+- 競合が対応していない機能/市場
+
+### Step 3: アイデア着想
+
+**制約条件（必須）:**
 ```yaml
----
-title: "{アイデアタイトル}"
-type: project-proposal
-status: refined
-created: YYYY-MM-DD
-source: idea-workflow
-original_idea: "[[10-Ideas/YYYY-MM-DD-slug]]"
-final_score: {総合スコア}
-iterations: {イテレーション回数}
-tags:
-  - {関連タグ}
----
+must:
+  - 収益化可能（課金 or 広告 or リード獲得が見える）
+  - エンドユーザーが存在する（開発者以外も含む）
+  - マスターのスキルで2週間以内にMVP可能
+    （JS/TS, Chrome拡張, 静的サイト, GAS, Next.js）
+  - エビデンスが1つ以上ある
+
+should:
+  - ¥500-5,000の価格帯（買い切り or 月額）
+  - 既存競合より1つ明確な優位性
+  - 日本市場で特にニーズあり
+
+never:
+  - OpenClaw内部ツール（自分用ユーティリティ）
+  - AI wrapper そのもの（差別化困難）
+  - 大規模インフラ必要なもの
+  - 既に飽和しているカテゴリ（TODO, メモアプリ等）
+```
+
+### Step 4: PDCA評価（最大2イテレーション）
+
+#### 定量スコアリング基準
+
+**PUGEF（10点満点）:**
+| 基準 | 2点 | 4点 | 6点 | 8点 | 10点 |
+|------|-----|-----|-----|-----|------|
+| 潜在ユーザー | <1K | 1K-10K | 10K-100K | 100K-1M | >1M |
+| 利用頻度 | 年1回 | 月1回 | 週1回 | 日1回 | 常時 |
+| 緊急性 | あれば便利 | 時々困る | よく困る | 毎日困る | ないと死ぬ |
+
+→ 3項目の平均 = PUGEFスコア
+
+**ICE（10点満点）:**
+| 基準 | 2点 | 4点 | 6点 | 8点 | 10点 |
+|------|-----|-----|-----|-----|------|
+| Impact | 微改善 | 小改善 | 中改善 | 大改善 | 革新的 |
+| Confidence | 仮説のみ | 類似例あり | エビデンス1つ | 複数エビデンス | 実証済み |
+| Ease | 3ヶ月+ | 1-3ヶ月 | 2-4週 | 1-2週 | 数日 |
+
+→ 3項目の平均 = ICEスコア
+
+**Market（10点満点）:**
+| 基準 | 2点 | 4点 | 6点 | 8点 | 10点 |
+|------|-----|-----|-----|-----|------|
+| 市場規模 | ニッチ中のニッチ | 小ニッチ | ニッチ | 中規模 | 大規模 |
+| 成長性 | 縮小 | 横ばい | 微成長 | 成長 | 急成長 |
+| 収益性 | 広告のみ | ¥500以下 | ¥500-2K | ¥2K-5K | ¥5K+ |
+
+**エビデンスなし = Marketスコア上限5**
+
+**Advantage（10点満点）:**
+| 基準 | 2点 | 4点 | 6点 | 8点 | 10点 |
+|------|-----|-----|-----|-----|------|
+| 差別化 | なし | 微差 | 1つ明確 | 2つ以上 | 独自カテゴリ |
+| 模倣困難 | 即コピー可 | 1週間 | 1ヶ月 | 数ヶ月 | 困難 |
+| 技術優位 | 汎用技術 | 組合せ技 | 専門知識要 | 独自アルゴ | 特許級 |
+
+**差別化ポイントを3つ挙げられない = Advantageスコア上限5**
+
+#### 総合スコア = 4軸の平均
+
+- **7.5以上:** 実装仕様書生成に進む
+- **6.0-7.4:** 1回改善イテレーション（弱い軸を強化）
+- **6.0未満:** 却下。学びだけ記録して次へ
+
+### Step 5: 実装仕様書（MD）生成
+
+スコア7.5+のアイデアのみ。以下のフォーマットで生成:
+
+```markdown
+# {プロジェクト名}
 
 ## 概要
+{1-2文の説明}
 
-{最終的に洗練されたアイデアの説明（300〜500字）}
-
-## 課題・背景
-
-{解決する問題、ターゲットユーザー}
-
-## 解決策
-
-{具体的なアプローチ}
+## エビデンス
+- {根拠1: URL + 要点}
+- {根拠2: URL + 要点}
 
 ## 評価スコア
-
-| 軸 | スコア | 理由 |
+| 軸 | スコア | 根拠 |
 |----|--------|------|
 | PUGEF | X.X | ... |
 | ICE | X.X | ... |
@@ -226,44 +195,110 @@ tags:
 | Advantage | X.X | ... |
 | **総合** | **X.X** | |
 
-## 改善履歴
+## 技術スタック
+- {使用技術}
 
-### Iteration 1
+## UI設計
+- スタイル: {具体的スタイル名。AI感排除。}
+- カラー: {具体的カラーコード}
+- フォント: {Google Fontsから}
+- 参考: {参考サイトURL}
+
+## 機能仕様
+### MVP（2週間以内）
+1. {機能1}
+2. {機能2}
+3. {機能3}
+
+### Phase 2（将来）
+- {追加機能}
+
+## 実装手順
+1. {ステップ1}
+2. {ステップ2}
 ...
 
-## 次のステップ
-
-{具体的なTODO / 実装の第一歩}
+## ファイル構成
+```
+projects/{project-name}/
+├── index.html
+├── README.md
+└── design-spec.yaml
 ```
 
-### Slack への最終報告
-
-```
-✅ PDCA完了: {タイトル}
-
-📊 最終スコア: {総合スコア}/10.0（{N}イテレーション）
-📁 20-Projects/YYYY-MM-DD-{slug}.md
-
-<@U0ADRLM7GE9>（Claude Code Agent）
-以下の企画書をもとにモック・実装を進めてください。
-
-\`\`\`markdown
-{20-Projects ファイルの全文}
-\`\`\`
+## 注意事項
+- {技術的注意点}
+- {デザイン上の注意点}
 ```
 
-⚠️ **必ず企画書MDの全文をコードブロックで貼り付けること**（Claude Code Agent はファイルを直接参照できない）
+### Step 6: 投稿と通知
+
+**#lab に投稿:**
+```
+💡 新アイデア提案: {タイトル}
+
+📊 スコア: {総合}/10.0
+🏷 カテゴリ: {カテゴリ}
+🔍 着想: {メソッド名}
+📎 エビデンス: {URL 1-2個}
+
+{アイデアの2-3行サマリー}
+
+---
+実装仕様書（全文）:
+```markdown
+{MD仕様書全文}
+```（ここまで）
+
+マスターの承認後、Claude Code Agentに転送してください。
+```
+
+**#setting に通知:**
+```
+🪽 新しいアイデア仕様書を #lab に投稿しました。
+確認して、よければClaude Code Agentに転送お願いします。
+```
+
+### Step 7: 学び記録（必須・スキップ不可）
+
+`memory/idea-learning.md` に追記:
+
+```markdown
+### {日付} {slot} — {タイトル}
+- カテゴリ: {X}
+- メソッド: {A-F}
+- スコア: {X.X}
+- 最も有用だったエビデンス: {URL}
+- 反省: {評価は甘くなかったか？着想に新しさはあったか？}
+- マスター反応: （後日追記）
+```
+
+### Step 8: State更新
+
+`memory/auto-idea-state.json` を更新。
+
+**必須: `heartbeat-state.json` も同期更新する。**
+```python
+import json, time
+hb_path = "memory/heartbeat-state.json"
+hb = json.load(open(hb_path))
+slot = "idea_morning" or "idea_evening"  # 実行スロットに応じて
+hb["lastChecks"][slot] = int(time.time())
+json.dump(hb, open(hb_path, "w"), indent=2)
+```
+これにより、cron経由でもheartbeat経由でも状態が一貫する。
 
 ---
 
-## 処理済みマーカー
+## Vault既存アイデアの処理
 
-Phase 2 が完了したら、処理済みマーカーを作成:
-
-```bash
-mkdir -p /mnt/vault/10-Ideas/.processed
-touch /mnt/vault/10-Ideas/.processed/${IDEA_BASENAME}.done
-```
+`/mnt/vault/10-Ideas/` に未処理ファイルがある場合:
+- 既存アイデアを **Step 4 から** 開始（リサーチはスキップ）
+- エビデンスが必要な場合はその場でweb_search
+- 処理後 `.processed/{filename}.done` マーカー作成
+- **供給源①（Vault）と②（自律生成）を交互に回す**
+  - 朝: 自律生成
+  - 夜: Vaultから（ストックがあれば）。なければ自律生成
 
 ---
 
@@ -271,7 +306,7 @@ touch /mnt/vault/10-Ideas/.processed/${IDEA_BASENAME}.done
 
 ```
 ⚠️ idea-workflow エラー
-📍 {発生フェーズ（Phase 1 / Phase 2）}
-💬 {エラー内容}
-🔄 {次の対応（自動再試行 / マスターへの確認）}
+📍 {Step番号}
+💬 {内容}
+→ idea-learning.md に記録して次回に活かす
 ```

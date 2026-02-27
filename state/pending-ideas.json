@@ -1,17 +1,6 @@
 {
   "pendingIdeas": [
     {
-      "ideaFile": "2026-02-10-switchbot-ai-hub-iot.md",
-      "ideaPath": "/mnt/vault/10-Ideas/2026-02-10-switchbot-ai-hub-iot.md",
-      "title": "SwitchBot AIハブでIoT化",
-      "phase": "awaiting-master-reply",
-      "slackChannel": "lab",
-      "parentMessageId": "1771347649.275869",
-      "threadMessageId": "1771347664.290849",
-      "postedAt": "2026-02-17T17:00:00Z",
-      "status": "phase1-complete"
-    },
-    {
       "ideaFile": "2026-02-08-weather-transit-notification-flow.md",
       "ideaPath": "/mnt/vault/10-Ideas/2026-02-08-weather-transit-notification-flow.md",
       "title": "OpenClaw天気予報・交通機関通知フロー",
@@ -21,6 +10,102 @@
       "parentMessageId": "1771434236.467929",
       "threadMessageId": "1771434246.506039",
       "postedAt": "2026-02-18T17:00:00Z",
+      "status": "phase1-complete"
+    },
+    {
+      "ideaFile": "2026-02-09-ai-wizard-agent-ui.md",
+      "ideaPath": "/mnt/vault/10-Ideas/2026-02-09-ai-wizard-agent-ui.md",
+      "title": "AIウィザード／エージェントUI構想",
+      "phase": "awaiting-master-reply",
+      "slackChannel": "lab",
+      "channelId": "lab",
+      "parentMessageId": "1771520427.698829",
+      "threadMessageId": "1771520445.736859",
+      "postedAt": "2026-02-19T17:00:00Z",
+      "status": "phase1-complete"
+    },
+    {
+      "ideaFile": "2026-02-09-idea-creation-validation-support.md",
+      "ideaPath": "/mnt/vault/10-Ideas/2026-02-09-idea-creation-validation-support.md",
+      "title": "アイデア創出・検証支援系",
+      "phase": "awaiting-master-reply",
+      "slackChannel": "lab",
+      "channelId": "C0918RCL2MT",
+      "parentMessageId": "1771606865.040899",
+      "threadMessageId": "1771606871.676429",
+      "postedAt": "2026-02-20T17:01:35Z",
+      "status": "phase1-complete"
+    },
+    {
+      "ideaFile": "2026-02-09-ai-wizard-agent-ui.md",
+      "ideaPath": "/mnt/vault/10-Ideas/2026-02-09-ai-wizard-agent-ui.md",
+      "title": "AIウィザード／エージェントUI構想",
+      "phase": "awaiting-master-reply",
+      "slackChannel": "lab",
+      "channelId": "lab",
+      "parentMessageId": "1771693246.676959",
+      "threadMessageId": "1771693259.566299",
+      "postedAt": "2026-02-21T17:00:00Z",
+      "status": "phase1-complete"
+    },
+    {
+      "ideaFile": "2026-02-09-ai-wizard-agent-ui.md",
+      "ideaPath": "/mnt/vault/10-Ideas/2026-02-09-ai-wizard-agent-ui.md",
+      "title": "AIウィザード／エージェントUI構想",
+      "phase": "awaiting-master-reply",
+      "slackChannel": "lab",
+      "channelId": "lab",
+      "parentMessageId": "1771779643.471559",
+      "threadMessageId": "1771779654.933539",
+      "postedAt": "2026-02-22T17:00:00Z",
+      "status": "phase1-complete"
+    },
+    {
+      "ideaFile": "2026-02-09-moltbook-scraping-workflow.md",
+      "ideaPath": "/mnt/vault/10-Ideas/2026-02-09-moltbook-scraping-workflow.md",
+      "title": "Moltbook投稿スクレイピング & X投稿ワークフロー",
+      "phase": "awaiting-master-reply",
+      "slackChannel": "lab",
+      "channelId": "C0918RCL2MT",
+      "parentMessageId": "1771866048.407449",
+      "threadMessageId": "1771866071.115839",
+      "postedAt": "2026-02-23T17:00:00Z",
+      "status": "phase1-complete"
+    },
+    {
+      "ideaFile": "2026-02-09-m1-comedy-skills.md",
+      "ideaPath": "/mnt/vault/10-Ideas/2026-02-09-m1-comedy-skills.md",
+      "title": "M-1動画を学習させてお笑いSkillsを作成",
+      "phase": "awaiting-master-reply",
+      "slackChannel": "lab",
+      "channelId": "C0918RCL2MT",
+      "parentMessageId": "1771952481.627119",
+      "threadMessageId": "1771952494.739509",
+      "postedAt": "2026-02-24T17:00:00Z",
+      "status": "phase1-complete"
+    },
+    {
+      "ideaFile": "2026-02-09-ai-wizard-agent-ui.md",
+      "ideaPath": "/mnt/vault/10-Ideas/2026-02-09-ai-wizard-agent-ui.md",
+      "title": "AIウィザード／エージェントUI構想",
+      "phase": "awaiting-master-reply",
+      "slackChannel": "lab",
+      "channelId": "C0918RCL2MT",
+      "parentMessageId": "1772038858.581729",
+      "threadMessageId": "1772038868.615939",
+      "postedAt": "2026-02-25T17:00:00Z",
+      "status": "phase1-complete"
+    },
+    {
+      "ideaFile": "2026-02-09-house-cleaning-schedule-app.md",
+      "ideaPath": "/mnt/vault/10-Ideas/2026-02-09-house-cleaning-schedule-app.md",
+      "title": "家の掃除場所管理アプリ",
+      "phase": "awaiting-master-reply",
+      "slackChannel": "lab",
+      "channelId": "C0918RCL2MT",
+      "parentMessageId": "1772125248.385749",
+      "threadMessageId": "1772125261.203949",
+      "postedAt": "2026-02-26T17:00:00Z",
       "status": "phase1-complete"
     }
   ]

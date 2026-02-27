@@ -134,6 +134,7 @@ Reactions are lightweight social signals. Humans use them constantly — they sa
 | `#news` | AIニュース自動収集・配信 | `channels/news.md` |
 | `#lab` | アイデアPDCAワークフロー | `channels/lab.md` |
 | `#imagelab` | 画像生成研究・TikTok動画制作 | `channels/imagelab.md` |
+| `#compass` | 毎朝の活動レポート（Vault・Lab・ImageLab統合） | `channels/compass.md` |
 
 **新規チャンネルを追加する場合:** `channels/{name}.md` を作成し、この表に追記する。
 

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ドラクエ風UI - PC操作インターフェース</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- メインウィンドウ -->
+        <div class="window main-window">
+            <div class="window-title">システム管理</div>
+            <div class="window-content">
+                <div id="display-area">
+                    <p class="message">▼ ようこそ、マスター。</p>
+                    <p class="message">コマンドを選択してください。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- コマンドメニュー -->
+        <div class="window command-window">
+            <div class="window-content">
+                <div class="command-menu">
+                    <div class="command-item active" data-command="files">
+                        <span class="cursor">▶</span> ファイル
+                    </div>
+                    <div class="command-item" data-command="system">
+                        <span class="cursor">▶</span> システム
+                    </div>
+                    <div class="command-item" data-command="tasks">
+                        <span class="cursor">▶</span> タスク
+                    </div>
+                    <div class="command-item" data-command="settings">
+                        <span class="cursor">▶</span> 設定
+                    </div>
+                    <div class="command-item" data-command="help">
+                        <span class="cursor">▶</span> ヘルプ
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ステータスバー -->
+        <div class="window status-window">
+            <div class="window-content status-bar">
+                <span class="status-item">📂 /workspace</span>
+                <span class="status-item">⏰ <span id="time">--:--</span></span>
+                <span class="status-item">💾 <span id="memory">0MB</span></span>
+            </div>
+        </div>
+
+        <!-- 操作ヒント -->
+        <div class="controls-hint">
+            <span>↑↓ 選択</span>
+            <span>ENTER 決定</span>
+            <span>ESC キャンセル</span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

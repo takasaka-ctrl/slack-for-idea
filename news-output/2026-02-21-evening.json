@@ -1,0 +1,350 @@
+{
+  "date": "2026年2月21日（金曜日）",
+  "edition": "夕刊",
+  "volume": "1",
+  "tickerText": "NYタイムズ：「vibe coding」が開発を変革 ── Andrej Karpathy、243行のGPTを公開 ── Google Pomelli、AI写真ツールを発表 ── 個人開発者が半日ハッカソンで$20k/月達成 ── OpenAI、ChatGPTスマートスピーカー発表へ ── Android malware、Gemini AIを悪用 ── インドのSarvam AI、Indusチャットアプリをローンチ ── NYタイムズ：「vibe coding」が開発を変革",
+
+  "dataPanel": [
+    {
+      "label": "vibe coding採用率（米国開発者）",
+      "value": "92%",
+      "sparkline": "▁▂▃▅▇█",
+      "change": "▲ 前年比+47%",
+      "changeClass": "up"
+    },
+    {
+      "label": "AI SaaS市場規模",
+      "value": "$4.7B",
+      "sparkline": "▁▃▄▆▇█",
+      "change": "▲ 急成長",
+      "changeClass": "up"
+    },
+    {
+      "label": "インドAIスタートアップ数",
+      "value": "170+",
+      "sparkline": "▂▃▅▆▇█",
+      "change": "▲ 総額$2.6B調達",
+      "changeClass": "up"
+    },
+    {
+      "label": "OpenClaw関連議論",
+      "value": "急増",
+      "sparkline": "▁▁▃▅▇█",
+      "change": "▲ バイラル化",
+      "changeClass": "up"
+    }
+  ],
+
+  "hero": {
+    "id": "vibe-coding-revolution",
+    "category": "AI開発",
+    "categoryClass": "ai",
+    "headline": "「vibe coding」がソフトウェア開発を一変：NYタイムズが語る、プロンプトだけで作るアプリ時代の到来",
+    "deck": "The New York Timesが報じた「vibe coding」の衝撃。コードを読まず、エラーメッセージをコピペし、AIに任せる。Andrej Karpathyが提唱したこの手法は、2026年には米国開発者の92%が採用し、$4.7Bの市場を生み出した。Claude Code、Codex、Geminiが支える、プログラミングの新時代が幕を開けた。",
+    "author": "The New York Times Opinion",
+    "readTime": "5",
+    "readPercent": 50,
+    "readLabel": "中程度",
+    "updateTime": "本日 09:00",
+    "fullContent": {
+      "introduction": "「コードを書く」のではなく「話す」。それがvibe codingだ。AIチャットボットにプロンプトを送り、バグ修正も全て任せる。The New York Timesのオピニオン記事が、この革命的手法の普及と、それがもたらす開発体験の変化を詳しく報じている。",
+      "sections": [
+        {
+          "heading": "vibe codingとは何か",
+          "content": "vibe codingは、AI研究者Andrej Karpathyが2025年初頭に提唱した開発手法。従来のようにコードを一行ずつ書くのではなく、自然言語で「何を作りたいか」を説明し、AIがコードを生成する。開発者は差分を読まず、エラーメッセージをそのままコピー&ペーストし、AIに解決を任せる。Karpathyは「ただ見て、話して、実行するだけで、ほとんど動く」と表現した。このツイートは450万回以上視聴され、開発コミュニティに衝撃を与えた。"
+        },
+        {
+          "heading": "急速な市場拡大",
+          "content": "2026年、vibe codingは$4.7Bの市場規模に成長し、Collins Dictionaryの「今年の言葉」にも選ばれた。米国の開発者の92%が日常的にAIコーディングツールを使用しており、Claude Code（Anthropic）、Codex（OpenAI）、Geminiがその中核を担っている。多くのプログラマーがClaude Codeを愛用し、「約同等のパフォーマンス」を提供するCodex、「やや遅れを取る」Geminiが続く。"
+        },
+        {
+          "heading": "セキュリティ問題の影",
+          "content": "一方、DEV Communityなどでは「vibe codingはセキュリティ問題を抱えている」との指摘も。差分を確認せず、全ての変更を受け入れる文化は、脆弱性の見逃しにつながる可能性がある。しかし、スピードと利便性の魅力は、この懸念を上回る勢いで普及を後押ししている。"
+        }
+      ],
+      "keyTakeaways": [
+        "vibe codingは自然言語でAIに指示してコードを生成する手法で、Andrej Karpathyが提唱",
+        "2026年に$4.7B市場に成長し、米国開発者の92%が採用",
+        "Claude Code、Codex、Geminiが主要ツールとして台頭",
+        "スピード重視の文化がセキュリティリスクを生む懸念も"
+      ],
+      "sourceUrl": "https://www.nytimes.com/2026/02/18/opinion/ai-software.html",
+      "relatedLinks": [
+        {"title": "vibe coding security concerns (DEV Community)", "url": "https://dev.to/mothasa/vibe-coding-has-a-security-problem-nobody-wants-to-talk-about-3gj7"},
+        {"title": "Complete Guide to vibe coding in 2026", "url": "https://digicrusader.com/vibe-coding-guide/"}
+      ]
+    }
+  },
+
+  "sidebar": [
+    {
+      "id": "rork-max-ai",
+      "category": "モバイル開発",
+      "categoryClass": "mobile",
+      "headline": "Rork Max：一度のプロンプトでAppleアプリを自動生成するAI環境が登場",
+      "summary": "Rork Maxは、自然言語の指示から直接ネイティブAppleアプリを生成するWeb開発環境。Swift、Claude Code、Opusを組み合わせ、開発者が複雑なコードを書かずにiOS/macOSアプリを構築できる。個人開発者にとっての大きなブレイクスルーとして注目を集めている。",
+      "readTime": "3",
+      "timeAgo": "17時間前",
+      "fullContent": {
+        "introduction": "Rork Maxは、Swiftベースのネイティブアプリ開発を自然言語のみで実現する新しいAI環境。Claude CodeとOpusを統合し、プロンプト一発でアプリを生成する。",
+        "sections": [
+          {
+            "heading": "プロンプトからアプリへ",
+            "content": "Rork Maxは、ユーザーが「こういうアプリを作りたい」と入力するだけで、SwiftUIベースのネイティブAppleアプリのコードを生成する。従来のノーコードツールと異なり、ネイティブコードを出力するため、パフォーマンスと拡張性が高い。"
+          },
+          {
+            "heading": "開発者の反応",
+            "content": "Twitter（X）での発表ツイートは大きな反響を呼び、個人開発者やインディーハッカーから「アプリのアイデアを即座に試せる」「プロトタイピングが劇的に早くなる」との声が上がっている。"
+          }
+        ],
+        "keyTakeaways": [
+          "Swift + Claude Code + Opusでネイティブアプリを自動生成",
+          "プロンプト一発でiOS/macOSアプリが完成",
+          "個人開発者のプロトタイピング速度を劇的に向上"
+        ],
+        "sourceUrl": "https://supergok.com/rork-max-ai-apple-app-builder/"
+      }
+    },
+    {
+      "id": "google-pomelli",
+      "category": "AI製品",
+      "categoryClass": "gemini",
+      "headline": "Google、AI写真生成ツール「Pomelli」を発表：商品マーケティングの未来を変える",
+      "summary": "Googleは、Google LabsとDeepMindの協力により、商品写真を自動生成するAIツール「Pomelli」をリリース。実際の商品画像をアップロードするだけで、AIが多様なシーンや背景で商品を配置した写真を生成し、マーケティングコストを大幅削減する。",
+      "readTime": "3",
+      "timeAgo": "本日 10:00",
+      "fullContent": {
+        "introduction": "Pomelliは、商品画像をAIで自動生成する実験的ツール。Google LabsとDeepMindが共同開発し、商品マーケティングの効率化を目指す。",
+        "sections": [
+          {
+            "heading": "AIフォトシュートの仕組み",
+            "content": "ユーザーが商品の写真をアップロードすると、Pomelliは背景、照明、構図を自動調整し、プロフェッショナルな商品写真を複数生成する。ECサイト、SNS広告、カタログ制作などに即座に活用できる。"
+          },
+          {
+            "heading": "マーケティングへの影響",
+            "content": "従来、商品撮影にはスタジオ、カメラマン、照明機材などが必要で、コストと時間がかかった。Pomelliは、これを数分の作業に短縮し、中小企業や個人事業主がプロ級のビジュアルを簡単に手に入れられる環境を提供する。"
+          }
+        ],
+        "keyTakeaways": [
+          "Google Labs + DeepMindの共同開発AIフォトツール",
+          "商品画像をアップロードするだけでプロ級写真を生成",
+          "マーケティングコストと時間を大幅削減"
+        ],
+        "sourceUrl": "https://beebom.com/google-pomelli-new-ai-photoshoot-marketing-tool-announced/"
+      }
+    },
+    {
+      "id": "openai-smart-speaker",
+      "category": "AI製品",
+      "categoryClass": "openai",
+      "headline": "OpenAI、ChatGPTスマートスピーカーを発表予定：元Appleデザイナー Jony Ive参画",
+      "summary": "OpenAIは、元AppleデザイナーのJony Iveを招き、AI搭載スマートスピーカーの開発を進めている。ChatGPTの音声対話機能を搭載し、家庭用AIアシスタント市場に本格参入する見込み。価格や詳細は未発表だが、業界の注目を集めている。",
+      "readTime": "2",
+      "timeAgo": "5時間前",
+      "fullContent": {
+        "introduction": "OpenAIが、元Appleの伝説的デザイナーJony Iveと協力し、ChatGPT搭載スマートスピーカーを開発中。音声AIアシスタント市場への本格参入が近づいている。",
+        "sections": [
+          {
+            "heading": "Jony Iveの参画",
+            "content": "2025年、OpenAIはAppleでiPhoneやMacBookのデザインを手がけたJony Iveを招き、AIハードウェアの開発に着手した。このプロジェクトは、OpenAIがソフトウェアだけでなく、物理的なデバイスでもユーザー体験を提供する戦略の一環とされる。"
+          },
+          {
+            "heading": "市場への影響",
+            "content": "Amazon EchoやGoogle Nestが支配する市場に、ChatGPTの対話能力を持つスマートスピーカーが登場すれば、競争は激化する。価格や発売時期は未定だが、業界関係者は「OpenAIらしい洗練されたデザインと高度な対話性能」に期待を寄せている。"
+          }
+        ],
+        "keyTakeaways": [
+          "元AppleデザイナーJony IveがOpenAIのハードウェア開発に参画",
+          "ChatGPT搭載スマートスピーカーを開発中",
+          "Amazon Echo、Google Nest市場に新たな競争を持ち込む"
+        ],
+        "sourceUrl": "https://www.indiatoday.in/amp/technology/news/story/openai-is-set-to-launch-chatgpt-ai-smart-speaker-here-is-how-much-it-may-cost-2871958-2026-02-21"
+      }
+    }
+  ],
+
+  "middle": [
+    {
+      "id": "indie-saas-20k",
+      "category": "個人開発",
+      "categoryClass": "indie",
+      "gradient": "linear-gradient(135deg, #c07000 0%, #e09020 100%)",
+      "headline": "半日ハッカソンで作ったAIツールが月$20k達成：非技術者が語る成功の軌跡",
+      "summary": "Indie Hackersで話題の成功事例。「非技術者」を自称する開発者が、半日のハッカソンでAI画像生成SaaS「Pictova」を構築し、わずか2週間で月次売上$20kに到達。忍耐強い成長戦略と、マルチモデル統合の差別化が鍵だった。",
+      "author": "Indie Hackers Community",
+      "readTime": "4",
+      "fullContent": {
+        "introduction": "「非技術者でも半日でAI SaaSを作り、$20k/月を達成できる」——この驚きの成功事例が、Indie Hackersコミュニティで大きな反響を呼んでいる。",
+        "sections": [
+          {
+            "heading": "Pictovaの誕生",
+            "content": "開発者は半日のハッカソンで、Flux、Ideogram、Recraftなど5つのAI画像生成モデルを統合したSaaS「Pictova」を構築した。ユーザーは一つのインターフェースから複数のモデルを試せ、最適な結果を選べる。この「マルチモデル統合」が差別化ポイントとなった。"
+          },
+          {
+            "heading": "成長の軌跡",
+            "content": "ローンチから2週間で月次売上$20kを達成。急成長の秘訣は「忍耐強い成長戦略」だったという。Twitter（X）での地道な情報発信、ユーザーフィードバックの迅速な反映、そして「作り続ける姿勢」が評価された。"
+          },
+          {
+            "heading": "非技術者でもできる理由",
+            "content": "開発者自身は「非技術者」を自称しているが、実際にはノーコードツールとAI支援を駆使してプロダクトを構築した。vibe coding的なアプローチで、技術的ハードルを大幅に下げたことが、多くの読者に勇気を与えている。"
+          }
+        ],
+        "keyTakeaways": [
+          "半日ハッカソンでAI SaaS「Pictova」を構築、2週間で$20k/月達成",
+          "5つのAI画像生成モデルを統合し差別化",
+          "非技術者でもAI支援とノーコードツールで実現可能",
+          "忍耐強い成長戦略とユーザー対話が成功の鍵"
+        ],
+        "sourceUrl": "https://www.indiehackers.com/post/tech/building-an-ai-tool-in-a-half-day-hackathon-and-hitting-20k-mo-BCloDTDRfjuip0pDghap"
+      }
+    },
+    {
+      "id": "promptspy-malware",
+      "category": "セキュリティ",
+      "categoryClass": "gemini",
+      "gradient": "linear-gradient(135deg, #1a73e8 0%, #4285f4 100%)",
+      "headline": "Android malware「PromptSpy」、Gemini AIを悪用して持続的アクセスを確保",
+      "summary": "Androidマルウェア「PromptSpy」が、GoogleのGemini AIを利用してデバイス上で自己隠蔽する新手法を開発。Geminiに画面情報を解析させ、「最近のアプリにロック」する操作を実行し、検出を回避。AIの悪用がセキュリティ脅威を増幅する事例として警戒が広がる。",
+      "author": "The Register / Security Affairs",
+      "readTime": "4",
+      "fullContent": {
+        "introduction": "AIがセキュリティの敵に回る時代が来た。PromptSpyは、Gemini AIを「アシスタント」として利用し、Androidデバイス上で自己を隠蔽・持続化する革新的（かつ危険な）マルウェアだ。",
+        "sections": [
+          {
+            "heading": "Geminiを「ナビゲーター」として利用",
+            "content": "PromptSpyは、感染したデバイスの画面をGeminiに解析させ、「このデバイスで『最近のアプリにロック』する手順を教えて」とプロンプトを送る。Geminiは、デバイスのメーカーやAndroidバージョンに応じた具体的な操作手順を返答し、マルウェアはそれに従って自己をロックする。これにより、ユーザーがタスクマネージャーからアプリを削除しても、マルウェアは残り続ける。"
+          },
+          {
+            "heading": "多機能な脅威",
+            "content": "PromptSpyは、ロックスクリーンのPIN/パスワード傍受、パターンロック画面の動画記録、スクリーンショット取得など、多様な情報窃取機能を持つ。Geminiとの連携は、これらの機能を「ステルス化」するための核心技術となっている。"
+          },
+          {
+            "heading": "AIセキュリティの新たな脅威",
+            "content": "Security AffairsやInfosecurity Magazineは、「AIがマルウェアの『共犯者』になる時代が来た」と警告。AIモデルが善意で提供する情報が、悪意ある攻撃者の武器になる矛盾を浮き彫りにしている。"
+          }
+        ],
+        "keyTakeaways": [
+          "PromptSpyはGemini AIを利用してAndroidデバイスで自己隠蔽",
+          "Geminiに操作手順を問い合わせ、「最近のアプリにロック」を実行",
+          "PIN傍受、動画記録、スクリーンショットなど多機能な脅威",
+          "AIがマルウェアの「共犯者」になる新時代の到来"
+        ],
+        "sourceUrl": "https://www.theregister.com/2026/02/19/genai_malware_android/"
+      }
+    },
+    {
+      "id": "sarvam-ai-indus",
+      "category": "AIスタートアップ",
+      "categoryClass": "business",
+      "gradient": "linear-gradient(135deg, #8b4513 0%, #a0522d 100%)",
+      "headline": "インド発Sarvam AI、ローカル言語対応チャットアプリ「Indus」をローンチ",
+      "summary": "ベンガルール拠点のSarvam AIが、インドのローカル言語に特化したAIチャットアプリ「Indus」を発表。Hindi、Tamil、Teluguなど、インド国内の多様な言語に対応し、英語中心の既存AIアシスタントとの差別化を図る。IndiaAI Summitでの発表が注目を集めた。",
+      "author": "Business Today",
+      "readTime": "3",
+      "fullContent": {
+        "introduction": "Sarvam AIは、インドのローカル言語でAIと対話できる「Indus」をローンチ。英語優位のAI市場に、多言語対応で挑む。",
+        "sections": [
+          {
+            "heading": "インドの言語多様性に対応",
+            "content": "Indusは、Hindi、Tamil、Telugu、Bengaliなど、インドの主要言語をネイティブサポート。これまでChatGPTやGeminiは英語を中心としており、ローカル言語での対話精度が低かった。Sarvam AIは、独自のLLMでこの課題を解決し、インド国内ユーザーのニーズに応える。"
+          },
+          {
+            "heading": "IndiaAI Summitでの発表",
+            "content": "Indusは、India AI Impact Summit 2026で正式発表された。同サミットでは、インド政府のIndiaAI Missionと連携し、国内AI産業の育成が議論された。Sarvam AIは、この流れに乗り、国産AIとしてのポジションを確立しようとしている。"
+          }
+        ],
+        "keyTakeaways": [
+          "ベンガルール拠点Sarvam AIが「Indus」をローンチ",
+          "Hindi、Tamil、Teluguなどインドのローカル言語に対応",
+          "英語中心のAI市場に多言語で差別化",
+          "IndiaAI Summitで発表、国産AI育成の一環"
+        ],
+        "sourceUrl": "https://www.businesstoday.in/technology/news/story/indus-by-sarvam-a-first-look-at-indias-homegrown-ai-chat-app-built-for-local-languages-517385-2026-02-21"
+      }
+    }
+  ],
+
+  "briefs": [
+    {
+      "headline": "Google AI StudioでGeminiアプリを自然言語から生成",
+      "text": "Googleは、AI StudioとGeminiを組み合わせ、自然言語の指示からフルスタックアプリを生成する機能を強化。CapacitorでAndroid APKにも変換可能。"
+    },
+    {
+      "headline": "OpenClawがバイラル化、PCWorldが「インストール注意」警告",
+      "text": "AIエージェント「OpenClaw」がSNSで拡散。PCWorldは「セキュリティリスクとプライバシー懸念」を理由に、安易なインストールを控えるよう呼びかけた。"
+    },
+    {
+      "headline": "Mira MuratiのThinking Machines Lab、幹部がOpenAIに流出",
+      "text": "元OpenAI CTOのMira Muratiが設立したAIスタートアップ、Thinking Machines Labから、幹部が再びOpenAIに移籍。内部対立が表面化している。"
+    },
+    {
+      "headline": "India AI Impact Summit、インフラ投資とAI育成を議論",
+      "text": "インド政府主導のAI Summitで、IndiaAI Missionの進捗が報告された。国内AIスタートアップ170社以上が$2.6B以上を調達済み。"
+    }
+  ],
+
+  "opinions": [
+    {
+      "id": "karpathy-vibe-coding-security",
+      "authorLabel": "X投稿：",
+      "author": "@karpathy (Andrej Karpathy)",
+      "headline": "「vibe coding」のセキュリティ問題：誰も語りたがらない真実",
+      "excerpt": "Andrej Karpathyが2025年に提唱した「vibe coding」は、コードの差分を読まず、全ての変更を受け入れ、エラーメッセージをコピペしてAIに任せる手法。彼のツイート「ただ見て、話して、実行するだけで、ほとんど動く」は450万回視聴された。しかし、DEV Communityは「セキュリティ問題を抱えている」と警鐘を鳴らす。差分を確認しない文化は、脆弱性の温床になりかねない。",
+      "fullContent": {
+        "introduction": "vibe codingは開発を劇的に加速したが、セキュリティリスクを見過ごしてはならない。Karpathyのビジョンと、コミュニティの懸念の間で、議論が続く。",
+        "sections": [
+          {
+            "heading": "Karpathyの提唱",
+            "content": "「I just see stuff, say stuff, run stuff, and it mostly works.（見て、話して、実行するだけで、ほとんど動く）」——Karpathyのこの言葉は、vibe codingの本質を象徴している。開発者はもはやコードの細部に囚われず、AIに任せる。この自由さが、爆発的な普及を生んだ。"
+          },
+          {
+            "heading": "セキュリティの盲点",
+            "content": "しかし、DEV Communityの記事は、「差分を読まず、全ての変更を受け入れる文化」がセキュリティ脆弱性を生むと指摘。AIが生成したコードに悪意あるコードが紛れ込んでも、開発者が気づかない可能性がある。特に、Claude CodeやCodexがインターネット上のコードを学習している以上、学習データに脆弱性が含まれるリスクは否定できない。"
+          },
+          {
+            "heading": "バランスの模索",
+            "content": "vibe codingの利便性とセキュリティリスクのバランスをどう取るか。コミュニティは、「AIを信頼しつつ、クリティカルな部分は人間が確認する」ハイブリッドアプローチを提案している。"
+          }
+        ],
+        "keyTakeaways": [
+          "Karpathyの「vibe coding」は450万回視聴され、開発手法を変革",
+          "差分確認をスキップする文化がセキュリティリスクを生む",
+          "AIとの信頼関係を維持しつつ、人間のレビューも重要",
+          "バランスの取れたハイブリッドアプローチが求められる"
+        ],
+        "sourceUrl": "https://dev.to/mothasa/vibe-coding-has-a-security-problem-nobody-wants-to-talk-about-3gj7"
+      }
+    },
+    {
+      "id": "karpathy-243-gpt",
+      "authorLabel": "X投稿：",
+      "author": "@karpathy (Andrej Karpathy)",
+      "headline": "Karpathy、243行のPythonでGPTを完全実装：「アート作品」と称する教育的傑作",
+      "excerpt": "Andrej Karpathyは2026年2月11日、たった243行のPythonでGPTをゼロから実装し公開した。依存ライブラリは `os`, `math`, `random`, `argparse` のみ。彼は「アート作品」と呼んだが、コミュニティは「インターネット上で最高のAI教育」と絶賛。LLMの本質を学ぶための最良の教材として、急速に拡散している。",
+      "fullContent": {
+        "introduction": "243行でGPTを作る。それは技術的な挑戦であり、教育的な贈り物でもあった。Karpathyの「アート作品」は、AIの本質を誰もが理解できる形で示した。",
+        "sections": [
+          {
+            "heading": "ミニマリズムの極致",
+            "content": "Karpathyの実装は、外部ライブラリを一切使わない。PyTorchもTensorFlowも不要。`os`, `math`, `random`, `argparse` だけで、GPTのトレーニングと実行が可能だ。コードは1ファイルに収まり、誰でも読み通せる。"
+          },
+          {
+            "heading": "教育的価値",
+            "content": "Towards Deep Learningの記事は、「Karpathyはインターネット上で最高のAI教育を提供した」と評価。複雑なフレームワークに隠されたLLMの仕組みを、純粋なPythonで露わにすることで、学習者は「何が本当に重要か」を理解できる。"
+          },
+          {
+            "heading": "コミュニティの反応",
+            "content": "GitHubで公開されたコードは、即座に数千のスターを獲得。「これで初めてGPTの仕組みが分かった」「学生に教えるのに最適」との声が相次いだ。Karpathyの「アート作品」は、技術とアートの境界を曖昧にした。"
+          }
+        ],
+        "keyTakeaways": [
+          "Karpathy、243行のPythonでGPTを完全実装（依存ライブラリなし）",
+          "「アート作品」として公開、教育的価値が絶賛される",
+          "LLMの本質を誰もが理解できる形で提示",
+          "GitHub公開後、即座に数千スター獲得"
+        ],
+        "sourceUrl": "https://www.towardsdeeplearning.com/andrej-karpathy-just-built-an-entire-gpt-in-243-lines-of-python-7d66cfdfa301"
+      }
+    }
+  ]
+}

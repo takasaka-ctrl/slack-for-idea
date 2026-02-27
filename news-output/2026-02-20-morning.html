@@ -1,0 +1,1802 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Chronicle</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&family=DM+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&family=Noto+Serif+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-paper: #faf7f2;
+  --bg-cream: #f5f0e8;
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-caption: #777;
+  --rule-color: #c8c0b4;
+  --rule-heavy: #2a2a2a;
+  --accent-red: #c41e1e;
+  --accent-blue: #1e3a5f;
+  --accent-gold: #b8860b;
+  --category-ai: #2d5a27;
+  --category-tech: #1e3a5f;
+  --category-business: #8b4513;
+  --category-research: #5b2c6f;
+  --category-openai: #10a37f;
+  --category-gemini: #1a73e8;
+  --category-indie: #c07000;
+  --category-mobile: #0f4c75;
+  --font-display: 'Playfair Display', 'Noto Serif JP', serif;
+  --font-body: 'Source Serif 4', 'Noto Serif JP', serif;
+  --font-sans: 'DM Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-paper: #1a1a1a;
+    --bg-cream: #252525;
+    --text-primary: #e8e3db;
+    --text-secondary: #b8b5b0;
+    --text-caption: #888;
+    --rule-color: #3a3a3a;
+    --rule-heavy: #d0d0d0;
+  }
+}
+
+body.dark-mode {
+  --bg-paper: #1a1a1a;
+  --bg-cream: #252525;
+  --text-primary: #e8e3db;
+  --text-secondary: #b8b5b0;
+  --text-caption: #888;
+  --rule-color: #3a3a3a;
+  --rule-heavy: #d0d0d0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #e8e3db;
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.3s, color 0.3s;
+}
+
+.newspaper {
+  max-width: 1200px;
+  margin: 24px auto;
+  background: var(--bg-paper);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.06);
+  position: relative;
+  transition: background 0.3s;
+}
+
+/* Dark mode toggle */
+.dark-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--bg-cream);
+  border: 1px solid var(--rule-color);
+  border-radius: 20px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  z-index: 100;
+  transition: all 0.3s;
+}
+
+.dark-toggle:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Masthead */
+.masthead {
+  text-align: center;
+  padding: 28px 40px 20px;
+  border-bottom: 3px double var(--rule-heavy);
+  position: relative;
+}
+
+.masthead::before, .masthead::after {
+  content: '';
+  position: absolute;
+  left: 40px;
+  right: 40px;
+  height: 1px;
+  background: var(--rule-heavy);
+}
+
+.masthead::before { top: 8px; }
+.masthead::after { bottom: 8px; }
+
+.masthead-date {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-caption);
+  margin-bottom: 8px;
+}
+
+.masthead-title {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 60px);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  color: var(--text-primary);
+}
+
+.masthead-subtitle {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-caption);
+  margin-top: 6px;
+}
+
+/* Ticker */
+.ticker {
+  background: var(--accent-red);
+  color: white;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 8px 40px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow: hidden;
+}
+
+.ticker-label {
+  background: rgba(255,255,255,0.2);
+  padding: 2px 10px;
+  border-radius: 2px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.ticker-text {
+  white-space: nowrap;
+  animation: ticker-scroll 30s linear infinite;
+}
+
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Section nav */
+.section-nav {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  padding: 12px 40px;
+  border-bottom: 1px solid var(--rule-color);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  flex-wrap: wrap;
+}
+
+.section-nav a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 2px 0;
+  transition: color 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+
+.section-nav a:hover,
+.section-nav a.active {
+  color: var(--text-primary);
+  border-bottom: 2px solid var(--accent-red);
+}
+
+.content {
+  padding: 0 40px 40px;
+}
+
+/* Data panel with sparklines */
+.data-panel {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  padding: 20px 0;
+  border-bottom: 2px solid var(--rule-heavy);
+}
+
+.data-item {
+  text-align: center;
+  padding: 0 16px;
+  border-right: 1px solid var(--rule-color);
+}
+
+.data-item:last-child { border-right: none; }
+
+.data-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-caption);
+  margin-bottom: 4px;
+}
+
+.data-value {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.data-sparkline {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  letter-spacing: 1px;
+  margin: 4px 0;
+  color: var(--category-ai);
+}
+
+.data-change {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.data-change.up { color: var(--category-ai); }
+.data-change.down { color: var(--accent-red); }
+
+/* Category tags */
+.category-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  display: inline-block;
+  margin-bottom: 10px;
+  transition: all 0.2s;
+}
+
+.category-tag--ai {
+  color: var(--category-ai);
+  border: 1px solid var(--category-ai);
+}
+
+.category-tag--tech {
+  color: var(--category-tech);
+  border: 1px solid var(--category-tech);
+}
+
+.category-tag--business {
+  color: var(--category-business);
+  border: 1px solid var(--category-business);
+}
+
+.category-tag--research {
+  color: var(--category-research);
+  border: 1px solid var(--category-research);
+}
+
+.category-tag--openai {
+  color: var(--category-openai);
+  border: 1px solid var(--category-openai);
+}
+
+.category-tag--gemini {
+  color: var(--category-gemini);
+  border: 1px solid var(--category-gemini);
+}
+
+.category-tag--indie {
+  color: var(--category-indie);
+  border: 1px solid var(--category-indie);
+}
+
+.category-tag--mobile {
+  color: var(--category-mobile);
+  border: 1px solid var(--category-mobile);
+}
+
+/* Hero section */
+.hero-section {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 0;
+  border-bottom: 2px solid var(--rule-heavy);
+  padding: 24px 0;
+}
+
+.hero-main {
+  padding-right: 24px;
+  border-right: 1px solid var(--rule-color);
+}
+
+.hero-image {
+  width: 100%;
+  height: 320px;
+  background: linear-gradient(135deg, #1a2a3a 0%, #2d4a6a 50%, #1a3a5a 100%);
+  border-radius: 2px;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s;
+  cursor: pointer;
+}
+
+.hero-image:hover {
+  transform: scale(1.01);
+}
+
+.hero-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.02) 2px, rgba(255,255,255,0.02) 4px),
+              repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255,255,255,0.02) 2px, rgba(255,255,255,0.02) 4px);
+}
+
+.hero-image-text {
+  color: rgba(255,255,255,0.15);
+  font-family: var(--font-display);
+  font-size: 72px;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  z-index: 1;
+  user-select: none;
+}
+
+.hero-headline {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.5vw, 42px);
+  font-weight: 900;
+  line-height: 1.15;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+  transition: color 0.2s;
+  cursor: pointer;
+}
+
+.hero-headline:hover {
+  color: var(--accent-red);
+}
+
+.hero-deck {
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.hero-meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-caption);
+  letter-spacing: 0.03em;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.hero-meta strong {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.read-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.read-time-bar {
+  display: inline-block;
+  width: 60px;
+  height: 4px;
+  background: var(--rule-color);
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+}
+
+.read-time-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: var(--accent-red);
+  width: 75%; /* Will be dynamic */
+}
+
+/* Sidebar */
+.hero-sidebar {
+  padding-left: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.sidebar-item {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--rule-color);
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.sidebar-item:hover {
+  transform: translateX(4px);
+}
+
+.sidebar-item:first-child { padding-top: 0; }
+.sidebar-item:last-child { border-bottom: none; }
+
+.sidebar-headline {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 6px;
+  color: var(--text-primary);
+  transition: color 0.2s;
+}
+
+.sidebar-item:hover .sidebar-headline {
+  color: var(--accent-red);
+}
+
+.sidebar-summary {
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.sidebar-meta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-caption);
+  margin-top: 6px;
+  letter-spacing: 0.03em;
+}
+
+/* Middle grid */
+.middle-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--rule-color);
+}
+
+.middle-article {
+  padding: 0 20px;
+  border-right: 1px solid var(--rule-color);
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.middle-article:hover {
+  transform: translateY(-2px);
+}
+
+.middle-article:first-child { padding-left: 0; }
+.middle-article:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+.middle-image {
+  width: 100%;
+  height: 160px;
+  border-radius: 2px;
+  margin-bottom: 12px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+.middle-article:hover .middle-image {
+  transform: scale(1.02);
+}
+
+.middle-headline {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 8px;
+  transition: color 0.2s;
+}
+
+.middle-article:hover .middle-headline {
+  color: var(--accent-red);
+}
+
+.middle-summary {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+.middle-meta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-caption);
+  margin-top: 8px;
+}
+
+/* Brief section */
+.brief-section {
+  padding: 24px 0;
+  border-bottom: 1px solid var(--rule-color);
+}
+
+.section-label {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--rule-color);
+}
+
+.brief-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+
+.brief-item {
+  padding: 0 16px;
+  border-right: 1px solid var(--rule-color);
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.brief-item:hover {
+  transform: translateX(2px);
+}
+
+.brief-item:first-child { padding-left: 0; }
+.brief-item:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+.brief-bullet {
+  width: 6px;
+  height: 6px;
+  background: var(--accent-red);
+  display: inline-block;
+  margin-right: 6px;
+  vertical-align: middle;
+  border-radius: 1px;
+}
+
+.brief-headline {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 4px;
+  transition: color 0.2s;
+}
+
+.brief-item:hover .brief-headline {
+  color: var(--accent-red);
+}
+
+.brief-text {
+  font-family: var(--font-body);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+/* Opinion section */
+.opinion-section {
+  background: var(--bg-cream);
+  margin: 0 -40px;
+  padding: 24px 40px;
+  border-top: 3px solid var(--accent-gold);
+  transition: background 0.3s;
+}
+
+.opinion-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.opinion-item {
+  padding: 0 24px;
+  border-right: 1px solid var(--rule-color);
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.opinion-item:hover {
+  transform: translateX(4px);
+}
+
+.opinion-item:first-child { padding-left: 0; }
+.opinion-item:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+.opinion-author {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent-gold);
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+.opinion-headline {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  font-style: italic;
+  line-height: 1.25;
+  margin-bottom: 8px;
+  transition: color 0.2s;
+}
+
+.opinion-item:hover .opinion-headline {
+  color: var(--accent-red);
+}
+
+.opinion-excerpt {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 16px 40px;
+  border-top: 1px solid var(--rule-color);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--text-caption);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .newspaper { margin: 0; }
+  .content { padding: 0 20px 20px; }
+  .masthead { padding: 20px 20px 16px; }
+  .masthead::before, .masthead::after {
+    left: 20px;
+    right: 20px;
+  }
+  .ticker { padding: 8px 20px; }
+  .section-nav {
+    padding: 10px 20px;
+    gap: 16px;
+  }
+  .hero-section { grid-template-columns: 1fr; }
+  .hero-main {
+    padding-right: 0;
+    border-right: none;
+    border-bottom: 1px solid var(--rule-color);
+    padding-bottom: 20px;
+  }
+  .hero-sidebar {
+    padding-left: 0;
+    padding-top: 16px;
+  }
+  .middle-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .middle-article {
+    padding: 0;
+    border-right: none;
+    border-bottom: 1px solid var(--rule-color);
+    padding-bottom: 20px;
+  }
+  .middle-article:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  .opinion-section {
+    margin: 0 -20px;
+    padding: 20px;
+  }
+  .opinion-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .opinion-item {
+    padding: 0;
+    border-right: none;
+    border-bottom: 1px solid var(--rule-color);
+    padding-bottom: 16px;
+  }
+  .opinion-item:last-child { border-bottom: none; }
+  .brief-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .brief-item {
+    border-right: none;
+    padding: 0;
+  }
+  .data-panel {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .data-item { border-right: none; }
+}
+
+@media (max-width: 520px) {
+  .brief-grid { grid-template-columns: 1fr; }
+  .data-panel { grid-template-columns: 1fr 1fr; }
+  .hero-image { height: 200px; }
+}
+
+/* Print texture */
+.newspaper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.015'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+}
+
+.newspaper > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* ============================================
+   ARTICLE DETAIL MODAL STYLES
+   ============================================ */
+
+/* Modal Container */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.modal.active {
+  display: flex;
+  opacity: 1;
+}
+
+/* Overlay */
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+}
+
+/* Container */
+.modal-container {
+  position: relative;
+  width: 90%;
+  max-width: 900px;
+  max-height: 90vh;
+  z-index: 2001;
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+}
+
+.modal.active .modal-container {
+  transform: translateY(0);
+}
+
+/* Content */
+.modal-content {
+  background: var(--bg-paper);
+  border-radius: 4px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* Header (Close + Copy buttons) */
+.modal-header {
+  position: sticky;
+  top: 0;
+  background: var(--bg-paper);
+  border-bottom: 1px solid var(--rule-color);
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+
+.modal-close {
+  font-size: 32px;
+  line-height: 1;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.modal-close:hover {
+  color: var(--accent-red);
+  transform: scale(1.1);
+}
+
+.modal-copy {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 16px;
+  background: var(--bg-cream);
+  border: 1px solid var(--rule-color);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--text-primary);
+}
+
+.modal-copy:hover {
+  background: var(--accent-gold);
+  color: white;
+  border-color: var(--accent-gold);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.modal-copy.copied {
+  background: var(--category-ai);
+  color: white;
+  border-color: var(--category-ai);
+}
+
+/* Newspaper Content */
+.modal-newspaper {
+  padding: 32px 48px 48px;
+}
+
+.modal-category-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  display: inline-block;
+  margin-bottom: 16px;
+  border: 1px solid;
+}
+
+.modal-headline {
+  font-family: var(--font-display);
+  font-size: 36px;
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+}
+
+.modal-meta {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-caption);
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid var(--rule-heavy);
+}
+
+.modal-introduction {
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+  padding: 20px;
+  background: var(--bg-cream);
+  border-left: 4px solid var(--accent-gold);
+}
+
+/* Sections */
+.modal-section {
+  margin-bottom: 32px;
+}
+
+.modal-section-heading {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.modal-section-content {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+.modal-section-steps {
+  margin: 16px 0;
+  padding-left: 20px;
+}
+
+.modal-section-steps li {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  padding-left: 8px;
+}
+
+.modal-section-code {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.6;
+  background: #1a1a1a;
+  color: #e8e3db;
+  padding: 20px;
+  border-radius: 4px;
+  overflow-x: auto;
+  margin: 16px 0;
+  white-space: pre;
+}
+
+.modal-section-warning {
+  background: rgba(196, 30, 30, 0.1);
+  border-left: 4px solid var(--accent-red);
+  padding: 16px;
+  margin: 16px 0;
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+
+/* Key Takeaways */
+.modal-key-takeaways {
+  background: var(--bg-cream);
+  padding: 24px;
+  margin: 32px 0;
+  border-top: 3px solid var(--accent-gold);
+}
+
+.modal-key-takeaways h3 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.modal-key-takeaways ul {
+  list-style: none;
+  padding: 0;
+}
+
+.modal-key-takeaways li {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  padding-left: 24px;
+  position: relative;
+}
+
+.modal-key-takeaways li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--accent-gold);
+  font-weight: 700;
+}
+
+/* Personal Tips ("あなたへの活用アイデア") */
+.modal-personal-tips {
+  background: linear-gradient(135deg, rgba(0, 100, 80, 0.12) 0%, rgba(0, 60, 50, 0.08) 100%);
+  border: 1px solid rgba(0, 180, 140, 0.35);
+  border-left: 4px solid #00b48c;
+  padding: 24px;
+  margin: 32px 0;
+  border-radius: 2px;
+}
+
+.modal-personal-tips h3 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: #00c9a0;
+  letter-spacing: 0.5px;
+}
+
+.modal-personal-tips ul {
+  list-style: none;
+  padding: 0;
+}
+
+.modal-personal-tips li {
+  font-family: var(--font-body);
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+  padding-left: 24px;
+  position: relative;
+}
+
+.modal-personal-tips li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: #00c9a0;
+  font-weight: 700;
+}
+
+.modal-personal-tips li:last-child {
+  margin-bottom: 0;
+}
+
+/* Footer Links */
+.modal-footer {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule-color);
+}
+
+.modal-footer h3 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.modal-links {
+  list-style: none;
+  padding: 0;
+}
+
+.modal-links li {
+  margin-bottom: 8px;
+}
+
+.modal-links a {
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--accent-blue);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.modal-links a:hover {
+  color: var(--accent-red);
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .modal-container {
+    width: 95%;
+  }
+  
+  .modal-newspaper {
+    padding: 24px 20px 32px;
+  }
+  
+  .modal-headline {
+    font-size: 28px;
+  }
+  
+  .modal-section-heading {
+    font-size: 20px;
+  }
+  
+  .modal-header {
+    padding: 12px 16px;
+  }
+  
+  .modal-copy {
+    font-size: 11px;
+    padding: 6px 12px;
+  }
+}
+
+/* Dark mode adjustments */
+body.dark-mode .modal-section-code {
+  background: #0a0a0a;
+  color: #e8e3db;
+}
+
+</style>
+</head>
+<body>
+<button class="dark-toggle" onclick="toggleDarkMode()">
+  <span id="mode-icon">🌙</span> <span id="mode-text">Dark</span>
+</button>
+
+<div class="newspaper">
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="masthead-date">2026年2月20日（金曜日） · Tokyo Edition · Vol. 1</div>
+  <h1 class="masthead-title">The AI Chronicle</h1>
+  <div class="masthead-subtitle">Your Daily Intelligence on Artificial Intelligence · Curated by Athena</div>
+</header>
+
+<!-- TICKER -->
+<div class="ticker">
+  <span class="ticker-label">Breaking</span>
+  <span class="ticker-text">Anthropic、Claude Code Securityを発表 ── Google、Gemini 3.1 Proをリリース ── OpenAI、GPT-5.3-CodexがGitHub Copilotで一般提供開始 ── Karpathy、243行のPythonで完全なGPTを実装 ── SWE-benchでClaude Opus 4.5が首位 ── Anthropic、Claude Code Securityを発表</span>
+</div>
+
+<!-- SECTION NAV -->
+<nav class="section-nav">
+  <a class="active">Top Stories</a>
+  <a>Models & Research</a>
+  <a>Industry</a>
+  <a>Tools & Products</a>
+  <a>Opinion</a>
+  <a>Data</a>
+</nav>
+
+<div class="content">
+<!-- DATA PANEL -->
+<div class="data-panel">
+  
+    <div class="data-item">
+      <div class="data-label">Claude Opus 4.5 (SWE-bench)</div>
+      <div class="data-value">58.4%</div>
+      <div class="data-sparkline">▁▃▅▇█</div>
+      <div class="data-change up">▲ Verified基準でトップスコア</div>
+    </div>
+    
+    <div class="data-item">
+      <div class="data-label">Gemini 3.1 Pro 推論性能</div>
+      <div class="data-value">+95%</div>
+      <div class="data-sparkline">▁▂▄▆█</div>
+      <div class="data-change up">▲ エージェント型ワークフローで約2倍</div>
+    </div>
+    
+    <div class="data-item">
+      <div class="data-label">GPT-5.3-Codex レイテンシ</div>
+      <div class="data-value">超低遅延</div>
+      <div class="data-sparkline">▁▁▂▃█</div>
+      <div class="data-change up">▲ Cerebras最適化でリアルタイム編集</div>
+    </div>
+    
+    <div class="data-item">
+      <div class="data-label">AI API割当量消費</div>
+      <div class="data-value">180/2000</div>
+      <div class="data-sparkline">▂▃▅▆█</div>
+      <div class="data-change down">▼ レート制限に注意</div>
+    </div>
+    
+</div>
+
+<!-- HERO SECTION -->
+<section class="hero-section">
+  <div class="hero-main">
+    <div class="hero-image">
+      <span class="hero-image-text">AI</span>
+    </div>
+    <span class="category-tag category-tag--ai">AIセキュリティ</span>
+    <h2 class="hero-headline">Anthropic、Claude Code Securityを発表 — サイバーセキュリティ株が急落</h2>
+    <p class="hero-deck">Anthropicは本日、Claude Code Securityを限定研究プレビューとして公開。コードベースの脆弱性を自動スキャンし、ターゲット化されたパッチを提案する新機能により、従来のセキュリティソフトウェア企業の株価が下落した。</p>
+    <div class="hero-meta">
+      By <strong>Bloomberg / TipRanks</strong> · 
+      <span class="read-time">
+        📖 4 min
+        <span class="read-time-bar">
+          <span class="read-time-fill" style="width: 50%"></span>
+        </span>
+        中程度
+      </span>
+      · Updated 本日 06:30
+    </div>
+  </div>
+  <aside class="hero-sidebar">
+    
+    <div class="sidebar-item">
+      <span class="category-tag category-tag--gemini">AIモデル</span>
+      <h3 class="sidebar-headline">Google、Gemini 3.1 Proを発表 — 複雑問題解決で推論性能が約2倍に</h3>
+      <p class="sidebar-summary">Googleは、Gemini 3.1 Proを発表。エージェント型ワークフローのベンチマークで推論性能がほぼ倍増し、コーディング支援も強化。Gemini appやNotebookLMで即日利用可能に。</p>
+      <div class="sidebar-meta">3 min read · 1日前</div>
+    </div>
+    
+    <div class="sidebar-item">
+      <span class="category-tag category-tag--openai">開発ツール</span>
+      <h3 class="sidebar-headline">GPT-5.3-Codex、GitHub Copilotで一般提供開始 — ベンチマークで新記録</h3>
+      <p class="sidebar-summary">OpenAIの最新コーディング特化モデル GPT-5.3-Codex が GitHub Copilot で一般提供開始。初期テストでコーディング、エージェント、実世界タスクのベンチマークで新高スコアを記録。</p>
+      <div class="sidebar-meta">3 min read · 2日前</div>
+    </div>
+    
+    <div class="sidebar-item">
+      <span class="category-tag category-tag--research">研究</span>
+      <h3 class="sidebar-headline">Karpathy、243行のPythonで完全なGPTを実装 — 「アートプロジェクト」が話題に</h3>
+      <p class="sidebar-summary">元OpenAI/Tesla AI責任者のAndrej Karpathyが、わずか243行のPythonコードでGPTを完全実装。依存ライブラリゼロ、標準ライブラリのみで学習と推論が可能な「教育用最高傑作」。</p>
+      <div class="sidebar-meta">4 min read · 9時間前</div>
+    </div>
+    
+  </aside>
+</section>
+
+<!-- MIDDLE GRID -->
+<section class="middle-grid">
+  
+    <article class="middle-article">
+      <div class="middle-image" style="background: linear-gradient(135deg, #10a37f 0%, #1a7a5e 100%);"></div>
+      <span class="category-tag category-tag--openai">ハードウェア</span>
+      <h3 class="middle-headline">OpenAI、2027年にAI搭載スマートスピーカーを発表か</h3>
+      <p class="middle-summary">OpenAIが2027年に初のAI搭載コンシューマーデバイス、スマートスピーカーをリリースする可能性が報じられた。ChatGPTを統合した音声アシスタントデバイスとなる見込み。</p>
+      <div class="middle-meta">By Engadget · 2 min read</div>
+    </article>
+    
+    <article class="middle-article">
+      <div class="middle-image" style="background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%);"></div>
+      <span class="category-tag category-tag--business">インフラ</span>
+      <h3 class="middle-headline">OpenAI、インドTCSのデータセンターで初顧客に — Stargate構想の一環</h3>
+      <p class="middle-summary">OpenAIがインドのTata Consultancy Services（TCS）のデータセンター事業で初顧客となる。100MWの容量で開始し、グローバルAIインフラ構想Stargateの一部となる。</p>
+      <div class="middle-meta">By Reuters · 3 min read</div>
+    </article>
+    
+    <article class="middle-article">
+      <div class="middle-image" style="background: linear-gradient(135deg, #5b2c6f 0%, #8e44ad 100%);"></div>
+      <span class="category-tag category-tag--research">ベンチマーク</span>
+      <h3 class="middle-headline">SWE-bench 2月版リーダーボード更新 — Claude Opus 4.5が首位、中国勢が躍進</h3>
+      <p class="middle-summary">SWE-bench Verifiedの最新結果が公開。Claude Opus 4.5が58.4%でトップ、Gemini 3 Flashが2位、中国MiniMaxのM2.5が3位に。OpenAIのGPT-5.2は6位。</p>
+      <div class="middle-meta">By @simonw (Simon Willison) · 4 min read</div>
+    </article>
+    
+</section>
+
+<!-- BRIEF SECTION -->
+<section class="brief-section">
+  <div class="section-label">In Brief</div>
+  <div class="brief-grid">
+    
+    <div class="brief-item">
+      <h4 class="brief-headline"><span class="brief-bullet"></span>OpenAI Mafia特集 — 元社員が創業した18のスタートアップ</h4>
+      <p class="brief-text">TechCrunchがOpenAI出身者が創業したスタートアップを特集。Karpathyの教育系YouTubeチャンネル、各種AI企業など多岐にわたる。</p>
+    </div>
+    
+    <div class="brief-item">
+      <h4 class="brief-headline"><span class="brief-bullet"></span>Code Metal、1.25億ドル調達 — 防衛産業コードをAIで書き換え</h4>
+      <p class="brief-text">Vibe Codingスタートアップ Code Metal がシリーズBで1.25億ドルを調達。Karpathyが言及した「CからRustへの移植」トレンドに言及。</p>
+    </div>
+    
+    <div class="brief-item">
+      <h4 class="brief-headline"><span class="brief-bullet"></span>Anthropic、Claude Code利用規約を更新 — OAuth Token制限</h4>
+      <p class="brief-text">AnthropicがClaude CodeドキュメントでOAuthトークン利用を制限。NanoClawなどサードパーティツールでの利用は規約違反に。</p>
+    </div>
+    
+    <div class="brief-item">
+      <h4 class="brief-headline"><span class="brief-bullet"></span>Claude Sonnet 4.6、100万トークン対応で幻覚が減少</h4>
+      <p class="brief-text">Anthropicが Claude Sonnet 4.6 をリリース。100万トークンの長文対応と、幻覚（ハルシネーション）の大幅削減を実現。</p>
+    </div>
+    
+  </div>
+</section>
+
+<!-- OPINION -->
+<section class="opinion-section">
+  <div class="section-label">Opinion & Analysis</div>
+  <div class="opinion-grid">
+    
+    <div class="opinion-item">
+      <div class="opinion-author">X投稿： @karpathy (Andrej Karpathy)</div>
+      <h3 class="opinion-headline">「243行のPythonでGPTを完全実装 — 依存ゼロのアートプロジェクト」</h3>
+      <p class="opinion-excerpt">Karpathyが公開した243行のGPT実装は、AI教育の金字塔として瞬く間に拡散。「依存ライブラリなし、標準ライブラリのみ」という制約が、逆にLLMの本質を浮き彫りにし、教育的価値を最大化している。</p>
+    </div>
+    
+    <div class="opinion-item">
+      <div class="opinion-author">X投稿： @simonw (Simon Willison)</div>
+      <h3 class="opinion-headline">「SWE-bench 2月更新：Claude 4.5が首位、中国勢が躍進」</h3>
+      <p class="opinion-excerpt">Simon Willisonが詳細に分析したSWE-bench最新結果。Claude Opus 4.5が58.4%でトップを獲得し、中国のMiniMax、GLM、DeepSeekがトップ10に複数ランクイン。OpenAIのGPT-5.3-Codex未評価が今後の注目点。</p>
+    </div>
+    
+  </div>
+</section>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  The AI Chronicle · A personal AI news digest · Auto-generated from curated sources · © 2026
+</footer>
+</div>
+
+<script>
+function toggleDarkMode() {
+  document.body.classList.toggle('dark-mode');
+  const isDark = document.body.classList.contains('dark-mode');
+  const iconEl = document.getElementById('mode-icon');
+  const textEl = document.getElementById('mode-text');
+  
+  if (iconEl) iconEl.textContent = isDark ? '☀️' : '🌙';
+  if (textEl) textEl.textContent = isDark ? 'Light' : 'Dark';
+  
+  localStorage.setItem('darkMode', isDark);
+}
+
+// Load saved preference on page load
+document.addEventListener('DOMContentLoaded', function() {
+  const savedMode = localStorage.getItem('darkMode');
+  if (savedMode === 'true') {
+    document.body.classList.add('dark-mode');
+    const iconEl = document.getElementById('mode-icon');
+    const textEl = document.getElementById('mode-text');
+    if (iconEl) iconEl.textContent = '☀️';
+    if (textEl) textEl.textContent = 'Light';
+  }
+});
+
+// Also check system preference
+if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches && !localStorage.getItem('darkMode')) {
+  document.addEventListener('DOMContentLoaded', function() {
+    toggleDarkMode();
+  });
+}
+</script>
+<!-- ARTICLE DETAIL MODAL -->
+<div id="article-modal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="modal-title">
+  <div class="modal-overlay" aria-label="背景オーバーレイ"></div>
+  <div class="modal-container">
+    <div class="modal-content">
+      <header class="modal-header">
+        <button class="modal-close" aria-label="閉じる" title="閉じる（ESCキー）">×</button>
+        <button class="modal-copy" aria-label="保存用テキストコピー" title="保存用テキストコピー">
+          📋 保存用テキストコピー
+        </button>
+      </header>
+      
+      <article class="modal-newspaper">
+        <div class="modal-category-tag"></div>
+        <h1 id="modal-title" class="modal-headline"></h1>
+        <div class="modal-meta"></div>
+        
+        <div class="modal-introduction"></div>
+        
+        <div class="modal-sections"></div>
+        
+        <div class="modal-personal-tips">
+          <h3>💡 あなたへの活用アイデア</h3>
+          <ul></ul>
+        </div>
+
+        <div class="modal-key-takeaways">
+          <h3>📌 重要ポイント</h3>
+          <ul></ul>
+        </div>
+        
+        <footer class="modal-footer">
+          <h3>🔗 関連リンク</h3>
+          <ul class="modal-links"></ul>
+        </footer>
+      </article>
+    </div>
+  </div>
+</div>
+
+<script>const ARTICLES_DATA = {"date":"2026年2月20日（金曜日）","edition":"朝刊","volume":"1","tickerText":"Anthropic、Claude Code Securityを発表 ── Google、Gemini 3.1 Proをリリース ── OpenAI、GPT-5.3-CodexがGitHub Copilotで一般提供開始 ── Karpathy、243行のPythonで完全なGPTを実装 ── SWE-benchでClaude Opus 4.5が首位 ── Anthropic、Claude Code Securityを発表","dataPanel":[{"label":"Claude Opus 4.5 (SWE-bench)","value":"58.4%","sparkline":"▁▃▅▇█","change":"▲ Verified基準でトップスコア","changeClass":"up"},{"label":"Gemini 3.1 Pro 推論性能","value":"+95%","sparkline":"▁▂▄▆█","change":"▲ エージェント型ワークフローで約2倍","changeClass":"up"},{"label":"GPT-5.3-Codex レイテンシ","value":"超低遅延","sparkline":"▁▁▂▃█","change":"▲ Cerebras最適化でリアルタイム編集","changeClass":"up"},{"label":"AI API割当量消費","value":"180/2000","sparkline":"▂▃▅▆█","change":"▼ レート制限に注意","changeClass":"down"}],"hero":{"id":"claude-code-security","category":"AIセキュリティ","categoryClass":"ai","headline":"Anthropic、Claude Code Securityを発表 — サイバーセキュリティ株が急落","deck":"Anthropicは本日、Claude Code Securityを限定研究プレビューとして公開。コードベースの脆弱性を自動スキャンし、ターゲット化されたパッチを提案する新機能により、従来のセキュリティソフトウェア企業の株価が下落した。","author":"Bloomberg / TipRanks","readTime":"4","readPercent":50,"readLabel":"中程度","updateTime":"本日 06:30","fullContent":{"introduction":"Anthropicが発表した新機能「Claude Code Security」は、Claude Code on the webに組み込まれ、コードベース全体の脆弱性を自動スキャンして修正パッチを提案する。この発表を受け、サイバーセキュリティ関連株が軒並み下落している。","sections":[{"heading":"Claude Code Securityとは","content":"Claude Code Securityは、Claude Codeに統合されたセキュリティスキャン機能。開発者がコードを書くと同時に、SQLインジェクション、XSS、認証不備などの一般的な脆弱性を検出し、具体的な修正案を提示する。限定研究プレビューとして提供が開始された。"},{"heading":"市場への影響","content":"この発表により、従来のサイバーセキュリティソフトウェア企業の株価が大きく下落。Bloombergによれば、主要セキュリティベンダーの株価は平均5〜8%下落した。AI統合型のセキュリティツールが、従来のスタンドアロンソリューションを置き換える可能性への懸念が高まっている。"},{"heading":"技術的優位性","content":"Claude Code Securityは、コンテキスト全体を理解した上で脆弱性を検出できる点が強み。従来の静的解析ツールが見逃しやすい、複雑なロジックに隠れたセキュリティ問題も発見可能。さらに、検出だけでなく修正コードまで生成するため、開発者の負担を大幅に削減する。"}],"keyTakeaways":["Anthropicが Claude Code Security を限定プレビューで公開","脆弱性の自動検出とパッチ提案により、従来のセキュリティツールを補完・代替","サイバーセキュリティ株が5〜8%下落、AI統合型ツールへの市場シフトを示唆"],"sourceUrl":"https://www.bloomberg.com/news/articles/2026-02-20/cyber-stocks-slide-as-anthropic-unveils-claude-code-security","relatedLinks":[{"title":"TipRanks: Anthropic announces Claude Code Security","url":"https://www.tipranks.com/news/the-fly/anthropic-announces-availablity-of-claude-code-security-in-limited-preview-thefly-news"}]}},"sidebar":[{"id":"gemini-3-1-pro","category":"AIモデル","categoryClass":"gemini","headline":"Google、Gemini 3.1 Proを発表 — 複雑問題解決で推論性能が約2倍に","summary":"Googleは、Gemini 3.1 Proを発表。エージェント型ワークフローのベンチマークで推論性能がほぼ倍増し、コーディング支援も強化。Gemini appやNotebookLMで即日利用可能に。","readTime":"3","timeAgo":"1日前","fullContent":{"introduction":"GoogleがGemini 3シリーズ初の.1インクリメントアップデートとなるGemini 3.1 Proをリリース。複雑な問題解決とコーディングタスクで大幅な性能向上を実現した。","sections":[{"heading":"性能向上の詳細","content":"Gemini 3.1 Proは、エージェント型ワークフローのベンチマークで推論性能がほぼ2倍に向上。特にコーディング支援では、複数ファイルにまたがる変更や、複雑なリファクタリングへの対応力が大幅に強化された。"},{"heading":"提供範囲","content":"Gemini 3.1 ProはGemini appとNotebookLMで即日利用可能。企業向けにはVertex AIとGemini Enterpriseでも展開。開発者向けにはAI StudioとAntigravity IDEでプレビュー提供が開始された。"}],"keyTakeaways":["Gemini 3シリーズ初の.1インクリメントアップデート","エージェント型ワークフローで推論性能が約2倍に","Gemini app、NotebookLM、Vertex AIで即日利用可能"],"sourceUrl":"https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-pro/"}},{"id":"gpt-5-3-codex-copilot","category":"開発ツール","categoryClass":"openai","headline":"GPT-5.3-Codex、GitHub Copilotで一般提供開始 — ベンチマークで新記録","summary":"OpenAIの最新コーディング特化モデル GPT-5.3-Codex が GitHub Copilot で一般提供開始。初期テストでコーディング、エージェント、実世界タスクのベンチマークで新高スコアを記録。","readTime":"3","timeAgo":"2日前","fullContent":{"introduction":"OpenAIのエージェント型コーディングモデル GPT-5.3-Codex が GitHub Copilot に統合され、一般提供が開始された。初期ベンチマークで高いコーディング能力とエージェント型タスク性能を示している。","sections":[{"heading":"GPT-5.3-Codexの特徴","content":"GPT-5.3-Codexは、128kコンテキストウィンドウを持ち、Cerebrasハードウェアで超低レイテンシを実現。リアルタイム編集機能により、開発者の入力に即座に反応して複数ファイルにわたるコード変更を提案できる。"},{"heading":"ベンチマーク結果","content":"初期テストでは、コーディング、エージェント型ワークフロー、実世界タスクの各ベンチマークで新高スコアを記録。特に複雑なリファクタリングや、複数のコンテキストを横断する変更提案で高い精度を発揮した。"}],"keyTakeaways":["GPT-5.3-CodexがGitHub Copilotで一般提供開始","Cerebras最適化で超低レイテンシとリアルタイム編集を実現","コーディング、エージェント、実世界タスクのベンチマークで新記録"],"sourceUrl":"https://github.blog/changelog/2026-02-09-gpt-5-3-codex-is-now-generally-available-for-github-copilot/"}},{"id":"karpathy-gpt-243-lines","category":"研究","categoryClass":"research","headline":"Karpathy、243行のPythonで完全なGPTを実装 — 「アートプロジェクト」が話題に","summary":"元OpenAI/Tesla AI責任者のAndrej Karpathyが、わずか243行のPythonコードでGPTを完全実装。依存ライブラリゼロ、標準ライブラリのみで学習と推論が可能な「教育用最高傑作」。","readTime":"4","timeAgo":"9時間前","fullContent":{"introduction":"Andrej Karpathyが2月11日に公開した単一Pythonファイルが、AI教育界で大きな話題に。標準ライブラリのみを使い、243行でGPTの学習と推論を実現した。","sections":[{"heading":"実装の詳細","content":"Karpathyの実装は、os、math、random、argparseという標準ライブラリのみを使用。PyTorch、TensorFlow、JAXなどの機械学習フレームワークに一切依存せず、GPTの訓練と推論を完全に実装している。"},{"heading":"「アートプロジェクト」の意図","content":"Karpathy自身は「アートプロジェクト」と呼んでいるが、実際にはLLMの内部動作を理解するための最高の教材となっている。各行が何をしているかが明確で、ブラックボックス化されがちなディープラーニングを完全に可視化している。"},{"heading":"教育的価値","content":"「インターネット上に存在する最高のAI教育」と評される理由は、実用性よりも理解のしやすさを重視した設計。複雑な最適化やトリックを排除し、GPTの本質的なメカニズムだけを純粋に実装している点が高く評価されている。"}],"keyTakeaways":["243行のPythonコードで完全なGPTを実装","依存ライブラリゼロ、標準ライブラリのみで動作","「インターネット上で最高のAI教育」と称賛される"],"sourceUrl":"https://www.towardsdeeplearning.com/andrej-karpathy-just-built-an-entire-gpt-in-243-lines-of-python-7d66cfdfa301"}}],"middle":[{"id":"openai-smart-speaker","category":"ハードウェア","categoryClass":"openai","gradient":"linear-gradient(135deg, #10a37f 0%, #1a7a5e 100%)","headline":"OpenAI、2027年にAI搭載スマートスピーカーを発表か","summary":"OpenAIが2027年に初のAI搭載コンシューマーデバイス、スマートスピーカーをリリースする可能性が報じられた。ChatGPTを統合した音声アシスタントデバイスとなる見込み。","author":"Engadget","readTime":"2","fullContent":{"introduction":"OpenAIが2027年に初のコンシューマー向けハードウェアデバイスとして、AI搭載スマートスピーカーをリリースする可能性があると報じられている。","sections":[{"heading":"予想される機能","content":"ChatGPTの音声モードを核とした、自然な対話型音声アシスタント。既存のスマートスピーカーと異なり、より高度な文脈理解と複雑なタスク実行が可能になると予想される。"}],"keyTakeaways":["OpenAIが2027年にスマートスピーカーをリリース予定","ChatGPT音声モードを統合した対話型デバイス"],"sourceUrl":"https://www.engadget.com/ai/openai-will-reportedly-release-an-ai-powered-smart-speaker-in-2027-173344866.html"}},{"id":"openai-tata-stargate","category":"インフラ","categoryClass":"business","gradient":"linear-gradient(135deg, #8b4513 0%, #a0522d 100%)","headline":"OpenAI、インドTCSのデータセンターで初顧客に — Stargate構想の一環","summary":"OpenAIがインドのTata Consultancy Services（TCS）のデータセンター事業で初顧客となる。100MWの容量で開始し、グローバルAIインフラ構想Stargateの一部となる。","author":"Reuters","readTime":"3","fullContent":{"introduction":"OpenAIとTata Consultancy Services（TCS）は、OpenAIがTCSのデータセンター事業の初顧客となることを発表。Stargate構想におけるグローバルAIインフラ拡張の一環。","sections":[{"heading":"契約の詳細","content":"OpenAIは100メガワットの容量からスタートし、インドを拠点にアジア太平洋地域でのAIインフラを強化。TCSはクラウドとデータセンター運用の専門知識を提供する。"},{"heading":"Stargate構想","content":"Stargateは、OpenAIが推進するグローバルAIインフラ構想。地理的に分散したデータセンターネットワークにより、レイテンシ削減と地域規制への対応を目指す。"}],"keyTakeaways":["OpenAIがインドTCSのデータセンターで初顧客に","100MW容量でスタート、アジア太平洋地域のインフラ強化","グローバルAI構想Stargateの一環"],"sourceUrl":"https://www.reuters.com/technology/openai/"}},{"id":"swe-bench-feb-2026","category":"ベンチマーク","categoryClass":"research","gradient":"linear-gradient(135deg, #5b2c6f 0%, #8e44ad 100%)","headline":"SWE-bench 2月版リーダーボード更新 — Claude Opus 4.5が首位、中国勢が躍進","summary":"SWE-bench Verifiedの最新結果が公開。Claude Opus 4.5が58.4%でトップ、Gemini 3 Flashが2位、中国MiniMaxのM2.5が3位に。OpenAIのGPT-5.2は6位。","author":"@simonw (Simon Willison)","readTime":"4","fullContent":{"introduction":"SWE-benchの公式リーダーボードが2月に大規模アップデート。最新世代のAIモデルをBash Onlyベンチマークで評価し、Anthropic Claude Opus 4.5が首位に立った。","sections":[{"heading":"トップ10の結果","content":"1位: Claude Opus 4.5 (58.4%)、2位: Gemini 3 Flash、3位: MiniMax M2.5 (229Bパラメータ)。興味深いことに、Claude Opus 4.6は4.5を約1ポイント下回った。中国勢ではGLM-5、Kimi K2.5、DeepSeek V3.2がトップ10入り。"},{"heading":"OpenAIモデルの位置付け","content":"OpenAIのGPT-5.2は6位。最新のコーディング特化モデルGPT-5.3-Codexは、まだOpenAI APIで利用不可のため未評価。公開されれば上位に食い込む可能性がある。"},{"heading":"ベンチマーク手法","content":"SWE-bench Verifiedは、OpenAI資金提供により厳選された500サンプル。Django、SymPy、Sphinx、Matplotlibなど12のOSSプロジェクトから実世界のコーディング問題を抽出。全モデルに同一システムプロンプトを使用し、公平な比較を実現。"}],"keyTakeaways":["Claude Opus 4.5が58.4%でSWE-bench首位","中国勢が躍進、MiniMax M2.5が3位、GLM-5、Kimi、DeepSeekもトップ10","GPT-5.3-Codexは未評価、APIリリース後の順位変動に注目"],"sourceUrl":"https://simonwillison.net/2026/Feb/19/swe-bench/"}}],"briefs":[{"headline":"OpenAI Mafia特集 — 元社員が創業した18のスタートアップ","text":"TechCrunchがOpenAI出身者が創業したスタートアップを特集。Karpathyの教育系YouTubeチャンネル、各種AI企業など多岐にわたる。"},{"headline":"Code Metal、1.25億ドル調達 — 防衛産業コードをAIで書き換え","text":"Vibe Codingスタートアップ Code Metal がシリーズBで1.25億ドルを調達。Karpathyが言及した「CからRustへの移植」トレンドに言及。"},{"headline":"Anthropic、Claude Code利用規約を更新 — OAuth Token制限","text":"AnthropicがClaude CodeドキュメントでOAuthトークン利用を制限。NanoClawなどサードパーティツールでの利用は規約違反に。"},{"headline":"Claude Sonnet 4.6、100万トークン対応で幻覚が減少","text":"Anthropicが Claude Sonnet 4.6 をリリース。100万トークンの長文対応と、幻覚（ハルシネーション）の大幅削減を実現。"}],"opinions":[{"id":"opinion-karpathy-243","authorLabel":"X投稿：","author":"@karpathy (Andrej Karpathy)","headline":"「243行のPythonでGPTを完全実装 — 依存ゼロのアートプロジェクト」","excerpt":"Karpathyが公開した243行のGPT実装は、AI教育の金字塔として瞬く間に拡散。「依存ライブラリなし、標準ライブラリのみ」という制約が、逆にLLMの本質を浮き彫りにし、教育的価値を最大化している。","fullContent":{"introduction":"元OpenAI/Tesla AI責任者のAndrej Karpathyが、わずか243行のPythonコードでGPTを完全実装した「アートプロジェクト」を公開。AI研究者や開発者の間で爆発的に拡散している。","sections":[{"heading":"「アート」としてのシンプルさ","content":"Karpathyは「アートプロジェクト」と呼んでいるが、実際には極限まで削ぎ落とされた教育用コード。os、math、random、argparseという標準ライブラリのみで、GPTの訓練と推論を実現。PyTorch、TensorFlow、JAXなどの機械学習フレームワークに一切依存しない。","steps":[]},{"heading":"教育的インパクト","content":"「インターネット上で最高のAI教育」と称賛される理由は、その可読性と明快さ。各行が何をしているかが一目瞭然で、ブラックボックス化されがちなディープラーニングを完全に可視化している。初心者からエキスパートまで、誰もが学びを得られる設計。","steps":[]}],"keyTakeaways":["243行のPythonで完全なGPTを実装、依存ライブラリゼロ","「アートプロジェクト」として公開、AI教育の金字塔に","標準ライブラリのみでLLMの本質を可視化"],"sourceUrl":"https://www.towardsdeeplearning.com/andrej-karpathy-just-built-an-entire-gpt-in-243-lines-of-python-7d66cfdfa301"}},{"id":"opinion-simonw-swebench","authorLabel":"X投稿：","author":"@simonw (Simon Willison)","headline":"「SWE-bench 2月更新：Claude 4.5が首位、中国勢が躍進」","excerpt":"Simon Willisonが詳細に分析したSWE-bench最新結果。Claude Opus 4.5が58.4%でトップを獲得し、中国のMiniMax、GLM、DeepSeekがトップ10に複数ランクイン。OpenAIのGPT-5.3-Codex未評価が今後の注目点。","fullContent":{"introduction":"Simon Willisonが自身のブログでSWE-bench 2月版リーダーボードを詳細分析。Claude Opus 4.5が首位に立ち、中国勢の躍進が目立つ結果となった。","sections":[{"heading":"Claude 4.5 vs 4.6の逆転","content":"興味深いのは、Claude Opus 4.5が4.6を約1ポイント上回った点。通常、新しいバージョンが性能向上するはずだが、特定ベンチマークでは旧バージョンが優位な場合もある。これは、モデルの最適化方向がベンチマークと完全に一致しないことを示唆。","steps":[]},{"heading":"中国勢の台頭","content":"MiniMax M2.5（229Bパラメータ）が3位、GLM-5、Kimi K2.5、DeepSeek V3.2もトップ10入り。中国のAI開発力が、グローバル競争で無視できない存在になっていることを明確に示している。","steps":[]},{"heading":"GPT-5.3-Codexの未評価","content":"OpenAIの最新コーディングモデルGPT-5.3-CodexはまだOpenAI APIで利用不可のため、このベンチマークに含まれていない。公開されれば順位が大きく変動する可能性があり、次回更新が注目される。","steps":[]}],"keyTakeaways":["Claude Opus 4.5が58.4%で首位、4.6を上回る","中国勢が躍進、MiniMax M2.5が3位、他3モデルもトップ10","GPT-5.3-Codex未評価、次回更新で順位変動の可能性"],"sourceUrl":"https://simonwillison.net/2026/Feb/19/swe-bench/"}}]};</script>
+<script>
+/**
+ * Article Detail Modal Controller
+ * Handles modal open/close, rendering, and copy functionality
+ */
+
+const ArticleModal = {
+  modal: null,
+  overlay: null,
+  content: null,
+  closeBtn: null,
+  copyBtn: null,
+  articlesData: null,
+  currentArticle: null,
+
+  /**
+   * Initialize modal
+   */
+  init(articlesData) {
+    this.articlesData = articlesData;
+    this.modal = document.getElementById('article-modal');
+    if (!this.modal) { console.error('Modal element not found'); return; }
+
+    this.overlay = this.modal.querySelector('.modal-overlay');
+    this.content = this.modal.querySelector('.modal-content');
+    this.closeBtn = this.modal.querySelector('.modal-close');
+    this.copyBtn = this.modal.querySelector('.modal-copy');
+
+    // Event listeners
+    this.closeBtn.addEventListener('click', () => this.close());
+    this.overlay.addEventListener('click', () => this.close());
+    this.copyBtn.addEventListener('click', () => this.copyToClipboard());
+
+    // ESC key to close
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && this.modal.classList.contains('active')) this.close();
+    });
+
+    // Prevent content scroll when modal is open
+    this.content.addEventListener('click', (e) => e.stopPropagation());
+
+    // Register click events on all articles
+    this.registerArticleClicks();
+  },
+
+  /**
+   * Register click events on all articles
+   */
+  registerArticleClicks() {
+    // Hero article
+    const heroHeadline = document.querySelector('.hero-headline');
+    const heroImage = document.querySelector('.hero-image');
+    if (heroHeadline) {
+      heroHeadline.style.cursor = 'pointer';
+      heroHeadline.addEventListener('click', () => this.open(this.articlesData.hero));
+    }
+    if (heroImage) {
+      heroImage.style.cursor = 'pointer';
+      heroImage.addEventListener('click', () => this.open(this.articlesData.hero));
+    }
+
+    // Sidebar articles
+    document.querySelectorAll('.sidebar-item').forEach((item, index) => {
+      if (this.articlesData.sidebar[index]) {
+        item.style.cursor = 'pointer';
+        item.addEventListener('click', () => this.open(this.articlesData.sidebar[index]));
+      }
+    });
+
+    // Middle articles
+    document.querySelectorAll('.middle-article').forEach((item, index) => {
+      if (this.articlesData.middle[index]) {
+        item.style.cursor = 'pointer';
+        item.addEventListener('click', () => this.open(this.articlesData.middle[index]));
+      }
+    });
+
+    // Opinion articles
+    document.querySelectorAll('.opinion-item').forEach((item, index) => {
+      if (this.articlesData.opinions[index]) {
+        item.style.cursor = 'pointer';
+        item.addEventListener('click', () => this.open(this.articlesData.opinions[index]));
+      }
+    });
+  },
+
+  /**
+   * Open modal with article data
+   */
+  open(articleData) {
+    if (!articleData) return;
+
+    // If no fullContent, build a minimal one from available fields
+    if (!articleData.fullContent) {
+      articleData = {
+        ...articleData,
+        fullContent: {
+          introduction: articleData.summary || articleData.excerpt || articleData.deck || '',
+          sections: [],
+          keyTakeaways: [],
+          sourceUrl: null,
+          relatedLinks: []
+        }
+      };
+    }
+
+    this.currentArticle = articleData;
+    this.render(articleData);
+    this.modal.classList.add('active');
+    this.modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+
+    // Scroll modal to top
+    this.content.scrollTop = 0;
+  },
+
+  /**
+   * Close modal
+   */
+  close() {
+    this.modal.classList.remove('active');
+    this.modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    this.currentArticle = null;
+  },
+
+  /**
+   * Render article content into modal
+   */
+  render(article) {
+    const { category, categoryClass, headline, author, readTime, authorLabel, fullContent } = article;
+
+    // Category tag
+    const categoryTag = this.modal.querySelector('.modal-category-tag');
+    categoryTag.textContent = category;
+    categoryTag.className = `modal-category-tag category-tag--${categoryClass || 'ai'}`;
+
+    // Headline
+    this.modal.querySelector('.modal-headline').textContent = headline;
+
+    // Meta
+    const byline = authorLabel ? `${authorLabel} ${author}` : `By ${author}`;
+    const readPart = readTime ? ` · ${readTime} min read` : '';
+    this.modal.querySelector('.modal-meta').textContent = byline + readPart;
+
+    // Introduction
+    const introEl = this.modal.querySelector('.modal-introduction');
+    if (fullContent.introduction) {
+      introEl.textContent = fullContent.introduction;
+      introEl.style.display = '';
+    } else {
+      introEl.style.display = 'none';
+    }
+
+    // Sections
+    const sectionsEl = this.modal.querySelector('.modal-sections');
+    sectionsEl.innerHTML = '';
+    if (fullContent.sections && fullContent.sections.length > 0) {
+      fullContent.sections.forEach(section => {
+        const sectionDiv = document.createElement('div');
+        sectionDiv.className = 'modal-section';
+
+        const headingEl = document.createElement('h2');
+        headingEl.className = 'modal-section-heading';
+        headingEl.textContent = section.heading;
+        sectionDiv.appendChild(headingEl);
+
+        if (section.content) {
+          const contentEl = document.createElement('p');
+          contentEl.className = 'modal-section-content';
+          contentEl.textContent = section.content;
+          sectionDiv.appendChild(contentEl);
+        }
+        if (section.steps && section.steps.length > 0) {
+          const stepsList = document.createElement('ol');
+          stepsList.className = 'modal-section-steps';
+          section.steps.forEach(step => {
+            const li = document.createElement('li');
+            li.textContent = step;
+            stepsList.appendChild(li);
+          });
+          sectionDiv.appendChild(stepsList);
+        }
+        if (section.code) {
+          const codeEl = document.createElement('pre');
+          codeEl.className = 'modal-section-code';
+          codeEl.textContent = section.code;
+          sectionDiv.appendChild(codeEl);
+        }
+        if (section.warning) {
+          const warningEl = document.createElement('div');
+          warningEl.className = 'modal-section-warning';
+          warningEl.textContent = section.warning;
+          sectionDiv.appendChild(warningEl);
+        }
+
+        sectionsEl.appendChild(sectionDiv);
+      });
+    }
+
+    // Personal Tips ("あなたへの活用アイデア")
+    const tipsBox = this.modal.querySelector('.modal-personal-tips');
+    if (tipsBox) {
+      const tipsUl = tipsBox.querySelector('ul');
+      if (tipsUl) tipsUl.innerHTML = '';
+      if (fullContent.personalTips && fullContent.personalTips.length > 0 && tipsUl) {
+        fullContent.personalTips.forEach(tip => {
+          const li = document.createElement('li');
+          li.textContent = tip;
+          tipsUl.appendChild(li);
+        });
+        tipsBox.style.display = '';
+      } else if (tipsBox) {
+        tipsBox.style.display = 'none';
+      }
+    }
+
+    // Key Takeaways
+    const takeawaysBox = this.modal.querySelector('.modal-key-takeaways');
+    const takeawaysUl = takeawaysBox.querySelector('ul');
+    takeawaysUl.innerHTML = '';
+    if (fullContent.keyTakeaways && fullContent.keyTakeaways.length > 0) {
+      fullContent.keyTakeaways.forEach(point => {
+        const li = document.createElement('li');
+        li.textContent = point;
+        takeawaysUl.appendChild(li);
+      });
+      takeawaysBox.style.display = '';
+    } else {
+      takeawaysBox.style.display = 'none';
+    }
+
+    // Related Links
+    const linksUl = this.modal.querySelector('.modal-links');
+    const footerEl = this.modal.querySelector('.modal-footer');
+    linksUl.innerHTML = '';
+    const hasLinks = fullContent.sourceUrl || (fullContent.relatedLinks && fullContent.relatedLinks.length > 0);
+
+    if (hasLinks) {
+      if (fullContent.sourceUrl) {
+        const sourceLi = document.createElement('li');
+        const sourceA = document.createElement('a');
+        sourceA.href = fullContent.sourceUrl;
+        sourceA.target = '_blank';
+        sourceA.rel = 'noopener noreferrer';
+        sourceA.textContent = '→ 元ポスト（X / Twitter）';
+        sourceLi.appendChild(sourceA);
+        linksUl.appendChild(sourceLi);
+      }
+      if (fullContent.relatedLinks) {
+        fullContent.relatedLinks.forEach(link => {
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = link.url;
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+          a.textContent = `→ ${link.title}`;
+          li.appendChild(a);
+          linksUl.appendChild(li);
+        });
+      }
+      footerEl.style.display = '';
+    } else {
+      footerEl.style.display = 'none';
+    }
+  },
+
+  /**
+   * Copy article to clipboard as formatted memo
+   */
+  copyToClipboard() {
+    if (!this.currentArticle) return;
+
+    const { category, headline, fullContent } = this.currentArticle;
+    const date = new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' });
+
+    let text = `📰 AI Daily Chronicle - 保存メモ\n`;
+    text += `${'═'.repeat(50)}\n\n`;
+    text += `■ タイトル\n${headline}\n\n`;
+    text += `■ カテゴリ\n${category}\n\n`;
+
+    if (fullContent && fullContent.personalTips && fullContent.personalTips.length > 0) {
+      text += `■ 活用アイデア（自分への応用）\n`;
+      fullContent.personalTips.forEach(tip => { text += `→ ${tip}\n`; });
+      text += `\n`;
+    }
+
+    if (fullContent && fullContent.keyTakeaways && fullContent.keyTakeaways.length > 0) {
+      text += `■ 重要ポイント\n`;
+      fullContent.keyTakeaways.forEach(point => { text += `• ${point}\n`; });
+      text += `\n`;
+    }
+
+    if (fullContent && fullContent.introduction) {
+      text += `■ 概要\n${fullContent.introduction}\n\n`;
+    }
+
+    if (fullContent && fullContent.sections && fullContent.sections.length > 0) {
+      text += `■ 詳細\n`;
+      fullContent.sections.forEach(section => {
+        text += `\n【${section.heading}】\n`;
+        if (section.content) text += `${section.content}\n`;
+        if (section.steps) {
+          section.steps.forEach((step, i) => { text += `${i + 1}. ${step}\n`; });
+        }
+        if (section.code) text += `\n\`\`\`\n${section.code}\n\`\`\`\n`;
+        if (section.warning) text += `\n⚠️ ${section.warning}\n`;
+      });
+      text += `\n`;
+    }
+
+    if (fullContent && (fullContent.sourceUrl || (fullContent.relatedLinks && fullContent.relatedLinks.length > 0))) {
+      text += `■ 参考リンク\n`;
+      if (fullContent.sourceUrl) text += `- 元ポスト: ${fullContent.sourceUrl}\n`;
+      if (fullContent.relatedLinks) {
+        fullContent.relatedLinks.forEach(link => { text += `- ${link.title}: ${link.url}\n`; });
+      }
+      text += `\n`;
+    }
+
+    text += `${'─'.repeat(50)}\n`;
+    text += `保存日時: ${date}\n`;
+    text += `出典: AI Daily Chronicle\n`;
+
+    navigator.clipboard.writeText(text).then(() => {
+      const originalText = this.copyBtn.innerHTML;
+      this.copyBtn.innerHTML = '✅ コピーしました';
+      this.copyBtn.classList.add('copied');
+      setTimeout(() => {
+        this.copyBtn.innerHTML = originalText;
+        this.copyBtn.classList.remove('copied');
+      }, 2500);
+    }).catch(() => {
+      // Fallback for non-secure contexts
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      const originalText = this.copyBtn.innerHTML;
+      this.copyBtn.innerHTML = '✅ コピーしました';
+      this.copyBtn.classList.add('copied');
+      setTimeout(() => {
+        this.copyBtn.innerHTML = originalText;
+        this.copyBtn.classList.remove('copied');
+      }, 2500);
+    });
+  }
+};
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof ARTICLES_DATA !== 'undefined') {
+    ArticleModal.init(ARTICLES_DATA);
+  }
+});
+
+</script>
+</body>
+</html>

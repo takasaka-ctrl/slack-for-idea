@@ -1,0 +1,25 @@
+{
+  "lastChecks": {
+    "calendar": 1772204012,
+    "vault_inbox": 1772207618,
+    "memory_maintenance": null,
+    "idea_morning": 1740614700,
+    "idea_noon": null,
+    "idea_evening": 1772194521
+  },
+  "lastProactiveReport": 1772187027,
+  "notes": {
+    "2026-02-25_23:25": "Late night check - Calendar shows interview tomorrow 19:00. Vault inbox processed (1 file moved to 30-Decisions). No notifications sent per night-time rules.",
+    "2026-02-26_06:25": "Early morning silent check (JST 6:25 AM). Calendar confirmed: Sky interview today 19:00, Primal prep Fri 20:00, subscription Sat 15:00. Vault inbox empty. Quiet hours - no notifications.",
+    "2026-02-26_17:25": "Routine check (JST 17:25 PM). Calendar: Sky interview in 1.5h (19:00), other events confirmed. Vault inbox empty. Job scout ran: no new matches. Memory: pending tasks all require auth/design input. No action needed.",
+    "2026-02-26_18:55": "Pre-interview reminder sent to #setting. Sky interview starts in 5 minutes (19:00 JST). Proactive notification.",
+    "2026-02-27_06:55": "Morning briefing created and sent to #setting (compass channel not configured yet). Calendar: Primal prep tonight 20:00. Vault: 4 new Ideas, 7 new Projects past week. Lab: 9 pending ideas awaiting reply.",
+    "2026-02-27_08:25": "Routine check. Morning briefing already delivered (06:55). Calendar: Primal prep at 20:00 tonight. Idea generation cron scheduled for 09:00 JST. Vault inbox empty. No action needed.",
+    "2026-02-27_19:09": "Final pre-interview reminder (51 min before). プライマル社 at 20:00 JST. Sent to #setting.",
+    "2026-02-27_21:12": "Evening idea generation: CreatorVault (7.84/10). Posted to #lab.",
+    "2026-02-27_21:18": "Post-evening routine check. Daily log updated with CreatorVault details. Calendar: Tomorrow (Sat 2/28) at 15:00 (もえのさぶすく) and 18:00 (飲み会). Mon 3/2 at 20:00 (Primal一次面接). All tasks complete.",
+    "2026-02-27_23:53": "Silent night check (JST 23:53). Interview at 20:00 has passed. Tomorrow: 15:00/18:00 events. Vault inbox empty. No notifications per night-time rules.",
+    "2026-02-28_00:23": "Deep night silent check (JST 00:23). Interview at 20:00 completed. Next idea slot: 21:00 JST today. Vault inbox empty. Quiet hours - no notifications.",
+    "2026-02-28_00:53": "Deep night silent check (JST 00:53). gcalcli permission error noted. Vault inbox empty. Next events: 15:00/18:00 today. Quiet hours - no notifications."
+  }
+}

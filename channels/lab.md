@@ -1,34 +1,63 @@
 # #lab チャンネル指示
 
-**役割:** アイデアをブレインストーミング・評価・改善するPDCAサイクル。
+**役割:** エビデンスベースのアイデア生成 → PDCA評価 → 実装仕様書(MD) → Claude Code Agent実装 → ギャラリー追加
 
-**使用スキル:** `workspace/skills/idea-workflow/SKILL.md`
+**使用スキル:** `skills/idea-workflow/SKILL.md` (v2)
 
-**State ファイル:** `workspace/state/pending-ideas.json`
+## 自動化フロー（1日2回: 朝9:00 / 夜21:00 JST）
 
-## 自動化フロー（毎日 2:00 JST / cron設定済み）
+### 供給モード
+- **朝（9:00 JST）:** 自律生成 — 市場リサーチベースで新規アイデア
+- **夜（21:00 JST）:** Vaultストック優先 — `/mnt/vault/10-Ideas/` から。なければ自律生成
 
-### Phase 1 - 質問生成（自動）
-1. `/mnt/vault/10-Ideas/` から未処理のアイデアを1つ選択
-2. 処理済みマーカー: `/mnt/vault/10-Ideas/.processed/{filename}.done`
-3. アイデア内容を分析し、確認質問を生成
-4. #lab に投稿（親: タイトル + 概要、スレッド: 原文 + 質問）
-5. スレッドIDを `pending-ideas.json` に保存して待機
+### フロー
+```
+① idea-learning.md を読む（過去の学び）
+② カテゴリ + 着想メソッド をローテーション決定
+③ web_search × 2（トレンド + 競合）
+④ web_fetch × 1-2（エビデンス深掘り）
+⑤ アイデア着想（制約条件 + エビデンスベース）
+⑥ 定量PDCA評価（最大2イテレーション）
+⑦ スコア 7.5+: MD仕様書生成 → #lab投稿 → #setting通知
+⑧ idea-learning.md 更新（必須）
+⑨ auto-idea-state.json 更新
+```
 
-### Phase 2 - PDCA実行（マスター回答後）
-1. マスターがスレッドで回答 → PDCAサイクル実行
-2. 最終原案を `/mnt/vault/20-Projects/{日付}-{アイデア名}.md` に保存
-3. `<@U0ADRLM7GE9>` (Claude Code Agent) にメンション
-4. ⚠️ **原案MDの全文をコードブロックで投稿**（ファイルパスのみ不可）
+### 投稿フォーマット
+```
+💡 新アイデア提案: {タイトル}
 
-**マスターが48時間以内に未回答の場合:** Phase 2 スキップ、`.done` は作成しない
+📊 スコア: {総合}/10.0
+🏷 カテゴリ: {カテゴリ}
+🔍 着想: {メソッド名}
+📎 エビデンス: {URL 1-2個}
 
-## PDCA処理フロー
-1. **Plan:** 問題起点でアイデア生成（3〜5個）
-2. **Do:** PUGEF / ICE / Market / Advantage スコアで評価
-3. **Check:** ギャップ分析・改善優先度決定
-4. **Act:** 優先度に基づきアイデア改善
-5. スコア ≥ 7.0 または最大3イテレーションで終了
+{2-3行サマリー}
 
-## 手動トリガー例
-- "〇〇のアイデアをブレストして評価したい" → 即座にPDCA実行
+---
+実装仕様書:
+（コードブロックでMD全文）
+---
+
+マスターの承認後、Claude Code Agentに転送してください。
+```
+
+### Claude Code Agent連携
+- **bot-to-botメンションは不安定** → マスターが手動転送
+- Athenaは #setting に承認依頼を送る
+- マスター承認後、#lab のMD仕様書をClaude Code Agentに渡す
+
+### 出力先
+- Vault: `/mnt/vault/20-Projects/YYYY-MM-DD-{slug}.md`
+- GitHub: `takasaka-ctrl/slack-for-idea` → `projects/{name}/`
+- ギャラリー: `projects/index.html` にカード追加（Claude Code Agentが実装）
+
+## 手動トリガー
+- 「〇〇のアイデアをブレストして」→ 即座にPDCA実行
+- 「アイデア出して」→ 自律生成フロー実行
+- 「〇〇を評価して」→ Step 4 から実行
+
+## State管理
+- `memory/auto-idea-state.json` — 実行履歴、重複防止
+- `memory/idea-learning.md` — 学びの蓄積
+- `memory/idea-keywords.json` — キーワードプール、ローテーション

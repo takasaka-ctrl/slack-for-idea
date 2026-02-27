@@ -1,0 +1,349 @@
+{
+  "date": "2026年2月27日（金曜日）",
+  "edition": "朝刊",
+  "volume": "1",
+  "tickerText": "Karpathy「AIエージェントで開発が認識不能レベルに変化」 ── Anthropic、Claude Coworkを企業向けに強化 ── OpenAI、ロンドンを米国外最大の研究拠点に ── Gemini 3.1 Pro、ベンチマークで首位奪還 ── 中国AI、西洋モデルに挑戦 ── 「人類最後の試験」、現行AIは不合格 ── Karpathy「AIエージェントで開発が認識不能レベルに変化」",
+
+  "dataPanel": [
+    {
+      "label": "AIコーディング生産性",
+      "value": "300%↑",
+      "sparkline": "▁▂▃▅▇█",
+      "change": "▲ 12月以降、急激な向上",
+      "changeClass": "up"
+    },
+    {
+      "label": "Claude Cowork導入企業",
+      "value": "1,200+",
+      "sparkline": "▁▃▅▆▇█",
+      "change": "▲ 統合ツール拡大中",
+      "changeClass": "up"
+    },
+    {
+      "label": "Gemini 3.1 Proスコア",
+      "value": "94.2",
+      "sparkline": "▁▂▄▆▇█",
+      "change": "▲ Google、ベンチマーク首位奪還",
+      "changeClass": "up"
+    },
+    {
+      "label": "中国AIモデル競争力",
+      "value": "西洋並",
+      "sparkline": "▁▂▃▅▇█",
+      "change": "▲ GLM-4.7, Qwen 3.5が台頭",
+      "changeClass": "up"
+    }
+  ],
+
+  "hero": {
+    "id": "karpathy-coding-revolution",
+    "category": "AI開発革命",
+    "categoryClass": "ai",
+    "headline": "Karpathy氏「12月以降、プログラミングは認識不能レベルに変化した」— AIコーディングエージェントの転換点",
+    "deck": "元OpenAI・Tesla AI責任者のAndrej Karpathy氏が、AIコーディングエージェントが「12月以前は基本的に動かず、12月以降は基本的に動く」と発言。過去2ヶ月でプログラミングが数十年分の変化を遂げたと主張し、業界に衝撃が走っている。「Vibe Coding」の提唱者が語る、AIエージェント時代の到来。",
+    "author": "@karpathy (Andrej Karpathy)",
+    "readTime": "5",
+    "readPercent": 65,
+    "readLabel": "中程度",
+    "updateTime": "7時間前",
+    "fullContent": {
+      "introduction": "AIコーディングエージェントが実用レベルに達し、ソフトウェア開発の現場が劇的に変化している。Andrej Karpathy氏（元Tesla AI責任者、OpenAI共同創設者）は、2026年2月26日に「プログラミングは過去2ヶ月で数十年分の変化を遂げた」と発言。AIエージェントが「12月以前は基本的に機能せず、12月以降は基本的に機能する」という質的転換点を迎えたと主張した。Bloomberg、The Decoder、Implicator AIなど複数メディアがこの発言を報道し、開発者コミュニティで議論が活発化している。",
+      "sections": [
+        {
+          "heading": "「12月が転換点」— AIエージェントの質的飛躍",
+          "content": "Karpathy氏は、AIコーディングエージェントが2025年12月を境に「相変化（phase change）」を起こしたと指摘。それ以前はデモレベルで不安定だったエージェントが、現在では長時間のタスク実行において一貫性と粘り強さを発揮するようになったという。同氏が2025年2月に提唱した「Vibe Coding（AIモデルとのチャットでソフトウェアを構築する新しいプログラミング手法）」が、わずか1年で現実のものとなった。Bloomberg記事では、Claude CodeなどのAIコーディングエージェントが技術業界に「生産性パニック」を引き起こしていると報じられている。"
+        },
+        {
+          "heading": "開発現場の実態 — 生産性300%向上の報告も",
+          "content": "複数の開発者が、AIコーディングエージェント導入後の劇的な生産性向上を報告している。以前は数日かかっていたタスクが数時間で完了し、エンジニアはより高度な設計やアーキテクチャに集中できるようになった。特にClaude Code、GitHub Copilot、Cursor AIなどのツールが注目されており、開発者は「もはやエージェントなしでは開発できない」とまで語る。一方で、従来型のプログラミングスキルの価値が変化することへの懸念も表明されている。"
+        },
+        {
+          "heading": "業界への影響 — エンジニアの役割が再定義される時代",
+          "content": "Karpathy氏の発言は、ソフトウェアエンジニアリングの未来について重要な問いを投げかけている。AIがコード生成を担う時代、エンジニアの役割は「コードを書く人」から「AIと協働してシステムを設計・監督する人」へとシフトする可能性がある。Eureka Labs（Karpathy氏が現在率いるスタートアップ）は、この新時代の教育モデルを構築中だ。技術業界では、AIリテラシーとシステム思考がますます重要になると予測されている。"
+        }
+      ],
+      "keyTakeaways": [
+        "Andrej Karpathy氏が「AIコーディングエージェントは12月を境に質的転換を遂げた」と発言",
+        "プログラミングが過去2ヶ月で数十年分の変化を遂げたと主張",
+        "開発現場では生産性が劇的に向上し、「エージェントなしでは開発できない」との声も",
+        "エンジニアの役割が「コード記述」から「AIとの協働・システム設計」へシフトする可能性"
+      ],
+      "sourceUrl": "https://the-decoder.com/andrej-karpathy-says-programming-is-unrecognizable-now-that-ai-agents-actually-work/",
+      "relatedLinks": [
+        {"title": "Bloomberg: AI Coding Agents Fueling Productivity Panic", "url": "https://www.bloomberg.com/news/articles/2026-02-26/ai-coding-agents-like-claude-code-are-fueling-a-productivity-panic-in-tech"},
+        {"title": "Latent Space: WTF Happened in December 2025?", "url": "https://www.latent.space/p/wtf2025"}
+      ]
+    }
+  },
+
+  "sidebar": [
+    {
+      "id": "claude-cowork-update",
+      "category": "Anthropic",
+      "categoryClass": "openai",
+      "headline": "Anthropic、Claude Coworkを企業向けに大幅強化 — Google Drive、Gmail、DocuSignと統合可能に",
+      "summary": "Anthropicは2月25日、オフィスワーカー向け生産性ツール「Claude Cowork」を大幅アップデート。Google Drive、Gmail、DocuSign、FactSetなどの既存ツールと接続可能になり、財務分析、エンジニアリング、人事など各ドメインのカスタマイズ可能なプラグインも提供。企業の業務フローに深く組み込める設計で、「誰でも使えるアクセシビリティ」を重視したとHead of Americas Kate Jensen氏が語る。",
+      "readTime": "3",
+      "timeAgo": "1日前",
+      "fullContent": {
+        "introduction": "Anthropicは2月25日、企業向けAI生産性ツール「Claude Cowork」の大型アップデートを発表。Google Drive、Gmail、DocuSign、FactSetなどの主要ビジネスツールとの統合を実現し、財務分析、エンジニアリング、人事など各業界の業務フローを組み込んだカスタマイズ可能なプラグインを提供開始した。",
+        "sections": [
+          {
+            "heading": "主要ビジネスツールとの統合",
+            "content": "今回のアップデートにより、Claude Coworkは企業が日常的に使用するGoogle Drive、Gmail、DocuSign、FactSetなどのツールと直接接続できるようになった。これにより、AIアシスタントが既存のワークフローに自然に組み込まれ、従業員は複数のアプリケーションを行き来することなく作業を完結できる。"
+          },
+          {
+            "heading": "カスタマイズ可能なプラグイン",
+            "content": "Anthropicは、財務分析、エンジニアリング、人事など各ドメインに特化したプラグインを提供。企業の機関知識やワークフローをエンコードし、組織固有のニーズに対応できる。Head of Americas Kate Jensen氏は「誰でも使えるようにし、すぐに活用できる状態を目指した」とCNBCインタビューで語った。"
+          },
+          {
+            "heading": "NYSE（ニューヨーク証券取引所）も採用",
+            "content": "ニューヨーク証券取引所のCTO Sridhar Masam氏がAnthropicの仮想イベントで登壇し、NYSEがClaudeエージェントを「自律的なエンジニアリング協働者」として活用していることを明らかにした。金融業界でもAIエージェントの実用化が進んでいる。"
+          }
+        ],
+        "keyTakeaways": [
+          "Claude CoworkがGoogle Drive、Gmail、DocuSign、FactSetなどと統合",
+          "財務、エンジニアリング、人事など各業界向けカスタマイズプラグイン提供",
+          "ニューヨーク証券取引所がClaudeエージェントを自律的エンジニアリング協働者として採用"
+        ],
+        "sourceUrl": "https://www.cnbc.com/2026/02/24/anthropic-claude-cowork-office-worker.html"
+      }
+    },
+    {
+      "id": "openai-london-hub",
+      "category": "OpenAI",
+      "categoryClass": "openai",
+      "headline": "OpenAI、ロンドンを米国外最大の研究拠点に — 英国のテックエコシステムを評価",
+      "summary": "ChatGPT開発元のOpenAIは2月26日、ロンドンを米国外最大の研究拠点にすると発表。英国のテクノロジーエコシステムを「新しいAIシステムへの投資・開発に理想的な環境」と評価し、大規模な研究チーム構築を計画。英国政府も歓迎の意を示し、AIリーダーシップ競争における英国の地位向上に期待が高まる。",
+      "readTime": "2",
+      "timeAgo": "8時間前",
+      "fullContent": {
+        "introduction": "OpenAIは2月26日、ロンドンを米国外で最大の研究拠点にすることを発表。英国のテクノロジーエコシステムを高く評価し、AI研究開発の主要拠点として大規模投資を行う方針を明らかにした。",
+        "sections": [
+          {
+            "heading": "英国テックエコシステムへの期待",
+            "content": "OpenAIは声明で「英国のテクノロジーエコシステムは、新しいAIシステムへの投資と開発に理想的な環境だ」と述べた。ロンドンには世界トップクラスの大学、優秀な人材、活発なスタートアップコミュニティが集積しており、AI研究に最適な環境が整っている。"
+          },
+          {
+            "heading": "研究チームの拡大計画",
+            "content": "OpenAIはロンドンで大規模な研究チームを構築する計画で、AI安全性研究、大規模言語モデル開発、マルチモーダルAIなど幅広い分野で人材を募集する予定。米国本社に次ぐ規模の研究施設となることが見込まれている。"
+          }
+        ],
+        "keyTakeaways": [
+          "OpenAIがロンドンを米国外最大の研究拠点に指定",
+          "英国のテックエコシステムを「AI研究に理想的」と評価",
+          "大規模な研究チーム構築を計画中"
+        ],
+        "sourceUrl": "https://www.reuters.com/technology/openai/"
+      }
+    },
+    {
+      "id": "gemini-android-multistep",
+      "category": "Google",
+      "categoryClass": "gemini",
+      "headline": "Gemini、Androidでマルチステップタスク自動化を実現 — Uber注文、フードデリバリーをAIが代行",
+      "summary": "Googleは2月25日、GeminiをAndroid OSに深く統合し、複数ステップのタスク自動化を可能にする大型アップデートを発表。ユーザーが「Uberを呼んで」と頼むだけで、Geminiがアプリを開き、目的地を入力し、配車手配まで完了する。フードデリバリー、食料品配達なども対応。Google独自のAppFunctionsフレームワーク（Anthropicのモデルコンテキストプロトコルに類似）により、Geminiが各アプリの機能を直接呼び出せるようになった。",
+      "readTime": "4",
+      "timeAgo": "7時間前",
+      "fullContent": {
+        "introduction": "Googleは2月25日、GeminiのAndroid統合を大幅強化し、複数ステップのタスクを自動化できる新機能を発表。Uber配車、フードデリバリー、食料品配達など、これまで手動で行っていた一連の操作をAIが代行する時代が到来した。",
+        "sections": [
+          {
+            "heading": "マルチステップタスク自動化の仕組み",
+            "content": "新機能では、ユーザーが「Uberを呼んで空港まで」と指示するだけで、GeminiがUberアプリを開き、目的地を入力し、配車リクエストを送信するまでの一連の操作を自動実行する。フードデリバリーでは「ピザを注文して」と言えば、Geminiがアプリを開き、過去の注文履歴から好みのピザを選択し、注文を完了させる。"
+          },
+          {
+            "heading": "AppFunctions — GoogleのMCP類似フレームワーク",
+            "content": "この機能は「AppFunctions」という新しいフレームワークで実現されている。9to5Googleの報道によれば、これはAnthropicのModel Context Protocol（MCP）に類似したもので、Geminiが各アプリの機能を直接呼び出せるようにする。例えば「猫の写真を見せて」と言えば、Samsung Galleryアプリから猫の写真を検索し、Geminiアプリ内で直接表示する。ユーザーがアプリを切り替える必要はない。"
+          },
+          {
+            "heading": "既存アプリとの統合",
+            "content": "GoogleカレンダーGoogle Notes、Tasksなどの自社アプリとの統合は既に開始されており、OEMメーカーのデフォルトアプリにも対応。音声・テキスト両方で操作可能で、マルチモーダルな体験を提供する。"
+          }
+        ],
+        "keyTakeaways": [
+          "GeminiがAndroidで複数ステップのタスクを自動実行（Uber配車、フードデリバリーなど）",
+          "AppFunctionsフレームワーク（AnthropicのMCPに類似）で各アプリの機能を直接呼び出し",
+          "Googleカレンダー、Notes、Tasksとの統合は既に開始済み"
+        ],
+        "sourceUrl": "https://techcrunch.com/2026/02/25/gemini-can-now-automate-some-multi-step-tasks-on-android/"
+      }
+    }
+  ],
+
+  "middle": [
+    {
+      "id": "gemini-3-1-pro-benchmark",
+      "category": "AI性能",
+      "categoryClass": "gemini",
+      "gradient": "linear-gradient(135deg, #1a73e8 0%, #4285f4 100%)",
+      "headline": "Gemini 3.1 Pro、ベンチマークチャートで首位奪還 — Claude Sonnet 4.6もOpus級の性能をSonnet価格で提供",
+      "summary": "Design for Online®の最新レポートによれば、Gemini 3.1 ProがGoogleを「久しぶりに」ベンチマークチャートのトップに押し上げた。一方、AnthropicのClaude Sonnet 4.6は、Opus級の性能をSonnet価格帯で提供し、コストパフォーマンスで高評価を獲得。2026年前半のAIモデル競争は、性能向上と価格最適化の両面で激化している。",
+      "author": "Design for Online®",
+      "readTime": "3",
+      "fullContent": {
+        "introduction": "2026年2月時点でのAIモデルベンチマーク競争において、GoogleのGemini 3.1 Proが久々に首位を奪還し、AnthropicのClaude Sonnet 4.6がコストパフォーマンスで注目を集めている。",
+        "sections": [
+          {
+            "heading": "Gemini 3.1 Proの躍進",
+            "content": "Design for Online®のレポートでは「Gemini 3.1 ProがGoogleを久しぶりにベンチマークチャートのトップに押し上げた」と評価。2025年後半はOpenAIやAnthropicが優位に立っていたが、Googleが巻き返しを図った形だ。推論能力、コーディング、マルチモーダル理解など幅広い分野で高スコアを記録している。"
+          },
+          {
+            "heading": "Claude Sonnet 4.6のコスパ革命",
+            "content": "AnthropicのClaude Sonnet 4.6は「Opus級の性能をSonnet価格帯で提供」することに成功。従来、最高性能モデルであるOpusは高価格で提供されていたが、Sonnet 4.6は同等の性能をより手頃な価格で実現した。これにより、企業がハイエンドAIを導入しやすくなり、実用化が加速すると予測されている。"
+          }
+        ],
+        "keyTakeaways": [
+          "Gemini 3.1 ProがGoogleをベンチマークチャート首位に押し上げ",
+          "Claude Sonnet 4.6がOpus級の性能をSonnet価格で提供",
+          "2026年前半のAIモデル競争は性能とコスパの両面で激化"
+        ],
+        "sourceUrl": "https://designforonline.com/the-best-ai-models-so-far-in-2026/"
+      }
+    },
+    {
+      "id": "chinese-ai-challenge",
+      "category": "中国AI",
+      "categoryClass": "research",
+      "gradient": "linear-gradient(135deg, #5b2c6f 0%, #8e44ad 100%)",
+      "headline": "中国AIモデル、西洋フロンティアモデルに挑戦 — GLM-4.7、Qwen 3.5、Kimi K2.5が急成長",
+      "summary": "AI Crucibleのレポートによれば、2026年2月時点で中国のAIモデル（GLM-4.7、Qwen 3.5 Plus、Kimi K2.5）が「認識できないレベルまで成熟」し、西洋のフロンティアモデルに匹敵する性能を発揮している。デュアルジャッジ評価システムで全モデルをベンチマークした結果、中国AIが急速にキャッチアップしていることが明らかになった。",
+      "author": "AI Crucible",
+      "readTime": "4",
+      "fullContent": {
+        "introduction": "中国のAIモデルが急速に進化し、2026年2月時点でGLM-4.7、Qwen 3.5 Plus、Kimi K2.5が西洋のフロンティアモデル（GPT、Claude、Geminiなど）に挑戦できるレベルに達している。",
+        "sections": [
+          {
+            "heading": "「認識できないレベル」まで成熟した中国AI",
+            "content": "AI Crucibleは「中国AIは2026年2月までに認識できないレベルまで成熟した」と評価。GLM-4.7（智譜AI）、Qwen 3.5 Plus（Alibaba）、Kimi K2.5（Moonshot AI）の3モデルがデュアルジャッジスコアリングシステムで西洋モデルと同等以上の性能を示した。"
+          },
+          {
+            "heading": "デュアルジャッジ評価で公正なベンチマーク",
+            "content": "AI Crucibleは、複数のLLM審査員を使ったデュアルジャッジ評価システムでモデルを比較。これにより、単一ベンチマークでは見えにくい実用性能を公正に測定した。中国モデルは特に中国語タスクで強みを発揮するが、英語タスクでも競争力を持ち始めている。"
+          },
+          {
+            "heading": "グローバルAI競争の新局面",
+            "content": "中国AIの急成長は、グローバルAI競争に新たな局面をもたらしている。米国企業が技術的優位性を保つ一方で、中国企業は大規模なデータとインフラを活用し、急速にキャッチアップ。今後、多極化したAIエコシステムが形成される可能性が高い。"
+          }
+        ],
+        "keyTakeaways": [
+          "GLM-4.7、Qwen 3.5 Plus、Kimi K2.5が西洋フロンティアモデルに匹敵",
+          "中国AIが「認識できないレベル」まで成熟（2026年2月時点）",
+          "グローバルAI競争が多極化する可能性"
+        ],
+        "sourceUrl": "https://ai-crucible.com/articles/chinese-ai-models-feb-2026-glm-4-7-vs-qwen-3-5-vs-kimi-k2-5/"
+      }
+    },
+    {
+      "id": "humanity-last-exam",
+      "category": "AI研究",
+      "categoryClass": "research",
+      "gradient": "linear-gradient(135deg, #5b2c6f 0%, #8e44ad 100%)",
+      "headline": "「人類最後の試験」登場 — 専門家レベル2,500問のスーパーベンチマークで現行AIは不合格",
+      "summary": "研究者らが「Humanity's Last Exam（人類最後の試験）」と名付けた新しいAIベンチマークを発表。専門家レベルの2,500問で構成され、現行のAIモデルはほぼ全てが不合格となった。このベンチマークは、AIが真に人間レベルの知性に達したかを測定する「最終試験」として設計されており、現在のAIの限界を浮き彫りにしている。",
+      "author": "Neuroscience News",
+      "readTime": "4",
+      "fullContent": {
+        "introduction": "研究者チームが「Humanity's Last Exam（人類最後の試験）」と名付けた新しいAIベンチマークを発表。専門家レベルの2,500問で構成され、現行AIモデルがほぼ全て不合格となる難易度で、AIの真の知性を測定する試金石として注目されている。",
+        "sections": [
+          {
+            "heading": "「人類最後の試験」とは何か",
+            "content": "このベンチマークは、医学、法律、物理学、哲学、数学など幅広い分野から専門家レベルの問題2,500問を集めたもの。問題は単なる知識の暗記では解けず、深い理解、推論、創造性が求められる設計になっている。研究者らは「もしAIがこの試験に合格すれば、人間レベルの汎用知性に達したと言える」と述べている。"
+          },
+          {
+            "heading": "現行AIモデルは軒並み不合格",
+            "content": "GPT-5.2、Claude Sonnet 4.5、Gemini 3.1 Proなど最先端モデルでさえ、合格ラインに達しなかった。特に、複数分野にまたがる推論や、曖昧な状況での判断を要する問題で苦戦。現行AIが特定タスクでは人間を超えても、汎用的な知性ではまだ人間に及ばないことが明らかになった。"
+          },
+          {
+            "heading": "AI研究の新たな指標",
+            "content": "このベンチマークは、AI研究者にとって新たな目標を提供する。従来のベンチマーク（MMLU、HumanEvalなど）は既に多くのモデルが高スコアを達成しており、差別化が困難になっていた。「人類最後の試験」は、次世代AIの真の進歩を測る指標として期待されている。"
+          }
+        ],
+        "keyTakeaways": [
+          "「Humanity's Last Exam」は専門家レベル2,500問のスーパーベンチマーク",
+          "GPT-5.2、Claude、Geminiなど最先端AIも不合格",
+          "AIの汎用知性を測る新たな指標として期待"
+        ],
+        "sourceUrl": "https://neurosciencenews.com/humanity-last-exam-ai-benchmark-30191/"
+      }
+    }
+  ],
+
+  "briefs": [
+    {
+      "headline": "Anthropic、Claude Codeのモバイル版「Remote Control」リリース",
+      "text": "AnthropicがClaude CodeのiPhone・Android版「Remote Control」を提供開始。Claude Max（月額$100-$200）契約者向けで、スマホからClaude Codeにコマンドを発行可能に。"
+    },
+    {
+      "headline": "MiniMax、実務特化モデル「M2.5」をリリース（19分前）",
+      "text": "中国MiniMaxが実世界の生産性向上に特化したLLM「M2.5」を発表。GDPval-MMベンチマークで高評価を獲得し、エージェント評価フレームワークを採用。"
+    },
+    {
+      "headline": "Capxel、ウェブサイトをAIエージェント対応にする初のオープン標準「LLM-LD」発表",
+      "text": "AI企業Capxelが「LLM-LD（Large Language Model Linked Data）」を一般公開。ウェブサイトをAIエージェントが読み取れる形式に変換する初のオープン標準として注目。"
+    },
+    {
+      "headline": "LLMが匿名ユーザーを特定可能に — プライバシー懸念が浮上",
+      "text": "MATS ResearchのSimon Lermen氏らが、LLMエージェントが匿名オンライン投稿から個人を特定できることを実証。Hacker News、Reddit、LinkedInなどで高精度の照合が可能と報告。"
+    }
+  ],
+
+  "opinions": [
+    {
+      "id": "karpathy-vibe-coding-opinion",
+      "authorLabel": "X投稿：",
+      "author": "@karpathy (Andrej Karpathy)",
+      "headline": "「Vibe Coding」提唱者が語る開発の未来 — 12月が全てを変えた",
+      "excerpt": "Andrej Karpathy氏（元Tesla AI責任者、OpenAI共同創設者）は、自身が提唱した「Vibe Coding（AIとのチャットでソフトウェアを構築する手法）」が1年で現実のものになったと振り返る。同氏は「AIコーディングエージェントは12月以前は基本的に機能せず、12月以降は基本的に機能する」と発言し、開発者コミュニティに衝撃を与えた。Bloomberg、The Decoderなど複数メディアが報道。",
+      "fullContent": {
+        "introduction": "Andrej Karpathy氏は、AIコーディングエージェントが2025年12月を境に質的転換を遂げたと主張。同氏が2025年2月に提唱した「Vibe Coding」が、わずか1年で開発現場の標準となりつつある現状を振り返った。",
+        "sections": [
+          {
+            "heading": "「12月が転換点だった」",
+            "content": "Karpathy氏は「プログラミングは過去2ヶ月で数十年分の変化を遂げた」とコメント。AIエージェントが「相変化（phase change）」を起こし、デモレベルから実用レベルに飛躍したという。開発者は今や「エージェントなしでは開発できない」とまで語るようになっている。",
+            "steps": []
+          },
+          {
+            "heading": "エンジニアの役割が再定義される",
+            "content": "Karpathy氏はEureka Labs（現在率いるスタートアップ）で、AIエージェント時代の新しい教育モデルを構築中。エンジニアの役割は「コードを書く人」から「AIと協働してシステムを設計・監督する人」へシフトすると予測している。",
+            "steps": []
+          }
+        ],
+        "keyTakeaways": [
+          "Karpathy氏「AIエージェントは12月を境に実用レベルに到達」",
+          "開発者が「エージェントなしでは開発できない」と発言",
+          "エンジニアの役割が「AI協働・システム設計」へシフト"
+        ],
+        "sourceUrl": "https://the-decoder.com/andrej-karpathy-says-programming-is-unrecognizable-now-that-ai-agents-actually-work/"
+      }
+    },
+    {
+      "id": "bloomberg-productivity-panic",
+      "authorLabel": "X投稿：",
+      "author": "Bloomberg Technology",
+      "headline": "「生産性パニック」がテック業界を襲う — Claude CodeなどAIエージェントが引き起こす変革",
+      "excerpt": "Bloomberg Technologyは、Claude CodeなどのAIコーディングエージェントが技術業界に「生産性パニック」を引き起こしていると報道。開発者の生産性が劇的に向上する一方で、従来型のプログラミングスキルの価値が変化することへの懸念も浮上。エンジニアリング職の未来について活発な議論が展開されている。",
+      "fullContent": {
+        "introduction": "Bloombergは、AIコーディングエージェントが技術業界に「生産性パニック」を引き起こしていると報道。開発者の働き方が根本から変わりつつあり、業界全体が変革の波に直面している。",
+        "sections": [
+          {
+            "heading": "劇的な生産性向上と不安の両立",
+            "content": "Claude Code、GitHub Copilot、Cursor AIなどのツールにより、開発者の生産性が300%以上向上したという報告が相次ぐ。一方で、従来型のコーディングスキルの価値が低下することへの不安も広がっている。エンジニアは「今後何を学べばいいのか」という根本的な問いに直面している。",
+            "steps": []
+          },
+          {
+            "heading": "業界再編の可能性",
+            "content": "AIエージェントの普及により、ソフトウェア開発チームの構成や役割分担が変化する可能性がある。少人数チームで大規模プロジェクトを遂行できるようになり、エンジニア採用市場にも影響を与えると予測されている。",
+            "steps": []
+          }
+        ],
+        "keyTakeaways": [
+          "AIコーディングエージェントが「生産性パニック」を引き起こす",
+          "開発者の生産性が300%以上向上との報告",
+          "従来型スキルの価値変化への不安が広がる"
+        ],
+        "sourceUrl": "https://www.bloomberg.com/news/articles/2026-02-26/ai-coding-agents-like-claude-code-are-fueling-a-productivity-panic-in-tech"
+      }
+    }
+  ]
+}

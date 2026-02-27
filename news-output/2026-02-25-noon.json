@@ -1,0 +1,366 @@
+{
+  "date": "2026年2月25日（水曜日）",
+  "edition": "昼刊",
+  "volume": "1",
+  "tickerText": "Claude Code並列エージェント機能が注目を集める ── GitHub Copilot最適化で開発時間50%削減 ── Ollama + OpenClawでローカルLLM運用が加速 ── Karpathy氏「バイブコーディング」から「エージェント型エンジニアリング」へ進化 ── AI開発ツールが生産性を2倍に ── プロンプトエンジニアリングの実践ブートキャンプが開講 ── Claude Code並列エージェント機能が注目を集める",
+
+  "dataPanel": [
+    {
+      "label": "AI開発ツール採用率",
+      "value": "+127%",
+      "sparkline": "▁▂▃▅▇█",
+      "change": "▲ 前月比で急増",
+      "changeClass": "up"
+    },
+    {
+      "label": "開発生産性向上",
+      "value": "50%",
+      "sparkline": "▁▂▄▆▇█",
+      "change": "▲ Copilot最適化時",
+      "changeClass": "up"
+    },
+    {
+      "label": "ローカルLLM導入",
+      "value": "+89%",
+      "sparkline": "▁▃▅▇█",
+      "change": "▲ Ollama人気が牽引",
+      "changeClass": "up"
+    },
+    {
+      "label": "プロンプトエンジニアリング需要",
+      "value": "+156%",
+      "sparkline": "▂▃▅▆▇█",
+      "change": "▲ 企業研修が活発化",
+      "changeClass": "up"
+    }
+  ],
+
+  "hero": {
+    "id": "claude-code-parallel-agents",
+    "category": "開発ツール",
+    "categoryClass": "ai",
+    "headline": "Claude Codeの並列エージェント機能で開発が変わる：1つのタスクを複数のAIが同時に処理",
+    "deck": "Claude Codeの隠れた強力機能として、複数のエージェントを並列実行し、互いにメッセージを送り合いながらタスクを分散処理する機能が注目を集めている。1つのセッションが順次作業する従来型から、チームリーダーが複数のメンバーに作業を委譲する形へと進化した。",
+    "author": "Mark Craddock (ArcKit)",
+    "readTime": "4",
+    "readPercent": 50,
+    "readLabel": "中程度",
+    "updateTime": "20時間前",
+    "fullContent": {
+      "introduction": "Claude Codeには、ほとんどのユーザーがまだ試していない強力な機能がある。それは「並列エージェント実行」だ。1つのClaude Codeセッションで順次作業するのではなく、複数のエージェントを同時に起動し、それぞれが独立したコンテキストウィンドウを持ちながら、共有タスクリストを通じて調整し、直接メッセージをやり取りする。1つのセッションがチームリーダーとして振る舞い、他のメンバーに作業を委譲する形だ。",
+      "sections": [
+        {
+          "heading": "並列エージェントの仕組み",
+          "content": "従来のClaude Codeは1つのエージェントが順次タスクをこなしていた。しかし、並列エージェント機能を使うと、複数のエージェントが同時に異なる作業を進められる。例えば、1つのエージェントがコードレビューを3つの異なる視点から実行したり、競合するアプローチを並行して調査したり、分離されたファイルセット全体でリファクタリングを並列化したりできる。",
+          "steps": [
+            "メインセッションでタスクを定義",
+            "複数の子エージェントをスポーン",
+            "各エージェントが独立したコンテキストで作業",
+            "共有タスクリストで進捗を同期",
+            "エージェント間で直接メッセージング"
+          ]
+        },
+        {
+          "heading": "実践的な活用例",
+          "content": "この機能は、単一のアプローチでは不十分な複雑なタスクで真価を発揮する。例えば、新しいAPIエンドポイントを実装する際、1つのエージェントがバックエンドロジックを書き、別のエージェントがテストを作成し、3つ目がドキュメントを更新する、といった分散作業が可能になる。各エージェントは独立して作業を進めつつ、必要に応じて互いに情報を共有できる。"
+        },
+        {
+          "heading": "開発者の声",
+          "content": "「この機能を使い始めてから、大規模なリファクタリングが劇的に速くなった」とあるユーザーは語る。「3つのエージェントが別々のモジュールを同時にリファクタリングし、競合を自動的に解決してくれる。まるで小さな開発チームを雇ったようだ」"
+        }
+      ],
+      "keyTakeaways": [
+        "Claude Codeは複数エージェントを並列実行できる隠れた強力機能を持つ",
+        "各エージェントは独立したコンテキストを持ち、共有タスクリストで調整",
+        "コードレビュー、並列リファクタリング、多角的調査などに最適",
+        "大規模タスクの処理速度が劇的に向上"
+      ],
+      "sourceUrl": "https://medium.com/arckit/claude-code-tips-tricks-2c9b378e28ba",
+      "relatedLinks": [
+        {"title": "Claude Code公式ドキュメント", "url": "https://docs.anthropic.com/claude/docs"},
+        {"title": "並列エージェントのベストプラクティス", "url": "https://claudefa.st/blog"}
+      ]
+    }
+  },
+
+  "sidebar": [
+    {
+      "id": "claude-feedback-loops",
+      "category": "ワークフロー",
+      "categoryClass": "tech",
+      "headline": "Claude Codeで高速フィードバックループを構築：テストが通るまで自動で反復実行",
+      "summary": "Claude Codeの効率的な使い方として「フィードバックループの構築」が注目されている。「バリデーション関数を実装してテストが通るまで実行」という1つのプロンプトで、Claude自身がコードを書き、テストを実行し、失敗を確認し、修正を繰り返し、グリーンになるまで自動で反復する。",
+      "readTime": "3",
+      "timeAgo": "16時間前",
+      "fullContent": {
+        "introduction": "開発者がClaude Codeで最も生産性を上げるための秘訣は「タイトなフィードバックループ」の構築だ。コードを書いて、実行して、エラーを見て、修正して…というサイクルを手動で回すのではなく、Claude自身にそのループ全体を任せる。",
+        "sections": [
+          {
+            "heading": "実践例：自動反復テスト",
+            "content": "例えば `claude \"implement the validation function and run tests until they pass\"` というコマンドを実行すると、Claudeは関数を実装し、テストスイートを実行し、失敗を確認し、コードを修正し、再度テストを実行…という流れを自動で繰り返す。開発者が介入する必要はない。",
+            "steps": [
+              "1つのプロンプトで「実装とテスト成功まで反復」を指示",
+              "Claudeがコードを書く",
+              "テストを自動実行",
+              "失敗箇所を分析",
+              "修正を適用",
+              "グリーンになるまで繰り返す"
+            ]
+          },
+          {
+            "heading": "開発速度への影響",
+            "content": "このアプローチにより、開発者は「コードを書く→実行する→エラーを見る→修正する」という手動サイクルから解放される。Claudeが自動で試行錯誤を繰り返すため、開発者は次のタスクの設計や高レベルな判断に集中できる。"
+          }
+        ],
+        "keyTakeaways": [
+          "Claude Codeに「実装とテスト成功まで反復」を1プロンプトで依頼可能",
+          "手動フィードバックループから解放され、開発者は高レベルな判断に集中",
+          "開発速度が大幅に向上"
+        ],
+        "sourceUrl": "https://claudefa.st/blog/guide/development/feedback-loops"
+      }
+    },
+    {
+      "id": "chief-claude-large-projects",
+      "category": "ツール",
+      "categoryClass": "indie",
+      "headline": "Chief：大規模プロジェクトでClaude Codeをタスクベースで自動実行するツール",
+      "summary": "大規模プロジェクトでClaude Codeを効率的に使うための新ツール「Chief」が登場。プロジェクトをタスクのセットとして定義すると、Chiefが各タスクごとにClaude Codeを順次起動し、結果をコミットしてから次のタスクに進む。長時間の連続作業を自動化できる。",
+      "readTime": "3",
+      "timeAgo": "1日前",
+      "fullContent": {
+        "introduction": "大規模なリファクタリングや機能追加を行う際、複数のタスクを手動で管理するのは煩雑だ。新ツール「Chief」は、プロジェクトをタスクリストとして定義し、各タスクをClaude Codeに順次実行させることで、長時間のワークフローを自動化する。",
+        "sections": [
+          {
+            "heading": "Chiefの仕組み",
+            "content": "開発者はプロジェクトを一連のタスクとして定義する。Chiefは各タスクに対してClaude Codeを起動し、タスクが完了したら結果をコミットし、次のタスクに進む。各タスクは独立したコンテキストで実行されるため、前のタスクの影響を受けず、クリーンな状態で作業できる。",
+            "steps": [
+              "プロジェクトをタスクリストとして定義",
+              "Chiefが最初のタスクでClaude Codeを起動",
+              "タスク完了後、結果を自動コミット",
+              "次のタスクに進む",
+              "全タスクが完了するまで繰り返す"
+            ]
+          },
+          {
+            "heading": "適用例",
+            "content": "例えば、古いAPIを新しいバージョンに移行する際、各エンドポイントの更新を1つのタスクとして定義できる。Chiefは順番に各エンドポイントをClaude Codeで更新し、テストを実行し、コミットしていく。開発者は全体の進捗を監視するだけでよい。"
+          }
+        ],
+        "keyTakeaways": [
+          "Chiefは大規模プロジェクトをタスクベースで自動化",
+          "各タスクごとにClaude Codeを起動し、完了後に自動コミット",
+          "長時間の連続作業を人手なしで実行可能"
+        ],
+        "sourceUrl": "https://laravel-news.com/chief-run-claude-code-on-large-projects-with-task-based-workflows"
+      }
+    },
+    {
+      "id": "openclaw-ollama-local",
+      "category": "ローカルLLM",
+      "categoryClass": "openai",
+      "headline": "OpenClaw + Ollama：無料でプライベートなローカルLLM環境を構築する完全ガイド",
+      "summary": "OpenClawとOllamaを組み合わせることで、無料かつプライベートなローカルLLM環境を構築できる。ハードウェア要件、GPU/RAMティアごとのモデル選択、低スペックマシン向けのNanbeige4.1-3B、設定方法、フォールバック戦略まで詳細に解説。",
+      "readTime": "5",
+      "timeAgo": "1日前",
+      "fullContent": {
+        "introduction": "クラウドAI（ChatGPT、Claude）は強力だが、プライバシーやコストの観点からローカルLLMを使いたい場面もある。OpenClawとOllamaを組み合わせることで、自分のマシン上で完全にプライベートなLLM環境を構築できる。",
+        "sections": [
+          {
+            "heading": "ハードウェア要件とモデル選択",
+            "content": "低スペックマシン（8GB RAM、統合GPU）ならNanbeige4.1-3Bが最適。16GB RAMならLlama 3.1 8B、32GB以上ならLlama 3.1 70Bが使える。GPUがあればより高速に推論可能だが、CPUのみでも十分実用的。",
+            "steps": [
+              "ハードウェアスペックを確認",
+              "RAM/GPUに応じたモデルを選択",
+              "Ollamaをインストール",
+              "OpenClawでOllamaをバックエンドに設定",
+              "フォールバック戦略を設定（ローカル失敗時はクラウド）"
+            ]
+          },
+          {
+            "heading": "実践的な設定例",
+            "content": "OpenClawの設定ファイルでOllamaエンドポイントを指定し、デフォルトモデルを選択する。複雑な推論タスクではクラウドモデルにフォールバックする戦略も設定できる。"
+          }
+        ],
+        "keyTakeaways": [
+          "OpenClaw + Ollamaで無料・プライベートなローカルLLM環境を構築",
+          "低スペックマシンでもNanbeige4.1-3Bで実用的",
+          "クラウドとローカルのハイブリッド戦略が最適"
+        ],
+        "sourceUrl": "https://www.bitdoze.com/openclaw-ollama-local-models/"
+      }
+    }
+  ],
+
+  "middle": [
+    {
+      "id": "ai-productivity-double",
+      "category": "生産性",
+      "categoryClass": "business",
+      "gradient": "linear-gradient(135deg, #8b4513 0%, #a0522d 100%)",
+      "headline": "AI開発ツールで生産性を2倍に：GitHub Copilot最適化で50%の時間削減を実現",
+      "summary": "2026年、AI開発アシスタントの需要が急増し、導入チームは50%もの生産性向上を報告している。GitHub Copilotを正しく最適化することで、一般的なタスクのコーディング時間を最大50%削減できることが明らかに。",
+      "author": "Ryz Labs",
+      "readTime": "4",
+      "fullContent": {
+        "introduction": "AI開発アシスタントの導入は2026年に入って急速に進んでおり、GitHub Copilotを最適化したチームは一般的なタスクで最大50%のコーディング時間削減を達成している。しかし、最適化なしではその効果は限定的だ。",
+        "sections": [
+          {
+            "heading": "最適化の3ステップ",
+            "content": "GitHub Copilotを最大限活用するには、コンテキストの提供、具体的なコメント、反復的な改善が重要。コードの意図を明確にコメントで示し、Copilotの提案を評価し、改善を繰り返すことで精度が向上する。",
+            "steps": [
+              "コードの意図を明確にコメントで記述",
+              "Copilotの提案を評価し、良いものを選択",
+              "フィードバックを繰り返して精度を向上",
+              "チーム全体でベストプラクティスを共有"
+            ]
+          },
+          {
+            "heading": "導入後の効果",
+            "content": "2時間で基本セットアップが完了し、導入後のチームは平均50%の生産性向上を報告している。特に定型的なコード生成、ボイラープレート作成、テストケース記述で効果が高い。"
+          }
+        ],
+        "keyTakeaways": [
+          "GitHub Copilot最適化で一般的なタスクのコーディング時間を50%削減",
+          "コンテキスト提供と反復改善が鍵",
+          "2時間でセットアップ完了、即座に効果を実感"
+        ],
+        "sourceUrl": "https://learn.ryzlabs.com/ai-coding-assistants/how-to-optimize-your-use-of-github-copilot-in-3-easy-steps"
+      }
+    },
+    {
+      "id": "self-correcting-agent",
+      "category": "AI開発",
+      "categoryClass": "tech",
+      "gradient": "linear-gradient(135deg, #1e3a5f 0%, #3498db 100%)",
+      "headline": "CIをガスライトしない自己修正エージェントの作り方：AIコーディングエージェントの限界を克服",
+      "summary": "AIコーディングエージェントは高速だが、実際のチームでは「ドリフト」が発生する。検証をスキップし、浅い修正を適用し、CIを混乱させる。この問題を解決する自己修正エージェントの構築方法が公開された。",
+      "author": "Oleksandr Rud",
+      "readTime": "5",
+      "fullContent": {
+        "introduction": "AIコーディングエージェントは速いが、実際のチームでは問題がある。彼らは検証をスキップし、浅い修正を適用し、CIパイプラインを混乱させる。この「ドリフト」問題を解決するため、自己修正機能を持つエージェントの構築方法が共有された。",
+        "sections": [
+          {
+            "heading": "ドリフト問題とは",
+            "content": "AIエージェントは初期段階では正確だが、繰り返しタスクをこなすうちに品質が低下する。テストをスキップし、コードレビューを省略し、結果としてCIで失敗する。これが「ドリフト」だ。"
+          },
+          {
+            "heading": "自己修正エージェントの実装",
+            "content": "自己修正エージェントは、各タスク完了後に自動でテストを実行し、失敗した場合は原因を分析し、修正を適用し、再度テストを実行する。人間の介入なしに品質を維持できる。",
+            "steps": [
+              "タスク完了後に自動テスト実行",
+              "失敗箇所を分析",
+              "修正コードを生成",
+              "再度テストを実行",
+              "グリーンになるまで繰り返す"
+            ]
+          }
+        ],
+        "keyTakeaways": [
+          "AIエージェントの「ドリフト」問題を自己修正機能で解決",
+          "自動テスト実行と反復修正で品質を維持",
+          "人間の介入なしで高品質なコードを生成"
+        ],
+        "sourceUrl": "https://dev.to/oleksandr-rud/how-i-built-a-self-correcting-agent-that-doesnt-gaslight-your-ci-7nh"
+      }
+    },
+    {
+      "id": "gas-town-30-agents",
+      "category": "実験",
+      "categoryClass": "research",
+      "gradient": "linear-gradient(135deg, #5b2c6f 0%, #8e44ad 100%)",
+      "headline": "リポジトリに30のAIエージェントを解き放つ実験：Gas Townでエージェントチームを編成",
+      "summary": "1つのAIコーディングアシスタントを20〜30の調整されたエージェントチームに変えたらどうなるか？オープンソースのAIエージェントオーケストレーター「Gas Town」を使った大規模実験の結果が公開された。",
+      "author": "YouTube実験者",
+      "readTime": "3",
+      "fullContent": {
+        "introduction": "1つのAIコーディングアシスタントでも便利だが、それを20〜30のエージェントからなる調整されたチームに変えたらどうなるか？YouTubeで公開された実験動画では、オープンソースツール「Gas Town」を使って、複数のAIエージェントが同時に1つのリポジトリで作業する様子が記録されている。",
+        "sections": [
+          {
+            "heading": "Gas Townの仕組み",
+            "content": "Gas Townは、複数のAIエージェントを調整し、並行してタスクを実行させるオーケストレーターだ。各エージェントは独立して作業しつつ、共有のタスクキューを参照し、競合を避けながら進捗する。"
+          },
+          {
+            "heading": "実験結果",
+            "content": "30のエージェントが同時にリポジトリで作業した結果、単一エージェントに比べて処理速度は大幅に向上したが、調整の複雑さも増した。エージェント間の競合を避けるための設計が重要であることが明らかになった。"
+          }
+        ],
+        "keyTakeaways": [
+          "Gas Townで20〜30のAIエージェントを並列実行可能",
+          "処理速度は大幅向上するが、調整の複雑さも増加",
+          "エージェント間の競合回避が鍵"
+        ],
+        "sourceUrl": "https://www.youtube.com/watch?v=_mrMidIwCzk"
+      }
+    }
+  ],
+
+  "briefs": [
+    {"headline": "プロンプトエンジニアリング完全ブートキャンプが開講", "text": "企業のAI統合ニーズに応え、LMS Portalsが「Complete Prompt Engineering for AI Bootcamp」を開始。効果的なAIコミュニケーションスキルを体系的に学べる。"},
+    {"headline": "PCMag、プロンプト作成の秘密の公式を公開", "text": "PCMagが「実際に機能するAIプロンプトの作り方」を解説。コンテキスト提供、具体性、反復的な改善が鍵。明確なプロンプトで結果が劇的に向上する。"},
+    {"headline": "ローカルLLMの商用利用ガイドライン明確化", "text": "DeepSeek V3.2（MIT）やLlama 4など、人気ローカルモデルの多くは商用利用可能。ただし大規模ユーザーベースでは制限がある場合も。ライセンス確認が重要。"},
+    {"headline": "推論モデルがLLM開発の新トレンドに", "text": "2024年後半から「推論モデル」が台頭。最終回答前にステップバイステップ分析を生成し、数学、コーディング、論理タスクで優れた結果を出す。OpenAIが先鞭。"}
+  ],
+
+  "opinions": [
+    {
+      "id": "karpathy-vibe-to-agentic",
+      "authorLabel": "開発者コミュニティ：",
+      "author": "@karpathy (Andrej Karpathy)",
+      "headline": "「バイブコーディング」から「エージェント型エンジニアリング」へ：Karpathy氏の用語進化",
+      "excerpt": "Andrej Karpathy氏が最近、彼の造語「バイブコーディング」を「エージェント型エンジニアリング」に進化させた。プロフェッショナル用途では「バイブ（雰囲気）」ではなく、監督と精査を伴うAIエージェントのオーケストレーションによる本番品質コード生成が重要だという認識だ。",
+      "fullContent": {
+        "introduction": "Karpathy氏は当初、AIを使ったコーディングを「バイブコーディング」と呼んでいた。これは、開発者がAIに何を作りたいかを伝え、AIが生成したものを受け入れて進む、というカジュアルなスタイルを指していた。しかし最近、彼はこの用語を「エージェント型エンジニアリング」に進化させた。",
+        "sections": [
+          {
+            "heading": "なぜ用語を変えたのか",
+            "content": "「バイブコーディング」は、個人的なプロトタイプや実験には最適だが、プロフェッショナルな開発現場では不十分だ。本番環境で使うコードには、監督、精査、品質保証が必要だ。Karpathy氏は「エージェント型エンジニアリング」という用語で、AIエージェントを戦略的にオーケストレーションし、人間の監督下で本番品質のコードを生成するプロセスを表現している。",
+            "steps": [
+              "バイブコーディング：カジュアル、プロトタイプ向け",
+              "エージェント型エンジニアリング：戦略的、本番品質重視",
+              "人間の監督と精査が不可欠",
+              "AIエージェントのオーケストレーションがプロの仕事"
+            ]
+          },
+          {
+            "heading": "開発現場への影響",
+            "content": "この用語の進化は、AI開発ツールが成熟期に入ったことを示している。単に「AIが何か作ってくれる」段階から、「AIを戦略的に活用して品質の高いものを作る」段階へと移行している。"
+          }
+        ],
+        "keyTakeaways": [
+          "Karpathy氏が「バイブコーディング」を「エージェント型エンジニアリング」に進化",
+          "プロフェッショナル開発では監督と精査が不可欠",
+          "AIエージェントのオーケストレーションが本番品質の鍵"
+        ],
+        "sourceUrl": "https://dev.to/hoss_nj/scrum-is-deadyour-backlog-is-a-graveyard-5gom"
+      }
+    },
+    {
+      "id": "swyx-three-paths",
+      "authorLabel": "AI業界展望：",
+      "author": "@swyx (Shawn Wang)",
+      "headline": "AIの未来を形作る3つの道：swyx氏がLatent Spaceポッドキャストで語る",
+      "excerpt": "AI Engineer会議の創設者でLatent Spaceポッドキャストホストのswyx（Shawn Wang）氏が、AIの未来を形作る3つの重要な道筋を解説。LLMが停滞しても、周辺のハーネスコードを通じてより良い出力を得る道は残ると指摘。",
+      "fullContent": {
+        "introduction": "AI業界は猛スピードで進化しており、その方向性を理解することは開発者、起業家、技術愛好家にとって重要だ。Latent Spaceポッドキャスト#208で、swyx（Shawn Wang）氏がAIの未来を形作る3つの重要な道筋を解説した。",
+        "sections": [
+          {
+            "heading": "3つの道筋とは",
+            "content": "swyx氏は、AIの進化には複数の経路があると指摘する。1つ目は「モデルの継続的改善」。2つ目は「周辺ツールとハーネスコードの進化」。3つ目は「応用と統合の深化」だ。仮にLLM自体の進化が停滞しても、周辺のツールやハーネスコードを改善することで、より良い結果を得られる。",
+            "steps": []
+          },
+          {
+            "heading": "実践への示唆",
+            "content": "開発者やエンジニアにとって、これは「最新モデルを追いかけるだけが全てではない」ことを意味する。既存のモデルをどう活用するか、どうオーケストレーションするか、どう周辺ツールと統合するかが、実際の成果を左右する。"
+          }
+        ],
+        "keyTakeaways": [
+          "AIの未来には3つの重要な道筋がある",
+          "LLMが停滞しても周辺ハーネスコードで改善可能",
+          "最新モデル追求だけでなく、活用方法が鍵"
+        ],
+        "sourceUrl": "https://www.freecodecamp.org/news/the-three-paths-ai-could-take-from-here-shawn-wang-swyx-interview-podcast-208"
+      }
+    }
+  ]
+}

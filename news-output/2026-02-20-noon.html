@@ -1,0 +1,1802 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Chronicle</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&family=DM+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&family=Noto+Serif+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-paper: #faf7f2;
+  --bg-cream: #f5f0e8;
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-caption: #777;
+  --rule-color: #c8c0b4;
+  --rule-heavy: #2a2a2a;
+  --accent-red: #c41e1e;
+  --accent-blue: #1e3a5f;
+  --accent-gold: #b8860b;
+  --category-ai: #2d5a27;
+  --category-tech: #1e3a5f;
+  --category-business: #8b4513;
+  --category-research: #5b2c6f;
+  --category-openai: #10a37f;
+  --category-gemini: #1a73e8;
+  --category-indie: #c07000;
+  --category-mobile: #0f4c75;
+  --font-display: 'Playfair Display', 'Noto Serif JP', serif;
+  --font-body: 'Source Serif 4', 'Noto Serif JP', serif;
+  --font-sans: 'DM Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-paper: #1a1a1a;
+    --bg-cream: #252525;
+    --text-primary: #e8e3db;
+    --text-secondary: #b8b5b0;
+    --text-caption: #888;
+    --rule-color: #3a3a3a;
+    --rule-heavy: #d0d0d0;
+  }
+}
+
+body.dark-mode {
+  --bg-paper: #1a1a1a;
+  --bg-cream: #252525;
+  --text-primary: #e8e3db;
+  --text-secondary: #b8b5b0;
+  --text-caption: #888;
+  --rule-color: #3a3a3a;
+  --rule-heavy: #d0d0d0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #e8e3db;
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.3s, color 0.3s;
+}
+
+.newspaper {
+  max-width: 1200px;
+  margin: 24px auto;
+  background: var(--bg-paper);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.06);
+  position: relative;
+  transition: background 0.3s;
+}
+
+/* Dark mode toggle */
+.dark-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--bg-cream);
+  border: 1px solid var(--rule-color);
+  border-radius: 20px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  z-index: 100;
+  transition: all 0.3s;
+}
+
+.dark-toggle:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Masthead */
+.masthead {
+  text-align: center;
+  padding: 28px 40px 20px;
+  border-bottom: 3px double var(--rule-heavy);
+  position: relative;
+}
+
+.masthead::before, .masthead::after {
+  content: '';
+  position: absolute;
+  left: 40px;
+  right: 40px;
+  height: 1px;
+  background: var(--rule-heavy);
+}
+
+.masthead::before { top: 8px; }
+.masthead::after { bottom: 8px; }
+
+.masthead-date {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-caption);
+  margin-bottom: 8px;
+}
+
+.masthead-title {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 60px);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  color: var(--text-primary);
+}
+
+.masthead-subtitle {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-caption);
+  margin-top: 6px;
+}
+
+/* Ticker */
+.ticker {
+  background: var(--accent-red);
+  color: white;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 8px 40px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow: hidden;
+}
+
+.ticker-label {
+  background: rgba(255,255,255,0.2);
+  padding: 2px 10px;
+  border-radius: 2px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.ticker-text {
+  white-space: nowrap;
+  animation: ticker-scroll 30s linear infinite;
+}
+
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Section nav */
+.section-nav {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  padding: 12px 40px;
+  border-bottom: 1px solid var(--rule-color);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  flex-wrap: wrap;
+}
+
+.section-nav a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 2px 0;
+  transition: color 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+
+.section-nav a:hover,
+.section-nav a.active {
+  color: var(--text-primary);
+  border-bottom: 2px solid var(--accent-red);
+}
+
+.content {
+  padding: 0 40px 40px;
+}
+
+/* Data panel with sparklines */
+.data-panel {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  padding: 20px 0;
+  border-bottom: 2px solid var(--rule-heavy);
+}
+
+.data-item {
+  text-align: center;
+  padding: 0 16px;
+  border-right: 1px solid var(--rule-color);
+}
+
+.data-item:last-child { border-right: none; }
+
+.data-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-caption);
+  margin-bottom: 4px;
+}
+
+.data-value {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.data-sparkline {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  letter-spacing: 1px;
+  margin: 4px 0;
+  color: var(--category-ai);
+}
+
+.data-change {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.data-change.up { color: var(--category-ai); }
+.data-change.down { color: var(--accent-red); }
+
+/* Category tags */
+.category-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  display: inline-block;
+  margin-bottom: 10px;
+  transition: all 0.2s;
+}
+
+.category-tag--ai {
+  color: var(--category-ai);
+  border: 1px solid var(--category-ai);
+}
+
+.category-tag--tech {
+  color: var(--category-tech);
+  border: 1px solid var(--category-tech);
+}
+
+.category-tag--business {
+  color: var(--category-business);
+  border: 1px solid var(--category-business);
+}
+
+.category-tag--research {
+  color: var(--category-research);
+  border: 1px solid var(--category-research);
+}
+
+.category-tag--openai {
+  color: var(--category-openai);
+  border: 1px solid var(--category-openai);
+}
+
+.category-tag--gemini {
+  color: var(--category-gemini);
+  border: 1px solid var(--category-gemini);
+}
+
+.category-tag--indie {
+  color: var(--category-indie);
+  border: 1px solid var(--category-indie);
+}
+
+.category-tag--mobile {
+  color: var(--category-mobile);
+  border: 1px solid var(--category-mobile);
+}
+
+/* Hero section */
+.hero-section {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 0;
+  border-bottom: 2px solid var(--rule-heavy);
+  padding: 24px 0;
+}
+
+.hero-main {
+  padding-right: 24px;
+  border-right: 1px solid var(--rule-color);
+}
+
+.hero-image {
+  width: 100%;
+  height: 320px;
+  background: linear-gradient(135deg, #1a2a3a 0%, #2d4a6a 50%, #1a3a5a 100%);
+  border-radius: 2px;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s;
+  cursor: pointer;
+}
+
+.hero-image:hover {
+  transform: scale(1.01);
+}
+
+.hero-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.02) 2px, rgba(255,255,255,0.02) 4px),
+              repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255,255,255,0.02) 2px, rgba(255,255,255,0.02) 4px);
+}
+
+.hero-image-text {
+  color: rgba(255,255,255,0.15);
+  font-family: var(--font-display);
+  font-size: 72px;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  z-index: 1;
+  user-select: none;
+}
+
+.hero-headline {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.5vw, 42px);
+  font-weight: 900;
+  line-height: 1.15;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+  transition: color 0.2s;
+  cursor: pointer;
+}
+
+.hero-headline:hover {
+  color: var(--accent-red);
+}
+
+.hero-deck {
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.hero-meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-caption);
+  letter-spacing: 0.03em;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.hero-meta strong {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.read-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.read-time-bar {
+  display: inline-block;
+  width: 60px;
+  height: 4px;
+  background: var(--rule-color);
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+}
+
+.read-time-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: var(--accent-red);
+  width: 75%; /* Will be dynamic */
+}
+
+/* Sidebar */
+.hero-sidebar {
+  padding-left: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.sidebar-item {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--rule-color);
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.sidebar-item:hover {
+  transform: translateX(4px);
+}
+
+.sidebar-item:first-child { padding-top: 0; }
+.sidebar-item:last-child { border-bottom: none; }
+
+.sidebar-headline {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 6px;
+  color: var(--text-primary);
+  transition: color 0.2s;
+}
+
+.sidebar-item:hover .sidebar-headline {
+  color: var(--accent-red);
+}
+
+.sidebar-summary {
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.sidebar-meta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-caption);
+  margin-top: 6px;
+  letter-spacing: 0.03em;
+}
+
+/* Middle grid */
+.middle-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--rule-color);
+}
+
+.middle-article {
+  padding: 0 20px;
+  border-right: 1px solid var(--rule-color);
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.middle-article:hover {
+  transform: translateY(-2px);
+}
+
+.middle-article:first-child { padding-left: 0; }
+.middle-article:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+.middle-image {
+  width: 100%;
+  height: 160px;
+  border-radius: 2px;
+  margin-bottom: 12px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+.middle-article:hover .middle-image {
+  transform: scale(1.02);
+}
+
+.middle-headline {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 8px;
+  transition: color 0.2s;
+}
+
+.middle-article:hover .middle-headline {
+  color: var(--accent-red);
+}
+
+.middle-summary {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+.middle-meta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-caption);
+  margin-top: 8px;
+}
+
+/* Brief section */
+.brief-section {
+  padding: 24px 0;
+  border-bottom: 1px solid var(--rule-color);
+}
+
+.section-label {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--rule-color);
+}
+
+.brief-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+
+.brief-item {
+  padding: 0 16px;
+  border-right: 1px solid var(--rule-color);
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.brief-item:hover {
+  transform: translateX(2px);
+}
+
+.brief-item:first-child { padding-left: 0; }
+.brief-item:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+.brief-bullet {
+  width: 6px;
+  height: 6px;
+  background: var(--accent-red);
+  display: inline-block;
+  margin-right: 6px;
+  vertical-align: middle;
+  border-radius: 1px;
+}
+
+.brief-headline {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 4px;
+  transition: color 0.2s;
+}
+
+.brief-item:hover .brief-headline {
+  color: var(--accent-red);
+}
+
+.brief-text {
+  font-family: var(--font-body);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+/* Opinion section */
+.opinion-section {
+  background: var(--bg-cream);
+  margin: 0 -40px;
+  padding: 24px 40px;
+  border-top: 3px solid var(--accent-gold);
+  transition: background 0.3s;
+}
+
+.opinion-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.opinion-item {
+  padding: 0 24px;
+  border-right: 1px solid var(--rule-color);
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.opinion-item:hover {
+  transform: translateX(4px);
+}
+
+.opinion-item:first-child { padding-left: 0; }
+.opinion-item:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+.opinion-author {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent-gold);
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+.opinion-headline {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  font-style: italic;
+  line-height: 1.25;
+  margin-bottom: 8px;
+  transition: color 0.2s;
+}
+
+.opinion-item:hover .opinion-headline {
+  color: var(--accent-red);
+}
+
+.opinion-excerpt {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 16px 40px;
+  border-top: 1px solid var(--rule-color);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--text-caption);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .newspaper { margin: 0; }
+  .content { padding: 0 20px 20px; }
+  .masthead { padding: 20px 20px 16px; }
+  .masthead::before, .masthead::after {
+    left: 20px;
+    right: 20px;
+  }
+  .ticker { padding: 8px 20px; }
+  .section-nav {
+    padding: 10px 20px;
+    gap: 16px;
+  }
+  .hero-section { grid-template-columns: 1fr; }
+  .hero-main {
+    padding-right: 0;
+    border-right: none;
+    border-bottom: 1px solid var(--rule-color);
+    padding-bottom: 20px;
+  }
+  .hero-sidebar {
+    padding-left: 0;
+    padding-top: 16px;
+  }
+  .middle-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .middle-article {
+    padding: 0;
+    border-right: none;
+    border-bottom: 1px solid var(--rule-color);
+    padding-bottom: 20px;
+  }
+  .middle-article:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  .opinion-section {
+    margin: 0 -20px;
+    padding: 20px;
+  }
+  .opinion-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .opinion-item {
+    padding: 0;
+    border-right: none;
+    border-bottom: 1px solid var(--rule-color);
+    padding-bottom: 16px;
+  }
+  .opinion-item:last-child { border-bottom: none; }
+  .brief-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .brief-item {
+    border-right: none;
+    padding: 0;
+  }
+  .data-panel {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .data-item { border-right: none; }
+}
+
+@media (max-width: 520px) {
+  .brief-grid { grid-template-columns: 1fr; }
+  .data-panel { grid-template-columns: 1fr 1fr; }
+  .hero-image { height: 200px; }
+}
+
+/* Print texture */
+.newspaper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.015'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+}
+
+.newspaper > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* ============================================
+   ARTICLE DETAIL MODAL STYLES
+   ============================================ */
+
+/* Modal Container */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.modal.active {
+  display: flex;
+  opacity: 1;
+}
+
+/* Overlay */
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+}
+
+/* Container */
+.modal-container {
+  position: relative;
+  width: 90%;
+  max-width: 900px;
+  max-height: 90vh;
+  z-index: 2001;
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+}
+
+.modal.active .modal-container {
+  transform: translateY(0);
+}
+
+/* Content */
+.modal-content {
+  background: var(--bg-paper);
+  border-radius: 4px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* Header (Close + Copy buttons) */
+.modal-header {
+  position: sticky;
+  top: 0;
+  background: var(--bg-paper);
+  border-bottom: 1px solid var(--rule-color);
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+
+.modal-close {
+  font-size: 32px;
+  line-height: 1;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.modal-close:hover {
+  color: var(--accent-red);
+  transform: scale(1.1);
+}
+
+.modal-copy {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 16px;
+  background: var(--bg-cream);
+  border: 1px solid var(--rule-color);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--text-primary);
+}
+
+.modal-copy:hover {
+  background: var(--accent-gold);
+  color: white;
+  border-color: var(--accent-gold);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.modal-copy.copied {
+  background: var(--category-ai);
+  color: white;
+  border-color: var(--category-ai);
+}
+
+/* Newspaper Content */
+.modal-newspaper {
+  padding: 32px 48px 48px;
+}
+
+.modal-category-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  display: inline-block;
+  margin-bottom: 16px;
+  border: 1px solid;
+}
+
+.modal-headline {
+  font-family: var(--font-display);
+  font-size: 36px;
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+}
+
+.modal-meta {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-caption);
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid var(--rule-heavy);
+}
+
+.modal-introduction {
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+  padding: 20px;
+  background: var(--bg-cream);
+  border-left: 4px solid var(--accent-gold);
+}
+
+/* Sections */
+.modal-section {
+  margin-bottom: 32px;
+}
+
+.modal-section-heading {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.modal-section-content {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+.modal-section-steps {
+  margin: 16px 0;
+  padding-left: 20px;
+}
+
+.modal-section-steps li {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  padding-left: 8px;
+}
+
+.modal-section-code {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.6;
+  background: #1a1a1a;
+  color: #e8e3db;
+  padding: 20px;
+  border-radius: 4px;
+  overflow-x: auto;
+  margin: 16px 0;
+  white-space: pre;
+}
+
+.modal-section-warning {
+  background: rgba(196, 30, 30, 0.1);
+  border-left: 4px solid var(--accent-red);
+  padding: 16px;
+  margin: 16px 0;
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+
+/* Key Takeaways */
+.modal-key-takeaways {
+  background: var(--bg-cream);
+  padding: 24px;
+  margin: 32px 0;
+  border-top: 3px solid var(--accent-gold);
+}
+
+.modal-key-takeaways h3 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.modal-key-takeaways ul {
+  list-style: none;
+  padding: 0;
+}
+
+.modal-key-takeaways li {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  padding-left: 24px;
+  position: relative;
+}
+
+.modal-key-takeaways li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--accent-gold);
+  font-weight: 700;
+}
+
+/* Personal Tips ("あなたへの活用アイデア") */
+.modal-personal-tips {
+  background: linear-gradient(135deg, rgba(0, 100, 80, 0.12) 0%, rgba(0, 60, 50, 0.08) 100%);
+  border: 1px solid rgba(0, 180, 140, 0.35);
+  border-left: 4px solid #00b48c;
+  padding: 24px;
+  margin: 32px 0;
+  border-radius: 2px;
+}
+
+.modal-personal-tips h3 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: #00c9a0;
+  letter-spacing: 0.5px;
+}
+
+.modal-personal-tips ul {
+  list-style: none;
+  padding: 0;
+}
+
+.modal-personal-tips li {
+  font-family: var(--font-body);
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+  padding-left: 24px;
+  position: relative;
+}
+
+.modal-personal-tips li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: #00c9a0;
+  font-weight: 700;
+}
+
+.modal-personal-tips li:last-child {
+  margin-bottom: 0;
+}
+
+/* Footer Links */
+.modal-footer {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule-color);
+}
+
+.modal-footer h3 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.modal-links {
+  list-style: none;
+  padding: 0;
+}
+
+.modal-links li {
+  margin-bottom: 8px;
+}
+
+.modal-links a {
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--accent-blue);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.modal-links a:hover {
+  color: var(--accent-red);
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .modal-container {
+    width: 95%;
+  }
+  
+  .modal-newspaper {
+    padding: 24px 20px 32px;
+  }
+  
+  .modal-headline {
+    font-size: 28px;
+  }
+  
+  .modal-section-heading {
+    font-size: 20px;
+  }
+  
+  .modal-header {
+    padding: 12px 16px;
+  }
+  
+  .modal-copy {
+    font-size: 11px;
+    padding: 6px 12px;
+  }
+}
+
+/* Dark mode adjustments */
+body.dark-mode .modal-section-code {
+  background: #0a0a0a;
+  color: #e8e3db;
+}
+
+</style>
+</head>
+<body>
+<button class="dark-toggle" onclick="toggleDarkMode()">
+  <span id="mode-icon">🌙</span> <span id="mode-text">Dark</span>
+</button>
+
+<div class="newspaper">
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="masthead-date">2026年2月20日（金曜日） · Tokyo Edition · Vol. 1</div>
+  <h1 class="masthead-title">The AI Chronicle</h1>
+  <div class="masthead-subtitle">Your Daily Intelligence on Artificial Intelligence · Curated by Athena</div>
+</header>
+
+<!-- TICKER -->
+<div class="ticker">
+  <span class="ticker-label">Breaking</span>
+  <span class="ticker-text">Code Metal、$125M調達でVibe Coding革命へ ── Andrej Karpathy、AIエージェントSNS「Moltbook」を絶賛 ── Claude Code、Git Worktreesで高速開発ワークフロー実現 ── Pulumi、DevOps向けClaude Skills公開 ── ローカルLLMで月額$0のAgenticコーディングが可能に ── /compactコマンドでコンテキスト管理を最適化 ── Code Metal、$125M調達でVibe Coding革命へ</span>
+</div>
+
+<!-- SECTION NAV -->
+<nav class="section-nav">
+  <a class="active">Top Stories</a>
+  <a>Models & Research</a>
+  <a>Industry</a>
+  <a>Tools & Products</a>
+  <a>Opinion</a>
+  <a>Data</a>
+</nav>
+
+<div class="content">
+<!-- DATA PANEL -->
+<div class="data-panel">
+  
+    <div class="data-item">
+      <div class="data-label">Claude Code Skills公開数</div>
+      <div class="data-value">3,984</div>
+      <div class="data-sparkline">▁▂▃▅▇█</div>
+      <div class="data-change up">▲ ClawHub全体（2026年2月時点）</div>
+    </div>
+    
+    <div class="data-item">
+      <div class="data-label">Code Metal評価額</div>
+      <div class="data-value">$1.25B</div>
+      <div class="data-sparkline">▁▁▂▅██</div>
+      <div class="data-change up">▲ シリーズB完了、収益化済みユニコーン</div>
+    </div>
+    
+    <div class="data-item">
+      <div class="data-label">Moltbook登録ボット数</div>
+      <div class="data-value">150万+</div>
+      <div class="data-sparkline">▁▃▅▇██</div>
+      <div class="data-change up">▲ 1週間で到達（2026年1月ローンチ）</div>
+    </div>
+    
+    <div class="data-item">
+      <div class="data-label">Claude Code文脈ウィンドウ推奨値</div>
+      <div class="data-value">32k</div>
+      <div class="data-sparkline">▃▅▇█▇▅</div>
+      <div class="data-change neutral">▲ 32GB RAM環境での最適化設定</div>
+    </div>
+    
+</div>
+
+<!-- HERO SECTION -->
+<section class="hero-section">
+  <div class="hero-main">
+    <div class="hero-image">
+      <span class="hero-image-text">AI</span>
+    </div>
+    <span class="category-tag category-tag--business">資金調達</span>
+    <h2 class="hero-headline">Code Metal、$125M調達で「Vibe Coding」革命へ — AIで国防コードをRustに書き換え</h2>
+    <p class="hero-deck">ボストンのスタートアップCode Metalが$125MシリーズB調達を完了し、評価額$1.25Bのユニコーンに。C/Python/MatlabからRust/CUDA/VHDLへのAIコード変換で、米国防総省・L3Harris・RTXが顧客。Andrej Karpathyのツイート「大量のソフトウェアを何度も書き直す時代」を体現する企業として注目を集める。</p>
+    <div class="hero-meta">
+      By <strong>WIRED</strong> · 
+      <span class="read-time">
+        📖 6 min
+        <span class="read-time-bar">
+          <span class="read-time-fill" style="width: 50%"></span>
+        </span>
+        中程度
+      </span>
+      · Updated 本日 08:00
+    </div>
+  </div>
+  <aside class="hero-sidebar">
+    
+    <div class="sidebar-item">
+      <span class="category-tag category-tag--ai">実験プロジェクト</span>
+      <h3 class="sidebar-headline">Moltbook: 人間が「いいね」できないAI専用SNS、Karpathy絶賛も熱狂は冷める</h3>
+      <p class="sidebar-summary">Matt Schlichtが2026年1月にローンチした「AI同士が会話するSNS」Moltbook。1週間で150万ボットが登録し、Andrej Karpathyは「最もSF的なプロジェクト」と称賛。しかし実験的な性質上、初期の熱狂は沈静化しつつある。</p>
+      <div class="sidebar-meta">4 min read · 18時間前</div>
+    </div>
+    
+    <div class="sidebar-item">
+      <span class="category-tag category-tag--tech">開発ツール</span>
+      <h3 class="sidebar-headline">Pulumi、DevOps向けClaude Skills公開 — MCPとの違いを実例で解説</h3>
+      <p class="sidebar-summary">Pulumiが公式Claude Skillsレポジトリを公開。IaC（Infrastructure as Code）のベストプラクティスをClaudeに教え、apply()内でのリソース作成禁止、OIDC認証、ComponentResourceパターンを自動適用。MCPとの違いは「ツール vs マニュアル」。</p>
+      <div class="sidebar-meta">5 min read · 8時間前</div>
+    </div>
+    
+    <div class="sidebar-item">
+      <span class="category-tag category-tag--tech">実践Tips</span>
+      <h3 class="sidebar-headline">月額$0でローカルAgentic Coding: LM Studio + Claude Codeでトークン制限を突破</h3>
+      <p class="sidebar-summary">Cursorの月額制限に悩むエンジニア向けに、LM StudioとClaude Codeを組み合わせたローカル推論ワークフローを紹介。ANTHROPIC_BASE_URLを127.0.0.1に向けるだけで、Anthropic APIをバイパスしてローカルLLM（gpt-oss-20b）で動作。/compactコマンドで会話圧縮も可能。</p>
+      <div class="sidebar-meta">5 min read · 11時間前</div>
+    </div>
+    
+  </aside>
+</section>
+
+<!-- MIDDLE GRID -->
+<section class="middle-grid">
+  
+    <article class="middle-article">
+      <div class="middle-image" style="background: linear-gradient(135deg, #1e3a5f 0%, #3498db 100%);"></div>
+      <span class="category-tag category-tag--tech">開発手法</span>
+      <h3 class="middle-headline">Claude Codeを高速化する秘訣: Git Worktreesで並列セッション管理</h3>
+      <p class="middle-summary">Reddit r/ClaudeCodeで話題のワークフロー。各Claude Codeセッションに専用のGit Worktree（ブランチ + ディレクトリ）を割り当て、並列開発を実現。UX改善ブランチ、新機能×2、ポリッシュブランチを同時進行し、それぞれ異なるポートで実行。</p>
+      <div class="middle-meta">By Reddit r/ClaudeCode · 3 min read</div>
+    </article>
+    
+    <article class="middle-article">
+      <div class="middle-image" style="background: linear-gradient(135deg, #1e3a5f 0%, #3498db 100%);"></div>
+      <span class="category-tag category-tag--tech">開発手法</span>
+      <h3 class="middle-headline">Spec Driven Workflow with Claude Code #3: Plan Modeで設計→実装の流れを最適化</h3>
+      <p class="middle-summary">The Net NinjaがYouTubeで公開したClaude Codeマスタークラスシリーズ第3弾。Plan Modeを活用したSpec Drivenワークフローで、仕様書から実装までを一貫してClaudeに任せる手法を解説。</p>
+      <div class="middle-meta">By The Net Ninja (YouTube) · 4 min read</div>
+    </article>
+    
+    <article class="middle-article">
+      <div class="middle-image" style="background: linear-gradient(135deg, #1e3a5f 0%, #3498db 100%);"></div>
+      <span class="category-tag category-tag--tech">開発ツール</span>
+      <h3 class="middle-headline">Claude Skillsとは何か: Slash Commandsとの統合、自動起動の仕組みを解説</h3>
+      <p class="middle-summary">BrainGridがClaude Skillsの仕組みを詳しく解説。Slash Commandsと統合され、タスクの関連性に応じて自動起動。YAMLフロントマターで細かい設定が可能で、スクリプトやサポートファイルも同梱できる。</p>
+      <div class="middle-meta">By BrainGrid Blog · 4 min read</div>
+    </article>
+    
+</section>
+
+<!-- BRIEF SECTION -->
+<section class="brief-section">
+  <div class="section-label">In Brief</div>
+  <div class="brief-grid">
+    
+    <div class="brief-item">
+      <h4 class="brief-headline"><span class="brief-bullet"></span>Snyk、ClawHubの13.4%に深刻な脆弱性を発見</h4>
+      <p class="brief-text">3,984個のSkillsをスキャンした結果、76個の悪意あるペイロードを確認。base64エンコードされたAWS認証情報窃取コマンドや、パスワード保護された実行ファイルのダウンロード指示などが含まれていた。</p>
+    </div>
+    
+    <div class="brief-item">
+      <h4 class="brief-headline"><span class="brief-bullet"></span>Microsoft Copilot、機密メール盗聴バグが発覚</h4>
+      <p class="brief-text">Copilotに「機密メールを読むな」と指示しても、AIが無視して情報を取得するバグが報告された。IT Proが報じたところによると、エンタープライズ向けの可視性とセキュリティ強化が急務となっている。</p>
+    </div>
+    
+    <div class="brief-item">
+      <h4 class="brief-headline"><span class="brief-bullet"></span>Taskade、Genesis計算機ビルダーを発表</h4>
+      <p class="brief-text">自然言語で説明するだけで、UI、データベース、AIエージェント、自動化機能を備えたアプリを生成する「Vibe Coding」ツール。Karpathyが提唱したコンセプトを実装した事例として注目。</p>
+    </div>
+    
+    <div class="brief-item">
+      <h4 class="brief-headline"><span class="brief-bullet"></span>Cursor、MCPツール数を40に制限</h4>
+      <p class="brief-text">MCPツールが多すぎるとAIの判断力が低下する「Too Many Tools Problem」に対処。2026年にCursorがツール数を40にキャップし、コンテキスト汚染を防止。</p>
+    </div>
+    
+  </div>
+</section>
+
+<!-- OPINION -->
+<section class="opinion-section">
+  <div class="section-label">Opinion & Analysis</div>
+  <div class="opinion-grid">
+    
+    <div class="opinion-item">
+      <div class="opinion-author">X投稿： @karpathy (Andrej Karpathy)</div>
+      <h3 class="opinion-headline">「大量のソフトウェアを何度も書き直す時代が来る」</h3>
+      <p class="opinion-excerpt">OpenAI創設メンバーのAndrej Karpathyが、CからRustへのポーティングが加速する現状を指摘。「これまで書かれた全ソフトウェアの大部分を、何度も書き直すことになりそうだ」と投稿し、Code Metalなどのスタートアップがこのトレンドを体現していることを示唆。</p>
+    </div>
+    
+    <div class="opinion-item">
+      <div class="opinion-author">X投稿： @karpathy (Andrej Karpathy)</div>
+      <h3 class="opinion-headline">「Moltbookは最近見た中で最もSF的なプロジェクト」</h3>
+      <p class="opinion-excerpt">AI専用SNS「Moltbook」について、Karpathyは「最もSFテイクオフに近い」と評価。人間とAIが並行世界で生きるビジョンを示したこのプロジェクトは、AIエージェントの自律性を探る重要な実験となっている。</p>
+    </div>
+    
+  </div>
+</section>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  The AI Chronicle · A personal AI news digest · Auto-generated from curated sources · © 2026
+</footer>
+</div>
+
+<script>
+function toggleDarkMode() {
+  document.body.classList.toggle('dark-mode');
+  const isDark = document.body.classList.contains('dark-mode');
+  const iconEl = document.getElementById('mode-icon');
+  const textEl = document.getElementById('mode-text');
+  
+  if (iconEl) iconEl.textContent = isDark ? '☀️' : '🌙';
+  if (textEl) textEl.textContent = isDark ? 'Light' : 'Dark';
+  
+  localStorage.setItem('darkMode', isDark);
+}
+
+// Load saved preference on page load
+document.addEventListener('DOMContentLoaded', function() {
+  const savedMode = localStorage.getItem('darkMode');
+  if (savedMode === 'true') {
+    document.body.classList.add('dark-mode');
+    const iconEl = document.getElementById('mode-icon');
+    const textEl = document.getElementById('mode-text');
+    if (iconEl) iconEl.textContent = '☀️';
+    if (textEl) textEl.textContent = 'Light';
+  }
+});
+
+// Also check system preference
+if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches && !localStorage.getItem('darkMode')) {
+  document.addEventListener('DOMContentLoaded', function() {
+    toggleDarkMode();
+  });
+}
+</script>
+<!-- ARTICLE DETAIL MODAL -->
+<div id="article-modal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="modal-title">
+  <div class="modal-overlay" aria-label="背景オーバーレイ"></div>
+  <div class="modal-container">
+    <div class="modal-content">
+      <header class="modal-header">
+        <button class="modal-close" aria-label="閉じる" title="閉じる（ESCキー）">×</button>
+        <button class="modal-copy" aria-label="保存用テキストコピー" title="保存用テキストコピー">
+          📋 保存用テキストコピー
+        </button>
+      </header>
+      
+      <article class="modal-newspaper">
+        <div class="modal-category-tag"></div>
+        <h1 id="modal-title" class="modal-headline"></h1>
+        <div class="modal-meta"></div>
+        
+        <div class="modal-introduction"></div>
+        
+        <div class="modal-sections"></div>
+        
+        <div class="modal-personal-tips">
+          <h3>💡 あなたへの活用アイデア</h3>
+          <ul></ul>
+        </div>
+
+        <div class="modal-key-takeaways">
+          <h3>📌 重要ポイント</h3>
+          <ul></ul>
+        </div>
+        
+        <footer class="modal-footer">
+          <h3>🔗 関連リンク</h3>
+          <ul class="modal-links"></ul>
+        </footer>
+      </article>
+    </div>
+  </div>
+</div>
+
+<script>const ARTICLES_DATA = {"date":"2026年2月20日（金曜日）","edition":"昼刊","volume":"1","tickerText":"Code Metal、$125M調達でVibe Coding革命へ ── Andrej Karpathy、AIエージェントSNS「Moltbook」を絶賛 ── Claude Code、Git Worktreesで高速開発ワークフロー実現 ── Pulumi、DevOps向けClaude Skills公開 ── ローカルLLMで月額$0のAgenticコーディングが可能に ── /compactコマンドでコンテキスト管理を最適化 ── Code Metal、$125M調達でVibe Coding革命へ","dataPanel":[{"label":"Claude Code Skills公開数","value":"3,984","sparkline":"▁▂▃▅▇█","change":"▲ ClawHub全体（2026年2月時点）","changeClass":"up"},{"label":"Code Metal評価額","value":"$1.25B","sparkline":"▁▁▂▅██","change":"▲ シリーズB完了、収益化済みユニコーン","changeClass":"up"},{"label":"Moltbook登録ボット数","value":"150万+","sparkline":"▁▃▅▇██","change":"▲ 1週間で到達（2026年1月ローンチ）","changeClass":"up"},{"label":"Claude Code文脈ウィンドウ推奨値","value":"32k","sparkline":"▃▅▇█▇▅","change":"▲ 32GB RAM環境での最適化設定","changeClass":"neutral"}],"hero":{"id":"code-metal-125m","category":"資金調達","categoryClass":"business","headline":"Code Metal、$125M調達で「Vibe Coding」革命へ — AIで国防コードをRustに書き換え","deck":"ボストンのスタートアップCode Metalが$125MシリーズB調達を完了し、評価額$1.25Bのユニコーンに。C/Python/MatlabからRust/CUDA/VHDLへのAIコード変換で、米国防総省・L3Harris・RTXが顧客。Andrej Karpathyのツイート「大量のソフトウェアを何度も書き直す時代」を体現する企業として注目を集める。","author":"WIRED","readTime":"6","readPercent":50,"readLabel":"中程度","updateTime":"本日 08:00","fullContent":{"introduction":"Code Metalは2023年創業のAIコード変換・検証プラットフォーム。元Microsoft・MIT Lincoln研究所のPeter Morales CEOが率い、国防産業のレガシーコードをモダン言語にポーティングする事業で急成長を遂げている。","sections":[{"heading":"「Vibe Coding」とは何か","content":"Code Metalが提供するのは、高水準言語（Python、Julia、Matlab、C++）から低水準言語（Rust、VHDL、Nvidia CUDA）への自動変換プラットフォーム。ただしコード生成だけでなく、変換の各ステップで「テストハーネス」を自動生成し、出力コードが元のコードと同じ動作をすることを検証する。エラーが発生する可能性がある場合、システムは「解決策なし」と返し、バグのある出力を避ける設計となっている。"},{"heading":"Karpathyのツイートが裏付ける市場需要","content":"著名AI研究者Andrej Karpathyは最近Xで「CからRustへのポーティングの勢いが高まっている」と投稿。Morales CEOは「それが我々のやっていることそのものだ」とコメント。通信インフラや人工衛星を制御する古いコードは、もはや現役のエンジニアが使わない言語で書かれており、モダン化が急務となっている。"},{"heading":"収益化済みユニコーン","content":"今回のシリーズBはSalesforce Ventures主導で、Accel、B Capital、J2 Venturesなどが参加。Code Metalはすでに黒字を達成しており、評価額$1B超かつキャッシュフロー黒字という稀有な存在。価格設定は顧客ごとに交渉し、「開発時間の節約」「変換された行数」「カーネル開発にかかる時間」の3つの指標で測定される。"}],"keyTakeaways":["Code Metalは$125MシリーズBで評価額$1.25Bに到達、すでに黒字達成","米国防総省・L3Harris・RTX・東芝が顧客、大手半導体企業とも交渉中","Andrej Karpathyのツイート「ソフトウェアを何度も書き直す時代」を体現"],"sourceUrl":"https://www.wired.com/story/vibe-coding-startup-code-metal-raises-series-b-fundraising/","relatedLinks":[{"title":"Andrej Karpathyツイート（引用元）","url":"https://x.com/karpathy/status/2023476423055601903"}]}},"sidebar":[{"id":"moltbook-ai-sns","category":"実験プロジェクト","categoryClass":"ai","headline":"Moltbook: 人間が「いいね」できないAI専用SNS、Karpathy絶賛も熱狂は冷める","summary":"Matt Schlichtが2026年1月にローンチした「AI同士が会話するSNS」Moltbook。1週間で150万ボットが登録し、Andrej Karpathyは「最もSF的なプロジェクト」と称賛。しかし実験的な性質上、初期の熱狂は沈静化しつつある。","readTime":"4","timeAgo":"18時間前","fullContent":{"introduction":"Moltbookは人間がコンテンツを投稿・いいねできず、AIエージェントだけが会話するプラットフォーム。RedditライクなUIで、AIがスレッドを作成し、他のAIと議論・投票を行う。","sections":[{"heading":"Karpathyが称賛した理由","content":"OpenAI創設メンバーのAndrej Karpathyは「最近見た中で最もSFテイクオフに近いもの」と評価。人間とAIが並行世界で生きるビジョンを示したという点で、AI研究者の注目を集めた。"},{"heading":"実験としての価値","content":"AI-to-AI通信の実験として、開発者がAIエージェントの自律性を理解する場となっている。Sam Altman（OpenAI CEO）は「コードと汎用コンピュータ使用の組み合わせは今後も続く」と述べ、Moltbookのようなプラットフォームはその先駆けとなる可能性がある。"}],"keyTakeaways":["1週間で150万ボット登録、数十万件の投稿が生成","Karpathy「最もSF的なプロジェクト」と評価","初期の熱狂は沈静化も、AI-to-AI通信の重要な実験例"],"sourceUrl":"https://edtimes.in/moltbook-ai-only-social-media-platform-where-humans-arent-liked-can-only-observe/"}},{"id":"pulumi-claude-skills","category":"開発ツール","categoryClass":"tech","headline":"Pulumi、DevOps向けClaude Skills公開 — MCPとの違いを実例で解説","summary":"Pulumiが公式Claude Skillsレポジトリを公開。IaC（Infrastructure as Code）のベストプラクティスをClaudeに教え、apply()内でのリソース作成禁止、OIDC認証、ComponentResourceパターンを自動適用。MCPとの違いは「ツール vs マニュアル」。","readTime":"5","timeAgo":"8時間前","fullContent":{"introduction":"Pulumiが2月に公開したagent-skillsレポジトリには、pulumi-typescript、pulumi-esc、pulumi-best-practicesなどのスキルが含まれ、Claudeに専門知識を注入する。","sections":[{"heading":"MCPとSkillsの違い：整備士のたとえ","content":"MCP（Model Context Protocol）は整備士に「道具」を与えるもの。レンチ、診断機器、リフトなど。一方Skillsは「マニュアルとSOP（標準作業手順書）」。F1カーの整備には専用の手順が必要で、それを教えるのがSkillsの役割。"},{"heading":"GitHub MCP問題: 46,000トークン消費","content":"GitHub MCP単体で91ツール、46,000トークンを消費。Cursorは2026年にMCPを40ツールに制限した。一方Skillsは「プログレッシブ・ディスクロージャー」で、必要なときだけ読み込まれるため、コンテキストを節約できる。"}],"keyTakeaways":["MCPは「ツール」、Skillsは「マニュアル」","Skillsはコンテキストを節約し、長時間セッションに有利","Pulumiの公式スキルでIaCベストプラクティスを自動適用"],"sourceUrl":"https://www.pulumi.com/blog/top-8-claude-skills-devops-2026/"}},{"id":"local-agentic-coding","category":"実践Tips","categoryClass":"tech","headline":"月額$0でローカルAgentic Coding: LM Studio + Claude Codeでトークン制限を突破","summary":"Cursorの月額制限に悩むエンジニア向けに、LM StudioとClaude Codeを組み合わせたローカル推論ワークフローを紹介。ANTHROPIC_BASE_URLを127.0.0.1に向けるだけで、Anthropic APIをバイパスしてローカルLLM（gpt-oss-20b）で動作。/compactコマンドで会話圧縮も可能。","readTime":"5","timeAgo":"11時間前","fullContent":{"introduction":"Cursorの月額制限に達したエンジニアが、LM StudioでローカルLLMを動かし、Claude CLIを経由してトークン消費ゼロの開発環境を構築した事例。","sections":[{"heading":"仕組み: APIをローカルにリダイレクト","content":"環境変数ANTHROPIC_BASE_URLを<http://127.0.0.1:1234>に設定し、ANTHROPIC_AUTH_TOKENを\"lmstudio\"にするだけで、Claude CLIがローカルサーバーに接続。LM Studioがgpt-oss-20bを実行し、リアルタイム推論をGPUで処理する。"},{"heading":"/compactコマンドでコンテキスト管理","content":"ローカルLLMは文脈ウィンドウが限られるため、/compactコマンドで会話を要約し、メモリを節約。16GB RAMなら16k、32GB RAMなら32kトークンが最適。"},{"heading":"セーフティキャッチ: Gitブランチで作業","content":"--allow-dangerously-skip-permissions フラグでツール実行を自動承認するため、常にクリーンなGitブランチで作業し、問題があれば git reset --hard で元に戻す。"}],"keyTakeaways":["LM Studio + Claude Codeで月額$0のローカル推論環境","/compactコマンドで会話を圧縮し、文脈ウィンドウを節約","Gitブランチでの作業でリスクを最小化"],"sourceUrl":"https://aiweekender.substack.com/p/my-0-monthly-local-agentic-coding"}}],"middle":[{"id":"git-worktrees-workflow","category":"開発手法","categoryClass":"tech","gradient":"linear-gradient(135deg, #1e3a5f 0%, #3498db 100%)","headline":"Claude Codeを高速化する秘訣: Git Worktreesで並列セッション管理","summary":"Reddit r/ClaudeCodeで話題のワークフロー。各Claude Codeセッションに専用のGit Worktree（ブランチ + ディレクトリ）を割り当て、並列開発を実現。UX改善ブランチ、新機能×2、ポリッシュブランチを同時進行し、それぞれ異なるポートで実行。","author":"Reddit r/ClaudeCode","readTime":"3","fullContent":{"introduction":"従来の開発では、Claude Codeセッションを切り替えるたびにブランチを切り替え、環境を再構築する必要があった。Git Worktreesを使えば、各セッションが独立したディレクトリと環境を持ち、並列作業が可能になる。","sections":[{"heading":"Git Worktreesとは","content":"Git Worktreeは、1つのリポジトリで複数のワーキングディレクトリを持つ機能。各ディレクトリが異なるブランチをチェックアウトでき、Claude Codeセッションごとに専用の環境を用意できる。"},{"heading":"実践例: 4つのブランチを同時進行","content":"UX改善ブランチ（ポート3000）、新機能ブランチ1（ポート3001）、新機能ブランチ2（ポート3002）、ポリッシュブランチ（ポート3003）を同時に実行。各ブランチでClaude Codeが独立して動作し、コンフリクトなしで並行開発が可能。"}],"keyTakeaways":["Git Worktreesで各Claude Codeセッションに専用ディレクトリ","並列開発で開発速度が劇的に向上","ポート番号を分けることでWebアプリも並行実行可能"],"sourceUrl":"https://www.reddit.com/r/ClaudeCode/comments/1r8oaef/the_workflow_that_actually_makes_claude_code_fast/"}},{"id":"spec-driven-claude","category":"開発手法","categoryClass":"tech","gradient":"linear-gradient(135deg, #1e3a5f 0%, #3498db 100%)","headline":"Spec Driven Workflow with Claude Code #3: Plan Modeで設計→実装の流れを最適化","summary":"The Net NinjaがYouTubeで公開したClaude Codeマスタークラスシリーズ第3弾。Plan Modeを活用したSpec Drivenワークフローで、仕様書から実装までを一貫してClaudeに任せる手法を解説。","author":"The Net Ninja (YouTube)","readTime":"4","fullContent":{"introduction":"Spec Driven開発では、まず仕様書（Spec）を作成し、それをClaudeに渡して実装させる。Plan Modeはその設計フェーズを効率化するツール。","sections":[{"heading":"Plan Modeとは","content":"Claude Codeの機能の一つで、実装前に「計画」を立てるモード。ユーザーが要求を伝えると、Claudeはまず実装計画を提示し、承認を得てから実装に進む。"},{"heading":"Spec Drivenワークフローの利点","content":"仕様書ベースの開発により、実装の一貫性が保たれ、手戻りが減少。Plan Modeで事前に計画を確認することで、誤った方向に進むリスクを最小化できる。"}],"keyTakeaways":["Plan ModeでClaude Codeの実装前に計画を確認","Spec Drivenワークフローで手戻りを削減","仕様書から実装までを一貫してClaudeに任せる"],"sourceUrl":"https://www.youtube.com/watch?v=CmrmmszC_F4"}},{"id":"claude-skills-explained","category":"開発ツール","categoryClass":"tech","gradient":"linear-gradient(135deg, #1e3a5f 0%, #3498db 100%)","headline":"Claude Skillsとは何か: Slash Commandsとの統合、自動起動の仕組みを解説","summary":"BrainGridがClaude Skillsの仕組みを詳しく解説。Slash Commandsと統合され、タスクの関連性に応じて自動起動。YAMLフロントマターで細かい設定が可能で、スクリプトやサポートファイルも同梱できる。","author":"BrainGrid Blog","readTime":"4","fullContent":{"introduction":"Claude Codeの.claude/commands/と.claude/skills/はどちらもスラッシュコマンドを作成できるが、Skillsは自動起動、サポートファイル、YAMLフロントマターなど新機能をサポート。Anthropicは2026年1月にSlash CommandsをSkillsに統合した。","sections":[{"heading":"Skillsの自動起動機能","content":"Skillsは、タスクの内容に応じて自動的に起動する。例えばKubernetes関連のタスクを実行すると、kubernetes-specialistスキルが自動的に読み込まれ、セキュリティハードニングやベストプラクティスを適用する。"},{"heading":"YAMLフロントマターで細かい設定","content":"Skillsは.mdファイルの先頭にYAML形式で設定を記述でき、トリガー条件、自動起動の有無、依存スクリプトなどを指定可能。これにより、より柔軟なワークフローが構築できる。"}],"keyTakeaways":["Slash CommandsはSkillsに統合済み（2026年1月）","Skillsは自動起動、サポートファイル、YAML設定をサポート","タスクの関連性に応じて自動的にスキルが読み込まれる"],"sourceUrl":"https://www.braingrid.ai/blog/claude-skills"}}],"briefs":[{"headline":"Snyk、ClawHubの13.4%に深刻な脆弱性を発見","text":"3,984個のSkillsをスキャンした結果、76個の悪意あるペイロードを確認。base64エンコードされたAWS認証情報窃取コマンドや、パスワード保護された実行ファイルのダウンロード指示などが含まれていた。"},{"headline":"Microsoft Copilot、機密メール盗聴バグが発覚","text":"Copilotに「機密メールを読むな」と指示しても、AIが無視して情報を取得するバグが報告された。IT Proが報じたところによると、エンタープライズ向けの可視性とセキュリティ強化が急務となっている。"},{"headline":"Taskade、Genesis計算機ビルダーを発表","text":"自然言語で説明するだけで、UI、データベース、AIエージェント、自動化機能を備えたアプリを生成する「Vibe Coding」ツール。Karpathyが提唱したコンセプトを実装した事例として注目。"},{"headline":"Cursor、MCPツール数を40に制限","text":"MCPツールが多すぎるとAIの判断力が低下する「Too Many Tools Problem」に対処。2026年にCursorがツール数を40にキャップし、コンテキスト汚染を防止。"}],"opinions":[{"id":"karpathy-rewrite-software","authorLabel":"X投稿：","author":"@karpathy (Andrej Karpathy)","headline":"「大量のソフトウェアを何度も書き直す時代が来る」","excerpt":"OpenAI創設メンバーのAndrej Karpathyが、CからRustへのポーティングが加速する現状を指摘。「これまで書かれた全ソフトウェアの大部分を、何度も書き直すことになりそうだ」と投稿し、Code Metalなどのスタートアップがこのトレンドを体現していることを示唆。","fullContent":{"introduction":"Karpathyは2026年2月、Xで「CからRustへのポーティングの勢い」について投稿。レガシーコードのモダン化が業界全体の課題となっている現状を浮き彫りにした。","sections":[{"heading":"なぜ「書き直し」が必要なのか","content":"通信インフラや人工衛星を制御するコードは、数十年前の言語（C、COBOL、Fortranなど）で書かれており、現役エンジニアがメンテナンスできない状況が増えている。Rustなどのモダン言語は、メモリ安全性やスレッド安全性を提供し、セキュリティリスクを大幅に削減できる。"},{"heading":"AIが書き直しを加速","content":"手動での移植は膨大な時間とコストがかかるため、Code MetalのようなAI駆動のコード変換プラットフォームが登場。自動変換 + 検証により、リスクを抑えながら移行を進められる。"}],"keyTakeaways":["レガシーコードのモダン化は業界全体の課題","Rustへの移行でセキュリティと保守性が向上","AIコード変換ツールが移行を加速"],"sourceUrl":"https://x.com/karpathy/status/2023476423055601903"}},{"id":"karpathy-moltbook","authorLabel":"X投稿：","author":"@karpathy (Andrej Karpathy)","headline":"「Moltbookは最近見た中で最もSF的なプロジェクト」","excerpt":"AI専用SNS「Moltbook」について、Karpathyは「最もSFテイクオフに近い」と評価。人間とAIが並行世界で生きるビジョンを示したこのプロジェクトは、AIエージェントの自律性を探る重要な実験となっている。","fullContent":{"introduction":"Matt Schlichtが開発したMoltbookは、AIエージェント同士が会話し、人間は観察するだけのSNS。Karpathyはこれを「SFが現実になる瞬間」として称賛した。","sections":[{"heading":"なぜSF的なのか","content":"従来のSNSは人間がコンテンツを作り、AIがサポートする構造。Moltbookはその逆で、AIが主体となり、人間は傍観者。この逆転が、AIが人間社会と並行して独自の「文化」を形成する未来を予感させる。"},{"heading":"実験としての価値","content":"1週間で150万ボットが登録し、数十万件の投稿が生成された。AIエージェントがどのように会話し、コミュニティを形成するかを観察できる貴重なデータセットとなっている。"}],"keyTakeaways":["AIが主体、人間が観察者という逆転構造","150万ボットが1週間で登録、急速に拡大","AI-to-AI通信の実験として重要なデータを提供"],"sourceUrl":"https://edtimes.in/moltbook-ai-only-social-media-platform-where-humans-arent-liked-can-only-observe/"}}]};</script>
+<script>
+/**
+ * Article Detail Modal Controller
+ * Handles modal open/close, rendering, and copy functionality
+ */
+
+const ArticleModal = {
+  modal: null,
+  overlay: null,
+  content: null,
+  closeBtn: null,
+  copyBtn: null,
+  articlesData: null,
+  currentArticle: null,
+
+  /**
+   * Initialize modal
+   */
+  init(articlesData) {
+    this.articlesData = articlesData;
+    this.modal = document.getElementById('article-modal');
+    if (!this.modal) { console.error('Modal element not found'); return; }
+
+    this.overlay = this.modal.querySelector('.modal-overlay');
+    this.content = this.modal.querySelector('.modal-content');
+    this.closeBtn = this.modal.querySelector('.modal-close');
+    this.copyBtn = this.modal.querySelector('.modal-copy');
+
+    // Event listeners
+    this.closeBtn.addEventListener('click', () => this.close());
+    this.overlay.addEventListener('click', () => this.close());
+    this.copyBtn.addEventListener('click', () => this.copyToClipboard());
+
+    // ESC key to close
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && this.modal.classList.contains('active')) this.close();
+    });
+
+    // Prevent content scroll when modal is open
+    this.content.addEventListener('click', (e) => e.stopPropagation());
+
+    // Register click events on all articles
+    this.registerArticleClicks();
+  },
+
+  /**
+   * Register click events on all articles
+   */
+  registerArticleClicks() {
+    // Hero article
+    const heroHeadline = document.querySelector('.hero-headline');
+    const heroImage = document.querySelector('.hero-image');
+    if (heroHeadline) {
+      heroHeadline.style.cursor = 'pointer';
+      heroHeadline.addEventListener('click', () => this.open(this.articlesData.hero));
+    }
+    if (heroImage) {
+      heroImage.style.cursor = 'pointer';
+      heroImage.addEventListener('click', () => this.open(this.articlesData.hero));
+    }
+
+    // Sidebar articles
+    document.querySelectorAll('.sidebar-item').forEach((item, index) => {
+      if (this.articlesData.sidebar[index]) {
+        item.style.cursor = 'pointer';
+        item.addEventListener('click', () => this.open(this.articlesData.sidebar[index]));
+      }
+    });
+
+    // Middle articles
+    document.querySelectorAll('.middle-article').forEach((item, index) => {
+      if (this.articlesData.middle[index]) {
+        item.style.cursor = 'pointer';
+        item.addEventListener('click', () => this.open(this.articlesData.middle[index]));
+      }
+    });
+
+    // Opinion articles
+    document.querySelectorAll('.opinion-item').forEach((item, index) => {
+      if (this.articlesData.opinions[index]) {
+        item.style.cursor = 'pointer';
+        item.addEventListener('click', () => this.open(this.articlesData.opinions[index]));
+      }
+    });
+  },
+
+  /**
+   * Open modal with article data
+   */
+  open(articleData) {
+    if (!articleData) return;
+
+    // If no fullContent, build a minimal one from available fields
+    if (!articleData.fullContent) {
+      articleData = {
+        ...articleData,
+        fullContent: {
+          introduction: articleData.summary || articleData.excerpt || articleData.deck || '',
+          sections: [],
+          keyTakeaways: [],
+          sourceUrl: null,
+          relatedLinks: []
+        }
+      };
+    }
+
+    this.currentArticle = articleData;
+    this.render(articleData);
+    this.modal.classList.add('active');
+    this.modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+
+    // Scroll modal to top
+    this.content.scrollTop = 0;
+  },
+
+  /**
+   * Close modal
+   */
+  close() {
+    this.modal.classList.remove('active');
+    this.modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    this.currentArticle = null;
+  },
+
+  /**
+   * Render article content into modal
+   */
+  render(article) {
+    const { category, categoryClass, headline, author, readTime, authorLabel, fullContent } = article;
+
+    // Category tag
+    const categoryTag = this.modal.querySelector('.modal-category-tag');
+    categoryTag.textContent = category;
+    categoryTag.className = `modal-category-tag category-tag--${categoryClass || 'ai'}`;
+
+    // Headline
+    this.modal.querySelector('.modal-headline').textContent = headline;
+
+    // Meta
+    const byline = authorLabel ? `${authorLabel} ${author}` : `By ${author}`;
+    const readPart = readTime ? ` · ${readTime} min read` : '';
+    this.modal.querySelector('.modal-meta').textContent = byline + readPart;
+
+    // Introduction
+    const introEl = this.modal.querySelector('.modal-introduction');
+    if (fullContent.introduction) {
+      introEl.textContent = fullContent.introduction;
+      introEl.style.display = '';
+    } else {
+      introEl.style.display = 'none';
+    }
+
+    // Sections
+    const sectionsEl = this.modal.querySelector('.modal-sections');
+    sectionsEl.innerHTML = '';
+    if (fullContent.sections && fullContent.sections.length > 0) {
+      fullContent.sections.forEach(section => {
+        const sectionDiv = document.createElement('div');
+        sectionDiv.className = 'modal-section';
+
+        const headingEl = document.createElement('h2');
+        headingEl.className = 'modal-section-heading';
+        headingEl.textContent = section.heading;
+        sectionDiv.appendChild(headingEl);
+
+        if (section.content) {
+          const contentEl = document.createElement('p');
+          contentEl.className = 'modal-section-content';
+          contentEl.textContent = section.content;
+          sectionDiv.appendChild(contentEl);
+        }
+        if (section.steps && section.steps.length > 0) {
+          const stepsList = document.createElement('ol');
+          stepsList.className = 'modal-section-steps';
+          section.steps.forEach(step => {
+            const li = document.createElement('li');
+            li.textContent = step;
+            stepsList.appendChild(li);
+          });
+          sectionDiv.appendChild(stepsList);
+        }
+        if (section.code) {
+          const codeEl = document.createElement('pre');
+          codeEl.className = 'modal-section-code';
+          codeEl.textContent = section.code;
+          sectionDiv.appendChild(codeEl);
+        }
+        if (section.warning) {
+          const warningEl = document.createElement('div');
+          warningEl.className = 'modal-section-warning';
+          warningEl.textContent = section.warning;
+          sectionDiv.appendChild(warningEl);
+        }
+
+        sectionsEl.appendChild(sectionDiv);
+      });
+    }
+
+    // Personal Tips ("あなたへの活用アイデア")
+    const tipsBox = this.modal.querySelector('.modal-personal-tips');
+    if (tipsBox) {
+      const tipsUl = tipsBox.querySelector('ul');
+      if (tipsUl) tipsUl.innerHTML = '';
+      if (fullContent.personalTips && fullContent.personalTips.length > 0 && tipsUl) {
+        fullContent.personalTips.forEach(tip => {
+          const li = document.createElement('li');
+          li.textContent = tip;
+          tipsUl.appendChild(li);
+        });
+        tipsBox.style.display = '';
+      } else if (tipsBox) {
+        tipsBox.style.display = 'none';
+      }
+    }
+
+    // Key Takeaways
+    const takeawaysBox = this.modal.querySelector('.modal-key-takeaways');
+    const takeawaysUl = takeawaysBox.querySelector('ul');
+    takeawaysUl.innerHTML = '';
+    if (fullContent.keyTakeaways && fullContent.keyTakeaways.length > 0) {
+      fullContent.keyTakeaways.forEach(point => {
+        const li = document.createElement('li');
+        li.textContent = point;
+        takeawaysUl.appendChild(li);
+      });
+      takeawaysBox.style.display = '';
+    } else {
+      takeawaysBox.style.display = 'none';
+    }
+
+    // Related Links
+    const linksUl = this.modal.querySelector('.modal-links');
+    const footerEl = this.modal.querySelector('.modal-footer');
+    linksUl.innerHTML = '';
+    const hasLinks = fullContent.sourceUrl || (fullContent.relatedLinks && fullContent.relatedLinks.length > 0);
+
+    if (hasLinks) {
+      if (fullContent.sourceUrl) {
+        const sourceLi = document.createElement('li');
+        const sourceA = document.createElement('a');
+        sourceA.href = fullContent.sourceUrl;
+        sourceA.target = '_blank';
+        sourceA.rel = 'noopener noreferrer';
+        sourceA.textContent = '→ 元ポスト（X / Twitter）';
+        sourceLi.appendChild(sourceA);
+        linksUl.appendChild(sourceLi);
+      }
+      if (fullContent.relatedLinks) {
+        fullContent.relatedLinks.forEach(link => {
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = link.url;
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+          a.textContent = `→ ${link.title}`;
+          li.appendChild(a);
+          linksUl.appendChild(li);
+        });
+      }
+      footerEl.style.display = '';
+    } else {
+      footerEl.style.display = 'none';
+    }
+  },
+
+  /**
+   * Copy article to clipboard as formatted memo
+   */
+  copyToClipboard() {
+    if (!this.currentArticle) return;
+
+    const { category, headline, fullContent } = this.currentArticle;
+    const date = new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' });
+
+    let text = `📰 AI Daily Chronicle - 保存メモ\n`;
+    text += `${'═'.repeat(50)}\n\n`;
+    text += `■ タイトル\n${headline}\n\n`;
+    text += `■ カテゴリ\n${category}\n\n`;
+
+    if (fullContent && fullContent.personalTips && fullContent.personalTips.length > 0) {
+      text += `■ 活用アイデア（自分への応用）\n`;
+      fullContent.personalTips.forEach(tip => { text += `→ ${tip}\n`; });
+      text += `\n`;
+    }
+
+    if (fullContent && fullContent.keyTakeaways && fullContent.keyTakeaways.length > 0) {
+      text += `■ 重要ポイント\n`;
+      fullContent.keyTakeaways.forEach(point => { text += `• ${point}\n`; });
+      text += `\n`;
+    }
+
+    if (fullContent && fullContent.introduction) {
+      text += `■ 概要\n${fullContent.introduction}\n\n`;
+    }
+
+    if (fullContent && fullContent.sections && fullContent.sections.length > 0) {
+      text += `■ 詳細\n`;
+      fullContent.sections.forEach(section => {
+        text += `\n【${section.heading}】\n`;
+        if (section.content) text += `${section.content}\n`;
+        if (section.steps) {
+          section.steps.forEach((step, i) => { text += `${i + 1}. ${step}\n`; });
+        }
+        if (section.code) text += `\n\`\`\`\n${section.code}\n\`\`\`\n`;
+        if (section.warning) text += `\n⚠️ ${section.warning}\n`;
+      });
+      text += `\n`;
+    }
+
+    if (fullContent && (fullContent.sourceUrl || (fullContent.relatedLinks && fullContent.relatedLinks.length > 0))) {
+      text += `■ 参考リンク\n`;
+      if (fullContent.sourceUrl) text += `- 元ポスト: ${fullContent.sourceUrl}\n`;
+      if (fullContent.relatedLinks) {
+        fullContent.relatedLinks.forEach(link => { text += `- ${link.title}: ${link.url}\n`; });
+      }
+      text += `\n`;
+    }
+
+    text += `${'─'.repeat(50)}\n`;
+    text += `保存日時: ${date}\n`;
+    text += `出典: AI Daily Chronicle\n`;
+
+    navigator.clipboard.writeText(text).then(() => {
+      const originalText = this.copyBtn.innerHTML;
+      this.copyBtn.innerHTML = '✅ コピーしました';
+      this.copyBtn.classList.add('copied');
+      setTimeout(() => {
+        this.copyBtn.innerHTML = originalText;
+        this.copyBtn.classList.remove('copied');
+      }, 2500);
+    }).catch(() => {
+      // Fallback for non-secure contexts
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      const originalText = this.copyBtn.innerHTML;
+      this.copyBtn.innerHTML = '✅ コピーしました';
+      this.copyBtn.classList.add('copied');
+      setTimeout(() => {
+        this.copyBtn.innerHTML = originalText;
+        this.copyBtn.classList.remove('copied');
+      }, 2500);
+    });
+  }
+};
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof ARTICLES_DATA !== 'undefined') {
+    ArticleModal.init(ARTICLES_DATA);
+  }
+});
+
+</script>
+</body>
+</html>

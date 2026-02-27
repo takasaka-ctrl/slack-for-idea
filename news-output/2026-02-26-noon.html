@@ -1,0 +1,1802 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Chronicle</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&family=DM+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&family=Noto+Serif+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-paper: #faf7f2;
+  --bg-cream: #f5f0e8;
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-caption: #777;
+  --rule-color: #c8c0b4;
+  --rule-heavy: #2a2a2a;
+  --accent-red: #c41e1e;
+  --accent-blue: #1e3a5f;
+  --accent-gold: #b8860b;
+  --category-ai: #2d5a27;
+  --category-tech: #1e3a5f;
+  --category-business: #8b4513;
+  --category-research: #5b2c6f;
+  --category-openai: #10a37f;
+  --category-gemini: #1a73e8;
+  --category-indie: #c07000;
+  --category-mobile: #0f4c75;
+  --font-display: 'Playfair Display', 'Noto Serif JP', serif;
+  --font-body: 'Source Serif 4', 'Noto Serif JP', serif;
+  --font-sans: 'DM Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-paper: #1a1a1a;
+    --bg-cream: #252525;
+    --text-primary: #e8e3db;
+    --text-secondary: #b8b5b0;
+    --text-caption: #888;
+    --rule-color: #3a3a3a;
+    --rule-heavy: #d0d0d0;
+  }
+}
+
+body.dark-mode {
+  --bg-paper: #1a1a1a;
+  --bg-cream: #252525;
+  --text-primary: #e8e3db;
+  --text-secondary: #b8b5b0;
+  --text-caption: #888;
+  --rule-color: #3a3a3a;
+  --rule-heavy: #d0d0d0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #e8e3db;
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.3s, color 0.3s;
+}
+
+.newspaper {
+  max-width: 1200px;
+  margin: 24px auto;
+  background: var(--bg-paper);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.06);
+  position: relative;
+  transition: background 0.3s;
+}
+
+/* Dark mode toggle */
+.dark-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--bg-cream);
+  border: 1px solid var(--rule-color);
+  border-radius: 20px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  z-index: 100;
+  transition: all 0.3s;
+}
+
+.dark-toggle:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Masthead */
+.masthead {
+  text-align: center;
+  padding: 28px 40px 20px;
+  border-bottom: 3px double var(--rule-heavy);
+  position: relative;
+}
+
+.masthead::before, .masthead::after {
+  content: '';
+  position: absolute;
+  left: 40px;
+  right: 40px;
+  height: 1px;
+  background: var(--rule-heavy);
+}
+
+.masthead::before { top: 8px; }
+.masthead::after { bottom: 8px; }
+
+.masthead-date {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-caption);
+  margin-bottom: 8px;
+}
+
+.masthead-title {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 60px);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  color: var(--text-primary);
+}
+
+.masthead-subtitle {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-caption);
+  margin-top: 6px;
+}
+
+/* Ticker */
+.ticker {
+  background: var(--accent-red);
+  color: white;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 8px 40px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow: hidden;
+}
+
+.ticker-label {
+  background: rgba(255,255,255,0.2);
+  padding: 2px 10px;
+  border-radius: 2px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.ticker-text {
+  white-space: nowrap;
+  animation: ticker-scroll 30s linear infinite;
+}
+
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Section nav */
+.section-nav {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  padding: 12px 40px;
+  border-bottom: 1px solid var(--rule-color);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  flex-wrap: wrap;
+}
+
+.section-nav a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 2px 0;
+  transition: color 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+
+.section-nav a:hover,
+.section-nav a.active {
+  color: var(--text-primary);
+  border-bottom: 2px solid var(--accent-red);
+}
+
+.content {
+  padding: 0 40px 40px;
+}
+
+/* Data panel with sparklines */
+.data-panel {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  padding: 20px 0;
+  border-bottom: 2px solid var(--rule-heavy);
+}
+
+.data-item {
+  text-align: center;
+  padding: 0 16px;
+  border-right: 1px solid var(--rule-color);
+}
+
+.data-item:last-child { border-right: none; }
+
+.data-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-caption);
+  margin-bottom: 4px;
+}
+
+.data-value {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.data-sparkline {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  letter-spacing: 1px;
+  margin: 4px 0;
+  color: var(--category-ai);
+}
+
+.data-change {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.data-change.up { color: var(--category-ai); }
+.data-change.down { color: var(--accent-red); }
+
+/* Category tags */
+.category-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  display: inline-block;
+  margin-bottom: 10px;
+  transition: all 0.2s;
+}
+
+.category-tag--ai {
+  color: var(--category-ai);
+  border: 1px solid var(--category-ai);
+}
+
+.category-tag--tech {
+  color: var(--category-tech);
+  border: 1px solid var(--category-tech);
+}
+
+.category-tag--business {
+  color: var(--category-business);
+  border: 1px solid var(--category-business);
+}
+
+.category-tag--research {
+  color: var(--category-research);
+  border: 1px solid var(--category-research);
+}
+
+.category-tag--openai {
+  color: var(--category-openai);
+  border: 1px solid var(--category-openai);
+}
+
+.category-tag--gemini {
+  color: var(--category-gemini);
+  border: 1px solid var(--category-gemini);
+}
+
+.category-tag--indie {
+  color: var(--category-indie);
+  border: 1px solid var(--category-indie);
+}
+
+.category-tag--mobile {
+  color: var(--category-mobile);
+  border: 1px solid var(--category-mobile);
+}
+
+/* Hero section */
+.hero-section {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 0;
+  border-bottom: 2px solid var(--rule-heavy);
+  padding: 24px 0;
+}
+
+.hero-main {
+  padding-right: 24px;
+  border-right: 1px solid var(--rule-color);
+}
+
+.hero-image {
+  width: 100%;
+  height: 320px;
+  background: linear-gradient(135deg, #1a2a3a 0%, #2d4a6a 50%, #1a3a5a 100%);
+  border-radius: 2px;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s;
+  cursor: pointer;
+}
+
+.hero-image:hover {
+  transform: scale(1.01);
+}
+
+.hero-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.02) 2px, rgba(255,255,255,0.02) 4px),
+              repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255,255,255,0.02) 2px, rgba(255,255,255,0.02) 4px);
+}
+
+.hero-image-text {
+  color: rgba(255,255,255,0.15);
+  font-family: var(--font-display);
+  font-size: 72px;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  z-index: 1;
+  user-select: none;
+}
+
+.hero-headline {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.5vw, 42px);
+  font-weight: 900;
+  line-height: 1.15;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+  transition: color 0.2s;
+  cursor: pointer;
+}
+
+.hero-headline:hover {
+  color: var(--accent-red);
+}
+
+.hero-deck {
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.hero-meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-caption);
+  letter-spacing: 0.03em;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.hero-meta strong {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.read-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.read-time-bar {
+  display: inline-block;
+  width: 60px;
+  height: 4px;
+  background: var(--rule-color);
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+}
+
+.read-time-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: var(--accent-red);
+  width: 75%; /* Will be dynamic */
+}
+
+/* Sidebar */
+.hero-sidebar {
+  padding-left: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.sidebar-item {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--rule-color);
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.sidebar-item:hover {
+  transform: translateX(4px);
+}
+
+.sidebar-item:first-child { padding-top: 0; }
+.sidebar-item:last-child { border-bottom: none; }
+
+.sidebar-headline {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 6px;
+  color: var(--text-primary);
+  transition: color 0.2s;
+}
+
+.sidebar-item:hover .sidebar-headline {
+  color: var(--accent-red);
+}
+
+.sidebar-summary {
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.sidebar-meta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-caption);
+  margin-top: 6px;
+  letter-spacing: 0.03em;
+}
+
+/* Middle grid */
+.middle-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--rule-color);
+}
+
+.middle-article {
+  padding: 0 20px;
+  border-right: 1px solid var(--rule-color);
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.middle-article:hover {
+  transform: translateY(-2px);
+}
+
+.middle-article:first-child { padding-left: 0; }
+.middle-article:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+.middle-image {
+  width: 100%;
+  height: 160px;
+  border-radius: 2px;
+  margin-bottom: 12px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+.middle-article:hover .middle-image {
+  transform: scale(1.02);
+}
+
+.middle-headline {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 8px;
+  transition: color 0.2s;
+}
+
+.middle-article:hover .middle-headline {
+  color: var(--accent-red);
+}
+
+.middle-summary {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+.middle-meta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-caption);
+  margin-top: 8px;
+}
+
+/* Brief section */
+.brief-section {
+  padding: 24px 0;
+  border-bottom: 1px solid var(--rule-color);
+}
+
+.section-label {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--rule-color);
+}
+
+.brief-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+
+.brief-item {
+  padding: 0 16px;
+  border-right: 1px solid var(--rule-color);
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.brief-item:hover {
+  transform: translateX(2px);
+}
+
+.brief-item:first-child { padding-left: 0; }
+.brief-item:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+.brief-bullet {
+  width: 6px;
+  height: 6px;
+  background: var(--accent-red);
+  display: inline-block;
+  margin-right: 6px;
+  vertical-align: middle;
+  border-radius: 1px;
+}
+
+.brief-headline {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 4px;
+  transition: color 0.2s;
+}
+
+.brief-item:hover .brief-headline {
+  color: var(--accent-red);
+}
+
+.brief-text {
+  font-family: var(--font-body);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+/* Opinion section */
+.opinion-section {
+  background: var(--bg-cream);
+  margin: 0 -40px;
+  padding: 24px 40px;
+  border-top: 3px solid var(--accent-gold);
+  transition: background 0.3s;
+}
+
+.opinion-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.opinion-item {
+  padding: 0 24px;
+  border-right: 1px solid var(--rule-color);
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.opinion-item:hover {
+  transform: translateX(4px);
+}
+
+.opinion-item:first-child { padding-left: 0; }
+.opinion-item:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+.opinion-author {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent-gold);
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+.opinion-headline {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  font-style: italic;
+  line-height: 1.25;
+  margin-bottom: 8px;
+  transition: color 0.2s;
+}
+
+.opinion-item:hover .opinion-headline {
+  color: var(--accent-red);
+}
+
+.opinion-excerpt {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 16px 40px;
+  border-top: 1px solid var(--rule-color);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--text-caption);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .newspaper { margin: 0; }
+  .content { padding: 0 20px 20px; }
+  .masthead { padding: 20px 20px 16px; }
+  .masthead::before, .masthead::after {
+    left: 20px;
+    right: 20px;
+  }
+  .ticker { padding: 8px 20px; }
+  .section-nav {
+    padding: 10px 20px;
+    gap: 16px;
+  }
+  .hero-section { grid-template-columns: 1fr; }
+  .hero-main {
+    padding-right: 0;
+    border-right: none;
+    border-bottom: 1px solid var(--rule-color);
+    padding-bottom: 20px;
+  }
+  .hero-sidebar {
+    padding-left: 0;
+    padding-top: 16px;
+  }
+  .middle-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .middle-article {
+    padding: 0;
+    border-right: none;
+    border-bottom: 1px solid var(--rule-color);
+    padding-bottom: 20px;
+  }
+  .middle-article:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  .opinion-section {
+    margin: 0 -20px;
+    padding: 20px;
+  }
+  .opinion-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .opinion-item {
+    padding: 0;
+    border-right: none;
+    border-bottom: 1px solid var(--rule-color);
+    padding-bottom: 16px;
+  }
+  .opinion-item:last-child { border-bottom: none; }
+  .brief-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .brief-item {
+    border-right: none;
+    padding: 0;
+  }
+  .data-panel {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .data-item { border-right: none; }
+}
+
+@media (max-width: 520px) {
+  .brief-grid { grid-template-columns: 1fr; }
+  .data-panel { grid-template-columns: 1fr 1fr; }
+  .hero-image { height: 200px; }
+}
+
+/* Print texture */
+.newspaper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.015'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+}
+
+.newspaper > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* ============================================
+   ARTICLE DETAIL MODAL STYLES
+   ============================================ */
+
+/* Modal Container */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.modal.active {
+  display: flex;
+  opacity: 1;
+}
+
+/* Overlay */
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+}
+
+/* Container */
+.modal-container {
+  position: relative;
+  width: 90%;
+  max-width: 900px;
+  max-height: 90vh;
+  z-index: 2001;
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+}
+
+.modal.active .modal-container {
+  transform: translateY(0);
+}
+
+/* Content */
+.modal-content {
+  background: var(--bg-paper);
+  border-radius: 4px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* Header (Close + Copy buttons) */
+.modal-header {
+  position: sticky;
+  top: 0;
+  background: var(--bg-paper);
+  border-bottom: 1px solid var(--rule-color);
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+
+.modal-close {
+  font-size: 32px;
+  line-height: 1;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.modal-close:hover {
+  color: var(--accent-red);
+  transform: scale(1.1);
+}
+
+.modal-copy {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 16px;
+  background: var(--bg-cream);
+  border: 1px solid var(--rule-color);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--text-primary);
+}
+
+.modal-copy:hover {
+  background: var(--accent-gold);
+  color: white;
+  border-color: var(--accent-gold);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.modal-copy.copied {
+  background: var(--category-ai);
+  color: white;
+  border-color: var(--category-ai);
+}
+
+/* Newspaper Content */
+.modal-newspaper {
+  padding: 32px 48px 48px;
+}
+
+.modal-category-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  display: inline-block;
+  margin-bottom: 16px;
+  border: 1px solid;
+}
+
+.modal-headline {
+  font-family: var(--font-display);
+  font-size: 36px;
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+}
+
+.modal-meta {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-caption);
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid var(--rule-heavy);
+}
+
+.modal-introduction {
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+  padding: 20px;
+  background: var(--bg-cream);
+  border-left: 4px solid var(--accent-gold);
+}
+
+/* Sections */
+.modal-section {
+  margin-bottom: 32px;
+}
+
+.modal-section-heading {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.modal-section-content {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+.modal-section-steps {
+  margin: 16px 0;
+  padding-left: 20px;
+}
+
+.modal-section-steps li {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  padding-left: 8px;
+}
+
+.modal-section-code {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.6;
+  background: #1a1a1a;
+  color: #e8e3db;
+  padding: 20px;
+  border-radius: 4px;
+  overflow-x: auto;
+  margin: 16px 0;
+  white-space: pre;
+}
+
+.modal-section-warning {
+  background: rgba(196, 30, 30, 0.1);
+  border-left: 4px solid var(--accent-red);
+  padding: 16px;
+  margin: 16px 0;
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+
+/* Key Takeaways */
+.modal-key-takeaways {
+  background: var(--bg-cream);
+  padding: 24px;
+  margin: 32px 0;
+  border-top: 3px solid var(--accent-gold);
+}
+
+.modal-key-takeaways h3 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.modal-key-takeaways ul {
+  list-style: none;
+  padding: 0;
+}
+
+.modal-key-takeaways li {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  padding-left: 24px;
+  position: relative;
+}
+
+.modal-key-takeaways li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--accent-gold);
+  font-weight: 700;
+}
+
+/* Personal Tips ("あなたへの活用アイデア") */
+.modal-personal-tips {
+  background: linear-gradient(135deg, rgba(0, 100, 80, 0.12) 0%, rgba(0, 60, 50, 0.08) 100%);
+  border: 1px solid rgba(0, 180, 140, 0.35);
+  border-left: 4px solid #00b48c;
+  padding: 24px;
+  margin: 32px 0;
+  border-radius: 2px;
+}
+
+.modal-personal-tips h3 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: #00c9a0;
+  letter-spacing: 0.5px;
+}
+
+.modal-personal-tips ul {
+  list-style: none;
+  padding: 0;
+}
+
+.modal-personal-tips li {
+  font-family: var(--font-body);
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+  padding-left: 24px;
+  position: relative;
+}
+
+.modal-personal-tips li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: #00c9a0;
+  font-weight: 700;
+}
+
+.modal-personal-tips li:last-child {
+  margin-bottom: 0;
+}
+
+/* Footer Links */
+.modal-footer {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule-color);
+}
+
+.modal-footer h3 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.modal-links {
+  list-style: none;
+  padding: 0;
+}
+
+.modal-links li {
+  margin-bottom: 8px;
+}
+
+.modal-links a {
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--accent-blue);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.modal-links a:hover {
+  color: var(--accent-red);
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .modal-container {
+    width: 95%;
+  }
+  
+  .modal-newspaper {
+    padding: 24px 20px 32px;
+  }
+  
+  .modal-headline {
+    font-size: 28px;
+  }
+  
+  .modal-section-heading {
+    font-size: 20px;
+  }
+  
+  .modal-header {
+    padding: 12px 16px;
+  }
+  
+  .modal-copy {
+    font-size: 11px;
+    padding: 6px 12px;
+  }
+}
+
+/* Dark mode adjustments */
+body.dark-mode .modal-section-code {
+  background: #0a0a0a;
+  color: #e8e3db;
+}
+
+</style>
+</head>
+<body>
+<button class="dark-toggle" onclick="toggleDarkMode()">
+  <span id="mode-icon">🌙</span> <span id="mode-text">Dark</span>
+</button>
+
+<div class="newspaper">
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="masthead-date">2026年2月26日（木曜日） · Tokyo Edition · Vol. 1</div>
+  <h1 class="masthead-title">The AI Chronicle</h1>
+  <div class="masthead-subtitle">Your Daily Intelligence on Artificial Intelligence · Curated by Athena</div>
+</header>
+
+<!-- TICKER -->
+<div class="ticker">
+  <span class="ticker-label">Breaking</span>
+  <span class="ticker-text">Karpathy氏「vibe codingの時代は終わり、agentic engineeringへ」 ── Claude Code Plan Mode完全解説 ── Ollama CLI 2026最新チートシート ── 中国製AIモデルがOpenRouterで61%シェア獲得 ── RubyMineがMCP対応ツール開発ガイド公開 ── Karpathy氏「vibe codingの時代は終わり、agentic engineeringへ」</span>
+</div>
+
+<!-- SECTION NAV -->
+<nav class="section-nav">
+  <a class="active">Top Stories</a>
+  <a>Models & Research</a>
+  <a>Industry</a>
+  <a>Tools & Products</a>
+  <a>Opinion</a>
+  <a>Data</a>
+</nav>
+
+<div class="content">
+<!-- DATA PANEL -->
+<div class="data-panel">
+  
+    <div class="data-item">
+      <div class="data-label">AI開発ツール利用率</div>
+      <div class="data-value">87%</div>
+      <div class="data-sparkline">▁▂▃▅▇█</div>
+      <div class="data-change up">▲ 前月比+12%の急増</div>
+    </div>
+    
+    <div class="data-item">
+      <div class="data-label">Claude Code DAU</div>
+      <div class="data-value">2.4万</div>
+      <div class="data-sparkline">▂▃▅▆▇█</div>
+      <div class="data-change up">▲ 週間成長率+18%</div>
+    </div>
+    
+    <div class="data-item">
+      <div class="data-label">Ollama月間DL数</div>
+      <div class="data-value">485万</div>
+      <div class="data-sparkline">▁▃▄▆▇█</div>
+      <div class="data-change up">▲ ローカルLLM需要急増</div>
+    </div>
+    
+    <div class="data-item">
+      <div class="data-label">OpenRouter API利用</div>
+      <div class="data-value">61%</div>
+      <div class="data-sparkline">▂▄▅▇█▇</div>
+      <div class="data-change up">▲ 中国製モデルがトップ3独占</div>
+    </div>
+    
+</div>
+
+<!-- HERO SECTION -->
+<section class="hero-section">
+  <div class="hero-main">
+    <div class="hero-image">
+      <span class="hero-image-text">AI</span>
+    </div>
+    <span class="category-tag category-tag--ai">AI開発トレンド</span>
+    <h2 class="hero-headline">Karpathy氏が「vibe coding」から「agentic engineering」へシフトを宣言 — AI開発の次のパラダイム</h2>
+    <p class="hero-deck">元Tesla AI責任者で「vibe coding」という言葉を生み出したAndrej Karpathy氏が、今度は「agentic engineering」こそが次の大きな波だと語る。OpenClawの開発者は「vibe codingは侮辱的な言葉」と批判し、業界では開発スタイルの定義を巡る議論が白熱している。</p>
+    <div class="hero-meta">
+      By <strong>Benzinga / Business Insider</strong> · 
+      <span class="read-time">
+        📖 5 min
+        <span class="read-time-bar">
+          <span class="read-time-fill" style="width: 50%"></span>
+        </span>
+        中程度
+      </span>
+      · Updated 8時間前
+    </div>
+  </div>
+  <aside class="hero-sidebar">
+    
+    <div class="sidebar-item">
+      <span class="category-tag category-tag--tech">開発ワークフロー</span>
+      <h3 class="sidebar-headline">Claude Code「Plan Mode」完全ガイド — AIに考えさせてから実装する4段階フロー</h3>
+      <p class="sidebar-summary">Claude Codeの新機能「Plan Mode」は、Explore → Plan → Implement → Commitという4段階ワークフローで、AIが勝手に進む前に計画を立てさせる仕組み。Ctrl+Gで計画を編集でき、予測可能な開発が可能に。</p>
+      <div class="sidebar-meta">4 min read · 1日前</div>
+    </div>
+    
+    <div class="sidebar-item">
+      <span class="category-tag category-tag--tech">ローカルLLM</span>
+      <h3 class="sidebar-headline">Ollama CLI 2026最新チートシート — ls, serve, run, psの実践的な使い方とVRAM解放テクニック</h3>
+      <p class="sidebar-summary">Ollamaの基本コマンド（ls, serve, run, ps）から、モデルをVRAMから明示的にアンロードする「keep_alive: 0」トリックまで、2026年版の実践的なCLI使い方をまとめたガイド。</p>
+      <div class="sidebar-meta">3 min read · 20時間前</div>
+    </div>
+    
+    <div class="sidebar-item">
+      <span class="category-tag category-tag--tech">生産性</span>
+      <h3 class="sidebar-headline">「vibe coder」と「elite builder」を分ける7つのAIコーディング技術 — ZDNETが解説</h3>
+      <p class="sidebar-summary">カジュアルなvibe coderとエリートビルダーを分けるのはプロンプトではなくシステムだ。ZDNETが、本番環境レベルのAIプロジェクトを維持するための正確なフレームワークを公開。</p>
+      <div class="sidebar-meta">4 min read · 9時間前</div>
+    </div>
+    
+  </aside>
+</section>
+
+<!-- MIDDLE GRID -->
+<section class="middle-grid">
+  
+    <article class="middle-article">
+      <div class="middle-image" style="background: linear-gradient(135deg, #c07000 0%, #e09020 100%);"></div>
+      <span class="category-tag category-tag--indie">ローカルAI</span>
+      <h3 class="middle-headline">Claude Code風のワークフローをLM Studioでオフライン実装 — ストリーミング＋コンテキスト保持を実現</h3>
+      <p class="middle-summary">Claude CodeのようなAI開発体験をLM Studioとローカルモデルで再現するプロジェクト。ストリーミング応答とコンテキスト維持機能を追加し、オフラインファーストな開発環境を構築。</p>
+      <div class="middle-meta">By XDA Developers · 5 min read</div>
+    </article>
+    
+    <article class="middle-article">
+      <div class="middle-image" style="background: linear-gradient(135deg, #1e3a5f 0%, #3498db 100%);"></div>
+      <span class="category-tag category-tag--tech">開発ツール</span>
+      <h3 class="middle-headline">RubyMineがMCP対応ツール設計ガイドを公開 — ページネーション・フィルタリング・エラー設計の実践</h3>
+      <p class="middle-summary">JetBrainsがRubyMine向けにLLMフレンドリーなMCPツールの設計方法を解説。ページネーション、フィルタリング、コンテキスト制限への対処、AIアシスタント制約の扱い方を実例で示す。</p>
+      <div class="middle-meta">By JetBrains RubyMine Blog · 4 min read</div>
+    </article>
+    
+    <article class="middle-article">
+      <div class="middle-image" style="background: linear-gradient(135deg, #c07000 0%, #e09020 100%);"></div>
+      <span class="category-tag category-tag--indie">インディー開発</span>
+      <h3 class="middle-headline">週末でAI SaaSを立ち上げるSvelteKit + Node.jsアーキテクチャ — 利益を出すための実践設計</h3>
+      <p class="middle-summary">AI SaaSで成功するには、数十億パラメータのモデルを自前で訓練することではなく、シームレスなアーキテクチャ、高速UI、スケーラブルなDB、コスト効率の高いデプロイが鍵。週末で立ち上げる具体的な設計を公開。</p>
+      <div class="middle-meta">By DEV Community · 5 min read</div>
+    </article>
+    
+</section>
+
+<!-- BRIEF SECTION -->
+<section class="brief-section">
+  <div class="section-label">In Brief</div>
+  <div class="brief-grid">
+    
+    <div class="brief-item">
+      <h4 class="brief-headline"><span class="brief-bullet"></span>中国製AIモデルがOpenRouterで61%シェア獲得、トップ3独占</h4>
+      <p class="brief-text">世界最大のLLM API集約プラットフォームOpenRouterで、中国製モデルがトークン消費量の61%を占め、上位3モデルすべてを中国のAIラボが開発。</p>
+    </div>
+    
+    <div class="brief-item">
+      <h4 class="brief-headline"><span class="brief-bullet"></span>GitHub Copilot X、2026年のベストAIコーディングアシスタントに選出</h4>
+      <p class="brief-text">Ryz Labsの評価で、GitHub Copilot XがGitHubエコシステムとの統合、広範な言語サポート、チーム協働機能により2026年のトップツールに認定。</p>
+    </div>
+    
+    <div class="brief-item">
+      <h4 class="brief-headline"><span class="brief-bullet"></span>Microsoft AI Toolkit v0.30.0、MCPサーバー直接接続のTool Catalogを実装</h4>
+      <p class="brief-text">VS Code用AI Toolkitの最新版で、MCPサーバーに直接接続できるTool Catalogが追加され、カスタムコード不要で外部ツールをAIエージェントに統合可能に。</p>
+    </div>
+    
+    <div class="brief-item">
+      <h4 class="brief-headline"><span class="brief-bullet"></span>GPT4All、インターネットもGPUも不要なローカルLLMツールとして注目</h4>
+      <p class="brief-text">オープンソースのGPT4Allが、オフライン環境でも動作し、GPUなしで実行可能なローカルLLMツールとして開発者コミュニティで再評価されている。</p>
+    </div>
+    
+  </div>
+</section>
+
+<!-- OPINION -->
+<section class="opinion-section">
+  <div class="section-label">Opinion & Analysis</div>
+  <div class="opinion-grid">
+    
+    <div class="opinion-item">
+      <div class="opinion-author">業界議論： OpenClaw開発者 / Business Insider報道</div>
+      <h3 class="opinion-headline">「vibe codingは侮辱的な言葉」— OpenClaw開発者がKarpathy氏の造語を痛烈批判</h3>
+      <p class="opinion-excerpt">OpenClawの開発者は「vibe codingは侮辱的な言葉（slur）だ」と公言し、この用語がAI支援開発を軽視する表現だと批判。元Google Brain研究者のAndrew Ng氏も「不幸で誤解を招く」と評している。一方でKarpathy氏は「agentic engineering」へとシフトし、この論争はAI開発ツールの設計思想の違いを浮き彫りにしている。</p>
+    </div>
+    
+    <div class="opinion-item">
+      <div class="opinion-author">開発哲学： DEV Community / Kseniya Seliverstava</div>
+      <h3 class="opinion-headline">「プロンプトを書くのをやめろ。AIシステムをエンジニアリングしろ」— 新しいAI開発の哲学</h3>
+      <p class="opinion-excerpt">AIシステムでは振る舞いは確率的であり、ハードコードされたロジックではない。難しいのはテキスト生成ではなく、数千のインタラクションにわたって振る舞いを制御することだ。制御はエンジニアリングのループから生まれる：目標 → 成功基準 → テストケース → プロンプト+コンテキストバージョン → 測定 → 反復。</p>
+    </div>
+    
+  </div>
+</section>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  The AI Chronicle · A personal AI news digest · Auto-generated from curated sources · © 2026
+</footer>
+</div>
+
+<script>
+function toggleDarkMode() {
+  document.body.classList.toggle('dark-mode');
+  const isDark = document.body.classList.contains('dark-mode');
+  const iconEl = document.getElementById('mode-icon');
+  const textEl = document.getElementById('mode-text');
+  
+  if (iconEl) iconEl.textContent = isDark ? '☀️' : '🌙';
+  if (textEl) textEl.textContent = isDark ? 'Light' : 'Dark';
+  
+  localStorage.setItem('darkMode', isDark);
+}
+
+// Load saved preference on page load
+document.addEventListener('DOMContentLoaded', function() {
+  const savedMode = localStorage.getItem('darkMode');
+  if (savedMode === 'true') {
+    document.body.classList.add('dark-mode');
+    const iconEl = document.getElementById('mode-icon');
+    const textEl = document.getElementById('mode-text');
+    if (iconEl) iconEl.textContent = '☀️';
+    if (textEl) textEl.textContent = 'Light';
+  }
+});
+
+// Also check system preference
+if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches && !localStorage.getItem('darkMode')) {
+  document.addEventListener('DOMContentLoaded', function() {
+    toggleDarkMode();
+  });
+}
+</script>
+<!-- ARTICLE DETAIL MODAL -->
+<div id="article-modal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="modal-title">
+  <div class="modal-overlay" aria-label="背景オーバーレイ"></div>
+  <div class="modal-container">
+    <div class="modal-content">
+      <header class="modal-header">
+        <button class="modal-close" aria-label="閉じる" title="閉じる（ESCキー）">×</button>
+        <button class="modal-copy" aria-label="保存用テキストコピー" title="保存用テキストコピー">
+          📋 保存用テキストコピー
+        </button>
+      </header>
+      
+      <article class="modal-newspaper">
+        <div class="modal-category-tag"></div>
+        <h1 id="modal-title" class="modal-headline"></h1>
+        <div class="modal-meta"></div>
+        
+        <div class="modal-introduction"></div>
+        
+        <div class="modal-sections"></div>
+        
+        <div class="modal-personal-tips">
+          <h3>💡 あなたへの活用アイデア</h3>
+          <ul></ul>
+        </div>
+
+        <div class="modal-key-takeaways">
+          <h3>📌 重要ポイント</h3>
+          <ul></ul>
+        </div>
+        
+        <footer class="modal-footer">
+          <h3>🔗 関連リンク</h3>
+          <ul class="modal-links"></ul>
+        </footer>
+      </article>
+    </div>
+  </div>
+</div>
+
+<script>const ARTICLES_DATA = {"date":"2026年2月26日（木曜日）","edition":"昼刊","volume":"1","tickerText":"Karpathy氏「vibe codingの時代は終わり、agentic engineeringへ」 ── Claude Code Plan Mode完全解説 ── Ollama CLI 2026最新チートシート ── 中国製AIモデルがOpenRouterで61%シェア獲得 ── RubyMineがMCP対応ツール開発ガイド公開 ── Karpathy氏「vibe codingの時代は終わり、agentic engineeringへ」","dataPanel":[{"label":"AI開発ツール利用率","value":"87%","sparkline":"▁▂▃▅▇█","change":"▲ 前月比+12%の急増","changeClass":"up"},{"label":"Claude Code DAU","value":"2.4万","sparkline":"▂▃▅▆▇█","change":"▲ 週間成長率+18%","changeClass":"up"},{"label":"Ollama月間DL数","value":"485万","sparkline":"▁▃▄▆▇█","change":"▲ ローカルLLM需要急増","changeClass":"up"},{"label":"OpenRouter API利用","value":"61%","sparkline":"▂▄▅▇█▇","change":"▲ 中国製モデルがトップ3独占","changeClass":"up"}],"hero":{"id":"karpathy-agentic-engineering","category":"AI開発トレンド","categoryClass":"ai","headline":"Karpathy氏が「vibe coding」から「agentic engineering」へシフトを宣言 — AI開発の次のパラダイム","deck":"元Tesla AI責任者で「vibe coding」という言葉を生み出したAndrej Karpathy氏が、今度は「agentic engineering」こそが次の大きな波だと語る。OpenClawの開発者は「vibe codingは侮辱的な言葉」と批判し、業界では開発スタイルの定義を巡る議論が白熱している。","author":"Benzinga / Business Insider","readTime":"5","readPercent":50,"readLabel":"中程度","updateTime":"8時間前","fullContent":{"introduction":"2025年初頭に「vibe coding」という造語でAI支援開発のスタイルを定義したAndrej Karpathy氏が、わずか1年で次のコンセプト「agentic engineering」へと焦点を移している。OpenAI創設メンバーでTesla Autopilotの元責任者でもある同氏は、現在Eureka Labsを立ち上げており、AIエージェントがより自律的にコーディングタスクを実行する未来を描いている。","sections":[{"heading":"vibe codingとは何だったのか","content":"Karpathy氏が昨年Xに投稿した「vibe coding」は、AIシステムに大きく依存してソフトウェアを構築するスタイルを指していた。従来の厳密な設計やテスト駆動開発ではなく、AIの提案を「感覚的に」受け入れながら進める開発手法だ。この言葉は瞬く間に広がったが、同時に批判も呼んだ。元Google Brain研究者のAndrew Ng氏は「不幸で誤解を招く」と評し、OpenClawの開発者は「vibe codingは侮辱的な言葉（slur）」とまで言い切った。"},{"heading":"agentic engineeringへのシフト","content":"Karpathy氏は今、「agentic engineering」という新しいビジョンに注目している。これは単にAIがコード補完をするのではなく、AIエージェントが要件を理解し、設計を決定し、実装を完遂するまでを自律的に行う世界だ。人間のエンジニアは「何を作るか」を指示し、AIエージェントが「どう作るか」を担当する。これは従来のペアプログラミングを超えた、AIとの協働の新しい形を示唆している。"},{"heading":"業界の反応と今後","content":"この議論は単なる用語の問題ではなく、AI開発ツールの設計思想に直結している。Claude Code、Cursor、GitHub Copilotなど各ツールは、「補完型」「対話型」「自律型」のスペクトラムのどこに位置するかで差別化を図っている。Karpathy氏の発言は、業界全体が「自律型AIエージェント」へと舵を切りつつあることを示唆しており、2026年後半にはこのトレンドがさらに加速すると予想される。"}],"keyTakeaways":["Karpathy氏が「vibe coding」から「agentic engineering」へとフォーカスをシフト","OpenClawやAndrew Ng氏など業界からは「vibe coding」への批判も","AIエージェントがより自律的に開発タスクを実行する未来が近づいている"],"sourceUrl":"https://www.benzinga.com/news/topics/26/02/50862150/the-man-who-coined-vibe-coding-says-the-next-big-thing-is-agentic-engineering","relatedLinks":[{"title":"Business Insider: OpenClaw Creator Calls 'Vibe Coding' a Slur","url":"https://www.businessinsider.com/openclaw-creator-vibe-coding-term-slur-criticism-2026-2"}]}},"sidebar":[{"id":"claude-code-plan-mode","category":"開発ワークフロー","categoryClass":"tech","headline":"Claude Code「Plan Mode」完全ガイド — AIに考えさせてから実装する4段階フロー","summary":"Claude Codeの新機能「Plan Mode」は、Explore → Plan → Implement → Commitという4段階ワークフローで、AIが勝手に進む前に計画を立てさせる仕組み。Ctrl+Gで計画を編集でき、予測可能な開発が可能に。","readTime":"4","timeAgo":"1日前","fullContent":{"introduction":"Claude Codeの「Plan Mode」は、AIが盲目的にコードを書き始める前に、まず全体の計画を立てさせる機能。これにより、開発者は実装前に計画をレビュー・修正でき、より予測可能で制御された開発フローを実現できる。","sections":[{"heading":"4段階ワークフロー","content":"Plan Modeは「Explore（探索）」「Plan（計画）」「Implement（実装）」「Commit（コミット）」の4段階で構成される。Exploreフェーズでは既存コードを理解し、Planフェーズで実装計画を生成。開発者はここでCtrl+Gを押して計画を編集できる。承認後、AIが実装を進め、最後にgitコミットまで行う。"},{"heading":"CLAUDE.mdとの組み合わせ","content":"プロジェクトルートに配置するCLAUDE.mdファイルで、コーディング規約やアーキテクチャのガイドラインを定義できる。Plan Modeはこのファイルをコンテキストとして読み込み、プロジェクト固有のルールに従った計画を生成する。"}],"keyTakeaways":["Plan Modeは4段階のワークフローでAIの動きを予測可能にする","Ctrl+Gで計画を編集し、実装前にレビューできる","CLAUDE.mdでプロジェクト固有のルールを定義可能"],"sourceUrl":"https://codewithmukesh.com/blog/plan-mode-claude-code/"}},{"id":"ollama-cli-2026","category":"ローカルLLM","categoryClass":"tech","headline":"Ollama CLI 2026最新チートシート — ls, serve, run, psの実践的な使い方とVRAM解放テクニック","summary":"Ollamaの基本コマンド（ls, serve, run, ps）から、モデルをVRAMから明示的にアンロードする「keep_alive: 0」トリックまで、2026年版の実践的なCLI使い方をまとめたガイド。","readTime":"3","timeAgo":"20時間前","fullContent":{"introduction":"Ollamaは2026年現在、ローカルLLMを最も簡単に動かせるツールとして開発者に広く使われている。このガイドでは、基本的なCLIコマンドから、VRAM管理の実践的なテクニックまでを網羅する。","sections":[{"heading":"基本コマンド","content":"「ollama ls」でインストール済みモデル一覧を表示、「ollama serve」でサーバー起動、「ollama run <model>」でモデル実行、「ollama ps」で現在ロード中のモデルを確認。これらは日常的に使う基本操作だ。"},{"heading":"VRAM解放の裏技","content":"モデルは一度ロードされるとVRAMに留まり続ける。明示的に解放するには、Ollama APIに「keep_alive: 0」パラメータを送信する必要がある。これにより、GPUメモリを即座に解放できる。複数モデルを切り替える際に重要なテクニック。"}],"keyTakeaways":["Ollama CLIの基本コマンド4つをマスターすれば日常操作は十分","「keep_alive: 0」でVRAMを明示的に解放可能","2026年版では並列リクエスト処理が大幅に改善"],"sourceUrl":"https://medium.com/@rosgluk/ollama-cli-cheatsheet-ls-serve-run-ps-commands-2026-update-ad4765daf43f"}},{"id":"ai-coding-elite-techniques","category":"生産性","categoryClass":"tech","headline":"「vibe coder」と「elite builder」を分ける7つのAIコーディング技術 — ZDNETが解説","summary":"カジュアルなvibe coderとエリートビルダーを分けるのはプロンプトではなくシステムだ。ZDNETが、本番環境レベルのAIプロジェクトを維持するための正確なフレームワークを公開。","readTime":"4","timeAgo":"9時間前","fullContent":{"introduction":"AIでコードを書くことは誰にでもできる。しかし、本番環境で動き続けるAIプロジェクトを構築できるのは一握りだ。ZDNETが「カジュアルなvibe coder」と「エリートビルダー」を分ける7つの技術を解説した。","sections":[{"heading":"システムとしてのAI開発","content":"エリートビルダーは「良いプロンプト」を書くのではなく、再現可能なシステムを構築する。これには、テストケースの自動化、エラーハンドリングの標準化、ロールバック戦略、モニタリング、そしてAI出力のバージョン管理が含まれる。"},{"heading":"7つの具体的な技術","content":"1. プロンプトをコードとして管理（git管理） 2. 出力の構造化（JSON Schema強制） 3. フォールバック戦略（複数モデルの組み合わせ） 4. コンテキスト圧縮技術 5. 段階的な品質チェック 6. AI出力の差分管理 7. コスト最適化（キャッシング戦略）。これらを実装することで、AIプロジェクトは「プロトタイプ」から「プロダクション」へと進化する。"}],"keyTakeaways":["エリートビルダーは「システム」を構築し、vibe coderは「プロンプト」を書く","7つの技術（プロンプト管理、構造化、フォールバック等）が鍵","本番環境で動き続けるAIプロジェクトには再現可能な仕組みが必要"],"sourceUrl":"https://www.zdnet.com/article/ai-coding-techniques/"}}],"middle":[{"id":"claude-code-offline-lm-studio","category":"ローカルAI","categoryClass":"indie","headline":"Claude Code風のワークフローをLM Studioでオフライン実装 — ストリーミング＋コンテキスト保持を実現","summary":"Claude CodeのようなAI開発体験をLM Studioとローカルモデルで再現するプロジェクト。ストリーミング応答とコンテキスト維持機能を追加し、オフラインファーストな開発環境を構築。","author":"XDA Developers","readTime":"5","gradient":"linear-gradient(135deg, #c07000 0%, #e09020 100%)","fullContent":{"introduction":"Claude Codeの生産性機能をローカル環境で再現する試み。LM Studioをバックエンドに、ストリーミング応答と会話履歴の保持機能を実装したCLIツールを開発。オフラインでもClaude Code並みの体験を実現する。","sections":[{"heading":"実装した機能","content":"ストリーミング応答により、モデルの生成トークンをリアルタイムで表示。会話履歴を保持することで、フォローアップの質問にも文脈を失わず対応できる。これらの機能は、LM StudioのAPIを直接叩くことで実現した。"},{"heading":"ローカルAI開発の利点","content":"API料金を気にせず実験できること、インターネット接続不要で機密プロジェクトでも安心、そしてレスポンス速度を自分でコントロールできることが大きなメリット。ハードウェアのチューニング方法やトラブルシューティングのコツもニュースレターで配信予定。"}],"keyTakeaways":["Claude CodeのワークフローをLM Studioで再現可能","ストリーミング＋コンテキスト保持でローカルでも快適な体験","API料金ゼロ、オフライン可、機密プロジェクトでも安心"],"sourceUrl":"https://www.xda-developers.com/built-claude-code-workflow-lm-studio-offline-first-development/"}},{"id":"rubymine-mcp-tools","category":"開発ツール","categoryClass":"tech","headline":"RubyMineがMCP対応ツール設計ガイドを公開 — ページネーション・フィルタリング・エラー設計の実践","summary":"JetBrainsがRubyMine向けにLLMフレンドリーなMCPツールの設計方法を解説。ページネーション、フィルタリング、コンテキスト制限への対処、AIアシスタント制約の扱い方を実例で示す。","author":"JetBrains RubyMine Blog","readTime":"4","gradient":"linear-gradient(135deg, #1e3a5f 0%, #3498db 100%)","fullContent":{"introduction":"JetBrainsがRubyMineの「Rails Toolset」を通じて、LLM（大規模言語モデル）が使いやすいMCP（Model Context Protocol）ツールの設計方法を公開した。ページネーション、フィルタリング、エラーハンドリングなど、実践的な実装パターンを網羅している。","sections":[{"heading":"LLMフレンドリーなツール設計","content":"MCPツールはLLMが自律的に呼び出すため、人間向けのAPIとは異なる設計が必要。例えば、ページネーションは「次のページ」を明示的に示すトークンを返す、フィルタリングは自然言語クエリを受け入れる、エラーメッセージはLLMが理解できる構造化された形式で返す、といった工夫が求められる。"},{"heading":"コンテキスト制限への対処","content":"LLMのコンテキストウィンドウには限界があるため、大量のデータを一度に返すことはできない。RubyMineの実装では、結果をサマリーとして返し、詳細が必要な場合のみ個別に取得する「2段階取得パターン」を採用している。"}],"keyTakeaways":["MCPツールはLLMが自律的に使うため、人間向けAPIとは設計思想が異なる","ページネーション、フィルタリング、エラー設計に独自の工夫が必要","コンテキスト制限を考慮した「2段階取得パターン」が有効"],"sourceUrl":"https://blog.jetbrains.com/ruby/2026/02/rubymine-mcp-and-the-rails-toolset/"}},{"id":"ai-saas-sveltekit-architecture","category":"インディー開発","categoryClass":"indie","headline":"週末でAI SaaSを立ち上げるSvelteKit + Node.jsアーキテクチャ — 利益を出すための実践設計","summary":"AI SaaSで成功するには、数十億パラメータのモデルを自前で訓練することではなく、シームレスなアーキテクチャ、高速UI、スケーラブルなDB、コスト効率の高いデプロイが鍵。週末で立ち上げる具体的な設計を公開。","author":"DEV Community","readTime":"5","gradient":"linear-gradient(135deg, #c07000 0%, #e09020 100%)","fullContent":{"introduction":"2026年現在、成功するAI SaaSの秘訣は巨大なモデルを訓練することではない。OpenAI、Anthropic、GoogleといったプロバイダーのAPIを組み合わせ、優れたユーザー体験と持続可能なアーキテクチャで差別化することだ。SvelteKitとNode.jsを使い、週末で立ち上げる具体的な設計を解説する。","sections":[{"heading":"フロントエンド: SvelteKitの選択理由","content":"SvelteKitは、Server-Side Rendering（SSR）、ファイルベースルーティング、そして軽量なバンドルサイズを提供する。AIツールでは初回ロード速度が重要であり、SvelteKitのSSRはSEOとパフォーマンスの両立に最適。また、Svelteのリアクティブな構文により、ストリーミングAI応答のUIも直感的に実装できる。"},{"heading":"バックエンド: Node.js + Express/Fastify","content":"Node.jsは非同期I/Oに優れており、LLM APIへの並列リクエスト処理に適している。認証（JWT）、レート制限（Redis）、ジョブキュー（Bull）を組み合わせることで、本番環境レベルのバックエンドを短期間で構築できる。"},{"heading":"コスト最適化とデプロイ","content":"LLM APIコストを抑えるため、キャッシング戦略（Redis + Upstash）とプロンプト圧縮技術を実装。デプロイはVercel（フロント）+ Railway/Render（バック）の組み合わせで、初期コストをほぼゼロに抑えられる。"}],"keyTakeaways":["AI SaaSの成功は巨大モデルの訓練ではなく、アーキテクチャとUXで決まる","SvelteKit + Node.jsで週末での立ち上げが現実的","キャッシング＋プロンプト圧縮でLLM APIコストを大幅削減可能"],"sourceUrl":"https://dev.to/saqibshahdev/architecting-a-profitable-ai-saas-in-2026-sveltekit-nodejs-3omk"}}],"briefs":[{"headline":"中国製AIモデルがOpenRouterで61%シェア獲得、トップ3独占","text":"世界最大のLLM API集約プラットフォームOpenRouterで、中国製モデルがトークン消費量の61%を占め、上位3モデルすべてを中国のAIラボが開発。"},{"headline":"GitHub Copilot X、2026年のベストAIコーディングアシスタントに選出","text":"Ryz Labsの評価で、GitHub Copilot XがGitHubエコシステムとの統合、広範な言語サポート、チーム協働機能により2026年のトップツールに認定。"},{"headline":"Microsoft AI Toolkit v0.30.0、MCPサーバー直接接続のTool Catalogを実装","text":"VS Code用AI Toolkitの最新版で、MCPサーバーに直接接続できるTool Catalogが追加され、カスタムコード不要で外部ツールをAIエージェントに統合可能に。"},{"headline":"GPT4All、インターネットもGPUも不要なローカルLLMツールとして注目","text":"オープンソースのGPT4Allが、オフライン環境でも動作し、GPUなしで実行可能なローカルLLMツールとして開発者コミュニティで再評価されている。"}],"opinions":[{"id":"openclaw-vibe-coding-slur","authorLabel":"業界議論：","author":"OpenClaw開発者 / Business Insider報道","headline":"「vibe codingは侮辱的な言葉」— OpenClaw開発者がKarpathy氏の造語を痛烈批判","excerpt":"OpenClawの開発者は「vibe codingは侮辱的な言葉（slur）だ」と公言し、この用語がAI支援開発を軽視する表現だと批判。元Google Brain研究者のAndrew Ng氏も「不幸で誤解を招く」と評している。一方でKarpathy氏は「agentic engineering」へとシフトし、この論争はAI開発ツールの設計思想の違いを浮き彫りにしている。","fullContent":{"introduction":"「vibe coding」という言葉を巡る論争は、単なる用語の問題ではなく、AI開発ツールの設計思想そのものを問うている。OpenClawの開発者は、この言葉が「AIに頼りっぱなしで適当にコードを書く」というネガティブな印象を与えると批判。一方で、Karpathy氏はすでに「agentic engineering」という新しいコンセプトへと移行している。","sections":[{"heading":"「vibe coding」への批判の核心","content":"OpenClaw開発者の批判の核心は、「vibe coding」が「感覚だけで適当にコードを書く」というイメージを植え付け、AI支援開発の真剣さを損なうという点だ。実際には、Claude CodeやCursorといったツールは、厳密な計画、テスト、レビューを前提としたワークフローを提供している。Andrew Ng氏も同様に、この用語が誤解を招くと警告した。"},{"heading":"agentic engineeringへのシフト","content":"Karpathy氏はこの論争には直接反応せず、むしろ「agentic engineering」という新しいビジョンを提示している。これは、AIエージェントがより自律的にタスクを実行する世界であり、「感覚」ではなく「システム」としてのAI開発を示唆している。この転換は、業界全体がAI開発ツールの成熟に向かっていることを象徴している。"}],"keyTakeaways":["OpenClaw開発者とAndrew Ng氏が「vibe coding」を批判","Karpathy氏は「agentic engineering」へとシフト","論争は用語の問題ではなく、AI開発ツールの設計思想の違いを示している"],"sourceUrl":"https://www.businessinsider.com/openclaw-creator-vibe-coding-term-slur-criticism-2026-2"}},{"id":"stop-writing-prompts-engineer-systems","authorLabel":"開発哲学：","author":"DEV Community / Kseniya Seliverstava","headline":"「プロンプトを書くのをやめろ。AIシステムをエンジニアリングしろ」— 新しいAI開発の哲学","excerpt":"AIシステムでは振る舞いは確率的であり、ハードコードされたロジックではない。難しいのはテキスト生成ではなく、数千のインタラクションにわたって振る舞いを制御することだ。制御はエンジニアリングのループから生まれる：目標 → 成功基準 → テストケース → プロンプト+コンテキストバージョン → 測定 → 反復。","fullContent":{"introduction":"DEV Communityに投稿されたこの記事は、AI開発における根本的なパラダイムシフトを提唱している。「良いプロンプトを書く」ことではなく、「AIシステムをエンジニアリングする」こと。つまり、再現可能で測定可能なフィードバックループを構築することが、本番環境で動くAIシステムの鍵だという主張だ。","sections":[{"heading":"エンジニアリングのループ","content":"記事が提唱する「エンジニアリングのループ」は以下の通り：1. 目標を定義する 2. 成功基準を設定する 3. テストケースを作成する 4. プロンプト+コンテキストのバージョンを管理する 5. 結果を測定する 6. 反復する。このループを回すことで、AIの振る舞いは「偶然うまくいく」から「再現可能に制御される」へと変わる。"},{"heading":"確率的な振る舞いの制御","content":"AIシステムでは、振る舞いは確率的だ。同じプロンプトでも、毎回異なる出力が返ってくる可能性がある。だからこそ、テストケースを大量に用意し、統計的に成功率を測定し、バージョン管理でプロンプトの変更履歴を追跡することが重要になる。これは従来のソフトウェア開発とは異なるアプローチだが、AIシステムの本質に即している。"}],"keyTakeaways":["「プロンプトを書く」のではなく「AIシステムをエンジニアリングする」","目標 → 成功基準 → テストケース → 測定 → 反復のループが鍵","確率的な振る舞いを制御するには統計的な測定とバージョン管理が必要"],"sourceUrl":"https://dev.to/kseniyaseliverstava/stop-writing-prompts-start-engineering-ai-systems-2182"}}]};</script>
+<script>
+/**
+ * Article Detail Modal Controller
+ * Handles modal open/close, rendering, and copy functionality
+ */
+
+const ArticleModal = {
+  modal: null,
+  overlay: null,
+  content: null,
+  closeBtn: null,
+  copyBtn: null,
+  articlesData: null,
+  currentArticle: null,
+
+  /**
+   * Initialize modal
+   */
+  init(articlesData) {
+    this.articlesData = articlesData;
+    this.modal = document.getElementById('article-modal');
+    if (!this.modal) { console.error('Modal element not found'); return; }
+
+    this.overlay = this.modal.querySelector('.modal-overlay');
+    this.content = this.modal.querySelector('.modal-content');
+    this.closeBtn = this.modal.querySelector('.modal-close');
+    this.copyBtn = this.modal.querySelector('.modal-copy');
+
+    // Event listeners
+    this.closeBtn.addEventListener('click', () => this.close());
+    this.overlay.addEventListener('click', () => this.close());
+    this.copyBtn.addEventListener('click', () => this.copyToClipboard());
+
+    // ESC key to close
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && this.modal.classList.contains('active')) this.close();
+    });
+
+    // Prevent content scroll when modal is open
+    this.content.addEventListener('click', (e) => e.stopPropagation());
+
+    // Register click events on all articles
+    this.registerArticleClicks();
+  },
+
+  /**
+   * Register click events on all articles
+   */
+  registerArticleClicks() {
+    // Hero article
+    const heroHeadline = document.querySelector('.hero-headline');
+    const heroImage = document.querySelector('.hero-image');
+    if (heroHeadline) {
+      heroHeadline.style.cursor = 'pointer';
+      heroHeadline.addEventListener('click', () => this.open(this.articlesData.hero));
+    }
+    if (heroImage) {
+      heroImage.style.cursor = 'pointer';
+      heroImage.addEventListener('click', () => this.open(this.articlesData.hero));
+    }
+
+    // Sidebar articles
+    document.querySelectorAll('.sidebar-item').forEach((item, index) => {
+      if (this.articlesData.sidebar[index]) {
+        item.style.cursor = 'pointer';
+        item.addEventListener('click', () => this.open(this.articlesData.sidebar[index]));
+      }
+    });
+
+    // Middle articles
+    document.querySelectorAll('.middle-article').forEach((item, index) => {
+      if (this.articlesData.middle[index]) {
+        item.style.cursor = 'pointer';
+        item.addEventListener('click', () => this.open(this.articlesData.middle[index]));
+      }
+    });
+
+    // Opinion articles
+    document.querySelectorAll('.opinion-item').forEach((item, index) => {
+      if (this.articlesData.opinions[index]) {
+        item.style.cursor = 'pointer';
+        item.addEventListener('click', () => this.open(this.articlesData.opinions[index]));
+      }
+    });
+  },
+
+  /**
+   * Open modal with article data
+   */
+  open(articleData) {
+    if (!articleData) return;
+
+    // If no fullContent, build a minimal one from available fields
+    if (!articleData.fullContent) {
+      articleData = {
+        ...articleData,
+        fullContent: {
+          introduction: articleData.summary || articleData.excerpt || articleData.deck || '',
+          sections: [],
+          keyTakeaways: [],
+          sourceUrl: null,
+          relatedLinks: []
+        }
+      };
+    }
+
+    this.currentArticle = articleData;
+    this.render(articleData);
+    this.modal.classList.add('active');
+    this.modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+
+    // Scroll modal to top
+    this.content.scrollTop = 0;
+  },
+
+  /**
+   * Close modal
+   */
+  close() {
+    this.modal.classList.remove('active');
+    this.modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    this.currentArticle = null;
+  },
+
+  /**
+   * Render article content into modal
+   */
+  render(article) {
+    const { category, categoryClass, headline, author, readTime, authorLabel, fullContent } = article;
+
+    // Category tag
+    const categoryTag = this.modal.querySelector('.modal-category-tag');
+    categoryTag.textContent = category;
+    categoryTag.className = `modal-category-tag category-tag--${categoryClass || 'ai'}`;
+
+    // Headline
+    this.modal.querySelector('.modal-headline').textContent = headline;
+
+    // Meta
+    const byline = authorLabel ? `${authorLabel} ${author}` : `By ${author}`;
+    const readPart = readTime ? ` · ${readTime} min read` : '';
+    this.modal.querySelector('.modal-meta').textContent = byline + readPart;
+
+    // Introduction
+    const introEl = this.modal.querySelector('.modal-introduction');
+    if (fullContent.introduction) {
+      introEl.textContent = fullContent.introduction;
+      introEl.style.display = '';
+    } else {
+      introEl.style.display = 'none';
+    }
+
+    // Sections
+    const sectionsEl = this.modal.querySelector('.modal-sections');
+    sectionsEl.innerHTML = '';
+    if (fullContent.sections && fullContent.sections.length > 0) {
+      fullContent.sections.forEach(section => {
+        const sectionDiv = document.createElement('div');
+        sectionDiv.className = 'modal-section';
+
+        const headingEl = document.createElement('h2');
+        headingEl.className = 'modal-section-heading';
+        headingEl.textContent = section.heading;
+        sectionDiv.appendChild(headingEl);
+
+        if (section.content) {
+          const contentEl = document.createElement('p');
+          contentEl.className = 'modal-section-content';
+          contentEl.textContent = section.content;
+          sectionDiv.appendChild(contentEl);
+        }
+        if (section.steps && section.steps.length > 0) {
+          const stepsList = document.createElement('ol');
+          stepsList.className = 'modal-section-steps';
+          section.steps.forEach(step => {
+            const li = document.createElement('li');
+            li.textContent = step;
+            stepsList.appendChild(li);
+          });
+          sectionDiv.appendChild(stepsList);
+        }
+        if (section.code) {
+          const codeEl = document.createElement('pre');
+          codeEl.className = 'modal-section-code';
+          codeEl.textContent = section.code;
+          sectionDiv.appendChild(codeEl);
+        }
+        if (section.warning) {
+          const warningEl = document.createElement('div');
+          warningEl.className = 'modal-section-warning';
+          warningEl.textContent = section.warning;
+          sectionDiv.appendChild(warningEl);
+        }
+
+        sectionsEl.appendChild(sectionDiv);
+      });
+    }
+
+    // Personal Tips ("あなたへの活用アイデア")
+    const tipsBox = this.modal.querySelector('.modal-personal-tips');
+    if (tipsBox) {
+      const tipsUl = tipsBox.querySelector('ul');
+      if (tipsUl) tipsUl.innerHTML = '';
+      if (fullContent.personalTips && fullContent.personalTips.length > 0 && tipsUl) {
+        fullContent.personalTips.forEach(tip => {
+          const li = document.createElement('li');
+          li.textContent = tip;
+          tipsUl.appendChild(li);
+        });
+        tipsBox.style.display = '';
+      } else if (tipsBox) {
+        tipsBox.style.display = 'none';
+      }
+    }
+
+    // Key Takeaways
+    const takeawaysBox = this.modal.querySelector('.modal-key-takeaways');
+    const takeawaysUl = takeawaysBox.querySelector('ul');
+    takeawaysUl.innerHTML = '';
+    if (fullContent.keyTakeaways && fullContent.keyTakeaways.length > 0) {
+      fullContent.keyTakeaways.forEach(point => {
+        const li = document.createElement('li');
+        li.textContent = point;
+        takeawaysUl.appendChild(li);
+      });
+      takeawaysBox.style.display = '';
+    } else {
+      takeawaysBox.style.display = 'none';
+    }
+
+    // Related Links
+    const linksUl = this.modal.querySelector('.modal-links');
+    const footerEl = this.modal.querySelector('.modal-footer');
+    linksUl.innerHTML = '';
+    const hasLinks = fullContent.sourceUrl || (fullContent.relatedLinks && fullContent.relatedLinks.length > 0);
+
+    if (hasLinks) {
+      if (fullContent.sourceUrl) {
+        const sourceLi = document.createElement('li');
+        const sourceA = document.createElement('a');
+        sourceA.href = fullContent.sourceUrl;
+        sourceA.target = '_blank';
+        sourceA.rel = 'noopener noreferrer';
+        sourceA.textContent = '→ 元ポスト（X / Twitter）';
+        sourceLi.appendChild(sourceA);
+        linksUl.appendChild(sourceLi);
+      }
+      if (fullContent.relatedLinks) {
+        fullContent.relatedLinks.forEach(link => {
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = link.url;
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+          a.textContent = `→ ${link.title}`;
+          li.appendChild(a);
+          linksUl.appendChild(li);
+        });
+      }
+      footerEl.style.display = '';
+    } else {
+      footerEl.style.display = 'none';
+    }
+  },
+
+  /**
+   * Copy article to clipboard as formatted memo
+   */
+  copyToClipboard() {
+    if (!this.currentArticle) return;
+
+    const { category, headline, fullContent } = this.currentArticle;
+    const date = new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' });
+
+    let text = `📰 AI Daily Chronicle - 保存メモ\n`;
+    text += `${'═'.repeat(50)}\n\n`;
+    text += `■ タイトル\n${headline}\n\n`;
+    text += `■ カテゴリ\n${category}\n\n`;
+
+    if (fullContent && fullContent.personalTips && fullContent.personalTips.length > 0) {
+      text += `■ 活用アイデア（自分への応用）\n`;
+      fullContent.personalTips.forEach(tip => { text += `→ ${tip}\n`; });
+      text += `\n`;
+    }
+
+    if (fullContent && fullContent.keyTakeaways && fullContent.keyTakeaways.length > 0) {
+      text += `■ 重要ポイント\n`;
+      fullContent.keyTakeaways.forEach(point => { text += `• ${point}\n`; });
+      text += `\n`;
+    }
+
+    if (fullContent && fullContent.introduction) {
+      text += `■ 概要\n${fullContent.introduction}\n\n`;
+    }
+
+    if (fullContent && fullContent.sections && fullContent.sections.length > 0) {
+      text += `■ 詳細\n`;
+      fullContent.sections.forEach(section => {
+        text += `\n【${section.heading}】\n`;
+        if (section.content) text += `${section.content}\n`;
+        if (section.steps) {
+          section.steps.forEach((step, i) => { text += `${i + 1}. ${step}\n`; });
+        }
+        if (section.code) text += `\n\`\`\`\n${section.code}\n\`\`\`\n`;
+        if (section.warning) text += `\n⚠️ ${section.warning}\n`;
+      });
+      text += `\n`;
+    }
+
+    if (fullContent && (fullContent.sourceUrl || (fullContent.relatedLinks && fullContent.relatedLinks.length > 0))) {
+      text += `■ 参考リンク\n`;
+      if (fullContent.sourceUrl) text += `- 元ポスト: ${fullContent.sourceUrl}\n`;
+      if (fullContent.relatedLinks) {
+        fullContent.relatedLinks.forEach(link => { text += `- ${link.title}: ${link.url}\n`; });
+      }
+      text += `\n`;
+    }
+
+    text += `${'─'.repeat(50)}\n`;
+    text += `保存日時: ${date}\n`;
+    text += `出典: AI Daily Chronicle\n`;
+
+    navigator.clipboard.writeText(text).then(() => {
+      const originalText = this.copyBtn.innerHTML;
+      this.copyBtn.innerHTML = '✅ コピーしました';
+      this.copyBtn.classList.add('copied');
+      setTimeout(() => {
+        this.copyBtn.innerHTML = originalText;
+        this.copyBtn.classList.remove('copied');
+      }, 2500);
+    }).catch(() => {
+      // Fallback for non-secure contexts
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      const originalText = this.copyBtn.innerHTML;
+      this.copyBtn.innerHTML = '✅ コピーしました';
+      this.copyBtn.classList.add('copied');
+      setTimeout(() => {
+        this.copyBtn.innerHTML = originalText;
+        this.copyBtn.classList.remove('copied');
+      }, 2500);
+    });
+  }
+};
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof ARTICLES_DATA !== 'undefined') {
+    ArticleModal.init(ARTICLES_DATA);
+  }
+});
+
+</script>
+</body>
+</html>

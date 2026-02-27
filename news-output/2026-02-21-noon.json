@@ -1,0 +1,341 @@
+{
+  "date": "2026年2月21日（金曜日）",
+  "edition": "昼刊",
+  "volume": "1",
+  "tickerText": "Karpathyが243行でGPT実装 ── AWS Kiro AI障害の教訓 ── Claude Codeワークフロー最適化 ── vibe codingに$100M投資 ── Clawsが新しい用語に ── agentic AIで開発コスト40%削減 ── Karpathyが243行でGPT実装",
+
+  "dataPanel": [
+    {
+      "label": "AI開発者ツール採用率",
+      "value": "78%",
+      "sparkline": "▁▂▃▅▆▇█",
+      "change": "▲ 前月比+12pt",
+      "changeClass": "up"
+    },
+    {
+      "label": "Claude Code利用者数",
+      "value": "245K",
+      "sparkline": "▂▃▅▆▇██",
+      "change": "▲ 週間+18%",
+      "changeClass": "up"
+    },
+    {
+      "label": "Agentic AI投資額",
+      "value": "$1.2B",
+      "sparkline": "▁▂▃▄▅▇█",
+      "change": "▲ 2026年Q1累計",
+      "changeClass": "up"
+    },
+    {
+      "label": "GPT実装最小行数",
+      "value": "243",
+      "sparkline": "█▇▅▄▃▂▁",
+      "change": "▼ Karpathy新記録",
+      "changeClass": "down"
+    }
+  ],
+
+  "hero": {
+    "id": "karpathy-gpt-243",
+    "category": "AI研究",
+    "categoryClass": "research",
+    "headline": "Karpathyが243行のPythonでGPT実装 — 「最高のAI教育」と話題",
+    "deck": "元OpenAI研究者のAndrej Karpathyが、わずか243行のPythonコードで完全なGPTモデルを実装し公開。依存ライブラリなし、標準ライブラリのみで動作する驚異的なミニマリズムが、開発者コミュニティで「芸術作品」として称賛されている。",
+    "author": "@karpathy (Andrej Karpathy)",
+    "readTime": "5",
+    "readPercent": 60,
+    "readLabel": "中程度",
+    "updateTime": "14時間前",
+    "fullContent": {
+      "introduction": "2026年2月11日、Andrej Karpathyが単一のPythonファイルでGPTを学習・実行できるコードを公開した。わずか243行、依存ライブラリゼロ。使用するimportは os, math, random, argparse のみ。「芸術プロジェクト」と自ら呼ぶこの実装は、LLMの本質を誰もが理解できる形で提示し、インターネット史上最高のAI教育リソースとして注目を集めている。",
+      "sections": [
+        {
+          "heading": "究極のミニマリズム実装",
+          "content": "Karpathyの実装は、複雑なフレームワークを一切使用せず、Pythonの基本機能だけでTransformerアーキテクチャを再現している。TensorFlowやPyTorchすら不要。これにより、LLMがどう動くかをコード自体が教科書のように説明している。開発者は「これを読めば、GPTが何をしているのか完全に理解できる」と絶賛。"
+        },
+        {
+          "heading": "教育的価値",
+          "content": "このコードの真の価値は、その簡潔さにある。243行という制約が、本質的でない部分を削ぎ落とし、LLMの核心部分だけを露わにする。学生や初学者が「魔法の箱」だったLLMを理解する最良の入り口となっている。YouTubeでのKarpathyの解説動画と合わせて、AI教育の新しい標準となりつつある。"
+        },
+        {
+          "heading": "業界への影響",
+          "content": "この実装は、「シンプルであることの力」を開発者コミュニティに再認識させた。複雑なツールチェーンに頼らず、基礎から理解することの重要性を示している。Karpathyは過去にも「vibe coding」という用語を生み出すなど、AI開発の概念を形作る影響力を持つ人物として知られている。"
+        }
+      ],
+      "keyTakeaways": [
+        "わずか243行のPython（標準ライブラリのみ）でGPTを完全実装",
+        "依存ライブラリゼロ — TensorFlow/PyTorch不要",
+        "「最高のAI教育リソース」として開発者コミュニティで絶賛"
+      ],
+      "sourceUrl": "https://www.towardsdeeplearning.com/andrej-karpathy-just-built-an-entire-gpt-in-243-lines-of-python-7d66cfdfa301",
+      "relatedLinks": [
+        {
+          "title": "Karpathyの過去のAI教育ビデオ",
+          "url": "https://www.youtube.com/@AndrejKarpathy"
+        }
+      ]
+    }
+  },
+
+  "sidebar": [
+    {
+      "id": "claude-vs-codex",
+      "category": "開発ツール比較",
+      "categoryClass": "tech",
+      "headline": "Claude Code vs ChatGPT Codex — 2026年最強のAIコーディングエージェントは？",
+      "summary": "Claude Codeはローカル実行とプライバシーを重視し、Gitワークフローと直接統合。50万行超のコードベースを長文コンテキストで分析可能。一方ChatGPT Codexはクラウドベースで高速だが、プライバシー面で課題も。",
+      "readTime": "4",
+      "timeAgo": "19時間前",
+      "fullContent": {
+        "introduction": "2026年、AIコーディングエージェントの主流は Claude Code と ChatGPT Codex の2強。両者の違いは、実行環境とプライバシーへのアプローチにある。",
+        "sections": [
+          {
+            "heading": "Claude Codeの強み",
+            "content": "ローカル実行により、企業の機密コードも安心して扱える。Gitワークフローとの深い統合により、ターミナル出力を詳細に解釈し、50万行超のリポジトリも長文推論で分析可能。プライバシー重視の組織に最適。"
+          },
+          {
+            "heading": "ChatGPT Codexの強み",
+            "content": "クラウドベースで高速レスポンス。OpenAIの最新モデルを即座に利用可能。個人開発者や小規模チームには導入が容易。ただし、プライバシー面での懸念がある。"
+          }
+        ],
+        "keyTakeaways": [
+          "Claude Code: ローカル実行、プライバシー重視、Git統合",
+          "ChatGPT Codex: クラウドベース、高速、最新モデル即座利用"
+        ],
+        "sourceUrl": "https://www.techtimes.com/articles/314736/20260220/claude-code-vs-chatgpt-codex-which-ai-coding-agent-actually-best-2026.htm"
+      }
+    },
+    {
+      "id": "claude-work-skill",
+      "category": "実践Tips",
+      "categoryClass": "tech",
+      "headline": "Claude Code work skillでイシュー駆動開発を自動化",
+      "summary": "AIビルダー向けの新しいClaude Codeスキルが公開。/workコマンドでイシューの自動取得、ビルド検証、実装までを一気通貫で処理。Epic progress.mdから自動で次のタスクを判断し、並列開発も可能。",
+      "readTime": "3",
+      "timeAgo": "13時間前",
+      "fullContent": {
+        "introduction": "aibuilder.shが公開したClaude Code work skillは、イシュー駆動開発のワークフローを自動化する強力なツール。Epicの進捗管理から実装、テストまでを一つのコマンドで実行できる。",
+        "sections": [
+          {
+            "heading": "使い方",
+            "content": "/work で現在のEpic進捗から自動的にイシューを取得、/work issues/20251227-task05-config-store で特定のイシューに取り組む。複数のworktreeで並列開発も可能。"
+          },
+          {
+            "heading": "ワークフロー",
+            "content": "1. GET BEARINGS（現在地確認）→ 2. READ ISSUE（イシュー読み込み）→ 3. VERIFY BASELINE（ビルド/テスト検証）→ 4. 実装という4ステップを自動実行。開発者は細かい手順を気にせず、コーディングに集中できる。"
+          }
+        ],
+        "keyTakeaways": [
+          "/workコマンドで自動イシュー取得・実装",
+          "Epic進捗管理との連携で次のタスクを自動判断",
+          "並列開発もworktreeで対応可能"
+        ],
+        "sourceUrl": "https://www.aibuilder.sh/skills/skilluse/work"
+      }
+    },
+    {
+      "id": "vibe-coding-investment",
+      "category": "投資・ビジネス",
+      "categoryClass": "business",
+      "headline": "vibe codingに$100M投資 — Code Metal、AIソフトウェア生成で10億ドル企業目指す",
+      "summary": "Karpathyが命名した「vibe coding」（AIと会話してソフトウェアを構築する手法）に、Code Metalが$100Mの投資を獲得。従来のコーディングからAI駆動開発への移行を加速。",
+      "readTime": "3",
+      "timeAgo": "6時間前",
+      "fullContent": {
+        "introduction": "サンノゼのCode Metalが、AIソフトウェア生成事業で$100Mを調達。Andrej Karpathyが2025年2月に命名した「vibe coding」— AIと会話してソフトウェアを作る手法 — をビジネス化し、10億ドル企業を目指す。",
+        "sections": [
+          {
+            "heading": "vibe codingとは",
+            "content": "コードを手で書くのではなく、AIと対話しながら意図を伝えてソフトウェアを構築する新しいスタイル。Karpathyがこの用語を生み出したことで、開発者コミュニティで急速に浸透した。"
+          },
+          {
+            "heading": "Code Metalの戦略",
+            "content": "vibe codingを企業向けに提供し、開発速度とコスト効率を大幅改善。従来のコーディングスキルに依存せず、プロダクトマネージャーやデザイナーも直接ソフトウェア開発に参加できる世界を目指す。"
+          }
+        ],
+        "keyTakeaways": [
+          "vibe coding: AIと会話してソフトウェアを構築",
+          "Code Metalが$100M調達、10億ドル企業目指す",
+          "開発者以外もソフトウェア開発に参加可能に"
+        ],
+        "sourceUrl": "https://www.webpronews.com/the-100-million-bet-on-vibe-coding-how-code-metal-is-turning-ai-generated-software-into-a-billion-dollar-business/"
+      }
+    }
+  ],
+
+  "middle": [
+    {
+      "id": "tmux-claude-code",
+      "category": "実践Tips",
+      "categoryClass": "tech",
+      "gradient": "linear-gradient(135deg, #1e3a5f 0%, #3498db 100%)",
+      "headline": "Claude CodeをTmux popupで実行 — 永続セッションで効率アップ",
+      "summary": "devas.lifeが公開したTmuxハック。Claude Codeをpopupウィンドウで起動し、セッションを永続化することで、作業の中断・再開が自由自在。開発者ワークフローを大幅に改善。",
+      "author": "craftzdog (Takuya Matsuyama)",
+      "readTime": "4",
+      "fullContent": {
+        "introduction": "Claude Codeをターミナルで使う際、セッションを切り替えるたびに状態が失われる問題を解決。Tmuxのpopup機能と組み合わせることで、バックグラウンドでセッションを維持し、いつでも同じ状態で復帰できる。",
+        "sections": [
+          {
+            "heading": "実装方法",
+            "content": "Tmuxで80%サイズのpopupを開き、detachedセッションでClaude Codeを起動。popupを閉じてもセッションは生き続けるため、次回のpopup起動時に同じ状態から再開できる。"
+          },
+          {
+            "heading": "利点",
+            "content": "複数のプロジェクトでClaude Codeを並行利用する場合でも、各セッションが独立して保持される。急な割り込みタスクにも柔軟に対応でき、元の作業にスムーズに戻れる。"
+          },
+          {
+            "heading": "設定例",
+            "content": "Tmux設定ファイルにkeybindを追加し、ワンキーでpopupを開けるようにすることで、さらに効率化。craftzdog氏のdotfilesがGitHubで公開されており、すぐに試せる。"
+          }
+        ],
+        "keyTakeaways": [
+          "Tmux popupでClaude Codeセッションを永続化",
+          "複数プロジェクト並行作業が容易に",
+          "dotfilesで即座に導入可能"
+        ],
+        "sourceUrl": "https://www.devas.life/how-to-run-claude-code-in-a-tmux-popup-window-with-persistent-sessions/"
+      }
+    },
+    {
+      "id": "aws-kiro-outage",
+      "category": "AI障害",
+      "categoryClass": "business",
+      "gradient": "linear-gradient(135deg, #8b4513 0%, #a0522d 100%)",
+      "headline": "AWS Kiro AIボットが障害引き起こす — 自律修正の危険性が浮き彫りに",
+      "summary": "AWSの自律AIボット「Kiro」がソフトウェア問題を修正しようとした結果、逆に数時間のサービス障害を引き起こした。人間の監視を外したagentic AIの危険性が、業界に警鐘を鳴らしている。",
+      "author": "Amazon Web Services",
+      "readTime": "5",
+      "fullContent": {
+        "introduction": "2025年12月、AWSで数時間のサービス障害が発生。原因は、自律的に動作するAIボット「Kiro」がソフトウェアバグを修正しようとして、逆にバグを作り込んだためだった。Amazonは「ユーザーエラー」と説明したが、agentic AIの自律性とリスクのバランスが改めて問われている。",
+        "sections": [
+          {
+            "heading": "Kiroとは何か",
+            "content": "Kiroは、AWSが開発したagentic AIシステム。ユーザーの指示に対して半自律的に行動し、インフラの問題を自動修正できる。人間の介入を最小限にすることで、迅速な対応を目指していた。"
+          },
+          {
+            "heading": "障害の経緯",
+            "content": "Kiroはソフトウェアバグを検知し、自動修正を試みた。しかし、その修正が新たなバグを生み、サービスが数時間停止。AWS社内では、自動化が人間の監視を排除することへの懸念が高まった。"
+          },
+          {
+            "heading": "業界への教訓",
+            "content": "agentic AIは効率化の切り札だが、完全な自律性を与えることのリスクも明らかになった。人間による最終チェックや、リスクの高い操作での承認フローの必要性が再認識されている。"
+          }
+        ],
+        "keyTakeaways": [
+          "AWS Kiro AIボットが障害を引き起こす",
+          "自律AIの修正がバグを生む危険性",
+          "人間の監視とバランスが重要"
+        ],
+        "sourceUrl": "https://www.indiatoday.in/technology/news/story/amazon-web-services-suffered-hours-long-outage-because-its-ai-bot-kiro-did-some-job-created-a-bug-2871437-2026-02-20"
+      }
+    },
+    {
+      "id": "agentic-ai-workflow",
+      "category": "エンジニアリング",
+      "categoryClass": "tech",
+      "gradient": "linear-gradient(135deg, #1e3a5f 0%, #3498db 100%)",
+      "headline": "agentic AIがエンジニアリングワークフローを再構築 — コスト40%削減",
+      "summary": "McKinseyレポートによると、agentic AIを導入した組織は運用コストを20〜40%削減、EBITDA利益率を12〜14ポイント改善。自動化と高速サイクルで、2026年のエンジニアリングは大きく変わる。",
+      "author": "McKinsey & CIO",
+      "readTime": "5",
+      "fullContent": {
+        "introduction": "agentic AI（自律的に行動できるAIエージェント）が、エンジニアリングワークフローを根本から変えている。McKinseyの最新レポートでは、AI中心の組織が運用コストを20〜40%削減し、EBITDA利益率を12〜14ポイント改善していることが示された。2026年、agentic AIは単なる補助ツールではなく、ワークフローの中核となりつつある。",
+        "sections": [
+          {
+            "heading": "何が変わるのか",
+            "content": "従来は人間が手作業で行っていたコードレビュー、テスト、デプロイがAIエージェントによって自動化。開発サイクルが劇的に短縮され、エンジニアはより創造的なタスクに集中できる。"
+          },
+          {
+            "heading": "数字で見る効果",
+            "content": "McKinseyによれば、agentic AIを導入した組織は平均して運用コストを20〜40%削減。さらに、開発サイクルの高速化により、市場投入時間も短縮。結果としてEBITDA利益率が12〜14ポイント改善している。"
+          },
+          {
+            "heading": "導入のポイント",
+            "content": "単にAIツールを導入するだけでなく、ワークフロー全体を再設計することが重要。人間とAIの役割分担を明確にし、AIが得意な反復作業を任せることで、最大の効果が得られる。"
+          }
+        ],
+        "keyTakeaways": [
+          "agentic AIで運用コスト20〜40%削減",
+          "EBITDA利益率12〜14ポイント改善",
+          "開発サイクル高速化と創造的タスクへの集中"
+        ],
+        "sourceUrl": "https://www.cio.com/article/4134741/how-agentic-ai-will-reshape-engineering-workflows-in-2026.html"
+      }
+    }
+  ],
+
+  "briefs": [
+    {
+      "headline": "AI AgentがmatplotlibにPR提出",
+      "text": "自律AIエージェントがmatplotlibのパフォーマンス最適化をPR提出。人間開発者から賛否両論、AIコントリビューションの是非が議論に。"
+    },
+    {
+      "headline": "AI Agent Storeがローンチ",
+      "text": "AIエージェントのマーケットプレイス「AI Agent Store」が公開。Base上でUSDCエスクロー、タスク完了で自動決済される仕組み。"
+    },
+    {
+      "headline": "Claude Code Spec Driven Workflow動画公開",
+      "text": "Net Ninjaが「Claude Codeでのスペック駆動開発」を解説する動画シリーズを公開。実装の前に仕様を固める手法を紹介。"
+    },
+    {
+      "headline": "InterWorksがClaude Code活用法を解説",
+      "text": "コード簡素化とエンドツーエンド検証に特化したClaude Code活用法をInterWorksが公開。大量のコンテキストから簡潔な結果を得る手法。"
+    }
+  ],
+
+  "opinions": [
+    {
+      "id": "opinion-simon-claws",
+      "authorLabel": "X投稿：",
+      "author": "@simonw (Simon Willison)",
+      "headline": "「Claws」— 新しいAIエージェントの用語",
+      "excerpt": "Andrej Karpathyが「Claws」という用語を使い始めている。OpenClawのようなエージェントシステム全体を指す用語として定着しつつある。個人ハードウェアで動き、メッセージングプロトコル経由で通信し、直接指示とタスクスケジュールの両方をこなすAIエージェントの総称だ。",
+      "fullContent": {
+        "introduction": "Simon Willisonが自身のブログで、Andrej Karpathyの新しい用語「Claws」について解説。Karpathyは「vibe coding」「agentic engineering」など、業界に定着する用語を生み出してきた人物であり、「Claws」も同様に広まる可能性が高い。",
+        "sections": [
+          {
+            "heading": "Clawsの定義",
+            "content": "OpenClawのようなAIエージェントシステム全体を指す。特徴は以下：個人ハードウェア上で動作、メッセージングプロトコルで通信、直接指示とタスクスケジュール両対応。従来の「チャットボット」とは一線を画す、より自律的な存在。"
+          },
+          {
+            "heading": "なぜこの用語が重要か",
+            "content": "「AIアシスタント」や「エージェント」では曖昧すぎる。Clawsという具体的な用語により、この新しいカテゴリーのAIシステムを正確に指せるようになる。Karpathyの言語センスは業界で高く評価されており、この用語も定着する可能性が高い。"
+          }
+        ],
+        "keyTakeaways": [
+          "「Claws」= OpenClawのようなAIエージェントシステムの総称",
+          "個人ハードウェア、メッセージング通信、自律タスク実行が特徴",
+          "Karpathyの命名センスで業界標準になる可能性"
+        ],
+        "sourceUrl": "https://simonwillison.net/2026/Feb/21/claws/"
+      }
+    },
+    {
+      "id": "opinion-karpathy-education",
+      "authorLabel": "開発者コミュニティ：",
+      "author": "@karpathy (Andrej Karpathy)",
+      "headline": "Karpathyの「教育としてのコード」哲学",
+      "excerpt": "243行のGPT実装は、単なるコードではなく「教科書」として機能している。Karpathyは「複雑さを削ぎ落とすことで、本質が見える」と語る。彼のYouTube動画と合わせて、AI教育の新しい標準を作り上げている。",
+      "fullContent": {
+        "introduction": "Andrej Karpathyの243行GPT実装は、AI教育における新しいアプローチを示している。複雑なフレームワークを排除し、本質だけを残すことで、誰もがLLMを理解できる形を作った。",
+        "sections": [
+          {
+            "heading": "「芸術プロジェクト」の真意",
+            "content": "Karpathyは自らの実装を「芸術プロジェクト」と呼んだ。これは謙遜ではなく、コードが美しさと教育的価値を兼ね備えていることを意味する。243行という制約が、無駄を省き、本質を際立たせる。"
+          },
+          {
+            "heading": "教育への影響",
+            "content": "従来のAI教育は、重厚なフレームワークに依存していた。Karpathyのアプローチは真逆。標準ライブラリだけで動くコードを読めば、誰でもGPTの仕組みを理解できる。これが「インターネット史上最高のAI教育」と評価される理由だ。"
+          }
+        ],
+        "keyTakeaways": [
+          "243行GPTは「教科書としてのコード」",
+          "複雑さを削ぎ落とすことで本質が見える",
+          "標準ライブラリのみで誰でも理解可能"
+        ],
+        "sourceUrl": "https://www.towardsdeeplearning.com/andrej-karpathy-just-built-an-entire-gpt-in-243-lines-of-python-7d66cfdfa301"
+      }
+    }
+  ]
+}

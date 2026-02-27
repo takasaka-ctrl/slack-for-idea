@@ -1,0 +1,308 @@
+{
+  "date": "2026年2月21日（土曜日）",
+  "edition": "朝刊",
+  "volume": "1",
+  "tickerText": "Google Gemini 3.1 Proが推論能力2倍超で発表 ── Anthropic Claude Code Securityでサイバーセキュリティ株暴落 ── Karpathyが「Claws」カテゴリーの到来を宣言 ── OpenAI、2027年にAIスマートスピーカー発売へ ── Karpathy、わずか243行でGPTを実装 ── オンデバイスLLMが現実に ── Google Gemini 3.1 Proが推論能力2倍超で発表",
+
+  "dataPanel": [
+    {
+      "label": "AIモデルリリース",
+      "value": "4件/週",
+      "sparkline": "▁▂▃▅▇█",
+      "change": "▲ 前週比+60%",
+      "changeClass": "up"
+    },
+    {
+      "label": "Gemini 3.1 Pro ARC-AGI-2",
+      "value": "77.1%",
+      "sparkline": "▁▁▂▅▇█",
+      "change": "▲ 3 Proの2倍超",
+      "changeClass": "up"
+    },
+    {
+      "label": "サイバーセキュリティ株",
+      "value": "-8.0%",
+      "sparkline": "█▇▅▃▂▁",
+      "change": "▼ Claude Code Security発表で急落",
+      "changeClass": "down"
+    },
+    {
+      "label": "LLM週次デプロイ",
+      "value": "1.2M",
+      "sparkline": "▁▂▃▅▇█",
+      "change": "▲ 前月比+15%",
+      "changeClass": "up"
+    }
+  ],
+
+  "hero": {
+    "id": "claude-code-security",
+    "category": "AI & セキュリティ",
+    "categoryClass": "ai",
+    "headline": "Anthropic、Claude Code Securityを発表 — サイバーセキュリティ株が8%急落",
+    "deck": "AnthropicがAI駆動の自動脆弱性検出ツール「Claude Code Security」を発表し、CrowdStrikeやCloudflareなど主要セキュリティ企業の株価が軒並み8%下落。従来のルールベース静的解析を超える「人間のセキュリティ研究者のように推論する」AIが業界を揺るがす。",
+    "author": "SiliconANGLE",
+    "readTime": "5",
+    "readPercent": 50,
+    "readLabel": "中程度",
+    "updateTime": "1日前",
+    "fullContent": {
+      "introduction": "Anthropicが2月20日、EnterpriseおよびTeamsエディション向けに「Claude Code Security」のリサーチプレビューを開始。このAI駆動セキュリティツールは、従来のルールベース静的解析とは異なり、コードの構造とデータフローを理解して脆弱性を発見する。発表を受け、CrowdStrike、Cloudflareなどサイバーセキュリティ株が急落した。",
+      "sections": [
+        {
+          "heading": "ルールベース解析の限界を超える",
+          "content": "従来の静的解析ツールは、事前定義されたルールのデータベースに基づいてコードをチェックする。しかし、ニッチな言語や新しい攻撃パターンに対応できないため、多くの脆弱性を見逃してしまう。Claude Code Securityは、「人間のセキュリティ研究者のように推論」し、アプリケーションのコンポーネント間の相互作用とデータフローをマッピングして潜在的な弱点を特定する。"
+        },
+        {
+          "heading": "GitHubリポジトリと統合、自動修正提案",
+          "content": "開発者はGitHubリポジトリを接続するだけでClaude Code Securityを起動可能。ツールは入力フィルタの欠如、認証メカニズムのバイパス可能性など幅広い脆弱性を検出し、深刻度順にランク付け。各脆弱性には自然言語での説明が生成され、「suggest fix」ボタンでClaudeが自動的にパッチを生成する。"
+        },
+        {
+          "heading": "株価への影響とOpenAIとの競争",
+          "content": "発表直後、CrowdStrike株は約8%下落、Cloudflareも8%超下落した。Anthropicは今月初めのClaude Coworkプラグイン発表に続き、2度目のエンタープライズソフトウェア株暴落を引き起こした。OpenAIも昨年10月に同様のツール「Aardvark」を発表しており、両社のセキュリティ市場への進出が加速している。"
+        }
+      ],
+      "keyTakeaways": [
+        "Claude Code SecurityはルールベースではなくAI推論でコード脆弱性を検出",
+        "CrowdStrike、Cloudflareなど主要セキュリティ株が8%急落",
+        "GitHubリポジトリと統合し、自動修正提案機能を提供"
+      ],
+      "sourceUrl": "https://siliconangle.com/2026/02/20/cybersecurity-stocks-drop-anthropic-debuts-claude-code-security/",
+      "relatedLinks": [
+        {"title": "Anthropic公式発表", "url": "https://www.anthropic.com/news/claude-code-security"},
+        {"title": "OpenAI Aardvark発表", "url": "https://siliconangle.com/2025/10/30/openai-unveils-aardvark-autonomous-gpt-5-agent-built-hunt-software-vulnerabilities/"}
+      ]
+    }
+  },
+
+  "sidebar": [
+    {
+      "id": "gemini-31-pro",
+      "category": "AIモデル",
+      "categoryClass": "gemini",
+      "headline": "Google、Gemini 3.1 Proを発表 — 推論能力が2倍超に向上",
+      "summary": "Googleが2月19日、Gemini 3.1 Proのプレビューを全プラン（Free～Ultra）でリリース。ARC-AGI-2ベンチマークで77.1%を記録し、Gemini 3 Proの2倍超の推論性能を達成。ただし一部ユーザーからは共感性低下の懸念も。",
+      "readTime": "4",
+      "timeAgo": "2日前",
+      "fullContent": {
+        "introduction": "Googleが「より賢く、複雑な問題解決に対応可能なベースライン」としてGemini 3.1 Proを発表。NotebookLMや開発者向けAPIでも利用可能になり、ベンチマークで大幅な性能向上を示した。",
+        "sections": [
+          {
+            "heading": "推論能力の劇的な向上",
+            "content": "ARC-AGI-2ベンチマーク（新しいロジックパターンを解く能力を評価）で3.1 Proは77.1%を記録。これはGemini 3 Proの2倍超の性能を意味する。Googleは都市計画アプリのデモを公開し、複雑な地形処理、インフラマッピング、交通シミュレーションを高品質に可視化する能力を示した。"
+          },
+          {
+            "heading": "ユーザーからの共感性低下の懸念",
+            "content": "性能向上の一方で、一部ユーザーは「感情的深み、共感、創造的柔軟性が大幅に減少した」と指摘。「論理的推論とコーディングベンチマークの飛躍は印象的だが、モデルの『魂』が失われた」との声も。この反応はChatGPT-5初期リリース時の反応と類似している。"
+          }
+        ],
+        "keyTakeaways": [
+          "ARC-AGI-2ベンチマークで77.1%を記録、Gemini 3 Proの2倍超",
+          "複雑な問題解決とマルチステップ推論に特化",
+          "一部ユーザーから共感性・創造性低下の懸念"
+        ],
+        "sourceUrl": "https://www.techradar.com/ai-platforms-assistants/gemini/google-just-upgraded-gemini-again-and-3-1-pro-more-than-doubles-its-ai-reasoning-power-but-some-users-arent-impressed"
+      }
+    },
+    {
+      "id": "openai-tcs-datacenter",
+      "category": "ビジネス",
+      "categoryClass": "business",
+      "headline": "OpenAI、インドTCS初のデータセンター顧客に — Stargate計画の一環",
+      "summary": "OpenAIがインドのTata Consultancy Services（TCS）のデータセンター事業初の顧客となり、100MWの容量から開始。グローバルAIインフラ構想Stargateの一環として提携を発表。",
+      "readTime": "3",
+      "timeAgo": "1日前",
+      "fullContent": {
+        "introduction": "OpenAIとTCSが戦略的提携を発表。TCSのデータセンター事業の初顧客としてOpenAIが100MWの容量を確保し、Stargate計画によるグローバルAIインフラ拡大を加速する。",
+        "sections": [
+          {
+            "heading": "Stargate計画とインド市場",
+            "content": "Stargate計画は、OpenAIがグローバルにAIインフラを拡大する構想。インド市場での存在感を強化し、TCSの最新データセンター設備を活用することでアジア太平洋地域でのAIサービス展開を強化する。"
+          }
+        ],
+        "keyTakeaways": [
+          "OpenAIがTCSデータセンター初顧客、100MW容量で開始",
+          "Stargate計画の一環としてインド市場に進出",
+          "アジア太平洋地域でのAIインフラ拡大を加速"
+        ],
+        "sourceUrl": "https://www.reuters.com/technology/openai/"
+      }
+    },
+    {
+      "id": "karpathy-microgpt",
+      "category": "技術",
+      "categoryClass": "tech",
+      "headline": "Karpathy、わずか243行のPythonでGPTを実装 — 「AIの最高の教材」",
+      "summary": "元OpenAI研究者Andrej KarpathyがPyTorch/TensorFlowなしでGPTを243行で実装。依存関係ゼロ、os/math/random/argparseのみの「アートプロジェクト」が教育界で絶賛。",
+      "readTime": "4",
+      "timeAgo": "1日前",
+      "fullContent": {
+        "introduction": "2月11日、Karpathyが単一Pythonファイル（243行）でGPTを訓練・実行するコードを公開。依存関係ゼロの純粋Python実装が「現在インターネット上に存在する最高のAI教育教材」と称賛されている。",
+        "sections": [
+          {
+            "heading": "依存関係ゼロの実装",
+            "content": "従来のTransformer実装は数千ファイル、数百パッケージの依存関係が必要だった。Karpathyの「microGPT」はos、math、random、argparseのみをインポート。赤ちゃんの名前リストをダウンロードし、パターンを学習して新しい架空の名前を生成する。"
+          },
+          {
+            "heading": "教育的価値",
+            "content": "Karpathy自身は「アートプロジェクト」と呼んだが、AI研究者たちは「友人にコーヒーを飲みながら説明するような分かりやすさ」と評価。複雑な概念を最小限のコードで表現し、LLMの本質を理解するための最適な教材となっている。"
+          }
+        ],
+        "keyTakeaways": [
+          "243行、依存関係ゼロでGPTを完全実装",
+          "基本的なPythonライブラリ（os/math/random）のみ使用",
+          "AI教育における画期的な教材として評価"
+        ],
+        "sourceUrl": "https://www.towardsdeeplearning.com/andrej-karpathy-just-built-an-entire-gpt-in-243-lines-of-python-7d66cfdfa301"
+      }
+    }
+  ],
+
+  "middle": [
+    {
+      "id": "openai-smart-speaker",
+      "category": "プロダクト",
+      "categoryClass": "tech",
+      "gradient": "linear-gradient(135deg, #1e3a5f 0%, #3498db 100%)",
+      "headline": "OpenAI、2027年にAI搭載スマートスピーカー発売へ",
+      "summary": "OpenAIが2027年に初のコンシューマー向けハードウェアデバイス、AI搭載スマートスピーカーを発売予定。音声AIアシスタント市場への本格参入が明らかに。",
+      "author": "Engadget",
+      "readTime": "3",
+      "fullContent": {
+        "introduction": "OpenAIが2027年に初のAI搭載コンシューマーデバイスを発売する計画が報道された。音声AIアシスタント市場への参入により、Amazon Echo、Google Nestとの直接競争が始まる。",
+        "sections": [
+          {
+            "heading": "音声AI市場への本格参入",
+            "content": "OpenAIはこれまでソフトウェアとAPIに注力してきたが、ハードウェア市場への進出を決断。GPT-5の音声機能を活用したスマートスピーカーは、より自然な会話、文脈理解、複雑なタスク実行を可能にすると期待されている。"
+          }
+        ],
+        "keyTakeaways": [
+          "OpenAI初のコンシューマー向けハードウェア製品",
+          "2027年発売予定のAI搭載スマートスピーカー",
+          "Amazon、Googleとの音声AI市場での直接競争"
+        ],
+        "sourceUrl": "https://www.engadget.com/ai/openai-will-reportedly-release-an-ai-powered-smart-speaker-in-2027-173344866.html"
+      }
+    },
+    {
+      "id": "tech-mahindra-hindi-llm",
+      "category": "グローバル",
+      "categoryClass": "ai",
+      "gradient": "linear-gradient(135deg, #2d5a27 0%, #4a8a3f 100%)",
+      "headline": "Tech Mahindra、教育向けヒンディー語優先LLMを発表",
+      "summary": "Tech MahindraがNVIDIAと提携し、Project Indusの一環として教育に特化したヒンディー語優先LLMを発表。India AI Impact Summit 2026で披露された。",
+      "author": "Kollege Apply News",
+      "readTime": "3",
+      "fullContent": {
+        "introduction": "Tech MahindraがIndia AI Impact Summit 2026でProject Indus構想の下、NVIDIAと共同開発したヒンディー語優先の教育向けLLMを発表。地域言語AI市場の拡大を加速する。",
+        "sections": [
+          {
+            "heading": "地域言語AIの重要性",
+            "content": "英語中心のLLMが主流の中、地域言語に特化したモデルは数億人のユーザーにAIアクセスを提供する。ヒンディー語は世界で5億人以上が使用する言語であり、教育分野での活用により大きな社会的インパクトが期待される。"
+          }
+        ],
+        "keyTakeaways": [
+          "NVIDIAと提携したProject Indus構想",
+          "教育特化のヒンディー語優先LLM",
+          "地域言語AI市場の拡大を促進"
+        ],
+        "sourceUrl": "https://news.kollegeapply.com/news/tech-mahindra-launches-hindi-first-llm-for-education-under-project-indus"
+      }
+    },
+    {
+      "id": "on-device-llm",
+      "category": "技術",
+      "categoryClass": "tech",
+      "gradient": "linear-gradient(135deg, #1e3a5f 0%, #3498db 100%)",
+      "headline": "オンデバイスLLM革命 — クラウド不要のAI推論が現実に",
+      "summary": "スマートフォン、自動車、産業ロボットでオンデバイスLLM推論が実用化。プライバシー保護と低レイテンシを実現し、クラウド依存から脱却する新時代が到来。",
+      "author": "Semiconductor Engineering",
+      "readTime": "4",
+      "fullContent": {
+        "introduction": "オンデバイスLLM推論はもはや「未来」ではなく「現在」。スマートフォンユーザーは即座に応答するローカルAIアシスタントを期待し、自動車システムはクラウド接続なしでリアルタイム自然言語理解を必要とし、産業ロボットは確定的レイテンシでインテリジェントな意思決定を求めている。",
+        "sections": [
+          {
+            "heading": "プライバシーと速度の両立",
+            "content": "クラウドベースLLMはネットワークレイテンシとプライバシーリスクが課題。オンデバイス推論は、データをデバイス内で処理することで即座の応答とプライバシー保護を実現。スマートフォン、車載システム、IoTデバイスでの採用が急速に進んでいる。"
+          },
+          {
+            "heading": "産業への影響",
+            "content": "自動車業界では、確定的レイテンシが安全性に直結。産業ロボットは、ネットワーク障害時でもローカルAIで判断を継続可能。オンデバイスLLMは、エッジコンピューティングの次の進化形として位置づけられている。"
+          }
+        ],
+        "keyTakeaways": [
+          "スマホ、自動車、ロボットでオンデバイスLLMが実用化",
+          "プライバシー保護と低レイテンシを同時実現",
+          "クラウド依存からの脱却が加速"
+        ],
+        "sourceUrl": "https://semiengineering.com/the-on-device-llm-revolution/"
+      }
+    }
+  ],
+
+  "briefs": [
+    {"headline": "OpenAI、GPT-4o廃止とChatGPTアップデート", "text": "OpenAIがGPT-4oと従来モデルを廃止し、ChatGPTに最大20ファイルアップロード、広範なファイルタイプ対応、AndroidとiOSでの性能改善を提供。"},
+    {"headline": "EFF、オープンソースプロジェクトでのLLM使用ポリシー導入", "text": "Electronic Frontier FoundationがLLM支援コントリビューションのポリシーを発表。単なるコード生成量ではなく高品質ソフトウェアの生産を重視。"},
+    {"headline": "SEAL Leaderboard更新 — 最新AIモデルランキング", "text": "Scale AIのSEAL Leaderboardが更新され、コーディング、推論など専門家駆動のベンチマークで最新AIモデルをランク付け。3時間前に最新データ公開。"},
+    {"headline": "Gemini 3.1 Pro、ベンチマーク信頼性の議論を巻き起こす", "text": "YouTubeで「Gemini 3.1 Proとベンチマークの衰退」動画が話題。ベンチマークスコアが機械知能を捉える手段として有効かの議論が再燃。"}
+  ],
+
+  "opinions": [
+    {
+      "id": "karpathy-claws",
+      "authorLabel": "X投稿：",
+      "author": "@karpathy (Andrej Karpathy)",
+      "headline": "Karpathy、「Claws」カテゴリーの到来を宣言 — OpenClaw系エージェントの新時代",
+      "excerpt": "元OpenAI研究者Andrej KarpathyがMac Miniを購入し「Claws」をいじっていると投稿。「LLMエージェントがLLMの新レイヤーだったように、Clawsはエージェント上の新レイヤー」と評価。NanoClaw、nanobot、zeroclaw、ironclaw、picoclawなど派生プロジェクトが急増中。",
+      "fullContent": {
+        "introduction": "KarpathyがTwitterで「Claws」についてミニエッセイを投稿。Mac Miniを購入し（「Apple Storeの店員が『ホットケーキのように売れてて、みんな困惑してる』と言ってた」）、OpenClaw系エージェントシステムを試していることを明かした。",
+        "sections": [
+          {
+            "heading": "「Claws」という新しいカテゴリー",
+            "content": "Karpathyは「OpenClaw自体を実行するのはちょっと不安だが、コンセプトは大好き」と述べ、「LLMエージェントがLLMの新レイヤーだったように、Clawsはエージェント上の新レイヤー。オーケストレーション、スケジューリング、コンテキスト、ツール呼び出し、永続性を次のレベルに引き上げる」と評価。"
+          },
+          {
+            "heading": "急増する派生プロジェクト",
+            "content": "高レベルのアイデアが明確になったことで、多数の小型Clawsプロジェクトが登場。Karpathyは「NanoClawがコアエンジン約4000行（自分やAIエージェントの頭に収まる）で、デフォルトでコンテナで全て実行する点が興味深い」と指摘。nanobot、zeroclaw、ironclaw、picoclaw（「lol @ プレフィックス」）などが続々登場している。"
+          },
+          {
+            "heading": "Simon Willisonの分析",
+            "content": "開発者Simon Willisonは「Karpathyは新しい用語に対する鋭い感覚を持つ（vibe coding、agentic engineeringを参照）。今回も正しい。『Claw』はOpenClaw系エージェントシステム全体のカテゴリーを指す用語になりつつある。個人ハードウェアで動作し、メッセージングプロトコルで通信し、直接指示とタスクスケジュールの両方が可能なAIエージェント」と分析。さらに「絵文字🦞まで確立されている」と付け加えた。"
+          }
+        ],
+        "keyTakeaways": [
+          "「Claws」がOpenClaw系エージェントの総称として定着",
+          "NanoClaw、nanobot、zeroclaw等の派生プロジェクトが急増",
+          "「エージェント上の新レイヤー」としてAIスタックに位置づけ"
+        ],
+        "sourceUrl": "https://simonwillison.net/2026/Feb/21/claws/"
+      }
+    },
+    {
+      "id": "gemini-empathy-concern",
+      "authorLabel": "ユーザー声明：",
+      "author": "IvanyaV (X)",
+      "headline": "Gemini 3.1 Pro、「魂を失った」— 共感性低下への懸念",
+      "excerpt": "Gemini 3.1 Proの推論能力向上を評価しつつ、一部ユーザーが「感情的深み、共感、創造的柔軟性が大幅に減少した」と指摘。「論理的推論とコーディングベンチマークの飛躍は印象的だが、モデルの『魂』が失われた感じがする」との声も。",
+      "fullContent": {
+        "introduction": "Xユーザー IvanyaVは「重い気持ちで書いている」と前置きし、Gemini 3.1 Proアップデートに対する複雑な感情を表明。論理的推論とコーディングベンチマークの飛躍を認めつつ、「日々の感情的サポートや繊細で人間中心のコラボレーションに依存するクリエイターやユーザーにとって、3.1 Proは3.0時代と比べて後退のように感じる」と述べた。",
+        "sections": [
+          {
+            "heading": "ChatGPT-5初期リリースとの類似",
+            "content": "この反応は、ChatGPT-5が人気のGPT-4oを置き換えた際の初期反応と酷似している。ユーザーたちは「新しいモデルがより機械的で分析的で、より人間らしい前身と比べて魅力がない」と訴えた。性能向上と人間らしさのトレードオフは、LLM開発における継続的な課題となっている。"
+          },
+          {
+            "heading": "長期使用での評価は未知数",
+            "content": "TechRadarの編集者は短時間のテストで明らかな共感性の問題を感じなかったと述べ、「長期使用でGemini 3.1 Proのニュアンスが明らかになる」と指摘。Googleも「プレビュー段階であり、より野心的なエージェントワークフローなどの分野でさらなる進歩を続けている」と強調している。"
+          }
+        ],
+        "keyTakeaways": [
+          "推論能力向上の一方で共感性・創造性低下の懸念",
+          "ChatGPT-5初期リリースと類似の反応",
+          "長期使用での評価が待たれる"
+        ],
+        "sourceUrl": "https://www.techradar.com/ai-platforms-assistants/gemini/google-just-upgraded-gemini-again-and-3-1-pro-more-than-doubles-its-ai-reasoning-power-but-some-users-arent-impressed"
+      }
+    }
+  ]
+}

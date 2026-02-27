@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ja" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Omni-Process Shadow | Agent Governance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .mono { font-family: 'JetBrains+Mono', monospace; }
+        .glass { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(12px); }
+        .border-subtle { border-color: rgba(255, 255, 255, 0.1); }
+        .agent-active { background: linear-gradient(90deg, #10b981 0%, #3b82f6 100%); }
+    </style>
+</head>
+<body class="bg-[#050505] text-slate-200 min-h-screen">
+    <!-- Navigation -->
+    <nav class="border-b border-subtle glass sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded bg-blue-600 flex items-center justify-center font-bold">O</div>
+                <span class="text-xl font-semibold tracking-tight">OPS <span class="text-slate-500 font-light">Shadow</span></span>
+            </div>
+            <div class="flex items-center gap-6 text-sm">
+                <a href="#" class="text-blue-400">Live Monitor</a>
+                <a href="#" class="hover:text-white transition">Audit Logs</a>
+                <a href="#" class="hover:text-white transition">Settings</a>
+                <div class="w-8 h-8 rounded-full bg-slate-800 border border-subtle flex items-center justify-center text-xs">JD</div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-6 py-8 grid grid-cols-12 gap-8">
+        
+        <!-- Sidebar: Active Sessions -->
+        <aside class="col-span-3 space-y-4">
+            <h2 class="text-xs font-semibold text-slate-500 uppercase tracking-widest px-2">Live Sessions</h2>
+            <div class="space-y-2">
+                <div class="p-3 rounded-lg bg-blue-600/10 border border-blue-500/30">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="text-sm font-medium">B2B Lead Research</span>
+                        <span class="text-[10px] px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30">RUNNING</span>
+                    </div>
+                    <div class="text-xs text-slate-400 mono">ID: ops-8821-xf</div>
+                </div>
+                <div class="p-3 rounded-lg hover:bg-white/5 border border-transparent transition cursor-pointer">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="text-sm font-medium">Market Analysis</span>
+                        <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 border border-amber-500/30">WAITING REVIEW</span>
+                    </div>
+                    <div class="text-xs text-slate-400 mono">ID: ops-1204-aq</div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content: Shadow Log -->
+        <section class="col-span-6 space-y-6">
+            <div class="flex items-center justify-between">
+                <h1 class="text-2xl font-semibold">B2B Lead Research <span class="text-slate-500 text-lg font-normal">#ops-8821-xf</span></h1>
+                <button class="bg-red-500/10 text-red-500 border border-red-500/30 px-4 py-1.5 rounded-md text-sm font-medium hover:bg-red-500/20 transition">Terminate</button>
+            </div>
+
+            <!-- Visual Feedback -->
+            <div class="aspect-video rounded-xl border border-subtle bg-slate-900 overflow-hidden relative group">
+                <div class="absolute inset-0 flex items-center justify-center text-slate-500">
+                    <div class="text-center">
+                        <div class="mb-2 opacity-50 italic">Rendering Remote Browser...</div>
+                        <div class="text-xs mono">https://www.linkedin.com/search/...</div>
+                    </div>
+                </div>
+                <div class="absolute top-4 left-4 bg-black/60 backdrop-blur px-3 py-1 rounded text-[10px] border border-white/10 flex items-center gap-2">
+                    <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                    REAL-TIME STREAMING
+                </div>
+            </div>
+
+            <!-- Activity Feed -->
+            <div class="space-y-4">
+                <div class="flex gap-4">
+                    <div class="w-px bg-slate-800 relative">
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-blue-500"></div>
+                    </div>
+                    <div class="pb-4">
+                        <div class="text-xs text-slate-500 mb-1">19:02:45</div>
+                        <div class="text-sm">Navigation started to <span class="text-blue-400 underline cursor-pointer">linkedin.com/search</span></div>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <div class="w-px bg-slate-800 relative">
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-blue-500"></div>
+                    </div>
+                    <div class="pb-4">
+                        <div class="text-xs text-slate-500 mb-1">19:03:12</div>
+                        <div class="text-sm">Action: <span class="bg-slate-800 px-1.5 py-0.5 rounded text-xs mono">FILL_INPUT</span> [Search Box] → "SaaS Founder Japan"</div>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <div class="w-px bg-slate-800 relative">
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-blue-500"></div>
+                    </div>
+                    <div class="pb-4">
+                        <div class="text-xs text-slate-500 mb-1">19:03:55</div>
+                        <div class="text-sm">Scraping profiles: <span class="text-slate-400 italic">25 entries extracted</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Right Panel: Controls / Intelligence -->
+        <aside class="col-span-3 space-y-6">
+            <div class="p-5 rounded-xl border border-subtle glass space-y-4">
+                <h3 class="text-sm font-semibold">Governance Score</h3>
+                <div class="flex items-end gap-2">
+                    <span class="text-4xl font-light">98</span>
+                    <span class="text-slate-500 mb-1">/100</span>
+                </div>
+                <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                    <div class="h-full bg-green-500" style="width: 98%"></div>
+                </div>
+                <p class="text-[11px] text-slate-500">All actions conform to defined safety protocols. No PII leaks detected.</p>
+            </div>
+
+            <div class="p-5 rounded-xl border border-amber-500/30 bg-amber-500/5 space-y-4">
+                <div class="flex items-center gap-2 text-amber-500">
+                    <span class="text-xs font-bold uppercase tracking-widest">Pending Review</span>
+                </div>
+                <p class="text-sm">Agent is requesting to send <span class="font-semibold text-white">Direct Messages</span> to 10 prospects.</p>
+                <div class="flex gap-2">
+                    <button class="flex-1 bg-white text-black text-xs font-bold py-2 rounded">Approve</button>
+                    <button class="flex-1 bg-transparent border border-white/20 text-xs font-bold py-2 rounded">Reject</button>
+                </div>
+            </div>
+        </aside>
+
+    </main>
+
+</body>
+</html>

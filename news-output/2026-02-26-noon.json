@@ -1,0 +1,331 @@
+{
+  "date": "2026年2月26日（木曜日）",
+  "edition": "昼刊",
+  "volume": "1",
+  "tickerText": "Karpathy氏「vibe codingの時代は終わり、agentic engineeringへ」 ── Claude Code Plan Mode完全解説 ── Ollama CLI 2026最新チートシート ── 中国製AIモデルがOpenRouterで61%シェア獲得 ── RubyMineがMCP対応ツール開発ガイド公開 ── Karpathy氏「vibe codingの時代は終わり、agentic engineeringへ」",
+
+  "dataPanel": [
+    {
+      "label": "AI開発ツール利用率",
+      "value": "87%",
+      "sparkline": "▁▂▃▅▇█",
+      "change": "▲ 前月比+12%の急増",
+      "changeClass": "up"
+    },
+    {
+      "label": "Claude Code DAU",
+      "value": "2.4万",
+      "sparkline": "▂▃▅▆▇█",
+      "change": "▲ 週間成長率+18%",
+      "changeClass": "up"
+    },
+    {
+      "label": "Ollama月間DL数",
+      "value": "485万",
+      "sparkline": "▁▃▄▆▇█",
+      "change": "▲ ローカルLLM需要急増",
+      "changeClass": "up"
+    },
+    {
+      "label": "OpenRouter API利用",
+      "value": "61%",
+      "sparkline": "▂▄▅▇█▇",
+      "change": "▲ 中国製モデルがトップ3独占",
+      "changeClass": "up"
+    }
+  ],
+
+  "hero": {
+    "id": "karpathy-agentic-engineering",
+    "category": "AI開発トレンド",
+    "categoryClass": "ai",
+    "headline": "Karpathy氏が「vibe coding」から「agentic engineering」へシフトを宣言 — AI開発の次のパラダイム",
+    "deck": "元Tesla AI責任者で「vibe coding」という言葉を生み出したAndrej Karpathy氏が、今度は「agentic engineering」こそが次の大きな波だと語る。OpenClawの開発者は「vibe codingは侮辱的な言葉」と批判し、業界では開発スタイルの定義を巡る議論が白熱している。",
+    "author": "Benzinga / Business Insider",
+    "readTime": "5",
+    "readPercent": 50,
+    "readLabel": "中程度",
+    "updateTime": "8時間前",
+    "fullContent": {
+      "introduction": "2025年初頭に「vibe coding」という造語でAI支援開発のスタイルを定義したAndrej Karpathy氏が、わずか1年で次のコンセプト「agentic engineering」へと焦点を移している。OpenAI創設メンバーでTesla Autopilotの元責任者でもある同氏は、現在Eureka Labsを立ち上げており、AIエージェントがより自律的にコーディングタスクを実行する未来を描いている。",
+      "sections": [
+        {
+          "heading": "vibe codingとは何だったのか",
+          "content": "Karpathy氏が昨年Xに投稿した「vibe coding」は、AIシステムに大きく依存してソフトウェアを構築するスタイルを指していた。従来の厳密な設計やテスト駆動開発ではなく、AIの提案を「感覚的に」受け入れながら進める開発手法だ。この言葉は瞬く間に広がったが、同時に批判も呼んだ。元Google Brain研究者のAndrew Ng氏は「不幸で誤解を招く」と評し、OpenClawの開発者は「vibe codingは侮辱的な言葉（slur）」とまで言い切った。"
+        },
+        {
+          "heading": "agentic engineeringへのシフト",
+          "content": "Karpathy氏は今、「agentic engineering」という新しいビジョンに注目している。これは単にAIがコード補完をするのではなく、AIエージェントが要件を理解し、設計を決定し、実装を完遂するまでを自律的に行う世界だ。人間のエンジニアは「何を作るか」を指示し、AIエージェントが「どう作るか」を担当する。これは従来のペアプログラミングを超えた、AIとの協働の新しい形を示唆している。"
+        },
+        {
+          "heading": "業界の反応と今後",
+          "content": "この議論は単なる用語の問題ではなく、AI開発ツールの設計思想に直結している。Claude Code、Cursor、GitHub Copilotなど各ツールは、「補完型」「対話型」「自律型」のスペクトラムのどこに位置するかで差別化を図っている。Karpathy氏の発言は、業界全体が「自律型AIエージェント」へと舵を切りつつあることを示唆しており、2026年後半にはこのトレンドがさらに加速すると予想される。"
+        }
+      ],
+      "keyTakeaways": [
+        "Karpathy氏が「vibe coding」から「agentic engineering」へとフォーカスをシフト",
+        "OpenClawやAndrew Ng氏など業界からは「vibe coding」への批判も",
+        "AIエージェントがより自律的に開発タスクを実行する未来が近づいている"
+      ],
+      "sourceUrl": "https://www.benzinga.com/news/topics/26/02/50862150/the-man-who-coined-vibe-coding-says-the-next-big-thing-is-agentic-engineering",
+      "relatedLinks": [
+        {"title": "Business Insider: OpenClaw Creator Calls 'Vibe Coding' a Slur", "url": "https://www.businessinsider.com/openclaw-creator-vibe-coding-term-slur-criticism-2026-2"}
+      ]
+    }
+  },
+
+  "sidebar": [
+    {
+      "id": "claude-code-plan-mode",
+      "category": "開発ワークフロー",
+      "categoryClass": "tech",
+      "headline": "Claude Code「Plan Mode」完全ガイド — AIに考えさせてから実装する4段階フロー",
+      "summary": "Claude Codeの新機能「Plan Mode」は、Explore → Plan → Implement → Commitという4段階ワークフローで、AIが勝手に進む前に計画を立てさせる仕組み。Ctrl+Gで計画を編集でき、予測可能な開発が可能に。",
+      "readTime": "4",
+      "timeAgo": "1日前",
+      "fullContent": {
+        "introduction": "Claude Codeの「Plan Mode」は、AIが盲目的にコードを書き始める前に、まず全体の計画を立てさせる機能。これにより、開発者は実装前に計画をレビュー・修正でき、より予測可能で制御された開発フローを実現できる。",
+        "sections": [
+          {
+            "heading": "4段階ワークフロー",
+            "content": "Plan Modeは「Explore（探索）」「Plan（計画）」「Implement（実装）」「Commit（コミット）」の4段階で構成される。Exploreフェーズでは既存コードを理解し、Planフェーズで実装計画を生成。開発者はここでCtrl+Gを押して計画を編集できる。承認後、AIが実装を進め、最後にgitコミットまで行う。"
+          },
+          {
+            "heading": "CLAUDE.mdとの組み合わせ",
+            "content": "プロジェクトルートに配置するCLAUDE.mdファイルで、コーディング規約やアーキテクチャのガイドラインを定義できる。Plan Modeはこのファイルをコンテキストとして読み込み、プロジェクト固有のルールに従った計画を生成する。"
+          }
+        ],
+        "keyTakeaways": [
+          "Plan Modeは4段階のワークフローでAIの動きを予測可能にする",
+          "Ctrl+Gで計画を編集し、実装前にレビューできる",
+          "CLAUDE.mdでプロジェクト固有のルールを定義可能"
+        ],
+        "sourceUrl": "https://codewithmukesh.com/blog/plan-mode-claude-code/"
+      }
+    },
+    {
+      "id": "ollama-cli-2026",
+      "category": "ローカルLLM",
+      "categoryClass": "tech",
+      "headline": "Ollama CLI 2026最新チートシート — ls, serve, run, psの実践的な使い方とVRAM解放テクニック",
+      "summary": "Ollamaの基本コマンド（ls, serve, run, ps）から、モデルをVRAMから明示的にアンロードする「keep_alive: 0」トリックまで、2026年版の実践的なCLI使い方をまとめたガイド。",
+      "readTime": "3",
+      "timeAgo": "20時間前",
+      "fullContent": {
+        "introduction": "Ollamaは2026年現在、ローカルLLMを最も簡単に動かせるツールとして開発者に広く使われている。このガイドでは、基本的なCLIコマンドから、VRAM管理の実践的なテクニックまでを網羅する。",
+        "sections": [
+          {
+            "heading": "基本コマンド",
+            "content": "「ollama ls」でインストール済みモデル一覧を表示、「ollama serve」でサーバー起動、「ollama run <model>」でモデル実行、「ollama ps」で現在ロード中のモデルを確認。これらは日常的に使う基本操作だ。"
+          },
+          {
+            "heading": "VRAM解放の裏技",
+            "content": "モデルは一度ロードされるとVRAMに留まり続ける。明示的に解放するには、Ollama APIに「keep_alive: 0」パラメータを送信する必要がある。これにより、GPUメモリを即座に解放できる。複数モデルを切り替える際に重要なテクニック。"
+          }
+        ],
+        "keyTakeaways": [
+          "Ollama CLIの基本コマンド4つをマスターすれば日常操作は十分",
+          "「keep_alive: 0」でVRAMを明示的に解放可能",
+          "2026年版では並列リクエスト処理が大幅に改善"
+        ],
+        "sourceUrl": "https://medium.com/@rosgluk/ollama-cli-cheatsheet-ls-serve-run-ps-commands-2026-update-ad4765daf43f"
+      }
+    },
+    {
+      "id": "ai-coding-elite-techniques",
+      "category": "生産性",
+      "categoryClass": "tech",
+      "headline": "「vibe coder」と「elite builder」を分ける7つのAIコーディング技術 — ZDNETが解説",
+      "summary": "カジュアルなvibe coderとエリートビルダーを分けるのはプロンプトではなくシステムだ。ZDNETが、本番環境レベルのAIプロジェクトを維持するための正確なフレームワークを公開。",
+      "readTime": "4",
+      "timeAgo": "9時間前",
+      "fullContent": {
+        "introduction": "AIでコードを書くことは誰にでもできる。しかし、本番環境で動き続けるAIプロジェクトを構築できるのは一握りだ。ZDNETが「カジュアルなvibe coder」と「エリートビルダー」を分ける7つの技術を解説した。",
+        "sections": [
+          {
+            "heading": "システムとしてのAI開発",
+            "content": "エリートビルダーは「良いプロンプト」を書くのではなく、再現可能なシステムを構築する。これには、テストケースの自動化、エラーハンドリングの標準化、ロールバック戦略、モニタリング、そしてAI出力のバージョン管理が含まれる。"
+          },
+          {
+            "heading": "7つの具体的な技術",
+            "content": "1. プロンプトをコードとして管理（git管理） 2. 出力の構造化（JSON Schema強制） 3. フォールバック戦略（複数モデルの組み合わせ） 4. コンテキスト圧縮技術 5. 段階的な品質チェック 6. AI出力の差分管理 7. コスト最適化（キャッシング戦略）。これらを実装することで、AIプロジェクトは「プロトタイプ」から「プロダクション」へと進化する。"
+          }
+        ],
+        "keyTakeaways": [
+          "エリートビルダーは「システム」を構築し、vibe coderは「プロンプト」を書く",
+          "7つの技術（プロンプト管理、構造化、フォールバック等）が鍵",
+          "本番環境で動き続けるAIプロジェクトには再現可能な仕組みが必要"
+        ],
+        "sourceUrl": "https://www.zdnet.com/article/ai-coding-techniques/"
+      }
+    }
+  ],
+
+  "middle": [
+    {
+      "id": "claude-code-offline-lm-studio",
+      "category": "ローカルAI",
+      "categoryClass": "indie",
+      "headline": "Claude Code風のワークフローをLM Studioでオフライン実装 — ストリーミング＋コンテキスト保持を実現",
+      "summary": "Claude CodeのようなAI開発体験をLM Studioとローカルモデルで再現するプロジェクト。ストリーミング応答とコンテキスト維持機能を追加し、オフラインファーストな開発環境を構築。",
+      "author": "XDA Developers",
+      "readTime": "5",
+      "gradient": "linear-gradient(135deg, #c07000 0%, #e09020 100%)",
+      "fullContent": {
+        "introduction": "Claude Codeの生産性機能をローカル環境で再現する試み。LM Studioをバックエンドに、ストリーミング応答と会話履歴の保持機能を実装したCLIツールを開発。オフラインでもClaude Code並みの体験を実現する。",
+        "sections": [
+          {
+            "heading": "実装した機能",
+            "content": "ストリーミング応答により、モデルの生成トークンをリアルタイムで表示。会話履歴を保持することで、フォローアップの質問にも文脈を失わず対応できる。これらの機能は、LM StudioのAPIを直接叩くことで実現した。"
+          },
+          {
+            "heading": "ローカルAI開発の利点",
+            "content": "API料金を気にせず実験できること、インターネット接続不要で機密プロジェクトでも安心、そしてレスポンス速度を自分でコントロールできることが大きなメリット。ハードウェアのチューニング方法やトラブルシューティングのコツもニュースレターで配信予定。"
+          }
+        ],
+        "keyTakeaways": [
+          "Claude CodeのワークフローをLM Studioで再現可能",
+          "ストリーミング＋コンテキスト保持でローカルでも快適な体験",
+          "API料金ゼロ、オフライン可、機密プロジェクトでも安心"
+        ],
+        "sourceUrl": "https://www.xda-developers.com/built-claude-code-workflow-lm-studio-offline-first-development/"
+      }
+    },
+    {
+      "id": "rubymine-mcp-tools",
+      "category": "開発ツール",
+      "categoryClass": "tech",
+      "headline": "RubyMineがMCP対応ツール設計ガイドを公開 — ページネーション・フィルタリング・エラー設計の実践",
+      "summary": "JetBrainsがRubyMine向けにLLMフレンドリーなMCPツールの設計方法を解説。ページネーション、フィルタリング、コンテキスト制限への対処、AIアシスタント制約の扱い方を実例で示す。",
+      "author": "JetBrains RubyMine Blog",
+      "readTime": "4",
+      "gradient": "linear-gradient(135deg, #1e3a5f 0%, #3498db 100%)",
+      "fullContent": {
+        "introduction": "JetBrainsがRubyMineの「Rails Toolset」を通じて、LLM（大規模言語モデル）が使いやすいMCP（Model Context Protocol）ツールの設計方法を公開した。ページネーション、フィルタリング、エラーハンドリングなど、実践的な実装パターンを網羅している。",
+        "sections": [
+          {
+            "heading": "LLMフレンドリーなツール設計",
+            "content": "MCPツールはLLMが自律的に呼び出すため、人間向けのAPIとは異なる設計が必要。例えば、ページネーションは「次のページ」を明示的に示すトークンを返す、フィルタリングは自然言語クエリを受け入れる、エラーメッセージはLLMが理解できる構造化された形式で返す、といった工夫が求められる。"
+          },
+          {
+            "heading": "コンテキスト制限への対処",
+            "content": "LLMのコンテキストウィンドウには限界があるため、大量のデータを一度に返すことはできない。RubyMineの実装では、結果をサマリーとして返し、詳細が必要な場合のみ個別に取得する「2段階取得パターン」を採用している。"
+          }
+        ],
+        "keyTakeaways": [
+          "MCPツールはLLMが自律的に使うため、人間向けAPIとは設計思想が異なる",
+          "ページネーション、フィルタリング、エラー設計に独自の工夫が必要",
+          "コンテキスト制限を考慮した「2段階取得パターン」が有効"
+        ],
+        "sourceUrl": "https://blog.jetbrains.com/ruby/2026/02/rubymine-mcp-and-the-rails-toolset/"
+      }
+    },
+    {
+      "id": "ai-saas-sveltekit-architecture",
+      "category": "インディー開発",
+      "categoryClass": "indie",
+      "headline": "週末でAI SaaSを立ち上げるSvelteKit + Node.jsアーキテクチャ — 利益を出すための実践設計",
+      "summary": "AI SaaSで成功するには、数十億パラメータのモデルを自前で訓練することではなく、シームレスなアーキテクチャ、高速UI、スケーラブルなDB、コスト効率の高いデプロイが鍵。週末で立ち上げる具体的な設計を公開。",
+      "author": "DEV Community",
+      "readTime": "5",
+      "gradient": "linear-gradient(135deg, #c07000 0%, #e09020 100%)",
+      "fullContent": {
+        "introduction": "2026年現在、成功するAI SaaSの秘訣は巨大なモデルを訓練することではない。OpenAI、Anthropic、GoogleといったプロバイダーのAPIを組み合わせ、優れたユーザー体験と持続可能なアーキテクチャで差別化することだ。SvelteKitとNode.jsを使い、週末で立ち上げる具体的な設計を解説する。",
+        "sections": [
+          {
+            "heading": "フロントエンド: SvelteKitの選択理由",
+            "content": "SvelteKitは、Server-Side Rendering（SSR）、ファイルベースルーティング、そして軽量なバンドルサイズを提供する。AIツールでは初回ロード速度が重要であり、SvelteKitのSSRはSEOとパフォーマンスの両立に最適。また、Svelteのリアクティブな構文により、ストリーミングAI応答のUIも直感的に実装できる。"
+          },
+          {
+            "heading": "バックエンド: Node.js + Express/Fastify",
+            "content": "Node.jsは非同期I/Oに優れており、LLM APIへの並列リクエスト処理に適している。認証（JWT）、レート制限（Redis）、ジョブキュー（Bull）を組み合わせることで、本番環境レベルのバックエンドを短期間で構築できる。"
+          },
+          {
+            "heading": "コスト最適化とデプロイ",
+            "content": "LLM APIコストを抑えるため、キャッシング戦略（Redis + Upstash）とプロンプト圧縮技術を実装。デプロイはVercel（フロント）+ Railway/Render（バック）の組み合わせで、初期コストをほぼゼロに抑えられる。"
+          }
+        ],
+        "keyTakeaways": [
+          "AI SaaSの成功は巨大モデルの訓練ではなく、アーキテクチャとUXで決まる",
+          "SvelteKit + Node.jsで週末での立ち上げが現実的",
+          "キャッシング＋プロンプト圧縮でLLM APIコストを大幅削減可能"
+        ],
+        "sourceUrl": "https://dev.to/saqibshahdev/architecting-a-profitable-ai-saas-in-2026-sveltekit-nodejs-3omk"
+      }
+    }
+  ],
+
+  "briefs": [
+    {
+      "headline": "中国製AIモデルがOpenRouterで61%シェア獲得、トップ3独占",
+      "text": "世界最大のLLM API集約プラットフォームOpenRouterで、中国製モデルがトークン消費量の61%を占め、上位3モデルすべてを中国のAIラボが開発。"
+    },
+    {
+      "headline": "GitHub Copilot X、2026年のベストAIコーディングアシスタントに選出",
+      "text": "Ryz Labsの評価で、GitHub Copilot XがGitHubエコシステムとの統合、広範な言語サポート、チーム協働機能により2026年のトップツールに認定。"
+    },
+    {
+      "headline": "Microsoft AI Toolkit v0.30.0、MCPサーバー直接接続のTool Catalogを実装",
+      "text": "VS Code用AI Toolkitの最新版で、MCPサーバーに直接接続できるTool Catalogが追加され、カスタムコード不要で外部ツールをAIエージェントに統合可能に。"
+    },
+    {
+      "headline": "GPT4All、インターネットもGPUも不要なローカルLLMツールとして注目",
+      "text": "オープンソースのGPT4Allが、オフライン環境でも動作し、GPUなしで実行可能なローカルLLMツールとして開発者コミュニティで再評価されている。"
+    }
+  ],
+
+  "opinions": [
+    {
+      "id": "openclaw-vibe-coding-slur",
+      "authorLabel": "業界議論：",
+      "author": "OpenClaw開発者 / Business Insider報道",
+      "headline": "「vibe codingは侮辱的な言葉」— OpenClaw開発者がKarpathy氏の造語を痛烈批判",
+      "excerpt": "OpenClawの開発者は「vibe codingは侮辱的な言葉（slur）だ」と公言し、この用語がAI支援開発を軽視する表現だと批判。元Google Brain研究者のAndrew Ng氏も「不幸で誤解を招く」と評している。一方でKarpathy氏は「agentic engineering」へとシフトし、この論争はAI開発ツールの設計思想の違いを浮き彫りにしている。",
+      "fullContent": {
+        "introduction": "「vibe coding」という言葉を巡る論争は、単なる用語の問題ではなく、AI開発ツールの設計思想そのものを問うている。OpenClawの開発者は、この言葉が「AIに頼りっぱなしで適当にコードを書く」というネガティブな印象を与えると批判。一方で、Karpathy氏はすでに「agentic engineering」という新しいコンセプトへと移行している。",
+        "sections": [
+          {
+            "heading": "「vibe coding」への批判の核心",
+            "content": "OpenClaw開発者の批判の核心は、「vibe coding」が「感覚だけで適当にコードを書く」というイメージを植え付け、AI支援開発の真剣さを損なうという点だ。実際には、Claude CodeやCursorといったツールは、厳密な計画、テスト、レビューを前提としたワークフローを提供している。Andrew Ng氏も同様に、この用語が誤解を招くと警告した。"
+          },
+          {
+            "heading": "agentic engineeringへのシフト",
+            "content": "Karpathy氏はこの論争には直接反応せず、むしろ「agentic engineering」という新しいビジョンを提示している。これは、AIエージェントがより自律的にタスクを実行する世界であり、「感覚」ではなく「システム」としてのAI開発を示唆している。この転換は、業界全体がAI開発ツールの成熟に向かっていることを象徴している。"
+          }
+        ],
+        "keyTakeaways": [
+          "OpenClaw開発者とAndrew Ng氏が「vibe coding」を批判",
+          "Karpathy氏は「agentic engineering」へとシフト",
+          "論争は用語の問題ではなく、AI開発ツールの設計思想の違いを示している"
+        ],
+        "sourceUrl": "https://www.businessinsider.com/openclaw-creator-vibe-coding-term-slur-criticism-2026-2"
+      }
+    },
+    {
+      "id": "stop-writing-prompts-engineer-systems",
+      "authorLabel": "開発哲学：",
+      "author": "DEV Community / Kseniya Seliverstava",
+      "headline": "「プロンプトを書くのをやめろ。AIシステムをエンジニアリングしろ」— 新しいAI開発の哲学",
+      "excerpt": "AIシステムでは振る舞いは確率的であり、ハードコードされたロジックではない。難しいのはテキスト生成ではなく、数千のインタラクションにわたって振る舞いを制御することだ。制御はエンジニアリングのループから生まれる：目標 → 成功基準 → テストケース → プロンプト+コンテキストバージョン → 測定 → 反復。",
+      "fullContent": {
+        "introduction": "DEV Communityに投稿されたこの記事は、AI開発における根本的なパラダイムシフトを提唱している。「良いプロンプトを書く」ことではなく、「AIシステムをエンジニアリングする」こと。つまり、再現可能で測定可能なフィードバックループを構築することが、本番環境で動くAIシステムの鍵だという主張だ。",
+        "sections": [
+          {
+            "heading": "エンジニアリングのループ",
+            "content": "記事が提唱する「エンジニアリングのループ」は以下の通り：1. 目標を定義する 2. 成功基準を設定する 3. テストケースを作成する 4. プロンプト+コンテキストのバージョンを管理する 5. 結果を測定する 6. 反復する。このループを回すことで、AIの振る舞いは「偶然うまくいく」から「再現可能に制御される」へと変わる。"
+          },
+          {
+            "heading": "確率的な振る舞いの制御",
+            "content": "AIシステムでは、振る舞いは確率的だ。同じプロンプトでも、毎回異なる出力が返ってくる可能性がある。だからこそ、テストケースを大量に用意し、統計的に成功率を測定し、バージョン管理でプロンプトの変更履歴を追跡することが重要になる。これは従来のソフトウェア開発とは異なるアプローチだが、AIシステムの本質に即している。"
+          }
+        ],
+        "keyTakeaways": [
+          "「プロンプトを書く」のではなく「AIシステムをエンジニアリングする」",
+          "目標 → 成功基準 → テストケース → 測定 → 反復のループが鍵",
+          "確率的な振る舞いを制御するには統計的な測定とバージョン管理が必要"
+        ],
+        "sourceUrl": "https://dev.to/kseniyaseliverstava/stop-writing-prompts-start-engineering-ai-systems-2182"
+      }
+    }
+  ]
+}
