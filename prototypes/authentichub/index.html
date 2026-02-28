@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuthenticHub — Proof of Human Engine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0F1115; color: #F3F4F6; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .badge-gradient { background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%); }
+        .timeline-line { width: 2px; background: rgba(255, 255, 255, 0.1); position: absolute; top: 0; bottom: 0; left: 16px; }
+        .step-circle { width: 12px; height: 12px; border-radius: 50%; background: #4F46E5; position: absolute; left: 11px; z-index: 10; border: 2px solid #0F1115; }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Navigation -->
+    <nav class="p-6 border-b border-white/5 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 badge-gradient rounded-lg flex items-center justify-center font-bold text-white italic">A</div>
+            <span class="text-xl font-bold tracking-tight">AuthenticHub</span>
+        </div>
+        <div class="flex gap-6 items-center text-sm font-medium text-gray-400">
+            <a href="#" class="hover:text-white transition-colors">Projects</a>
+            <a href="#" class="hover:text-white transition-colors">Analytics</a>
+            <a href="#" class="hover:text-white transition-colors">Settings</a>
+            <button class="bg-white text-black px-4 py-2 rounded-full hover:bg-gray-200 transition-colors">Sign Out</button>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto p-8">
+        <!-- Header Section -->
+        <header class="mb-12 flex justify-between items-end">
+            <div>
+                <h1 class="text-4xl font-bold mb-2">Verified Content Dashboard</h1>
+                <p class="text-gray-400">Manage your "Proof of Human" assets and verified BTS timelines.</p>
+            </div>
+            <div class="flex gap-3">
+                <button class="glass px-6 py-3 rounded-xl flex items-center gap-2 hover:bg-white/5 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    New Project
+                </button>
+                <button class="badge-gradient px-6 py-3 rounded-xl font-semibold shadow-lg shadow-indigo-500/20 hover:opacity-90 transition-opacity">
+                    Verify New Content
+                </button>
+            </div>
+        </header>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-4 gap-6 mb-12">
+            <div class="glass p-6 rounded-2xl">
+                <p class="text-sm text-gray-400 mb-1">Total Human Hours</p>
+                <p class="text-3xl font-bold">142.5h</p>
+                <div class="mt-2 text-xs text-green-400 font-medium">+12.4h this week</div>
+            </div>
+            <div class="glass p-6 rounded-2xl">
+                <p class="text-sm text-gray-400 mb-1">Authenticity Trust Score</p>
+                <p class="text-3xl font-bold">98.4%</p>
+                <div class="mt-2 text-xs text-blue-400 font-medium">Verified by 12k nodes</div>
+            </div>
+            <div class="glass p-6 rounded-2xl">
+                <p class="text-sm text-gray-400 mb-1">Engagement Boost (BTS)</p>
+                <p class="text-3xl font-bold">3.2x</p>
+                <div class="mt-2 text-xs text-purple-400 font-medium">vs polished content</div>
+            </div>
+            <div class="glass p-6 rounded-2xl">
+                <p class="text-sm text-gray-400 mb-1">Shared Verifications</p>
+                <p class="text-3xl font-bold">45</p>
+                <div class="mt-2 text-xs text-gray-400">Active public proofs</div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-8">
+            <!-- Project List -->
+            <div class="col-span-2 space-y-6">
+                <h2 class="text-xl font-semibold">Active Projects</h2>
+                
+                <!-- Project Card 1 -->
+                <div class="glass p-6 rounded-2xl group hover:border-white/20 transition-all">
+                    <div class="flex justify-between mb-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-16 h-12 bg-gray-800 rounded-lg overflow-hidden relative">
+                                <div class="absolute inset-0 flex items-center justify-center text-xs text-gray-500">Preview</div>
+                            </div>
+                            <div>
+                                <h3 class="font-bold">NextGen Visual Storytelling — Episode 4</h3>
+                                <p class="text-xs text-gray-500">Last recorded: 2 mins ago via Camera-to-Cloud</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs px-2 py-1 rounded bg-green-500/10 text-green-400 font-medium">Verified</span>
+                            <button class="p-2 hover:text-white transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-black/40 rounded-xl p-4 flex justify-between items-center text-sm">
+                        <div class="flex gap-4 text-gray-400">
+                            <span class="flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                2.4k views
+                            </span>
+                            <span class="flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                                842 proofs
+                            </span>
+                        </div>
+                        <button class="text-indigo-400 font-medium hover:text-indigo-300">Share Public Proof →</button>
+                    </div>
+                </div>
+
+                <!-- Project Card 2 -->
+                <div class="glass p-6 rounded-2xl group hover:border-white/20 transition-all opacity-70">
+                    <div class="flex justify-between mb-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-16 h-12 bg-gray-800 rounded-lg"></div>
+                            <div>
+                                <h3 class="font-bold">Indie Game Dev Journey #12</h3>
+                                <p class="text-xs text-gray-500">Drafting — 42h of human activity logs</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs px-2 py-1 rounded bg-yellow-500/10 text-yellow-400 font-medium">In Review</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Verification Feed -->
+            <div class="space-y-6">
+                <h2 class="text-xl font-semibold">Live BTS Verification</h2>
+                <div class="glass rounded-2xl p-6 relative overflow-hidden">
+                    <div class="timeline-line"></div>
+                    <div class="space-y-8 relative">
+                        <!-- Step 1 -->
+                        <div class="pl-8 relative">
+                            <div class="step-circle"></div>
+                            <p class="text-xs text-indigo-400 font-bold uppercase tracking-widest mb-1">Now Recording</p>
+                            <p class="text-sm font-semibold mb-1">DaVinci Resolve Activity</p>
+                            <p class="text-xs text-gray-500">Masking & Color Grading workflow detected. Metadata sync active.</p>
+                        </div>
+                        <!-- Step 2 -->
+                        <div class="pl-8 relative">
+                            <div class="step-circle !bg-gray-600"></div>
+                            <p class="text-xs text-gray-500 font-bold uppercase tracking-widest mb-1">10:42 AM</p>
+                            <p class="text-sm font-semibold mb-1">Hardware Input Confirmed</p>
+                            <p class="text-xs text-gray-500">Wacom Intuos Pro pressure data points signed via local node.</p>
+                        </div>
+                        <!-- Step 3 -->
+                        <div class="pl-8 relative">
+                            <div class="step-circle !bg-gray-600"></div>
+                            <p class="text-xs text-gray-500 font-bold uppercase tracking-widest mb-1">09:15 AM</p>
+                            <p class="text-sm font-semibold mb-1">Session Initialized</p>
+                            <p class="text-xs text-gray-500">Authenticated via Biometric Proof of Personhood.</p>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Fade -->
+                    <div class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#0F1115] to-transparent"></div>
+                </div>
+
+                <!-- Verified Badge Promo -->
+                <div class="badge-gradient rounded-2xl p-6 text-center">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-white/20 rounded-full flex items-center justify-center border-2 border-white/40">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                    </div>
+                    <h3 class="font-bold text-lg mb-1">Get the Human Badge</h3>
+                    <p class="text-sm text-white/80 mb-4">Embed your verification on YouTube, Instagram, and TikTok.</p>
+                    <button class="bg-white text-indigo-600 w-full py-2 rounded-xl font-bold hover:bg-gray-100 transition-colors">Generate Widget</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="mt-20 border-t border-white/5 p-8 text-center text-gray-500 text-sm">
+        &copy; 2026 AuthenticHub — Part of the Human Content Initiative.
+    </footer>
+</body>
+</html>
