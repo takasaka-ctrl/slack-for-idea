@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UriDoko（ウリドコ）— どこで売るのが一番得？</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #2563eb;
+  --primary-light: #3b82f6;
+  --primary-bg: #eff6ff;
+  --success: #16a34a;
+  --success-bg: #f0fdf4;
+  --warning: #d97706;
+  --warning-bg: #fffbeb;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Noto Sans JP', 'Inter', -apple-system, sans-serif;
+  background: var(--gray-50);
+  color: var(--gray-800);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Header */
+.header {
+  background: white;
+  border-bottom: 1px solid var(--gray-200);
+  padding: 16px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--gray-900);
+}
+.logo-icon {
+  width: 36px;
+  height: 36px;
+  background: var(--primary);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+}
+.logo-text {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+.logo-sub {
+  font-size: 12px;
+  color: var(--gray-500);
+  font-weight: 400;
+}
+.header-badge {
+  font-size: 12px;
+  background: var(--primary-bg);
+  color: var(--primary);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+/* Hero */
+.hero {
+  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+  color: white;
+  padding: 48px 20px;
+  text-align: center;
+}
+.hero h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  letter-spacing: -0.5px;
+}
+.hero p {
+  font-size: 16px;
+  opacity: 0.9;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Main */
+.main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 20px;
+}
+
+/* Calculator Card */
+.calc-card {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  padding: 28px;
+  margin-bottom: 24px;
+}
+.calc-card h2 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.calc-card h2 .icon {
+  font-size: 20px;
+}
+
+/* Form Grid */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 600px) {
+  .form-grid { grid-template-columns: 1fr; }
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+.form-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray-600);
+}
+.form-input {
+  padding: 10px 14px;
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background: white;
+}
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+}
+.form-input::placeholder {
+  color: var(--gray-400);
+}
+.input-suffix {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.input-suffix input {
+  border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+  border-right: none;
+  flex: 1;
+}
+.input-suffix .suffix {
+  padding: 10px 14px;
+  background: var(--gray-100);
+  border: 1.5px solid var(--gray-200);
+  border-left: none;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 13px;
+  color: var(--gray-500);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Size inputs */
+.size-inputs {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.size-inputs input {
+  width: 70px;
+  text-align: center;
+}
+.size-sep {
+  color: var(--gray-400);
+  font-weight: 500;
+}
+
+/* Calculate Button */
+.calc-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 16px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  margin-top: 8px;
+}
+.calc-btn:hover { background: var(--primary-light); }
+.calc-btn:active { transform: scale(0.99); }
+
+/* Results */
+.results-section {
+  display: none;
+}
+.results-section.visible {
+  display: block;
+}
+
+/* Platform Card */
+.platform-cards {
+  display: grid;
+  gap: 12px;
+}
+.platform-card {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px 24px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 16px;
+  align-items: center;
+  border: 2px solid transparent;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.platform-card.best {
+  border-color: var(--success);
+  box-shadow: var(--shadow-md), 0 0 0 3px rgba(22,163,74,0.1);
+}
+.platform-card .rank {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 16px;
+}
+.platform-card.best .rank {
+  background: var(--success);
+  color: white;
+}
+.platform-card:not(.best) .rank {
+  background: var(--gray-100);
+  color: var(--gray-500);
+}
+.platform-info h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+.platform-info .details {
+  font-size: 13px;
+  color: var(--gray-500);
+}
+.platform-amount {
+  text-align: right;
+}
+.platform-amount .amount {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--gray-900);
+}
+.platform-card.best .platform-amount .amount {
+  color: var(--success);
+}
+.platform-amount .label {
+  font-size: 11px;
+  color: var(--gray-500);
+  font-weight: 500;
+}
+.best-badge {
+  display: inline-block;
+  background: var(--success-bg);
+  color: var(--success);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-left: 8px;
+}
+
+/* Breakdown */
+.breakdown-toggle {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 4px 0;
+  margin-top: 4px;
+}
+.breakdown {
+  display: none;
+  grid-column: 1 / -1;
+  padding: 16px;
+  background: var(--gray-50);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+}
+.breakdown.visible { display: block; }
+.breakdown-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+}
+.breakdown-row.total {
+  border-top: 1px solid var(--gray-200);
+  margin-top: 8px;
+  padding-top: 8px;
+  font-weight: 700;
+}
+
+/* Category Tips */
+.tips-card {
+  background: var(--warning-bg);
+  border: 1px solid #fde68a;
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-top: 16px;
+  font-size: 14px;
+}
+.tips-card .tip-title {
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Packaging Section */
+.packaging-card {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px 24px;
+  margin-top: 16px;
+}
+.packaging-card h3 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.pkg-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+}
+.pkg-item {
+  background: var(--gray-50);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  font-size: 13px;
+}
+.pkg-item .pkg-name { font-weight: 600; margin-bottom: 2px; }
+.pkg-item .pkg-size { color: var(--gray-500); font-size: 12px; }
+.pkg-item .pkg-price { color: var(--primary); font-weight: 600; margin-top: 4px; }
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 32px 20px;
+  color: var(--gray-400);
+  font-size: 13px;
+}
+
+/* Category Select */
+select.form-input {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%236b7280' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <div class="logo-icon">売</div>
+      <div>
+        <div class="logo-text">UriDoko</div>
+        <div class="logo-sub">最適な売り場が一瞬でわかる</div>
+      </div>
+    </a>
+    <span class="header-badge">無料ツール</span>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>どこで売るのが一番得？</h1>
+  <p>商品情報を入力するだけで、6つのフリマ・オークションサイトの手取り額を瞬間比較</p>
+</section>
+
+<main class="main">
+  <div class="calc-card">
+    <h2><span class="icon">📦</span> 商品情報を入力</h2>
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label">売りたい価格</label>
+        <div class="input-suffix">
+          <input type="number" id="price" class="form-input" placeholder="3,000" min="300">
+          <span class="suffix">円</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">仕入れ価格（任意）</label>
+        <div class="input-suffix">
+          <input type="number" id="cost" class="form-input" placeholder="0" min="0">
+          <span class="suffix">円</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">商品カテゴリ</label>
+        <select id="category" class="form-input">
+          <option value="general">その他/一般</option>
+          <option value="fashion">ファッション・衣類</option>
+          <option value="electronics">家電・電子機器</option>
+          <option value="books">本・漫画・雑誌</option>
+          <option value="games">ゲーム・おもちゃ</option>
+          <option value="beauty">コスメ・美容</option>
+          <option value="sports">スポーツ・アウトドア</option>
+          <option value="handmade">ハンドメイド</option>
+          <option value="furniture">家具・インテリア</option>
+          <option value="baby">ベビー・キッズ</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">重量</label>
+        <div class="input-suffix">
+          <input type="number" id="weight" class="form-input" placeholder="500" min="0" step="10">
+          <span class="suffix">g</span>
+        </div>
+      </div>
+      <div class="form-group full-width">
+        <label class="form-label">サイズ（3辺の合計がわかる場合）</label>
+        <div class="size-inputs">
+          <input type="number" id="sizeW" class="form-input" placeholder="縦" min="0"> <span class="size-sep">×</span>
+          <input type="number" id="sizeH" class="form-input" placeholder="横" min="0"> <span class="size-sep">×</span>
+          <input type="number" id="sizeD" class="form-input" placeholder="高さ" min="0"> <span class="size-sep">cm</span>
+        </div>
+      </div>
+    </div>
+    <button class="calc-btn" onclick="calculate()">🔍 最適な売り場を比較する</button>
+  </div>
+
+  <div class="results-section" id="results">
+    <div class="calc-card">
+      <h2><span class="icon">🏆</span> 比較結果</h2>
+      <div class="platform-cards" id="platformCards"></div>
+    </div>
+
+    <div id="tipsContainer"></div>
+
+    <div class="packaging-card" id="packagingCard" style="display:none;">
+      <h3>📐 おすすめ梱包方法</h3>
+      <div class="pkg-grid" id="packagingGrid"></div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <p>© 2026 UriDoko — 手数料・送料データは2026年3月時点のものです</p>
+  <p style="margin-top:4px;">※ 実際の手数料・送料は変動する場合があります。最新情報は各サービスをご確認ください。</p>
+</footer>
+
+<script>
+// Platform data: fees, shipping methods
+const PLATFORMS = [
+  {
+    id: 'mercari',
+    name: 'メルカリ',
+    feeRate: 0.10,
+    shipping: [
+      { name: 'ネコポス', maxWeight: 1000, maxSize: 31.2+22.8+3, cost: 210 },
+      { name: 'ゆうパケット', maxWeight: 1000, maxSize: 60, cost: 230 },
+      { name: '宅急便コンパクト', maxWeight: Infinity, maxSize: 60, cost: 450 },
+      { name: 'ゆうパケットポスト', maxWeight: 2000, maxSize: 60, cost: 215 },
+      { name: '60サイズ', maxWeight: 2000, maxSize: 60, cost: 750 },
+      { name: '80サイズ', maxWeight: 5000, maxSize: 80, cost: 850 },
+      { name: '100サイズ', maxWeight: 10000, maxSize: 100, cost: 1050 },
+      { name: '120サイズ', maxWeight: 15000, maxSize: 120, cost: 1200 },
+      { name: '140サイズ', maxWeight: 20000, maxSize: 140, cost: 1450 },
+      { name: '160サイズ', maxWeight: 25000, maxSize: 160, cost: 1700 },
+    ],
+    color: '#e74c3c',
+    popularity: { fashion: 5, electronics: 4, books: 4, games: 5, beauty: 5, sports: 3, handmade: 4, furniture: 3, baby: 5, general: 4 }
+  },
+  {
+    id: 'rakuma',
+    name: 'ラクマ',
+    feeRate: 0.06,
+    shipping: [
+      { name: 'かんたんラクマパック(ネコポス)', maxWeight: 1000, maxSize: 57, cost: 200 },
+      { name: 'かんたんラクマパック(60)', maxWeight: 2000, maxSize: 60, cost: 800 },
+      { name: 'かんたんラクマパック(80)', maxWeight: 5000, maxSize: 80, cost: 900 },
+      { name: 'かんたんラクマパック(100)', maxWeight: 10000, maxSize: 100, cost: 1150 },
+      { name: 'かんたんラクマパック(120)', maxWeight: 15000, maxSize: 120, cost: 1350 },
+      { name: 'かんたんラクマパック(140)', maxWeight: 20000, maxSize: 140, cost: 1550 },
+      { name: 'かんたんラクマパック(160)', maxWeight: 25000, maxSize: 160, cost: 1800 },
+    ],
+    color: '#6f42c1',
+    popularity: { fashion: 4, electronics: 3, books: 3, games: 3, beauty: 4, sports: 2, handmade: 3, furniture: 2, baby: 4, general: 3 }
+  },
+  {
+    id: 'yahoo_flea',
+    name: 'Yahoo!フリマ',
+    feeRate: 0.05,
+    shipping: [
+      { name: 'おてがる配送(ネコポス)', maxWeight: 1000, maxSize: 57, cost: 170 },
+      { name: 'おてがる配送(60)', maxWeight: 2000, maxSize: 60, cost: 750 },
+      { name: 'おてがる配送(80)', maxWeight: 5000, maxSize: 80, cost: 850 },
+      { name: 'おてがる配送(100)', maxWeight: 10000, maxSize: 100, cost: 1050 },
+      { name: 'おてがる配送(120)', maxWeight: 15000, maxSize: 120, cost: 1200 },
+      { name: 'おてがる配送(140)', maxWeight: 20000, maxSize: 140, cost: 1450 },
+      { name: 'おてがる配送(160)', maxWeight: 25000, maxSize: 160, cost: 1700 },
+    ],
+    color: '#ff6600',
+    popularity: { fashion: 3, electronics: 3, books: 3, games: 3, beauty: 2, sports: 2, handmade: 2, furniture: 2, baby: 3, general: 3 }
+  },
+  {
+    id: 'yahoo_auction',
+    name: 'ヤフオク!',
+    feeRate: 0.088,
+    shipping: [
+      { name: 'おてがる配送(ネコポス)', maxWeight: 1000, maxSize: 57, cost: 170 },
+      { name: 'おてがる配送(60)', maxWeight: 2000, maxSize: 60, cost: 750 },
+      { name: 'おてがる配送(80)', maxWeight: 5000, maxSize: 80, cost: 850 },
+      { name: 'おてがる配送(100)', maxWeight: 10000, maxSize: 100, cost: 1050 },
+      { name: 'おてがる配送(120)', maxWeight: 15000, maxSize: 120, cost: 1200 },
+      { name: 'おてがる配送(140)', maxWeight: 20000, maxSize: 140, cost: 1450 },
+      { name: 'おてがる配送(160)', maxWeight: 25000, maxSize: 160, cost: 1700 },
+    ],
+    color: '#ff0033',
+    popularity: { fashion: 3, electronics: 5, books: 4, games: 4, beauty: 2, sports: 4, handmade: 2, furniture: 4, baby: 2, general: 4 }
+  },
+  {
+    id: 'booth',
+    name: 'BOOTH',
+    feeRate: 0.056,
+    shipping: [
+      { name: 'あんしんBOOTHパック(ネコポス)', maxWeight: 1000, maxSize: 57, cost: 370 },
+      { name: 'あんしんBOOTHパック(60)', maxWeight: 2000, maxSize: 60, cost: 850 },
+      { name: 'あんしんBOOTHパック(80)', maxWeight: 5000, maxSize: 80, cost: 970 },
+      { name: 'あんしんBOOTHパック(100)', maxWeight: 10000, maxSize: 100, cost: 1100 },
+      { name: 'あんしんBOOTHパック(120)', maxWeight: 15000, maxSize: 120, cost: 1300 },
+    ],
+    color: '#fc4d50',
+    popularity: { fashion: 2, electronics: 2, books: 3, games: 3, beauty: 1, sports: 1, handmade: 5, furniture: 1, baby: 1, general: 2 }
+  },
+  {
+    id: 'jmty',
+    name: 'ジモティー',
+    feeRate: 0.05,
+    shipping: [
+      { name: '手渡し（送料無料）', maxWeight: Infinity, maxSize: Infinity, cost: 0 },
+      { name: 'あんしん配送(60)', maxWeight: 2000, maxSize: 60, cost: 960 },
+      { name: 'あんしん配送(80)', maxWeight: 5000, maxSize: 80, cost: 1070 },
+      { name: 'あんしん配送(100)', maxWeight: 10000, maxSize: 100, cost: 1280 },
+      { name: 'あんしん配送(140)', maxWeight: 20000, maxSize: 140, cost: 1700 },
+    ],
+    color: '#00b900',
+    popularity: { fashion: 2, electronics: 3, books: 2, games: 2, beauty: 1, sports: 3, handmade: 1, furniture: 5, baby: 3, general: 3 }
+  }
+];
+
+const PACKAGING = [
+  { name: 'ネコポス用段ボール', size: '31×23×3cm', price: '約30円', maxSize: 57 },
+  { name: 'クリックポスト用箱', size: '34×25×3cm', price: '約35円', maxSize: 62 },
+  { name: '宅急便コンパクト専用箱', size: '25×20×5cm', price: '70円', maxSize: 50 },
+  { name: '60サイズ段ボール', size: '35×25×15cm', price: '約50円', maxSize: 75 },
+  { name: '80サイズ段ボール', size: '40×30×20cm', price: '約80円', maxSize: 90 },
+  { name: '100サイズ段ボール', size: '44×34×24cm', price: '約100円', maxSize: 102 },
+  { name: 'A4封筒+プチプチ', size: '33×24cm', price: '約20円', maxSize: 60 },
+  { name: '紙袋（ショッパー）', size: '各種', price: '0円（再利用）', maxSize: 80 },
+];
+
+const CATEGORY_TIPS = {
+  fashion: { tip: 'ファッション系はメルカリが圧倒的に売れやすい。ブランド品はラクマ（手数料6%）も◎', icon: '👗' },
+  electronics: { tip: '家電・電子機器はヤフオク!のオークション形式で高値がつくことも。メルカリは即決派向け', icon: '📱' },
+  books: { tip: '本・漫画はメルカリが回転◎。セット売りならヤフオク!で高値になることも', icon: '📚' },
+  games: { tip: 'ゲームはメルカリが最速。レトロゲームはヤフオク!でプレミアがつく場合あり', icon: '🎮' },
+  beauty: { tip: 'コスメはメルカリが強い。ハイブランドはラクマの手数料の低さが活きる', icon: '💄' },
+  handmade: { tip: 'ハンドメイドはBOOTHが手数料最安で相性◎。minne/Creemaも検討を', icon: '🧵' },
+  furniture: { tip: '家具はジモティーの手渡しが送料ゼロで最強。大型品は送料が利益を食う', icon: '🪑' },
+  baby: { tip: 'ベビー用品はメルカリの回転が速い。まとめ売りで送料を抑えるのがコツ', icon: '👶' },
+  sports: { tip: 'スポーツ用品はヤフオク!で高値がつきやすい。ジモティーの手渡しも人気', icon: '⚽' },
+  general: { tip: '迷ったらメルカリで出品。売れなければヤフオク!に出品し直すのが王道パターン', icon: '📦' },
+};
+
+function calculate() {
+  const price = parseInt(document.getElementById('price').value);
+  if (!price || price < 300) {
+    alert('300円以上の価格を入力してください');
+    return;
+  }
+  const cost = parseInt(document.getElementById('cost').value) || 0;
+  const weight = parseInt(document.getElementById('weight').value) || 500;
+  const sizeW = parseInt(document.getElementById('sizeW').value) || 20;
+  const sizeH = parseInt(document.getElementById('sizeH').value) || 15;
+  const sizeD = parseInt(document.getElementById('sizeD').value) || 5;
+  const totalSize = sizeW + sizeH + sizeD;
+  const category = document.getElementById('category').value;
+
+  const results = PLATFORMS.map(platform => {
+    const fee = Math.floor(price * platform.feeRate);
+    // Find cheapest shipping that fits
+    let bestShipping = null;
+    for (const ship of platform.shipping) {
+      if (weight <= ship.maxWeight && totalSize <= ship.maxSize) {
+        if (!bestShipping || ship.cost < bestShipping.cost) {
+          bestShipping = ship;
+        }
+      }
+    }
+    // Fallback to largest option
+    if (!bestShipping) {
+      bestShipping = platform.shipping[platform.shipping.length - 1];
+    }
+    const shipping = bestShipping.cost;
+    const profit = price - fee - shipping - cost;
+    const profitWithoutCost = price - fee - shipping;
+    return {
+      ...platform,
+      fee,
+      shipping,
+      shippingMethod: bestShipping.name,
+      profit,
+      profitWithoutCost,
+      netAmount: price - fee - shipping,
+      popularityScore: platform.popularity[category] || 3
+    };
+  });
+
+  // Sort by net amount (hand amount)
+  results.sort((a, b) => b.netAmount - a.netAmount);
+
+  const container = document.getElementById('platformCards');
+  container.innerHTML = results.map((r, i) => {
+    const isBest = i === 0;
+    const stars = '★'.repeat(r.popularityScore) + '☆'.repeat(5 - r.popularityScore);
+    return `
+      <div class="platform-card ${isBest ? 'best' : ''}">
+        <div class="rank">${i + 1}</div>
+        <div class="platform-info">
+          <h3>${r.name}${isBest ? '<span class="best-badge">おすすめ</span>' : ''}</h3>
+          <div class="details">
+            手数料 ${(r.feeRate * 100).toFixed(1)}% ／ ${r.shippingMethod}
+            <br>売れやすさ: <span style="color: var(--warning); letter-spacing: -1px">${stars}</span>
+          </div>
+          <button class="breakdown-toggle" onclick="toggleBreakdown('bd-${r.id}')">▶ 内訳を見る</button>
+        </div>
+        <div class="platform-amount">
+          <div class="label">手取り額</div>
+          <div class="amount">¥${r.netAmount.toLocaleString()}</div>
+          ${cost > 0 ? `<div class="label" style="color: ${r.profit >= 0 ? 'var(--success)' : 'var(--warning)'}">利益 ¥${r.profit.toLocaleString()}</div>` : ''}
+        </div>
+        <div class="breakdown" id="bd-${r.id}">
+          <div class="breakdown-row"><span>出品価格</span><span>¥${price.toLocaleString()}</span></div>
+          <div class="breakdown-row"><span>手数料 (${(r.feeRate * 100).toFixed(1)}%)</span><span>-¥${r.fee.toLocaleString()}</span></div>
+          <div class="breakdown-row"><span>送料 (${r.shippingMethod})</span><span>-¥${r.shipping.toLocaleString()}</span></div>
+          ${cost > 0 ? `<div class="breakdown-row"><span>仕入れ値</span><span>-¥${cost.toLocaleString()}</span></div>` : ''}
+          <div class="breakdown-row total"><span>手取り額${cost > 0 ? '(利益)' : ''}</span><span>¥${(cost > 0 ? r.profit : r.netAmount).toLocaleString()}</span></div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  // Category tip
+  const tipData = CATEGORY_TIPS[category];
+  document.getElementById('tipsContainer').innerHTML = `
+    <div class="tips-card">
+      <div class="tip-title">${tipData.icon} ${category === 'general' ? '売り場選びのコツ' : 'カテゴリ別アドバイス'}</div>
+      <p>${tipData.tip}</p>
+    </div>
+  `;
+
+  // Packaging suggestions
+  const suitablePackaging = PACKAGING.filter(p => totalSize <= p.maxSize).slice(0, 3);
+  if (suitablePackaging.length > 0) {
+    document.getElementById('packagingCard').style.display = 'block';
+    document.getElementById('packagingGrid').innerHTML = suitablePackaging.map(p => `
+      <div class="pkg-item">
+        <div class="pkg-name">${p.name}</div>
+        <div class="pkg-size">${p.size}</div>
+        <div class="pkg-price">${p.price}</div>
+      </div>
+    `).join('');
+  }
+
+  document.getElementById('results').classList.add('visible');
+  document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function toggleBreakdown(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('visible');
+  const btn = el.previousElementSibling.querySelector('.breakdown-toggle') ||
+    el.parentElement.querySelector('.breakdown-toggle');
+  if (btn) {
+    btn.textContent = el.classList.contains('visible') ? '▼ 内訳を閉じる' : '▶ 内訳を見る';
+  }
+}
+</script>
+</body>
+</html>
