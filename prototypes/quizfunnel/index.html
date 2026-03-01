@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizFunnel — 診断クイズでリードを獲得</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: { 50: '#EFF6FF', 100: '#DBEAFE', 200: '#BFDBFE', 500: '#3B82F6', 600: '#2563EB', 700: '#1D4ED8', 800: '#1E40AF', 900: '#1E3A8A' },
+                        amber: { 400: '#FBBF24', 500: '#F59E0B' },
+                        slate: { 50: '#F8FAFC', 100: '#F1F5F9', 200: '#E2E8F0', 300: '#CBD5E1', 400: '#94A3B8', 500: '#64748B', 600: '#475569', 700: '#334155', 800: '#1E293B', 900: '#0F172A' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Noto Sans JP', 'Inter', sans-serif; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #1E40AF 0%, #3B82F6 50%, #2563EB 100%); }
+        .card-shadow { box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06); }
+        .card-shadow-lg { box-shadow: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05); }
+        .stat-ring { background: conic-gradient(#2563EB var(--pct), #E2E8F0 0%); }
+        .quiz-preview { background: linear-gradient(180deg, #F8FAFC 0%, #FFFFFF 100%); }
+        .line-green { background-color: #06C755; }
+        .fade-in { animation: fadeIn 0.3s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .tab-active { color: #1E40AF; border-bottom: 2px solid #1E40AF; }
+        .progress-bar { transition: width 0.6s ease; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen">
+
+    <!-- Sidebar -->
+    <aside class="fixed left-0 top-0 bottom-0 w-64 bg-white border-r border-slate-200 z-30 flex flex-col">
+        <!-- Logo -->
+        <div class="p-6 border-b border-slate-100">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 gradient-bg rounded-xl flex items-center justify-center">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <div>
+                    <span class="text-lg font-bold text-slate-900 tracking-tight">QuizFunnel</span>
+                    <span class="block text-[10px] text-slate-400 font-medium tracking-wider uppercase">Pro Dashboard</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nav -->
+        <nav class="flex-1 p-4 space-y-1">
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-brand-50 text-brand-700 font-medium text-sm">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                ダッシュボード
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors text-sm">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                クイズ管理
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors text-sm">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                リード一覧
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors text-sm">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                分析
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors text-sm">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/></svg>
+                テンプレート
+            </a>
+
+            <div class="pt-4 mt-4 border-t border-slate-100">
+                <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors text-sm">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    設定
+                </a>
+            </div>
+        </nav>
+
+        <!-- User -->
+        <div class="p-4 border-t border-slate-100">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-full bg-gradient-to-br from-amber-400 to-amber-500 flex items-center justify-center text-white font-bold text-sm">T</div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-slate-900 truncate">田中マーケティング</p>
+                    <p class="text-xs text-slate-400">Pro プラン</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="ml-64 min-h-screen">
+        <!-- Top Bar -->
+        <header class="sticky top-0 z-20 bg-white/80 backdrop-blur-md border-b border-slate-200">
+            <div class="px-8 py-4 flex items-center justify-between">
+                <div>
+                    <h1 class="text-xl font-bold text-slate-900">ダッシュボード</h1>
+                    <p class="text-sm text-slate-400 mt-0.5">2026年3月1日（日）</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button class="px-4 py-2 text-sm text-slate-600 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                        埋め込みコード
+                    </button>
+                    <button class="px-5 py-2 text-sm font-semibold text-white gradient-bg rounded-lg hover:opacity-90 transition-opacity flex items-center gap-2 shadow-sm shadow-brand-500/20">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                        新規クイズ作成
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="p-8">
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-4 gap-5 mb-8">
+                <div class="bg-white rounded-xl p-5 card-shadow border border-slate-100">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-medium text-slate-400 uppercase tracking-wider">総クイズ数</span>
+                        <div class="w-8 h-8 rounded-lg bg-brand-50 flex items-center justify-center">
+                            <svg class="w-4 h-4 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                        </div>
+                    </div>
+                    <p class="text-3xl font-bold text-slate-900 font-inter">12</p>
+                    <p class="text-xs text-emerald-600 mt-1 flex items-center gap-1">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+                        +3 今月
+                    </p>
+                </div>
+
+                <div class="bg-white rounded-xl p-5 card-shadow border border-slate-100">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-medium text-slate-400 uppercase tracking-wider">回答数</span>
+                        <div class="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center">
+                            <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        </div>
+                    </div>
+                    <p class="text-3xl font-bold text-slate-900 font-inter">4,832</p>
+                    <p class="text-xs text-emerald-600 mt-1 flex items-center gap-1">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+                        +18.2% 先月比
+                    </p>
+                </div>
+
+                <div class="bg-white rounded-xl p-5 card-shadow border border-slate-100">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-medium text-slate-400 uppercase tracking-wider">コンバージョン率</span>
+                        <div class="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center">
+                            <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                        </div>
+                    </div>
+                    <p class="text-3xl font-bold text-slate-900 font-inter">38.4<span class="text-lg text-slate-400">%</span></p>
+                    <p class="text-xs text-emerald-600 mt-1 flex items-center gap-1">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+                        +2.1pt 先月比
+                    </p>
+                </div>
+
+                <div class="bg-white rounded-xl p-5 card-shadow border border-slate-100">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-medium text-slate-400 uppercase tracking-wider">獲得リード</span>
+                        <div class="w-8 h-8 rounded-lg bg-violet-50 flex items-center justify-center">
+                            <svg class="w-4 h-4 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        </div>
+                    </div>
+                    <p class="text-3xl font-bold text-slate-900 font-inter">1,856</p>
+                    <div class="flex items-center gap-2 mt-1">
+                        <span class="text-xs text-slate-500">✉️ 1,243</span>
+                        <span class="text-xs text-slate-300">|</span>
+                        <span class="text-xs text-emerald-600 flex items-center gap-0.5">
+                            <span class="w-2 h-2 rounded-full line-green inline-block"></span>
+                            LINE 613
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Grid -->
+            <div class="grid grid-cols-3 gap-6">
+                <!-- Quiz List (2 cols) -->
+                <div class="col-span-2 space-y-5">
+                    <!-- Section Header -->
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-lg font-bold text-slate-900">アクティブなクイズ</h2>
+                        <div class="flex gap-1 text-sm">
+                            <button class="px-3 py-1.5 rounded-md tab-active font-medium">すべて</button>
+                            <button class="px-3 py-1.5 rounded-md text-slate-400 hover:text-slate-600">公開中</button>
+                            <button class="px-3 py-1.5 rounded-md text-slate-400 hover:text-slate-600">下書き</button>
+                        </div>
+                    </div>
+
+                    <!-- Quiz Card 1 -->
+                    <div class="bg-white rounded-xl card-shadow border border-slate-100 overflow-hidden fade-in">
+                        <div class="p-5">
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 flex items-center justify-center text-white text-lg">🧠</div>
+                                    <div>
+                                        <div class="flex items-center gap-2">
+                                            <h3 class="font-bold text-slate-900">あなたのマーケティングタイプ診断</h3>
+                                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-700">公開中</span>
+                                        </div>
+                                        <p class="text-sm text-slate-400 mt-1">10問 • 4つの結果パターン • LINE連携ON</p>
+                                    </div>
+                                </div>
+                                <button class="text-slate-300 hover:text-slate-500">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"/></svg>
+                                </button>
+                            </div>
+                            <div class="mt-4 grid grid-cols-4 gap-4">
+                                <div>
+                                    <p class="text-xs text-slate-400">回答数</p>
+                                    <p class="text-lg font-bold text-slate-900 font-inter">2,148</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-400">完了率</p>
+                                    <p class="text-lg font-bold text-slate-900 font-inter">82%</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-400">CVR</p>
+                                    <p class="text-lg font-bold text-brand-600 font-inter">42.3%</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-400">リード</p>
+                                    <p class="text-lg font-bold text-slate-900 font-inter">908</p>
+                                </div>
+                            </div>
+                            <!-- Mini progress bar -->
+                            <div class="mt-3 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                                <div class="h-full rounded-full gradient-bg progress-bar" style="width: 42.3%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quiz Card 2 -->
+                    <div class="bg-white rounded-xl card-shadow border border-slate-100 overflow-hidden fade-in">
+                        <div class="p-5">
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white text-lg">💼</div>
+                                    <div>
+                                        <div class="flex items-center gap-2">
+                                            <h3 class="font-bold text-slate-900">フリーランス適性チェック</h3>
+                                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-700">公開中</span>
+                                        </div>
+                                        <p class="text-sm text-slate-400 mt-1">8問 • 3つの結果パターン • メール収集ON</p>
+                                    </div>
+                                </div>
+                                <button class="text-slate-300 hover:text-slate-500">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"/></svg>
+                                </button>
+                            </div>
+                            <div class="mt-4 grid grid-cols-4 gap-4">
+                                <div>
+                                    <p class="text-xs text-slate-400">回答数</p>
+                                    <p class="text-lg font-bold text-slate-900 font-inter">1,567</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-400">完了率</p>
+                                    <p class="text-lg font-bold text-slate-900 font-inter">76%</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-400">CVR</p>
+                                    <p class="text-lg font-bold text-brand-600 font-inter">35.8%</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-400">リード</p>
+                                    <p class="text-lg font-bold text-slate-900 font-inter">561</p>
+                                </div>
+                            </div>
+                            <div class="mt-3 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                                <div class="h-full rounded-full gradient-bg progress-bar" style="width: 35.8%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quiz Card 3 (Draft) -->
+                    <div class="bg-white rounded-xl card-shadow border border-slate-100 overflow-hidden fade-in opacity-80">
+                        <div class="p-5">
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-violet-400 to-purple-600 flex items-center justify-center text-white text-lg">🎯</div>
+                                    <div>
+                                        <div class="flex items-center gap-2">
+                                            <h3 class="font-bold text-slate-900">SNS運用スタイル診断</h3>
+                                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-500">下書き</span>
+                                        </div>
+                                        <p class="text-sm text-slate-400 mt-1">6問 • 5つの結果パターン • 作成中...</p>
+                                    </div>
+                                </div>
+                                <button class="text-slate-300 hover:text-slate-500">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"/></svg>
+                                </button>
+                            </div>
+                            <div class="mt-4 flex items-center gap-3">
+                                <div class="flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                                    <div class="h-full rounded-full bg-violet-400 progress-bar" style="width: 60%"></div>
+                                </div>
+                                <span class="text-xs text-slate-400 font-inter">60%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Sidebar -->
+                <div class="space-y-5">
+                    <!-- LINE Integration Card -->
+                    <div class="bg-white rounded-xl card-shadow border border-slate-100 p-5">
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="w-7 h-7 rounded-lg line-green flex items-center justify-center">
+                                <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2C6.48 2 2 5.82 2 10.5c0 3.67 3.16 6.74 7.43 7.9.29.07.68.21.78.48.09.24.06.62.03.86l-.12.75c-.04.23-.17.9.79.49s5.27-3.1 7.19-5.31C20.52 13.07 22 11.4 22 10.5 22 5.82 17.52 2 12 2z"/>
+                                </svg>
+                            </div>
+                            <h3 class="font-bold text-slate-900 text-sm">LINE連携</h3>
+                            <span class="ml-auto px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-700">接続済み</span>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center text-sm">
+                                <span class="text-slate-500">友だち追加数</span>
+                                <span class="font-bold text-slate-900 font-inter">613</span>
+                            </div>
+                            <div class="flex justify-between items-center text-sm">
+                                <span class="text-slate-500">今月の追加</span>
+                                <span class="font-bold text-emerald-600 font-inter">+89</span>
+                            </div>
+                            <div class="flex justify-between items-center text-sm">
+                                <span class="text-slate-500">自動配信</span>
+                                <span class="font-bold text-slate-900 font-inter">3セグメント</span>
+                            </div>
+                        </div>
+                        <button class="w-full mt-4 px-4 py-2 text-sm text-emerald-700 bg-emerald-50 rounded-lg hover:bg-emerald-100 transition-colors font-medium">
+                            セグメント設定
+                        </button>
+                    </div>
+
+                    <!-- Recent Leads -->
+                    <div class="bg-white rounded-xl card-shadow border border-slate-100 p-5">
+                        <h3 class="font-bold text-slate-900 text-sm mb-4">最近のリード</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-brand-100 flex items-center justify-center text-brand-700 text-xs font-bold">佐</div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-medium text-slate-900 truncate">佐藤 あかり</p>
+                                    <p class="text-xs text-slate-400">マーケタイプ診断 • 2分前</p>
+                                </div>
+                                <span class="w-2 h-2 rounded-full line-green flex-shrink-0"></span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center text-amber-700 text-xs font-bold">高</div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-medium text-slate-900 truncate">高橋 健太</p>
+                                    <p class="text-xs text-slate-400">フリーランス適性 • 15分前</p>
+                                </div>
+                                <svg class="w-4 h-4 text-slate-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-violet-100 flex items-center justify-center text-violet-700 text-xs font-bold">山</div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-medium text-slate-900 truncate">山田 ゆい</p>
+                                    <p class="text-xs text-slate-400">マーケタイプ診断 • 32分前</p>
+                                </div>
+                                <span class="w-2 h-2 rounded-full line-green flex-shrink-0"></span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 text-xs font-bold">鈴</div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-medium text-slate-900 truncate">鈴木 大輔</p>
+                                    <p class="text-xs text-slate-400">フリーランス適性 • 1時間前</p>
+                                </div>
+                                <svg class="w-4 h-4 text-slate-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                            </div>
+                        </div>
+                        <button class="w-full mt-4 px-4 py-2 text-sm text-brand-700 bg-brand-50 rounded-lg hover:bg-brand-100 transition-colors font-medium">
+                            すべてのリードを見る →
+                        </button>
+                    </div>
+
+                    <!-- Embed Code Preview -->
+                    <div class="bg-white rounded-xl card-shadow border border-slate-100 p-5">
+                        <h3 class="font-bold text-slate-900 text-sm mb-3">埋め込みコード</h3>
+                        <div class="bg-slate-900 rounded-lg p-3 text-xs font-mono text-emerald-400 overflow-x-auto">
+                            <code>&lt;script src="https://quizfunnel.jp/embed/qz_a1b2c3.js"&gt;&lt;/script&gt;</code>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-2">このコードをサイトに貼り付けるだけ</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
